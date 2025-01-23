@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://csuhjhv5e8pj3"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_b1jsc"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_b1jsc")
+
+[node name="FPSLabel" type="Label" parent="."]
+offset_right = 313.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 30
+
+[node name="MenuButton" type="MenuButton" parent="."]
+offset_left = 4.0
+offset_top = 978.0
+offset_right = 148.0
+offset_bottom = 1009.0
+text = "Menu"
+item_count = 2
+popup/item_0/text = "Settings"
+popup/item_1/text = "Controls"
+popup/item_1/id = 1
+
+[node name="RestartButton" type="Button" parent="."]
+offset_left = 1787.0
+offset_top = 3.0
+offset_right = 1915.0
+offset_bottom = 42.0
+text = "Restart"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 1789.0
+offset_top = 47.0
+offset_right = 1917.0
+offset_bottom = 86.0
+
+[node name="Button3" type="Button" parent="."]
+offset_left = 1785.0
+offset_top = 94.0
+offset_right = 1913.0
+offset_bottom = 133.0
+
+[node name="Button4" type="Button" parent="."]
+offset_left = 1787.0
+offset_top = 139.0
+offset_right = 1915.0
+offset_bottom = 178.0
+
+[node name="Button5" type="Button" parent="."]
+offset_left = 1785.0
+offset_top = 188.0
+offset_right = 1913.0
+offset_bottom = 227.0
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
