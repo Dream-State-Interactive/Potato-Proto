@@ -1,1 +1,4 @@
 res://tools/terrain.tscn
+res://main.tscn
+res://Scenes/Levels/main_world.tscn
+res://Scenes/Player/potato.tscn
