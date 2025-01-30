@@ -8,10 +8,10 @@
 script = ExtResource("1_b1jsc")
 
 [node name="FPSLabel" type="Label" parent="."]
-offset_left = 969.0
-offset_top = 29.0
-offset_right = 1282.0
-offset_bottom = 101.0
+offset_left = 1831.0
+offset_top = 1013.0
+offset_right = 1917.0
+offset_bottom = 1085.0
 theme_override_font_sizes/font_size = 30
 
 [node name="MenuButton" type="MenuButton" parent="."]
@@ -57,10 +57,10 @@ offset_right = 1913.0
 offset_bottom = 227.0
 
 [node name="BG" type="NinePatchRect" parent="."]
-offset_left = 43.0
-offset_top = 1.0
-offset_right = 827.0
-offset_bottom = 709.0
+offset_left = 6.0
+offset_top = -2.0
+offset_right = 790.0
+offset_bottom = 706.0
 texture = ExtResource("2_10bfv")
 
 [node name="SpeedLabel" type="Label" parent="BG"]
