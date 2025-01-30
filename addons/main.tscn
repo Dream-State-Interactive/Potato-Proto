@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://6cb4cuvypvat"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_1n2us"]
-[ext_resource type="PackedScene" uid="uid://denqj8osoufeu" path="res://player.tscn" id="2_acpln"]
-[ext_resource type="PackedScene" uid="uid://b70rocskxvela" path="res://obstacle.tscn" id="3_xf65y"]
-[ext_resource type="PackedScene" uid="uid://csuhjhv5e8pj3" path="res://hud.tscn" id="4_fadeu"]
+[ext_resource type="Script" path="res://Scenes/Levels/main.gd" id="1_1n2us"]
+[ext_resource type="PackedScene" uid="uid://denqj8osoufeu" path="res://Scenes/Player/player.tscn" id="2_acpln"]
+[ext_resource type="PackedScene" uid="uid://b70rocskxvela" path="res://assets/obstacle.tscn" id="3_xf65y"]
+[ext_resource type="PackedScene" uid="uid://csuhjhv5e8pj3" path="res://Scenes/HUD/hud.tscn" id="4_fadeu"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_1n2us")

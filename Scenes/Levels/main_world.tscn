@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="1_hlcpj"]
 [ext_resource type="Script" path="res://Tools/terrain.gd" id="2_3ge1q"]
-[ext_resource type="Texture2D" uid="uid://ca271v4q4gpbe" path="res://assets/tool/terrain_edge_grass_proto.png" id="3_xeljm"]
-[ext_resource type="Texture2D" uid="uid://jb501msdpxrl" path="res://assets/tool/terrain_dirt_proto_low.png" id="4_knk86"]
-[ext_resource type="PackedScene" uid="uid://bmnfp5a5860v2" path="res://tools/collisionmaker/collisionmaker.tscn" id="5_i7pmb"]
+[ext_resource type="Texture2D" uid="uid://ca271v4q4gpbe" path="res://Tools/tool/terrain_edge_grass_proto.png" id="3_xeljm"]
+[ext_resource type="Texture2D" uid="uid://jb501msdpxrl" path="res://Tools/tool/terrain_dirt_proto_low.png" id="4_knk86"]
+[ext_resource type="PackedScene" uid="uid://bmnfp5a5860v2" path="res://Tools/collisionmaker/collisionmaker.tscn" id="5_i7pmb"]
 [ext_resource type="Texture2D" uid="uid://dxya7eujy7kim" path="res://assets/bustin.png" id="6_oajyt"]
 [ext_resource type="Script" path="res://tools/PathMaker/PathMaker.gd" id="7_bqlx2"]
 [ext_resource type="Texture2D" uid="uid://bufss02blg5oa" path="res://assets/path_proto.png" id="8_d5814"]
