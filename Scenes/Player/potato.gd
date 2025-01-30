@@ -52,6 +52,17 @@ func _process(delta: float) -> void:
 			apply_torque(-roll_strength * roll_multiplier * delta)
 		elif Input.is_action_pressed("roll_right"):
 			apply_torque(roll_strength * roll_multiplier * delta)
+			
+	if Input.is_action_just_released("scroll_up"):
+		var zoom := Vector2($Camera2D.get_zoom())
+		zoom *= 1.2
+		$Camera2D.set_zoom(zoom)
+		print(zoom)
+	elif Input.is_action_just_released("scroll_down"):
+		var zoom := Vector2($Camera2D.get_zoom())
+		zoom *= 1/1.2
+		$Camera2D.set_zoom(zoom)
+		print(zoom)
 
 func _physics_process(delta: float) -> void:
 	# Update ground detection
