@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bygrolnrip8us"]
 
 [ext_resource type="Script" path="res://Tools/terrain.gd" id="1_t38g3"]
-[ext_resource type="Texture2D" uid="uid://ca271v4q4gpbe" path="res://assets/tool/terrain_edge_grass_proto.png" id="2_63y5m"]
-[ext_resource type="Texture2D" uid="uid://jb501msdpxrl" path="res://assets/tool/terrain_dirt_proto_low.png" id="3_y7uf6"]
+[ext_resource type="Texture2D" uid="uid://ca271v4q4gpbe" path="res://Tools/tool/terrain_edge_grass_proto.png" id="2_63y5m"]
+[ext_resource type="Texture2D" uid="uid://jb501msdpxrl" path="res://Tools/tool/terrain_dirt_proto_low.png" id="3_y7uf6"]
 
 [sub_resource type="Curve2D" id="Curve2D_1uoog"]
 resource_local_to_scene = true

@@ -8,8 +8,10 @@
 script = ExtResource("1_b1jsc")
 
 [node name="FPSLabel" type="Label" parent="."]
-offset_right = 313.0
-offset_bottom = 72.0
+offset_left = 969.0
+offset_top = 29.0
+offset_right = 1282.0
+offset_bottom = 101.0
 theme_override_font_sizes/font_size = 30
 
 [node name="MenuButton" type="MenuButton" parent="."]
