@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bq8n4uhvlw7ns"]
+[gd_scene load_steps=7 format=3 uid="uid://bq8n4uhvlw7ns"]
 
 [ext_resource type="Script" path="res://Scenes/Player/potato.gd" id="1_haj8d"]
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/potato_proto.png" id="2_hu54r"]
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/potato_proto_peeled.png" id="3_nrxwc"]
 [ext_resource type="Texture2D" uid="uid://ddjrr5t5m5fwc" path="res://assets/potato_proto_aged.png" id="4_l4l2i"]
-[ext_resource type="Texture2D" uid="uid://c0rgqdgt8gtdh" path="res://assets/GUI_Panel.png" id="5_d33in"]
-[ext_resource type="Texture2D" uid="uid://co1sbc5131rlm" path="res://assets/GUI_Panel_greyscale.png" id="6_1h3ap"]
+[ext_resource type="PackedScene" uid="uid://csuhjhv5e8pj3" path="res://Scenes/HUD/hud.tscn" id="5_slxtj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_054cc"]
 friction = 0.8
@@ -39,107 +38,8 @@ rotation_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 
-[node name="BG" type="NinePatchRect" parent="HUD"]
-offset_left = 43.0
-offset_top = 1.0
-offset_right = 827.0
-offset_bottom = 709.0
-texture = ExtResource("5_d33in")
-
-[node name="SpeedLabel" type="Label" parent="HUD/BG"]
-layout_mode = 2
-offset_left = 58.0
-offset_top = 330.0
-offset_right = 190.0
-offset_bottom = 385.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 40
-text = "Speed:"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="SpeedSlots" type="HBoxContainer" parent="HUD/BG"]
-layout_mode = 0
-offset_left = 217.0
-offset_top = 285.0
-offset_right = 993.0
-offset_bottom = 541.0
-scale = Vector2(0.6, 0.6)
-
-[node name="Speed1" type="TextureButton" parent="HUD/BG/SpeedSlots"]
-layout_mode = 2
-toggle_mode = true
-texture_normal = ExtResource("6_1h3ap")
-
-[node name="Speed2" type="TextureButton" parent="HUD/BG/SpeedSlots"]
-layout_mode = 2
-toggle_mode = true
-texture_normal = ExtResource("6_1h3ap")
-
-[node name="Speed3" type="TextureButton" parent="HUD/BG/SpeedSlots"]
-layout_mode = 2
-toggle_mode = true
-texture_normal = ExtResource("6_1h3ap")
-
-[node name="JumpLabel" type="Label" parent="HUD/BG"]
-layout_mode = 0
-offset_left = 56.0
-offset_top = 567.0
-offset_right = 188.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 40
-text = "Jump:"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="JumpSlots" type="HBoxContainer" parent="HUD/BG"]
-layout_mode = 0
-offset_left = 215.0
-offset_top = 522.0
-offset_right = 991.0
-offset_bottom = 778.0
-scale = Vector2(0.6, 0.6)
-
-[node name="Jump1" type="TextureButton" parent="HUD/BG/JumpSlots"]
-layout_mode = 2
-toggle_mode = true
-texture_normal = ExtResource("6_1h3ap")
-
-[node name="Jump2" type="TextureButton" parent="HUD/BG/JumpSlots"]
-layout_mode = 2
-toggle_mode = true
-texture_normal = ExtResource("6_1h3ap")
-
-[node name="Jump3" type="TextureButton" parent="HUD/BG/JumpSlots"]
-layout_mode = 2
-toggle_mode = true
-texture_normal = ExtResource("6_1h3ap")
-
-[node name="TitleLabel" type="Label" parent="HUD/BG"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 26.0
-offset_right = 750.0
-offset_bottom = 147.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 88
-text = "POTATO POWER!"
-horizontal_alignment = 1
-
-[node name="PointsLabel" type="Label" parent="HUD/BG"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 177.0
-offset_right = 437.0
-offset_bottom = 246.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 50
-text = "Points Available: 
-"
+[node name="HUD" parent="." instance=ExtResource("5_slxtj")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
