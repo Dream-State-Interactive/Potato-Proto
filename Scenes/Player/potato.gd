@@ -50,8 +50,10 @@ func _process(delta: float) -> void:
 	if !HUD.visible:  # Only process movement if HUD is *not* visible
 		if Input.is_action_pressed("roll_left"):
 			apply_torque(-roll_strength * roll_multiplier * delta)
-		elif Input.is_action_pressed("roll_right"):
+		if Input.is_action_pressed("roll_right"):
 			apply_torque(roll_strength * roll_multiplier * delta)
+		if Input.is_action_pressed("stop"):
+			set_angular_velocity(0)
 			
 	if Input.is_action_just_released("scroll_up"):
 		var zoom := Vector2($Camera2D.get_zoom())
@@ -63,6 +65,8 @@ func _process(delta: float) -> void:
 		zoom *= 1/1.2
 		$Camera2D.set_zoom(zoom)
 		print(zoom)
+	elif Input.is_action_pressed("space"):
+		set_angular_velocity(0)      
 
 func _physics_process(delta: float) -> void:
 	# Update ground detection
