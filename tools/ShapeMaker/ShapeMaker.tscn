@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0ponoq3fqag6"]
+
+[ext_resource type="Script" path="res://tools/ShapeMaker/shape_maker.gd" id="1_jcymb"]
+
+[node name="ShapeMaker" type="Node2D"]
+script = ExtResource("1_jcymb")
+
+[node name="ShapeContainer" type="Node2D" parent="."]

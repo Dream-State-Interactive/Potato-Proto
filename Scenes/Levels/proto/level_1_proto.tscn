@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4n4sr4ulry3i"]
+
+[ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_ytlsg"]
+
+[node name="Level1Proto" type="Node2D"]
+
+[node name="ShapeMaker" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(323, 296)
+shape_color = Color(0.617358, 0.433589, 0.704719, 1)
+circle_radius = 364.745
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.585, 0.585)
