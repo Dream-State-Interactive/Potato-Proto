@@ -64,9 +64,7 @@ func _process(delta: float) -> void:
 		var zoom := Vector2($Camera2D.get_zoom())
 		zoom *= 1/1.2
 		$Camera2D.set_zoom(zoom)
-		print(zoom)
-	elif Input.is_action_pressed("space"):
-		set_angular_velocity(0)      
+		print(zoom)     
 
 func _physics_process(delta: float) -> void:
 	# Update ground detection
