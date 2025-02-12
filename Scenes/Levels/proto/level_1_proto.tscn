@@ -1,13 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4n4sr4ulry3i"]
+[gd_scene load_steps=3 format=3 uid="uid://c4n4sr4ulry3i"]
 
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_ytlsg"]
+[ext_resource type="PackedScene" uid="uid://c0c4yienqo0ex" path="res://tools/PathMaker/path_maker.tscn" id="2_g804p"]
 
 [node name="Level1Proto" type="Node2D"]
 
 [node name="ShapeMaker" parent="." instance=ExtResource("1_ytlsg")]
+process_mode = 3
 position = Vector2(323, 296)
+shape_type = 0
 shape_color = Color(0.617358, 0.433589, 0.704719, 1)
 circle_radius = 364.745
+rectangle_size = Vector2(100, 50)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.585, 0.585)
+
+[node name="PathMaker" parent="." instance=ExtResource("2_g804p")]
+position = Vector2(-12976, -4031)
+path_texture = null
+extrude_texture = null
