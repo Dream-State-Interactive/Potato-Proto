@@ -3,10 +3,9 @@
 [ext_resource type="Script" path="res://tools/ShapeMaker/shape_maker.gd" id="1_jcymb"]
 
 [node name="ShapeMaker" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_jcymb")
-shape_type = null
-shape_color = null
-circle_radius = null
-rectangle_size = null
+collision_layer = null
+collision_mask = null
 
 [node name="ShapeContainer" type="Node2D" parent="."]
