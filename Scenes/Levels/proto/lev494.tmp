@@ -1,0 +1,417 @@
+[gd_scene load_steps=44 format=3 uid="uid://c4n4sr4ulry3i"]
+
+[ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_ytlsg"]
+[ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="2_cph5s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0r3yr"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ps4ci"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfha6"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u5jff"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6fedl"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aaq65"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwnlu"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xusb"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4g4gy"]
+size = Vector2(4000, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vwhd"]
+size = Vector2(2000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ttfh"]
+size = Vector2(2000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6qc16"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7x766"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qr4wa"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yp5ic"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j30h3"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljt76"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w85so"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vi1ek"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7nmp0"]
+size = Vector2(1500, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2pu0"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ygl52"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pw78a"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pnw5p"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dx005"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_44tkr"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_skwty"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bgdx2"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q47pb"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_smprk"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o2uij"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iy4ov"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g40ud"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jwxes"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_83w6d"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kfg6q"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mfjf0"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_302xb"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ysb5r"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4saad"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vjnb3"]
+radius = 50.0
+
+[node name="Level1Proto" type="Node2D"]
+
+[node name="BG" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-494, 1434)
+shape_type = 1
+shape_color = Color(0, 0, 0, 1)
+rectangle_size = Vector2(40000, 40000)
+
+[node name="HouseWall" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(2124, -213)
+shape_type = 1
+shape_color = Color(0.563578, 0.392251, 0.33158, 1)
+rectangle_size = Vector2(15000, 7000)
+
+[node name="Counter" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-3375, 1908)
+shape_type = 1
+shape_color = Color(0.689971, 0.724568, 0.81013, 1)
+rectangle_size = Vector2(4000, 807.165)
+create_collision = true
+
+[node name="@CollisionShape2D@39299" type="CollisionShape2D" parent="Counter"]
+shape = SubResource("RectangleShape2D_0r3yr")
+
+[node name="@StaticBody2D@17252" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@17252"]
+shape = SubResource("RectangleShape2D_ps4ci")
+
+[node name="@StaticBody2D@29333" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@29333"]
+shape = SubResource("RectangleShape2D_kfha6")
+
+[node name="@StaticBody2D@34209" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@34209"]
+shape = SubResource("RectangleShape2D_u5jff")
+
+[node name="@StaticBody2D@35081" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@35081"]
+shape = SubResource("RectangleShape2D_6fedl")
+
+[node name="@StaticBody2D@37880" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@37880"]
+shape = SubResource("RectangleShape2D_aaq65")
+
+[node name="@StaticBody2D@39336" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@39336"]
+shape = SubResource("RectangleShape2D_kwnlu")
+
+[node name="@StaticBody2D@17245" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@17245"]
+shape = SubResource("RectangleShape2D_1xusb")
+
+[node name="@StaticBody2D@37458" type="StaticBody2D" parent="Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter/@StaticBody2D@37458"]
+shape = SubResource("RectangleShape2D_4g4gy")
+
+[node name="CuttingBoard" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-3600, 1426)
+shape_type = 1
+shape_color = Color(0.786201, 0.527853, 0.382834, 1)
+rectangle_size = Vector2(2000, 100)
+create_collision = true
+enable_physics = true
+
+[node name="PhysicsBody2" type="RigidBody2D" parent="CuttingBoard"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CuttingBoard/PhysicsBody2"]
+shape = SubResource("RectangleShape2D_5vwhd")
+
+[node name="@RigidBody2D@37459" type="RigidBody2D" parent="CuttingBoard"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CuttingBoard/@RigidBody2D@37459"]
+shape = SubResource("RectangleShape2D_8ttfh")
+
+[node name="Sink" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(125, 2404)
+shape_type = 1
+shape_color = Color(0.562025, 0.519774, 0.582213, 1)
+rectangle_size = Vector2(3000, 1800)
+
+[node name="ShapeMaker4" parent="Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(1, 63)
+shape_type = 1
+shape_color = Color(0.39171, 0.498306, 0.929967, 1)
+rectangle_size = Vector2(3000, 1650)
+
+[node name="Counter2" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(2375, 1908)
+shape_type = 1
+shape_color = Color(0.689971, 0.724568, 0.81013, 1)
+rectangle_size = Vector2(1500, 807.165)
+create_collision = true
+
+[node name="@CollisionShape2D@39301" type="CollisionShape2D" parent="Counter2"]
+shape = SubResource("RectangleShape2D_6qc16")
+
+[node name="@StaticBody2D@17254" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@17254"]
+shape = SubResource("RectangleShape2D_7x766")
+
+[node name="@StaticBody2D@29335" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@29335"]
+shape = SubResource("RectangleShape2D_qr4wa")
+
+[node name="@StaticBody2D@34211" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@34211"]
+shape = SubResource("RectangleShape2D_yp5ic")
+
+[node name="@StaticBody2D@35083" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@35083"]
+shape = SubResource("RectangleShape2D_j30h3")
+
+[node name="@StaticBody2D@37882" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@37882"]
+shape = SubResource("RectangleShape2D_ljt76")
+
+[node name="@StaticBody2D@39338" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@39338"]
+shape = SubResource("RectangleShape2D_w85so")
+
+[node name="@StaticBody2D@17247" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@17247"]
+shape = SubResource("RectangleShape2D_vi1ek")
+
+[node name="@StaticBody2D@37460" type="StaticBody2D" parent="Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter2/@StaticBody2D@37460"]
+shape = SubResource("RectangleShape2D_7nmp0")
+
+[node name="Counter3" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(6430, 1912)
+shape_type = 1
+shape_color = Color(0.689971, 0.724568, 0.81013, 1)
+rectangle_size = Vector2(700, 807.165)
+create_collision = true
+
+[node name="@CollisionShape2D@39302" type="CollisionShape2D" parent="Counter3"]
+shape = SubResource("RectangleShape2D_d2pu0")
+
+[node name="@StaticBody2D@17255" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@17255"]
+shape = SubResource("RectangleShape2D_ygl52")
+
+[node name="@StaticBody2D@29336" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@29336"]
+shape = SubResource("RectangleShape2D_pw78a")
+
+[node name="@StaticBody2D@34212" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@34212"]
+shape = SubResource("RectangleShape2D_pnw5p")
+
+[node name="@StaticBody2D@35084" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@35084"]
+shape = SubResource("RectangleShape2D_dx005")
+
+[node name="@StaticBody2D@37883" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@37883"]
+shape = SubResource("RectangleShape2D_44tkr")
+
+[node name="@StaticBody2D@39339" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@39339"]
+shape = SubResource("RectangleShape2D_skwty")
+
+[node name="@StaticBody2D@17248" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@17248"]
+shape = SubResource("RectangleShape2D_bgdx2")
+
+[node name="@StaticBody2D@37461" type="StaticBody2D" parent="Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter3/@StaticBody2D@37461"]
+shape = SubResource("RectangleShape2D_q47pb")
+
+[node name="Oven" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(4608, 2402)
+shape_type = 1
+shape_color = Color(0.387255, 0.429801, 0.538052, 1)
+rectangle_size = Vector2(3000, 1800)
+enable_physics = true
+
+[node name="burner1" parent="Oven" instance=ExtResource("1_ytlsg")]
+position = Vector2(-776, -892)
+shape_type = 1
+shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
+rectangle_size = Vector2(750, 50)
+enable_physics = true
+
+[node name="burner2" parent="Oven" instance=ExtResource("1_ytlsg")]
+position = Vector2(751, -892)
+shape_type = 1
+shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
+rectangle_size = Vector2(750, 50)
+enable_physics = true
+
+[node name="ShapeMaker" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-4194, 946)
+
+[node name="ShapeMaker2" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-3947, 946)
+shape_color = Color(0.134611, 0.57279, 0.80361, 1)
+create_collision = true
+
+[node name="@CollisionShape2D@41997" type="CollisionShape2D" parent="ShapeMaker2"]
+shape = SubResource("CircleShape2D_smprk")
+
+[node name="@StaticBody2D@17256" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@17256"]
+shape = SubResource("CircleShape2D_o2uij")
+
+[node name="CollisionParent2" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/CollisionParent2"]
+shape = SubResource("CircleShape2D_iy4ov")
+
+[node name="@StaticBody2D@29337" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@29337"]
+shape = SubResource("CircleShape2D_g40ud")
+
+[node name="@StaticBody2D@34213" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@34213"]
+shape = SubResource("CircleShape2D_jwxes")
+
+[node name="@StaticBody2D@35085" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@35085"]
+shape = SubResource("CircleShape2D_83w6d")
+
+[node name="@StaticBody2D@37884" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@37884"]
+shape = SubResource("CircleShape2D_kfg6q")
+
+[node name="@StaticBody2D@39340" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@39340"]
+shape = SubResource("CircleShape2D_mfjf0")
+
+[node name="@StaticBody2D@17249" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@17249"]
+shape = SubResource("CircleShape2D_302xb")
+
+[node name="@StaticBody2D@37462" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@37462"]
+shape = SubResource("CircleShape2D_ysb5r")
+
+[node name="potato_base" parent="." instance=ExtResource("2_cph5s")]
+position = Vector2(-4427, 1119)
+
+[node name="ShapeMaker3" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-4037, 741)
+shape_color = Color(0.0254671, 0.61983, 0.554264, 1)
+create_collision = true
+enable_physics = true
+
+[node name="PhysicsBody2" type="RigidBody2D" parent="ShapeMaker3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3/PhysicsBody2"]
+shape = SubResource("CircleShape2D_4saad")
+
+[node name="@RigidBody2D@37463" type="RigidBody2D" parent="ShapeMaker3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3/@RigidBody2D@37463"]
+shape = SubResource("CircleShape2D_vjnb3")

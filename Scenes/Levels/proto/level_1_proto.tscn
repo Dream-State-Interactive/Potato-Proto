@@ -1,25 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4n4sr4ulry3i"]
+[gd_scene load_steps=5 format=3 uid="uid://c4n4sr4ulry3i"]
 
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_ytlsg"]
-[ext_resource type="PackedScene" uid="uid://denqj8osoufeu" path="res://Scenes/Player/player.tscn" id="2_8ho7p"]
+[ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="2_cph5s"]
+[ext_resource type="Script" path="res://tools/env_water.gd" id="3_38wdw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0r3yr"]
-size = Vector2(4000, 807.165)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxyt8"]
-size = Vector2(2000, 100)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6qc16"]
-size = Vector2(1500, 807.165)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2pu0"]
-size = Vector2(700, 807.165)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_smprk"]
-radius = 50.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3r0kv"]
-radius = 50.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
+size = Vector2(2932, 1636)
 
 [node name="Level1Proto" type="Node2D"]
 
@@ -28,28 +14,28 @@ position = Vector2(-494, 1434)
 shape_type = 1
 shape_color = Color(0, 0, 0, 1)
 rectangle_size = Vector2(40000, 40000)
-collision_layer = 1
-collision_mask = 1
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="HouseWall" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(2124, -213)
 shape_type = 1
 shape_color = Color(0.563578, 0.392251, 0.33158, 1)
 rectangle_size = Vector2(15000, 7000)
-collision_layer = 1
-collision_mask = 1
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="Counter" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-3375, 1908)
+position = Vector2(-3375, 2483)
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
-rectangle_size = Vector2(4000, 807.165)
+rectangle_size = Vector2(4000, 2000)
 create_collision = true
-collision_layer = 1
-collision_mask = 1
-
-[node name="@CollisionShape2D@39299" type="CollisionShape2D" parent="Counter"]
-shape = SubResource("RectangleShape2D_0r3yr")
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="CuttingBoard" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-3600, 1426)
@@ -58,39 +44,59 @@ shape_color = Color(0.786201, 0.527853, 0.382834, 1)
 rectangle_size = Vector2(2000, 100)
 create_collision = true
 enable_physics = true
-collision_layer = 1
-collision_mask = 1
-
-[node name="@CollisionShape2D@39300" type="CollisionShape2D" parent="CuttingBoard"]
-shape = SubResource("RectangleShape2D_dxyt8")
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="Sink" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(125, 2404)
 shape_type = 1
 shape_color = Color(0.562025, 0.519774, 0.582213, 1)
 rectangle_size = Vector2(3000, 1800)
-collision_layer = 1
-collision_mask = 1
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
-[node name="ShapeMaker4" parent="Sink" instance=ExtResource("1_ytlsg")]
-position = Vector2(1, 63)
+[node name="ShapeMaker" parent="Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(0, 868)
 shape_type = 1
-shape_color = Color(0.39171, 0.498306, 0.929967, 1)
-rectangle_size = Vector2(3000, 1650)
-collision_layer = 1
-collision_mask = 1
+shape_color = Color(0.461711, 0.496825, 0.51173, 1)
+rectangle_size = Vector2(3000, 50)
+create_collision = true
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
+
+[node name="Sink_Water" parent="." instance=ExtResource("1_ytlsg")]
+z_index = 1
+position = Vector2(125, 2419)
+shape_type = 1
+shape_color = Color(0.133333, 0.545098, 0.92549, 0.505882)
+rectangle_size = Vector2(3000, 1690)
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
+
+[node name="Sink_Front" parent="." instance=ExtResource("1_ytlsg")]
+z_index = 1
+position = Vector2(125, 2425)
+shape_type = 1
+shape_color = Color(0.562025, 0.519774, 0.582213, 1)
+rectangle_size = Vector2(3000, 1750)
+create_collision = true
+fade_on_player_contact = true
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="Counter2" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(2375, 1908)
+position = Vector2(2375, 2495)
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
-rectangle_size = Vector2(1500, 807.165)
+rectangle_size = Vector2(1500, 2000)
 create_collision = true
-collision_layer = 1
-collision_mask = 1
-
-[node name="@CollisionShape2D@39301" type="CollisionShape2D" parent="Counter2"]
-shape = SubResource("RectangleShape2D_6qc16")
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="Counter3" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(6430, 1912)
@@ -98,64 +104,82 @@ shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
 rectangle_size = Vector2(700, 807.165)
 create_collision = true
-collision_layer = 1
-collision_mask = 1
-
-[node name="@CollisionShape2D@39302" type="CollisionShape2D" parent="Counter3"]
-shape = SubResource("RectangleShape2D_d2pu0")
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="Oven" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(4608, 2402)
+position = Vector2(4608, 2381)
 shape_type = 1
 shape_color = Color(0.387255, 0.429801, 0.538052, 1)
 rectangle_size = Vector2(3000, 1800)
-enable_physics = true
-collision_layer = 1
-collision_mask = 1
+create_collision = true
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="burner1" parent="Oven" instance=ExtResource("1_ytlsg")]
 position = Vector2(-776, -892)
 shape_type = 1
 shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
 rectangle_size = Vector2(750, 50)
-enable_physics = true
-collision_layer = 1
-collision_mask = 1
+create_collision = true
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="burner2" parent="Oven" instance=ExtResource("1_ytlsg")]
 position = Vector2(751, -892)
 shape_type = 1
 shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
 rectangle_size = Vector2(750, 50)
-enable_physics = true
-collision_layer = 1
-collision_mask = 1
-
-[node name="Player" parent="." instance=ExtResource("2_8ho7p")]
-position = Vector2(-4421, 940)
+create_collision = true
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="ShapeMaker" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-4194, 946)
-collision_layer = 1
-collision_mask = 1
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
 [node name="ShapeMaker2" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-3947, 946)
 shape_color = Color(0.134611, 0.57279, 0.80361, 1)
 create_collision = true
-collision_layer = 1
-collision_mask = 1
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
-[node name="@CollisionShape2D@41997" type="CollisionShape2D" parent="ShapeMaker2"]
-shape = SubResource("CircleShape2D_smprk")
+[node name="potato_base" parent="." groups=["player"] instance=ExtResource("2_cph5s")]
+position = Vector2(-4374, 1069)
+water_impulse_strength = 500.0
 
 [node name="ShapeMaker3" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-3967, 805)
-shape_color = Color(0.142313, 0.64492, 0, 1)
+position = Vector2(-4041, 741)
+shape_color = Color(0, 0.635138, 0.409444, 1)
 create_collision = true
 enable_physics = true
-collision_layer = 1
-collision_mask = 1
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3"]
-shape = SubResource("CircleShape2D_3r0kv")
+[node name="ShapeMaker4" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-4195, 428)
+shape_type = 1
+create_collision = true
+enable_physics = true
+fade_on_player_contact = false
+opacity_fade_amount = 0.4
+fade_duration = 0.5
+
+[node name="EnvWater" type="Area2D" parent="."]
+position = Vector2(-529, 1727)
+script = ExtResource("3_38wdw")
+underwater_gravity_scale = 0.42
+underwater_linear_damp = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnvWater"]
+position = Vector2(663, 653)
+shape = SubResource("RectangleShape2D_aaeu4")

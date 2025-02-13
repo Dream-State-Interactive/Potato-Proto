@@ -6,7 +6,8 @@ enum ShapeType {
 	RECTANGLE
 }
 
-@export var shape_type: ShapeType = ShapeType.CIRCLE:
+# Exported properties with the old colon setter syntax (Godot 4.3 compatible)
+@export var shape_type: int = ShapeType.CIRCLE:
 	set(value):
 		shape_type = value
 		_update_visuals()
@@ -15,7 +16,7 @@ enum ShapeType {
 @export var shape_color: Color = Color(1, 0, 0):
 	set(value):
 		shape_color = value
-		queue_redraw()
+		_update_visuals()
 
 @export var circle_radius: float = 50.0:
 	set(value):
@@ -37,93 +38,137 @@ enum ShapeType {
 @export var enable_physics: bool = false:
 	set(value):
 		enable_physics = value
-		_update_collision()  # Now properly replaces StaticBody2D with RigidBody2D
+		_update_collision()
 
 @export var collision_layer: int = 1
 @export var collision_mask: int = 1
 
-func _draw():
-	# This function is called every frame (or when queue_redraw() is called) to draw the shape.
-	# It checks the shape_type and draws either a circle or a rectangle.
-	if shape_type == ShapeType.CIRCLE:
-		# Draw a circle centered at (0, 0) with the specified radius and color.
-		draw_circle(Vector2.ZERO, circle_radius, shape_color)
-	elif shape_type == ShapeType.RECTANGLE:
-		# Draw a rectangle centered at (0, 0). The rectangle's top-left corner is calculated
-		# by subtracting half of the rectangle's size from the center.  This ensures
-		# the rectangle is drawn centered on the origin (0, 0).
-		draw_rect(Rect2(-rectangle_size / 2, rectangle_size), shape_color)
+# These variables hold our dynamic nodes.
+var visual_node: Node2D = null
+var collision_body: CollisionObject2D = null
 
-func _ready():
-	# _ready() is called when the node enters the scene tree.
-	# This block ensures that the collision and visuals are updated only when the
-	# game is running in the editor.  This is important because the editor
-	# automatically instantiates the node to display it in the scene editor.
-	if not Engine.is_editor_hint():
-		# Exit early if not in the editor.
-		return
+#------------------------------------------------------------------------------
+# Inner Class: VisualShape
+#
+# This Node2D subclass is responsible for drawing the shape.
+# Its _draw() method uses the current settings.
+#------------------------------------------------------------------------------
+class VisualShape extends Node2D:
+	@export var shape_type: int = 0  # 0 for circle, 1 for rectangle
+	@export var shape_color: Color = Color(1, 0, 0)
+	@export var circle_radius: float = 50.0
+	@export var rectangle_size: Vector2 = Vector2(100, 50)
+	
+	func _ready() -> void:
+		# Mark for redraw.
+		queue_redraw()
+	
+	func _draw() -> void:
+		if shape_type == ShapeType.CIRCLE:
+			draw_circle(Vector2.ZERO, circle_radius, shape_color)
+		elif shape_type == ShapeType.RECTANGLE:
+			draw_rect(Rect2(-rectangle_size / 2, rectangle_size), shape_color)
+
+#------------------------------------------------------------------------------
+# _ready()
+#
+# Called when the node enters the scene tree.
+# We update both the visuals and collision.
+#------------------------------------------------------------------------------
+func _ready() -> void:
 	_update_visuals()
 	_update_collision()
 
-func _update_visuals():
-	# This function simply calls queue_redraw() to signal that the node's visuals
-	# need to be updated. This is important because changes to properties
-	# (shape_color, circle_radius, etc.) do not automatically trigger a redraw.
-	queue_redraw()
-
-func _update_collision():
-	# This function handles creating or updating the collision object.
-	# It first removes any existing collision object and then creates a new one
-	# based on the current settings (shape_type, create_collision, enable_physics).
-
-	_remove_existing_collision()  # Remove any old collision shapes before creating new ones.
-
-	if not create_collision:
-		# If create_collision is false, no collision object should be created.
-		return
-
-	var collision_parent: CollisionObject2D  # Declare a variable to hold either a StaticBody2D or RigidBody2D.
-
-	# If enable_physics is true, create a RigidBody2D; otherwise, create a StaticBody2D.
-	# This allows the shape to be either a static object (for collisions but not movement)
-	# or a dynamic object that responds to physics (gravity, collisions, etc.).
-	if enable_physics:
-		collision_parent = RigidBody2D.new() # Create a RigidBody2D if physics are enabled.
-		collision_parent.collision_layer = collision_layer # Set the collision layer for the rigid body.
-		collision_parent.collision_mask = collision_mask  # Set the collision mask for the rigid body.
-		collision_parent.name = "PhysicsBody"             # Give the RigidBody2D a name for easy access and removal.
+#------------------------------------------------------------------------------
+# _update_visuals()
+#
+# This function creates a VisualShape node that draws the shape.
+# If collision is enabled, the visual node will be reparented to the physics body.
+#------------------------------------------------------------------------------
+func _update_visuals() -> void:
+	# Remove any existing visual node.
+	if visual_node:
+		visual_node.queue_free()
+		visual_node = null
+	
+	# Create a new VisualShape instance.
+	visual_node = VisualShape.new()
+	visual_node.name = "VisualShape"
+	visual_node.shape_type = shape_type
+	visual_node.shape_color = shape_color
+	visual_node.circle_radius = circle_radius
+	visual_node.rectangle_size = rectangle_size
+	
+	# If a collision body already exists, add the visual node there;
+	# otherwise, add it as a direct child of this node.
+	if create_collision and collision_body:
+		collision_body.add_child(visual_node)
+		visual_node.owner = get_tree().edited_scene_root if get_tree() else self
 	else:
-		collision_parent = StaticBody2D.new()  # Create a StaticBody2D if physics are disabled.
-		collision_parent.name = "CollisionParent"         # Give the StaticBody2D a name for easy access and removal.
+		add_child(visual_node)
+		visual_node.owner = get_tree().edited_scene_root if get_tree() else self
+	
+	visual_node.queue_redraw()
 
-	add_child(collision_parent)  # Add the StaticBody2D or RigidBody2D to the scene.
-	collision_parent.set_owner(get_tree().edited_scene_root if get_tree() else self) # Set the owner to ensure that it gets automatically saved with the scene.
-
-	var shape_node = CollisionShape2D.new()  # Create a CollisionShape2D node to hold the collision shape.
-	var shape: Shape2D # Declare a variable to store the actual shape (CircleShape2D or RectangleShape2D).
-
-	# Determine the correct shape based on the shape_type.
+#------------------------------------------------------------------------------
+# _update_collision()
+#
+# This function creates (or re-creates) the collision object (a RigidBody2D or
+# StaticBody2D) and adds a CollisionShape2D to it.
+# It also reparents the visual node so that it moves along with the collision body.
+#------------------------------------------------------------------------------
+func _update_collision() -> void:
+	_remove_existing_collision()
+	
+	if not create_collision:
+		return
+	
+	# Create the collision body based on whether physics is enabled.
+	if enable_physics:
+		collision_body = RigidBody2D.new()
+		collision_body.collision_layer = collision_layer
+		collision_body.collision_mask = collision_mask
+		collision_body.name = "PhysicsBody"
+		collision_body.mass = 1.0
+	else:
+		collision_body = StaticBody2D.new()
+		collision_body.name = "CollisionParent"
+	
+	add_child(collision_body)
+	collision_body.owner = get_tree().edited_scene_root if get_tree() else self
+	
+	# Create and add the collision shape.
+	var shape_node = CollisionShape2D.new()
+	var shape: Shape2D
 	if shape_type == ShapeType.CIRCLE:
 		shape = CircleShape2D.new()
 		shape.radius = circle_radius
 	elif shape_type == ShapeType.RECTANGLE:
 		shape = RectangleShape2D.new()
 		shape.size = rectangle_size
+	shape_node.shape = shape
+	shape_node.name = "CollisionShape2D"
+	collision_body.add_child(shape_node)
+	shape_node.owner = get_tree().edited_scene_root if get_tree() else self
+	
+	# If a visual node exists, reparent it to the collision body so it follows physics.
+	if visual_node:
+		# Remove from its current parent...
+		visual_node.get_parent().remove_child(visual_node)
+		# ...and add it to the collision body.
+		collision_body.add_child(visual_node)
+		visual_node.owner = get_tree().edited_scene_root if get_tree() else self
 
-	shape_node.shape = shape               # Assign the created shape to the CollisionShape2D.
-	shape_node.name = "CollisionShape2D"      # Give the collision shape a name for possible future access.
-	collision_parent.add_child(shape_node) # Add the CollisionShape2D as a child of the StaticBody2D or RigidBody2D.
-	shape_node.set_owner(get_tree().edited_scene_root if get_tree() else self) # Set the owner for saving.
-
-func _remove_existing_collision():
-	# This function removes any existing collision objects (StaticBody2D or RigidBody2D).
-	# This is important for preventing multiple collision objects from being created and
-	# potentially causing conflicts or unexpected behavior.
-
-	var existing_parent = get_node_or_null("CollisionParent")  # Try to get the existing StaticBody2D.
+#------------------------------------------------------------------------------
+# _remove_existing_collision()
+#
+# Removes any existing collision body (RigidBody2D or StaticBody2D) to avoid duplicates.
+#------------------------------------------------------------------------------
+func _remove_existing_collision() -> void:
+	var existing_parent = get_node_or_null("CollisionParent")
 	if existing_parent:
-		existing_parent.queue_free()  # If found, remove it from the scene tree.
-
-	var existing_physics = get_node_or_null("PhysicsBody")  # Try to get the existing RigidBody2D
+		existing_parent.queue_free()
+	var existing_physics = get_node_or_null("PhysicsBody")
 	if existing_physics:
-		existing_physics.queue_free()  # If found, remove it from the scene tree.
+		existing_physics.queue_free()
+	collision_body = null
