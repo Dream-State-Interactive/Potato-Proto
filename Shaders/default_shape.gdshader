@@ -1,7 +1,9 @@
 shader_type canvas_item;
 
-uniform vec4 color : source_color;
+uniform float tile_factor_x : hint_range(0.1, 10.0) = 1.0;
+uniform float tile_factor_y : hint_range(0.1, 10.0) = 1.0;
 
 void fragment() {
-	COLOR = color;
+    vec2 tiled_uv = fract(UV * vec2(tile_factor_x, tile_factor_y));
+    COLOR = texture(TEXTURE, tiled_uv);
 }

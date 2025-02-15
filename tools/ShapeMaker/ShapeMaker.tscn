@@ -258,7 +258,5 @@ func _on_fade_area_body_exited(body: Node) -> void:
 [node name="ShapeMaker" type="Node2D"]
 process_mode = 3
 script = SubResource("GDScript_bekdv")
-weight = null
-buoyancy_factor = null
 
 [node name="ShapeContainer" type="Node2D" parent="."]

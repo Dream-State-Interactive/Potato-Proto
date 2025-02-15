@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://cmn5r10qnqroy"]
+
+[ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="1_3qjx1"]
+[ext_resource type="Texture2D" uid="uid://c1tyqi4qu5f77" path="res://assets/textures/env/proto_sky_01.png" id="1_igvhr"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="2_v8qg6"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/skyscale.gd" id="4_8mvc7"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="5_qhrff"]
+[ext_resource type="Shader" path="res://Shaders/ScrollShader.gdshader" id="6_vbptv"]
+[ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/textures/env/proto_clouds_01_A.png" id="7_q3rma"]
+[ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="7_uscwn"]
+[ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/textures/env/proto_clouds_01_B.png" id="9_7gcur"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="9_mpfot"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="9_y5s4h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
+shader = ExtResource("6_vbptv")
+shader_parameter/uv_offset_x = 0.0
+
+[node name="ParallaxBackground" type="ParallaxBackground" groups=["parallax_bg"]]
+scroll_ignore_camera_zoom = true
+script = ExtResource("1_3qjx1")
+
+[node name="ParallaxLayer_Sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 0)
+
+[node name="FullscreenControl_Sky" type="Control" parent="ParallaxLayer_Sky"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_v8qg6")
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer_Sky/FullscreenControl_Sky"]
+texture = ExtResource("1_igvhr")
+script = ExtResource("4_8mvc7")
+
+[node name="ParallaxLayer_Clouds" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.005, 0.002)
+motion_offset = Vector2(-1024, 0)
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxLayer_Clouds"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_qhrff")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayer_Clouds/FullscreenControl_Clouds"]
+material = SubResource("ShaderMaterial_w05i3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_q3rma")
+stretch_mode = 1
+script = ExtResource("9_mpfot")
+auto_scroll_speed = 0.01
+
+[node name="ParallaxLayer_Clouds2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.003, 0.002)
+motion_offset = Vector2(-1024, 0)
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxLayer_Clouds2"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_qhrff")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayer_Clouds2/FullscreenControl_Clouds"]
+material = SubResource("ShaderMaterial_w05i3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_7gcur")
+stretch_mode = 1
+script = ExtResource("9_mpfot")
+auto_scroll_speed = 0.004
+
+[node name="ParallaxLayer_Ground" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.03, 0.01)
+motion_offset = Vector2(0, 150)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="FullscreenControl_Ground" type="Control" parent="ParallaxLayer_Ground"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer_Ground/FullscreenControl_Ground"]
+texture = ExtResource("7_uscwn")
+offset = Vector2(512, 0)
+script = ExtResource("9_y5s4h")
