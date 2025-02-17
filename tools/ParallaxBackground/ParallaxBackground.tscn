@@ -94,6 +94,7 @@ script = ExtResource("9_mpfot")
 auto_scroll_speed = 0.004
 
 [node name="ParallaxLayer_Ground" type="ParallaxLayer" parent="."]
+position = Vector2(0, 24)
 motion_scale = Vector2(0.03, 0.01)
 motion_offset = Vector2(0, 150)
 motion_mirroring = Vector2(1920, 0)

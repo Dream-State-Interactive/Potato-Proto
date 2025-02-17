@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c4n4sr4ulry3i"]
+[gd_scene load_steps=22 format=3 uid="uid://c4n4sr4ulry3i"]
 
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_ytlsg"]
 [ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="2_cph5s"]
@@ -12,7 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://q34kk5g40bqq" path="res://assets/textures/env/proto_stars_02.png" id="10_oyrqq"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="11_e2ifx"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="12_qvb0x"]
+[ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/potato_proto_peeled.png" id="13_jfs44"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="13_xgufq"]
+[ext_resource type="PackedScene" uid="uid://dnmap2rnmnd8u" path="res://tools/Trigger/trigger_volume.tscn" id="14_g2u2s"]
+[ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/sfx_proto_04.mp3" id="18_ffmus"]
+[ext_resource type="PackedScene" uid="uid://denqj8osoufeu" path="res://Scenes/Player/player.tscn" id="19_n0all"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
 size = Vector2(2932, 1636)
@@ -21,23 +25,38 @@ size = Vector2(2932, 1636)
 shader = ExtResource("9_tudtg")
 shader_parameter/uv_offset_x = 0.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e7lq0"]
+size = Vector2(400, 800)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_huufe"]
+radius = 1000.0
+
 [node name="Level1Proto" type="Node2D"]
 
 [node name="BG" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-494, 1434)
+position = Vector2(-1150.4, 1486.4)
 shape_type = 1
 shape_color = Color(0, 0, 0, 1)
 rectangle_size = Vector2(40000, 40000)
 buoyancy_factor = 0.0
 
 [node name="HouseWall" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(2124, -213)
+position = Vector2(420.4, 498.2)
 shape_type = 1
 shape_color = Color(0.563578, 0.392251, 0.33158, 1)
 rectangle_size = Vector2(15000, 7000)
 buoyancy_factor = 0.0
 
-[node name="Counter" parent="." instance=ExtResource("1_ytlsg")]
+[node name="KitchenShapesRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -854.0
+offset_top = 626.0
+offset_right = -854.0
+offset_bottom = 626.0
+scale = Vector2(0.6, 0.6)
+
+[node name="Counter" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(-3375, 2483)
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
@@ -45,41 +64,66 @@ rectangle_size = Vector2(4000, 2000)
 create_collision = true
 buoyancy_factor = 0.0
 
-[node name="CuttingBoard" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-3600, 1426)
-shape_type = 1
-shape_color = Color(0.786201, 0.527853, 0.382834, 1)
-rectangle_size = Vector2(2000, 100)
-create_collision = true
-enable_physics = true
-buoyancy_factor = 0.0
-
-[node name="Sink" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(125, 2404)
+[node name="Sink" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
+position = Vector2(125, 2366)
 shape_type = 1
 shape_color = Color(0.562025, 0.519774, 0.582213, 1)
 rectangle_size = Vector2(3000, 1800)
 buoyancy_factor = 0.0
 
-[node name="ShapeMaker" parent="Sink" instance=ExtResource("1_ytlsg")]
-position = Vector2(0, 868)
+[node name="Knob" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(-774, -939)
+shape_type = 1
+shape_color = Color(0.584566, 0.648006, 0.6599, 1)
+rectangle_size = Vector2(150, 140)
+
+[node name="Knob2" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(772, -939)
+shape_type = 1
+shape_color = Color(0.584566, 0.648006, 0.6599, 1)
+rectangle_size = Vector2(150, 140)
+
+[node name="Spout" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(0, -1115)
+shape_type = 1
+shape_color = Color(0.601876, 0.664139, 0.675871, 1)
+rectangle_size = Vector2(200, 1400)
+
+[node name="SpoutTip" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(0, -1820)
+shape_color = Color(0.6, 0.662745, 0.67451, 1)
+circle_radius = 100.0
+
+[node name="SpoutTip2" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(0, -1584)
+shape_color = Color(0.393171, 0.452063, 0.463095, 1)
+circle_radius = 100.0
+
+[node name="SpoutTipFacade" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(0, -1673)
+shape_type = 1
+shape_color = Color(0.6, 0.662745, 0.67451, 1)
+rectangle_size = Vector2(200, 300)
+
+[node name="Sink_Water" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+z_index = 1
+position = Vector2(0, 50)
+shape_type = 1
+shape_color = Color(0.133333, 0.545098, 0.92549, 0.505882)
+rectangle_size = Vector2(3000, 1700)
+buoyancy_factor = 0.0
+
+[node name="Sink_Back" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
+position = Vector2(0, 932)
 shape_type = 1
 shape_color = Color(0.461711, 0.496825, 0.51173, 1)
-rectangle_size = Vector2(3000, 50)
+rectangle_size = Vector2(3000, 70)
 create_collision = true
 buoyancy_factor = 0.0
 
-[node name="Sink_Water" parent="." instance=ExtResource("1_ytlsg")]
+[node name="Sink_Front" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
 z_index = 1
-position = Vector2(125, 2419)
-shape_type = 1
-shape_color = Color(0.133333, 0.545098, 0.92549, 0.505882)
-rectangle_size = Vector2(3000, 1690)
-buoyancy_factor = 0.0
-
-[node name="Sink_Front" parent="." instance=ExtResource("1_ytlsg")]
-z_index = 1
-position = Vector2(125, 2425)
+position = Vector2(0, 59)
 shape_type = 1
 shape_color = Color(0.562025, 0.519774, 0.582213, 1)
 rectangle_size = Vector2(3000, 1750)
@@ -87,7 +131,7 @@ create_collision = true
 fade_on_player_contact = true
 buoyancy_factor = 0.0
 
-[node name="Counter2" parent="." instance=ExtResource("1_ytlsg")]
+[node name="Counter2" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(2375, 2495)
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
@@ -95,7 +139,7 @@ rectangle_size = Vector2(1500, 2000)
 create_collision = true
 buoyancy_factor = 0.0
 
-[node name="Counter3" parent="." instance=ExtResource("1_ytlsg")]
+[node name="Counter3" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(6430, 1912)
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
@@ -103,7 +147,7 @@ rectangle_size = Vector2(700, 807.165)
 create_collision = true
 buoyancy_factor = 0.0
 
-[node name="Oven" parent="." instance=ExtResource("1_ytlsg")]
+[node name="Oven" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(4608, 2381)
 shape_type = 1
 shape_color = Color(0.387255, 0.429801, 0.538052, 1)
@@ -111,7 +155,7 @@ rectangle_size = Vector2(3000, 1800)
 create_collision = true
 buoyancy_factor = 0.0
 
-[node name="burner1" parent="Oven" instance=ExtResource("1_ytlsg")]
+[node name="burner1" parent="KitchenShapesRoot/Oven" instance=ExtResource("1_ytlsg")]
 position = Vector2(-776, -892)
 shape_type = 1
 shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
@@ -119,7 +163,7 @@ rectangle_size = Vector2(750, 50)
 create_collision = true
 buoyancy_factor = 0.0
 
-[node name="burner2" parent="Oven" instance=ExtResource("1_ytlsg")]
+[node name="burner2" parent="KitchenShapesRoot/Oven" instance=ExtResource("1_ytlsg")]
 position = Vector2(751, -892)
 shape_type = 1
 shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
@@ -127,46 +171,42 @@ rectangle_size = Vector2(750, 50)
 create_collision = true
 buoyancy_factor = 0.0
 
+[node name="EnvWater" type="Area2D" parent="KitchenShapesRoot"]
+position = Vector2(-529, 1727)
+script = ExtResource("3_38wdw")
+underwater_gravity_scale = 0.42
+underwater_linear_damp = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/EnvWater"]
+position = Vector2(663, 653)
+shape = SubResource("RectangleShape2D_aaeu4")
+
 [node name="ShapeMaker" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-4194, 946)
+position = Vector2(-3370.4, 1193.6)
 buoyancy_factor = 0.0
 
 [node name="ShapeMaker2" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-3947, 946)
+position = Vector2(-3112, 1153)
 shape_color = Color(0.134611, 0.57279, 0.80361, 1)
 create_collision = true
 buoyancy_factor = 0.0
 
-[node name="potato_base" parent="." groups=["player"] instance=ExtResource("2_cph5s")]
-position = Vector2(-700, 1157)
-water_impulse_strength = 500.0
-
 [node name="ShapeMaker3" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-4041, 709)
+position = Vector2(-3284, 1023)
 shape_color = Color(0, 0.635138, 0.409444, 1)
 create_collision = true
 enable_physics = true
 buoyancy_factor = 0.0
 
 [node name="ShapeMaker4" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-4195, 396)
+position = Vector2(-2611, 260)
 shape_type = 1
 create_collision = true
 enable_physics = true
 buoyancy_factor = 0.0
 
-[node name="EnvWater" type="Area2D" parent="."]
-position = Vector2(-529, 1727)
-script = ExtResource("3_38wdw")
-underwater_gravity_scale = 0.42
-underwater_linear_damp = 2.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnvWater"]
-position = Vector2(663, 653)
-shape = SubResource("RectangleShape2D_aaeu4")
-
 [node name="ShapeMaker5" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-3395, 313)
+position = Vector2(-2645, 539)
 shape_type = 1
 shape_color = Color(0.592833, 0.433506, 0.855568, 1)
 rectangle_size = Vector2(420, 222)
@@ -176,7 +216,7 @@ weight = 25.0
 buoyancy_factor = 0.0
 
 [node name="ShapeMaker6" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-2872, 307)
+position = Vector2(-2037, 798)
 shape_type = 1
 shape_color = Color(0.665738, 0.380616, 0.865665, 1)
 rectangle_size = Vector2(420, 222)
@@ -185,7 +225,7 @@ enable_physics = true
 buoyancy_factor = 0.0
 
 [node name="ShapeMaker7" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-646, -1310)
+position = Vector2(-1241.6, -516)
 shape_type = 1
 shape_color = Color(0.790204, 0.147922, 0.811298, 1)
 rectangle_size = Vector2(420, 222)
@@ -195,7 +235,7 @@ weight = 500.0
 buoyancy_factor = 800.0
 
 [node name="ShapeMaker8" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-123, -1316)
+position = Vector2(-558, -513)
 shape_type = 1
 shape_color = Color(0.954192, 0.610979, 0.955743, 1)
 rectangle_size = Vector2(420, 222)
@@ -203,6 +243,15 @@ create_collision = true
 enable_physics = true
 weight = 0.002
 buoyancy_factor = 200.0
+
+[node name="CuttingBoard" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-3014, 1450)
+shape_type = 1
+shape_color = Color(0.786201, 0.527853, 0.382834, 1)
+rectangle_size = Vector2(1400, 100)
+create_collision = true
+enable_physics = true
+buoyancy_factor = 0.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
 scroll_ignore_camera_zoom = true
@@ -273,3 +322,33 @@ modulate = Color(0.254186, 0.405136, 0.563199, 1)
 texture = ExtResource("12_qvb0x")
 offset = Vector2(512, 0)
 script = ExtResource("13_xgufq")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(-3214, -265)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_e7lq0")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+texture = ExtResource("13_jfs44")
+
+[node name="potato_base" parent="." groups=["player"] instance=ExtResource("2_cph5s")]
+position = Vector2(-2186, 259)
+
+[node name="TriggerVolume" parent="." instance=ExtResource("14_g2u2s")]
+position = Vector2(-3670, 1671)
+reset_delay = 5.0
+break_shapes = Array[NodePath]([NodePath("../KitchenShapesRoot/Sink")])
+break_delays = Array[float]([7.0])
+sound_effects = Array[AudioStream]([ExtResource("18_ffmus")])
+sound_delays = Array[float]([1.0])
+entities_to_spawn = Array[PackedScene]([ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all")])
+spawn_positions = Array[Vector2]([Vector2(200, 0), Vector2(111, 0), Vector2(333, 0), Vector2(444, 0), Vector2(555, 0), Vector2(555, 100), Vector2(300, 200)])
+spawn_delays = Array[float]([0.2, 2.0, 4.0, 2.0, 1.0])
+impulse_targets = Array[NodePath]([NodePath("../potato_base"), NodePath("../ShapeMaker4"), NodePath("../ShapeMaker6")])
+impulse_forces = Array[Vector2]([Vector2(0, -1200), Vector2(0, -1300), Vector2(0, -50000)])
+impulse_delays = Array[float]([3.0, 1.0, 0.0])
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TriggerVolume"]
+position = Vector2(2916, 1463)
+shape = SubResource("CircleShape2D_huufe")
