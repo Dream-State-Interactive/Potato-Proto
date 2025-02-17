@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/potato_proto_peeled.png" id="13_jfs44"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="13_xgufq"]
 [ext_resource type="PackedScene" uid="uid://dnmap2rnmnd8u" path="res://tools/Trigger/trigger_volume.tscn" id="14_g2u2s"]
-[ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/sfx_proto_04.mp3" id="18_ffmus"]
+[ext_resource type="AudioStream" uid="uid://50td4j4ursmf" path="res://assets/sfx/sfx_proto_03.mp3" id="16_agjhg"]
 [ext_resource type="PackedScene" uid="uid://denqj8osoufeu" path="res://Scenes/Player/player.tscn" id="19_n0all"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
@@ -340,8 +340,8 @@ position = Vector2(-3670, 1671)
 reset_delay = 5.0
 break_shapes = Array[NodePath]([NodePath("../KitchenShapesRoot/Sink")])
 break_delays = Array[float]([7.0])
-sound_effects = Array[AudioStream]([ExtResource("18_ffmus")])
-sound_delays = Array[float]([1.0])
+sound_effects = Array[AudioStream]([ExtResource("16_agjhg")])
+sound_delays = Array[float]([2.0])
 entities_to_spawn = Array[PackedScene]([ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all")])
 spawn_positions = Array[Vector2]([Vector2(200, 0), Vector2(111, 0), Vector2(333, 0), Vector2(444, 0), Vector2(555, 0), Vector2(555, 100), Vector2(300, 200)])
 spawn_delays = Array[float]([0.2, 2.0, 4.0, 2.0, 1.0])
