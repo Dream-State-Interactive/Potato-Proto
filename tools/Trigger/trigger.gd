@@ -36,6 +36,11 @@ extends Area2D
 @export var impulse_forces: Array[Vector2] = []  # Each vector specifies the impulse (direction & magnitude) for the corresponding target
 @export var impulse_delays: Array[float] = []  # One delay per impulse
 
+# ─── CUSTOM ACTIONS ─────────────────
+@export_category("Custom Actions")
+# Each element should be a Resource of type CustomAction.
+@export var custom_actions: Array[Resource] = []
+
 var triggered: bool = false
 
 func _ready():
@@ -58,6 +63,7 @@ func _on_body_entered(body):
 	_play_sounds_parallel()
 	_spawn_entities_parallel()
 	_apply_impulses()
+	_execute_custom_actions()
 	
 	if not trigger_once:
 		if reset_delay > 0:
@@ -110,7 +116,6 @@ func _on_sound_timer_timeout(sound: AudioStream, index: int) -> void:
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = sound
 	# Retrieve individual sound settings or use defaults:
-	# Volume defaults to 0.0 dB, pitch defaults to 1.0, and bus defaults to "Master"
 	var vol: float = 0.0
 	if index < sound_volumes.size():
 		vol = sound_volumes[index]
@@ -179,3 +184,26 @@ func _on_impulse_timer_timeout(index: int) -> void:
 			target.apply_central_impulse(force)
 	else:
 		push_warning("No valid RigidBody2D found for impulse target at index " + str(index))
+
+# ##############################
+#       CUSTOM ACTIONS
+# ##############################
+func _execute_custom_actions():
+	for action in custom_actions:
+		if action.method == "":
+			push_warning("Custom action missing method name")
+			continue
+
+		var delay = action.delay
+		var target_node: Object = self
+
+		# Compare using NodePath("") instead of an empty string.
+		if action.target != NodePath(""):
+			var n = get_node_or_null(action.target)
+			if n:
+				target_node = n
+
+		_create_timer(delay, Callable(target_node, action.method), action.params)
+
+func _execute_custom_actions_delayed():
+	_execute_custom_actions()
