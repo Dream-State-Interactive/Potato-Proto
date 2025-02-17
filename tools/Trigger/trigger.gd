@@ -1,6 +1,5 @@
 extends Area2D
 
-
 # ─── GENERAL SETTINGS ─────────────────
 @export_category("General Settings")
 @export var trigger_once: bool = false
@@ -19,6 +18,9 @@ extends Area2D
 @export_group("Sound Settings")
 @export var sound_effects: Array[AudioStream] = []
 @export var sound_delays: Array[float] = []  # One delay per sound
+@export var sound_volumes: Array[float] = []  # Volume in dB for each sound (default 0.0)
+@export var sound_pitches: Array[float] = []  # Pitch scale for each sound (default 1.0)
+@export var sound_buses: Array[String] = ["Master"]   # Audio bus name for each sound (default "Master")
 
 # ─── ENTITY SPAWNING ─────────────────
 @export_category("Entity Spawning")
@@ -98,18 +100,31 @@ func _play_sounds_parallel():
 	for i in range(sound_effects.size()):
 		var sound = sound_effects[i]
 		var delay = sound_delays[i] if i < sound_delays.size() else 0.0
-		_play_sound_delayed(sound, delay)
+		_play_sound_delayed(sound, delay, i)
 
-func _play_sound_delayed(sound: AudioStream, delay: float):
-	_create_timer(delay, Callable(self, "_on_sound_timer_timeout"), [sound])
+func _play_sound_delayed(sound: AudioStream, delay: float, index: int):
+	_create_timer(delay, Callable(self, "_on_sound_timer_timeout"), [sound, index])
 
-func _on_sound_timer_timeout(sound: AudioStream) -> void:
+func _on_sound_timer_timeout(sound: AudioStream, index: int) -> void:
 	print("Playing sound:", sound)  # Debug print
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = sound
+	# Retrieve individual sound settings or use defaults:
+	# Volume defaults to 0.0 dB, pitch defaults to 1.0, and bus defaults to "Master"
+	var vol: float = 0.0
+	if index < sound_volumes.size():
+		vol = sound_volumes[index]
+	var pitch: float = 1.0
+	if index < sound_pitches.size():
+		pitch = sound_pitches[index]
+	var bus: String = "Master"
+	if index < sound_buses.size():
+		bus = sound_buses[index]
+	audio_player.volume_db = vol
+	audio_player.pitch_scale = pitch
+	audio_player.bus = bus
 	add_child(audio_player)
 	audio_player.play()
-	# Use a Callable to connect the finished signal
 	audio_player.connect("finished", Callable(audio_player, "queue_free"))
 
 # ##############################
