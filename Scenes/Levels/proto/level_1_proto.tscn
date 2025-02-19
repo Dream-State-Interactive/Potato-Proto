@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c4n4sr4ulry3i"]
+[gd_scene load_steps=18 format=3 uid="uid://c4n4sr4ulry3i"]
 
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_ytlsg"]
 [ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="2_cph5s"]
@@ -14,12 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="12_qvb0x"]
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/potato_proto_peeled.png" id="13_jfs44"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="13_xgufq"]
-[ext_resource type="PackedScene" uid="uid://dnmap2rnmnd8u" path="res://tools/Trigger/trigger_volume.tscn" id="14_g2u2s"]
-[ext_resource type="AudioStream" uid="uid://50td4j4ursmf" path="res://assets/sfx/sfx_proto_03.mp3" id="16_agjhg"]
-[ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/sfx_proto_04.mp3" id="17_1rqqm"]
-[ext_resource type="PackedScene" uid="uid://denqj8osoufeu" path="res://Scenes/Player/player.tscn" id="19_n0all"]
-[ext_resource type="Script" path="res://tools/Trigger/CustomAction.gd" id="19_nwhlr"]
-[ext_resource type="PackedScene" uid="uid://i56d1kpcqakb" path="res://tools/Door/door.tscn" id="20_mvm2c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
 size = Vector2(2932, 1636)
@@ -30,16 +24,6 @@ shader_parameter/uv_offset_x = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e7lq0"]
 size = Vector2(400, 800)
-
-[sub_resource type="Resource" id="Resource_u2s87"]
-script = ExtResource("19_nwhlr")
-target = NodePath("../Door")
-method = "open_door"
-params = []
-delay = 2.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_w72ac"]
-radius = 905.99
 
 [node name="Level1Proto" type="Node2D"]
 
@@ -343,29 +327,4 @@ shape = SubResource("RectangleShape2D_e7lq0")
 texture = ExtResource("13_jfs44")
 
 [node name="potato_base" parent="." groups=["player"] instance=ExtResource("2_cph5s")]
-position = Vector2(-1408, 837)
-
-[node name="TriggerVolume" parent="." instance=ExtResource("14_g2u2s")]
-position = Vector2(-824, 2930)
-reset_delay = 5.0
-break_shapes = Array[NodePath]([NodePath("../KitchenShapesRoot/Sink")])
-break_delays = Array[float]([7.0])
-sound_effects = Array[AudioStream]([ExtResource("16_agjhg"), ExtResource("17_1rqqm")])
-sound_delays = Array[float]([1.0, 7.0])
-sound_volumes = Array[float]([3.0, 4.0])
-sound_pitches = Array[float]([0.98, 1.4])
-sound_buses = Array[String](["Master", "Master"])
-entities_to_spawn = Array[PackedScene]([ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all"), ExtResource("19_n0all")])
-spawn_positions = Array[Vector2]([Vector2(300, 100), Vector2(400, 100), Vector2(400, 0), Vector2(300, 0), Vector2(200, 0), Vector2(100, 0)])
-spawn_delays = Array[float]([0.0, 0.4, 1.0, 2.0, 2.3, 2.7])
-impulse_targets = Array[NodePath]([NodePath("../RigidBody2D"), NodePath("../potato_base"), NodePath("../CuttingBoard")])
-impulse_forces = Array[Vector2]([Vector2(1000, -1000), Vector2(0, -500), Vector2(0, -10000)])
-impulse_delays = Array[float]([0.0, 0.0, 2.0])
-custom_actions = Array[Resource]([SubResource("Resource_u2s87")])
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerVolume"]
-shape = SubResource("CircleShape2D_w72ac")
-
-[node name="Door" parent="." instance=ExtResource("20_mvm2c")]
-position = Vector2(337, 1249)
-open_offset = Vector2(500, 0)
+position = Vector2(-1690, 1188)
