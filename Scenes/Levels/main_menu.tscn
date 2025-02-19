@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://da4niorgehkup"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/main_menu.gd" id="1_8l7gr"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_8l7gr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelSelectButton" type="Button" parent="CanvasLayer"]
+offset_left = 758.0
+offset_top = 412.0
+offset_right = 1254.0
+offset_bottom = 502.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Level Select"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="CanvasLayer/LevelSelectButton" to="." method="_on_level_select_button_pressed"]
