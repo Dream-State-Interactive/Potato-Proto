@@ -46,8 +46,3 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Level 4"
 metadata/_edit_use_anchors_ = true
-
-[connection signal="pressed" from="CanvasLayer/Level1Button" to="." method="_on_level_1_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Level2Button" to="." method="_on_level_2_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Level3Button" to="." method="_on_level_3_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Level4Button" to="." method="_on_level_4_button_pressed"]
