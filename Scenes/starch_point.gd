@@ -1,8 +1,19 @@
 extends Area2D
 
-@export var pickup_sound: AudioStream  # Export variable to pick the sound
-@export var pitch_scale: float = 1.5  # Export pitch scale for easy tweaking in the editor
-@export var volume_db: float = -6.0  # Export volume in decibels (default to -6 dB)
+@export var pickup_sound: AudioStream  
+@export var pitch_scale: float = 1.5  
+@export var volume_db: float = -6.0  
+@export var scale_min: float = 0.9  # Minimum scale for pulsing effect
+@export var scale_max: float = 1.1  # Maximum scale for pulsing effect
+@export var pulse_speed: float = 2.0  # Speed of pulsing
+@export var scale_amount: float = 0.1  # Amount of scaling for the pulse effect
+
+
+func _process(delta):
+	# Calculate the new scale using a sine wave for a breathing effect
+	var scale_factor = 1.0 + sin(Time.get_ticks_msec() * 0.001 * pulse_speed) * scale_amount
+	scale = Vector2(scale_factor, scale_factor)
+
 
 func _on_body_entered(body):
 	# Check if the body is in the "player" group

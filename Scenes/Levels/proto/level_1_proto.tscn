@@ -334,6 +334,7 @@ position = Vector2(156, 1110)
 [node name="StartchPoint1" parent="." instance=ExtResource("15_c80rc")]
 position = Vector2(504, 1353)
 pickup_sound = ExtResource("16_ph1ia")
+scale_min = 0.8
 
 [node name="StartchPoint2" parent="." instance=ExtResource("15_c80rc")]
 position = Vector2(680, 1351)
