@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://denqj8osoufeu"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_6vfy2"]
-[ext_resource type="Texture2D" uid="uid://ds0ds6v83hkxy" path="res://assets/potato.png" id="2_j05el"]
+[ext_resource type="Texture2D" uid="uid://ds0ds6v83hkxy" path="res://assets/PNGs/potato.png" id="2_j05el"]
 [ext_resource type="PackedScene" uid="uid://csuhjhv5e8pj3" path="res://Scenes/HUD/hud.tscn" id="3_lhcf0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dl2hb"]

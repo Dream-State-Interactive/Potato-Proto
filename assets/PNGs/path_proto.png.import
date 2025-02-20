@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t5os6tib4v57"
-path="res://.godot/imported/potato_proto_peeled.png-a8745b142ca2efe1d4b0a81de8bd4ed9.ctex"
+uid="uid://bufss02blg5oa"
+path="res://.godot/imported/path_proto.png-f82d577eeabb5c1069793b4ecb718bea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/potato_proto_peeled.png"
-dest_files=["res://.godot/imported/potato_proto_peeled.png-a8745b142ca2efe1d4b0a81de8bd4ed9.ctex"]
+source_file="res://assets/PNGs/path_proto.png"
+dest_files=["res://.godot/imported/path_proto.png-f82d577eeabb5c1069793b4ecb718bea.ctex"]
 
 [params]
 
