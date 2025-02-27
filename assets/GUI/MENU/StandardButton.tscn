@@ -7,6 +7,7 @@
 [node name="StandardButton" type="Button"]
 z_index = 7
 y_sort_enabled = true
+texture_filter = 3
 custom_minimum_size = Vector2(385.74, 140)
 offset_right = 3851.0
 offset_bottom = 1250.0
