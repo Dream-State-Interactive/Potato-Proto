@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bd6spyrfc537y"]
+[gd_scene load_steps=23 format=3 uid="uid://bd6spyrfc537y"]
 
 [ext_resource type="Script" path="res://assets/GUI/MENU/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://r72r0r10taqu" path="res://assets/GUI/MENU/TitleText.png" id="1_eb4w3"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="20_3o2gw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
 shader = ExtResource("13_q4qwy")
@@ -187,6 +188,7 @@ grow_vertical = 2
 custom_minimum_size = Vector2(385.74, 140)
 layout_mode = 2
 focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.807843, 0.423529, 0.156863, 1)
 flat = true
 
 [node name="Play" type="TextureRect" parent="VBoxContainer/Button_PLAY"]
@@ -237,3 +239,12 @@ offset_right = 1922.0
 offset_bottom = 624.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("5_o26qv")
+
+[node name="StandardButton" parent="." instance=ExtResource("20_3o2gw")]
+offset_left = 1244.0
+offset_top = 504.0
+offset_right = 5095.0
+offset_bottom = 1754.0
+text = "Level select
+"
+metadata/destination = "res://Scenes/Levels/Menus/level_select.tscn"

@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://p2m0x21yemk2"]
+
+[ext_resource type="Texture2D" uid="uid://bc3e38gqubve2" path="res://assets/GUI/MENU/button.png" id="1_p7soa"]
+[ext_resource type="Script" path="res://assets/GUI/MENU/standard_button.gd" id="2_otd6r"]
+[ext_resource type="FontFile" uid="uid://dmjdhsomc3fwp" path="res://assets/fonts/Coopers Town.otf" id="2_rhwol"]
+
+[node name="StandardButton" type="Button"]
+z_index = 7
+y_sort_enabled = true
+custom_minimum_size = Vector2(385.74, 140)
+offset_right = 3851.0
+offset_bottom = 1250.0
+scale = Vector2(0.1, 0.1)
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.807843, 0.423529, 0.156863, 1)
+theme_override_constants/outline_size = 160
+theme_override_fonts/font = ExtResource("2_rhwol")
+theme_override_font_sizes/font_size = 420
+text = "lkjlkjlkj"
+flat = true
+autowrap_mode = 2
+icon_alignment = 1
+script = ExtResource("2_otd6r")
+metadata/destination = ""
+
+[node name="Play" type="TextureRect" parent="."]
+z_index = -80
+texture_filter = 4
+layout_mode = 0
+offset_right = 1922.0
+offset_bottom = 624.0
+scale = Vector2(2, 2)
+texture = ExtResource("1_p7soa")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
