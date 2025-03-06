@@ -14,11 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="12_qvb0x"]
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/PNGs/potato_proto_peeled.png" id="13_jfs44"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="13_xgufq"]
-[ext_resource type="PackedScene" path="res://Scenes/StarchPoint.tscn" id="15_c80rc"]
+[ext_resource type="PackedScene" uid="uid://nnjqyuomoq6c" path="res://Scenes/StarchPoint.tscn" id="15_c80rc"]
 [ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/sfx_proto_04.mp3" id="16_ph1ia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
-size = Vector2(2932, 1636)
+size = Vector2(2932, 1521.33)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
 shader = ExtResource("9_tudtg")
@@ -174,7 +174,7 @@ underwater_gravity_scale = 0.42
 underwater_linear_damp = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/EnvWater"]
-position = Vector2(663, 653)
+position = Vector2(663, 710.333)
 shape = SubResource("RectangleShape2D_aaeu4")
 
 [node name="ShapeMaker" parent="." instance=ExtResource("1_ytlsg")]
@@ -221,24 +221,34 @@ enable_physics = true
 buoyancy_factor = 0.0
 
 [node name="ShapeMaker7" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-1241.6, -516)
+position = Vector2(-1294, -484)
 shape_type = 1
-shape_color = Color(0.790204, 0.147922, 0.811298, 1)
-rectangle_size = Vector2(420, 222)
+shape_color = Color(0.212855, 0.543923, 0.706466, 1)
+rectangle_size = Vector2(420, 145)
+create_collision = true
+enable_physics = true
+weight = 500.0
+buoyancy_factor = 750.0
+
+[node name="ShapeMaker9" parent="." instance=ExtResource("1_ytlsg")]
+position = Vector2(-442, -483)
+shape_type = 1
+shape_color = Color(0.0904595, 0.560993, 0.612702, 1)
+rectangle_size = Vector2(420, 145)
 create_collision = true
 enable_physics = true
 weight = 500.0
 buoyancy_factor = 800.0
 
 [node name="ShapeMaker8" parent="." instance=ExtResource("1_ytlsg")]
-position = Vector2(-558, -513)
+position = Vector2(-886, -1073)
 shape_type = 1
-shape_color = Color(0.954192, 0.610979, 0.955743, 1)
-rectangle_size = Vector2(420, 222)
+shape_color = Color(0.904294, 0.842451, 0.860175, 1)
+rectangle_size = Vector2(700, 111)
 create_collision = true
 enable_physics = true
-weight = 0.002
-buoyancy_factor = 200.0
+weight = 395.0
+buoyancy_factor = 600.0
 
 [node name="CuttingBoard" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-3014, 1450)
@@ -329,7 +339,7 @@ shape = SubResource("RectangleShape2D_e7lq0")
 texture = ExtResource("13_jfs44")
 
 [node name="potato_base" parent="." groups=["player"] instance=ExtResource("2_cph5s")]
-position = Vector2(156, 1110)
+position = Vector2(-2641, 6)
 
 [node name="StartchPoint1" parent="." instance=ExtResource("15_c80rc")]
 position = Vector2(504, 1353)
