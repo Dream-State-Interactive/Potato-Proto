@@ -203,3 +203,5 @@ offset_bottom = 1623.0
 size_flags_horizontal = 4
 text = "Play"
 metadata/destination = "res://Scenes/Levels/main_world.tscn"
+
+[connection signal="pressed" from="StandardButtonQuit" to="." method="_on_quit_button_pressed"]

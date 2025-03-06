@@ -94,3 +94,7 @@ func _on_button_pressed(button: Button) -> void:
 				print("Opening Settings! Wow!!! UwU")
 			"Button_QUIT":
 				get_tree().quit()
+
+
+func _on_quit_button_pressed() -> void:
+	get_tree().quit()
