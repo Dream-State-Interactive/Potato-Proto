@@ -14,14 +14,14 @@ func _ready() -> void:
 	title.pivot_offset = title.size * 0.5
 	
 	# Loop through all children of the button container to configure each button.
-	for button in button_container.get_children():
-		if button is Button:
-			# Center the button's pivot so that scaling occurs from the center.
-			button.pivot_offset = button.size * 0.5
-			# Connect hover and press signals using inline lambda functions.
-			button.mouse_entered.connect(func() -> void: _on_button_mouse_entered(button))
-			button.mouse_exited.connect(func() -> void: _on_button_mouse_exited(button))
-			button.pressed.connect(func() -> void: _on_button_pressed(button))
+	#for button in button_container.get_children():
+		#if button is Button:
+			## Center the button's pivot so that scaling occurs from the center.
+			#button.pivot_offset = button.size * 0.5
+			## Connect hover and press signals using inline lambda functions.
+			#button.mouse_entered.connect(func() -> void: _on_button_mouse_entered(button))
+			#button.mouse_exited.connect(func() -> void: _on_button_mouse_exited(button))
+			#button.pressed.connect(func() -> void: _on_button_pressed(button))
 	
 	# Begin the pulsating animation for the title.
 	animate_title()

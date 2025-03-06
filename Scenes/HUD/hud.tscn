@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://csuhjhv5e8pj3"]
+[gd_scene load_steps=5 format=3 uid="uid://csuhjhv5e8pj3"]
 
 [ext_resource type="Script" path="res://Scenes/HUD/hud.gd" id="1_b1jsc"]
 [ext_resource type="Texture2D" uid="uid://c0rgqdgt8gtdh" path="res://assets/PNGs/GUI_Panel.png" id="2_10bfv"]
 [ext_resource type="Texture2D" uid="uid://co1sbc5131rlm" path="res://assets/PNGs/GUI_Panel_greyscale.png" id="3_b71ge"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="4_ufet7"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_b1jsc")
@@ -24,38 +25,6 @@ item_count = 2
 popup/item_0/text = "Settings"
 popup/item_1/text = "Controls"
 popup/item_1/id = 1
-
-[node name="RestartButton" type="Button" parent="."]
-offset_left = 1787.0
-offset_top = 3.0
-offset_right = 1915.0
-offset_bottom = 42.0
-text = "Restart"
-
-[node name="Button2" type="Button" parent="."]
-offset_left = 1789.0
-offset_top = 47.0
-offset_right = 1917.0
-offset_bottom = 86.0
-text = "Main Menu"
-
-[node name="Button3" type="Button" parent="."]
-offset_left = 1785.0
-offset_top = 94.0
-offset_right = 1913.0
-offset_bottom = 133.0
-
-[node name="Button4" type="Button" parent="."]
-offset_left = 1787.0
-offset_top = 139.0
-offset_right = 1915.0
-offset_bottom = 178.0
-
-[node name="Button5" type="Button" parent="."]
-offset_left = 1785.0
-offset_top = 188.0
-offset_right = 1913.0
-offset_bottom = 227.0
 
 [node name="BG" type="NinePatchRect" parent="."]
 offset_left = 6.0
@@ -158,5 +127,21 @@ theme_override_font_sizes/font_size = 50
 text = "Points Available: 
 "
 
+[node name="RestartButton" parent="." instance=ExtResource("4_ufet7")]
+offset_left = 1511.0
+offset_top = 10.0
+offset_right = 5362.0
+offset_bottom = 1260.0
+text = "Restart
+"
+
+[node name="MainMenuButton" parent="." instance=ExtResource("4_ufet7")]
+offset_left = 1513.0
+offset_top = 141.0
+offset_right = 5364.0
+offset_bottom = 1391.0
+text = "Main Menu
+"
+metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
+
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b5xvitnc8cji"]
+
+[ext_resource type="FontFile" uid="uid://dmjdhsomc3fwp" path="res://assets/fonts/Coopers Town.otf" id="1_lkpyl"]
+
+[resource]
+default_font = ExtResource("1_lkpyl")
+default_font_size = 420

@@ -1,6 +1,8 @@
 extends Button
 
 @onready var standard_button: Button = $"."
+@onready var destination = get_meta("destination")
+@onready var replaceMenu = get_meta("replacementMenu")
 
 var action
 
@@ -15,4 +17,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_pressed() -> void:
-	get_tree().change_scene_to_file(get_meta("destination"))
+	if(destination):
+		get_tree().change_scene_to_file(destination)
+	#elif (load(replaceMenu)):
+		#self.remove_child($Menu)
+		#self.add_child(replaceMenu.instantiate())
