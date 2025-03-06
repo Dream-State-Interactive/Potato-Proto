@@ -22,3 +22,10 @@ func _on_pressed() -> void:
 	#elif (load(replaceMenu)):
 		#self.remove_child($Menu)
 		#self.add_child(replaceMenu.instantiate())
+		
+func _on_button_mouse_entered() -> void:
+	self.scale *= 1.1
+
+# Reset the button scale when the mouse exits.
+func _on_button_mouse_exited() -> void:
+	self.scale *= 1/1.1

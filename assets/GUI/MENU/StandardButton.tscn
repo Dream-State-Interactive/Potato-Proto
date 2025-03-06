@@ -9,8 +9,11 @@ z_index = 7
 y_sort_enabled = true
 texture_filter = 3
 custom_minimum_size = Vector2(385.74, 140)
-offset_right = 3840.0
-offset_bottom = 1250.0
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 0.116
+offset_right = 3456.0
+offset_bottom = 1124.72
 scale = Vector2(0.1, 0.1)
 focus_mode = 0
 theme = ExtResource("1_jj0s2")
@@ -26,4 +29,6 @@ script = ExtResource("2_otd6r")
 metadata/destination = ""
 metadata/ReplacementMenu = ""
 
+[connection signal="mouse_entered" from="." to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
