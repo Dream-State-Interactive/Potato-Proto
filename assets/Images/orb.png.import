@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0rgqdgt8gtdh"
-path="res://.godot/imported/GUI_Panel.png-126de395da251537f6f3357b01746f40.ctex"
+uid="uid://bkaqipfuus1ox"
+path="res://.godot/imported/orb.png-a2daed9a3690459e709030ceb0dda19f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/PNGs/GUI_Panel.png"
-dest_files=["res://.godot/imported/GUI_Panel.png-126de395da251537f6f3357b01746f40.ctex"]
+source_file="res://assets/Images/orb.png"
+dest_files=["res://.godot/imported/orb.png-a2daed9a3690459e709030ceb0dda19f.ctex"]
 
 [params]
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="1_gkk34"]
 [ext_resource type="Script" path="res://tools/PathMaker/PathMaker.gd" id="2_2swq7"]
-[ext_resource type="Texture2D" uid="uid://bufss02blg5oa" path="res://assets/PNGs/path_proto.png" id="3_05nxs"]
+[ext_resource type="Texture2D" uid="uid://bufss02blg5oa" path="res://assets/Images/path_proto.png" id="3_05nxs"]
 [ext_resource type="Texture2D" uid="uid://jb501msdpxrl" path="res://tools/tool/terrain_dirt_proto_low.png" id="4_lf2hj"]
 
 [sub_resource type="Curve2D" id="Curve2D_jjj1d"]

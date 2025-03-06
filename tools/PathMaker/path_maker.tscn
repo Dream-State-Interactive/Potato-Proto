@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c0c4yienqo0ex"]
 
 [ext_resource type="Script" path="res://tools/PathMaker/PathMaker.gd" id="1_2fdgv"]
-[ext_resource type="Texture2D" uid="uid://bufss02blg5oa" path="res://assets/PNGs/path_proto.png" id="2_dbuc7"]
+[ext_resource type="Texture2D" uid="uid://bufss02blg5oa" path="res://assets/Images/path_proto.png" id="2_dbuc7"]
 [ext_resource type="Texture2D" path="res://Assets/Textures/terrain_dirt_proto.png" id="3_sqbli"]
 
 [sub_resource type="Curve2D" id="Curve2D_jjj1d"]

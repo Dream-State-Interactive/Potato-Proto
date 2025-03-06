@@ -1,9 +1,9 @@
 [gd_scene load_steps=19 format=3 uid="uid://bd6spyrfc537y"]
 
 [ext_resource type="Script" path="res://assets/GUI/MENU/MainMenu.gd" id="1_30dhv"]
-[ext_resource type="Texture2D" uid="uid://r72r0r10taqu" path="res://assets/PNGs/TitleText.png" id="1_eb4w3"]
+[ext_resource type="Texture2D" uid="uid://r72r0r10taqu" path="res://assets/Images/TitleText.png" id="1_eb4w3"]
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_fturo"]
-[ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/PNGs/potato_proto.png" id="6_sb7rv"]
+[ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="8_jfuhy"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="9_8dugi"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/skyscale.gd" id="11_3wij5"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://r72r0r10taqu"
-path="res://.godot/imported/TitleText.png-52ce43f74f2d81abca620ab177983867.ctex"
+uid="uid://c0rgqdgt8gtdh"
+path="res://.godot/imported/GUI_Panel.png-5478f08325080ba605c2356267054c5d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/PNGs/TitleText.png"
-dest_files=["res://.godot/imported/TitleText.png-52ce43f74f2d81abca620ab177983867.ctex"]
+source_file="res://assets/Images/GUI_Panel.png"
+dest_files=["res://.godot/imported/GUI_Panel.png-5478f08325080ba605c2356267054c5d.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

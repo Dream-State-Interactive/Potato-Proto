@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4dl1grmfyx0a"
-path="res://.godot/imported/button.png-80e6506d2ccda6fe4421bbca1781b2ed.ctex"
+uid="uid://ddjrr5t5m5fwc"
+path="res://.godot/imported/potato_proto_aged.png-10bd84a35b2b0e37c32156e3aa087369.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/PNGs/button.png"
-dest_files=["res://.godot/imported/button.png-80e6506d2ccda6fe4421bbca1781b2ed.ctex"]
+source_file="res://assets/Images/potato_proto_aged.png"
+dest_files=["res://.godot/imported/potato_proto_aged.png-10bd84a35b2b0e37c32156e3aa087369.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://p2m0x21yemk2"]
 
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="1_jj0s2"]
-[ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/PNGs/button.png" id="2_kwnkb"]
+[ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/Images/button.png" id="2_kwnkb"]
 [ext_resource type="Script" path="res://assets/GUI/MENU/standard_button.gd" id="2_otd6r"]
 
 [node name="StandardButton" type="Button"]
