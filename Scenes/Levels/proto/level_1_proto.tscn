@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dj86amgv2wme7" path="res://assets/textures/env/proto_sky_02.png" id="6_n4ok6"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/skyscale.gd" id="7_bf82h"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="8_riasb"]
-[ext_resource type="Shader" path="res://Shaders/ScrollShader.gdshader" id="9_tudtg"]
+[ext_resource type="Shader" path="res://assets/Shaders/ScrollShader.gdshader" id="9_tudtg"]
 [ext_resource type="Texture2D" uid="uid://q34kk5g40bqq" path="res://assets/textures/env/proto_stars_02.png" id="10_oyrqq"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="11_e2ifx"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="12_qvb0x"]

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="2_v8qg6"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/skyscale.gd" id="4_8mvc7"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="5_qhrff"]
-[ext_resource type="Shader" path="res://Shaders/ScrollShader.gdshader" id="6_vbptv"]
+[ext_resource type="Shader" path="res://assets/Shaders/ScrollShader.gdshader" id="6_vbptv"]
 [ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/textures/env/proto_clouds_01_A.png" id="7_q3rma"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="7_uscwn"]
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/textures/env/proto_clouds_01_B.png" id="9_7gcur"]

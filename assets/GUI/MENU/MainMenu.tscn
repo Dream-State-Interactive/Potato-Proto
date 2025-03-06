@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="9_8dugi"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/skyscale.gd" id="11_3wij5"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="12_xho8u"]
-[ext_resource type="Shader" path="res://Shaders/ScrollShader.gdshader" id="13_q4qwy"]
+[ext_resource type="Shader" path="res://assets/Shaders/ScrollShader.gdshader" id="13_q4qwy"]
 [ext_resource type="AudioStream" uid="uid://b1wmtlyehendw" path="res://assets/Music/proto_pototo_v2.mp3" id="13_v7jc8"]
 [ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_0i57e"]
