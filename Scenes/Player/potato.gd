@@ -78,7 +78,7 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_released("scroll_down"):
 		adjust_zoom(1 / 1.2)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	is_on_ground = get_contact_count() > 0
 
 func _input(event: InputEvent) -> void:

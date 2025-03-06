@@ -3,7 +3,7 @@ extends CanvasLayer
 @export var pulse_duration: float = 2.0
 
 @onready var title: TextureRect = $Title
-@onready var button_container: Node = $VBoxContainer
+# @onready var button_container: Node = $VBoxContainer
 
 # Stores the initial scale of the title set in the scene (0.3, 0.3).
 var base_title_scale: Vector2
