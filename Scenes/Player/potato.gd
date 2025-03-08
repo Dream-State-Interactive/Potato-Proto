@@ -88,6 +88,14 @@ func _input(event: InputEvent) -> void:
 				apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier))
 			elif in_water:
 				apply_central_impulse(Vector2(0, -jump_strength * 0.3 * mass * jump_multiplier))
+		if event.is_action_pressed("up"):
+				apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier))
+		if event.is_action_pressed("down"):
+				apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier))
+		if event.is_action_pressed("left"):
+				apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier, 0))
+		if event.is_action_pressed("right"):
+				apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier, 0))
 	if event.is_action_pressed("restart"):
 		get_tree().reload_current_scene()
 
