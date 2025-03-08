@@ -16,7 +16,7 @@ func makeShape() -> void:
 
 	$CollisionPolygon2D.polygon = polygon
 
-func _process(delta):
+func _process(_delta):
 	makeShape()
 	$Polygon2D.queue_redraw()
 	$Line2D.queue_redraw()

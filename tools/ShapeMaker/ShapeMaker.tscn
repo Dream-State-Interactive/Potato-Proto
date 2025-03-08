@@ -73,7 +73,10 @@ var collision_body: CollisionObject2D = null
 # Helper: Returns a node to use as owner.
 func _get_owner_node() -> Node:
 	# In runtime we want our nodes saved with the scene; in tool mode, return null.
-	return get_tree().edited_scene_root if (get_tree() and not Engine.is_editor_hint()) else null
+	if (get_tree() and not Engine.is_editor_hint()):
+		return get_tree().edited_scene_root
+	else:
+		return null
 
 #------------------------------------------------------------------------------
 # Inner Class: VisualShape

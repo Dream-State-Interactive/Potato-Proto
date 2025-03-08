@@ -11,7 +11,7 @@ func _ready():
 		generate_collision_and_sprite(potato_texture)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		if potato_texture:
 			# Remove ALL children before generating new ones.
@@ -48,8 +48,8 @@ func generate_collision_and_sprite(texture: Texture2D):
 	var image = texture.get_image()
 	image.convert(Image.FORMAT_RGBA8)  # Ensure correct alpha values.
 
-	var width = image.get_width()
-	var height = image.get_height()
+	var width: float = image.get_width()
+	var height: float = image.get_height()
 
 
 	# 4. Downsample the image for performance.

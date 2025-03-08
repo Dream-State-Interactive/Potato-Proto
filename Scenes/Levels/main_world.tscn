@@ -120,8 +120,9 @@ texture_repeat = 2
 script = ExtResource("7_bqlx2")
 path_texture = ExtResource("8_d5814")
 extrude_texture = ExtResource("4_knk86")
-extrude_amount = 5000.0
+PathMaker_extrude_amount = null
 collision_resolution = 64
+Pathmaker_extrusion_resolution = null
 
 [node name="Path2D" type="Path2D" parent="PathMaker"]
 curve = SubResource("Curve2D_jjj1d")
