@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="12_qvb0x"]
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/Images/potato_proto_peeled.png" id="13_jfs44"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="13_xgufq"]
-[ext_resource type="PackedScene" path="res://Scenes/StarchPoint.tscn" id="15_c80rc"]
+[ext_resource type="PackedScene" uid="uid://nnjqyuomoq6c" path="res://Scenes/StarchPoint.tscn" id="15_c80rc"]
 [ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/sfx_proto_04.mp3" id="16_ph1ia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
@@ -344,7 +344,6 @@ position = Vector2(-2641, 6)
 [node name="StartchPoint1" parent="." instance=ExtResource("15_c80rc")]
 position = Vector2(504, 1353)
 pickup_sound = ExtResource("16_ph1ia")
-scale_min = 0.8
 
 [node name="StartchPoint2" parent="." instance=ExtResource("15_c80rc")]
 position = Vector2(680, 1351)
@@ -352,4 +351,28 @@ pickup_sound = ExtResource("16_ph1ia")
 
 [node name="StartchPoint3" parent="." instance=ExtResource("15_c80rc")]
 position = Vector2(777, 1363)
+pickup_sound = ExtResource("16_ph1ia")
+
+[node name="StartchPoint" parent="." instance=ExtResource("15_c80rc")]
+position = Vector2(-2217, 397)
+pickup_sound = ExtResource("16_ph1ia")
+
+[node name="StartchPoint4" parent="." instance=ExtResource("15_c80rc")]
+position = Vector2(-1824, 530)
+pickup_sound = ExtResource("16_ph1ia")
+
+[node name="StartchPoint5" parent="." instance=ExtResource("15_c80rc")]
+position = Vector2(-1985, 346)
+pickup_sound = ExtResource("16_ph1ia")
+
+[node name="StartchPoint6" parent="." instance=ExtResource("15_c80rc")]
+position = Vector2(-1533, 1274)
+pickup_sound = ExtResource("16_ph1ia")
+
+[node name="StartchPoint7" parent="." instance=ExtResource("15_c80rc")]
+position = Vector2(-1100, 1220)
+pickup_sound = ExtResource("16_ph1ia")
+
+[node name="StartchPoint8" parent="." instance=ExtResource("15_c80rc")]
+position = Vector2(-610, 1313)
 pickup_sound = ExtResource("16_ph1ia")

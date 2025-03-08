@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnmap2rnmnd8u"]
-
-[ext_resource type="Script" path="res://tools/Trigger/trigger.gd" id="1_ni14g"]
-
-[node name="TriggerVolume" type="Area2D"]
-script = ExtResource("1_ni14g")
