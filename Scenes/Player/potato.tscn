@@ -42,4 +42,14 @@ drag_vertical_enabled = true
 
 [node name="HUD" parent="." instance=ExtResource("5_slxtj")]
 
+[node name="InputCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="ComboCooldown" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]
+[connection signal="timeout" from="ComboCooldown" to="." method="_on_combo_cooldown_timeout"]

@@ -28,15 +28,23 @@ var is_on_ground: bool = false
 var points_available: int = 0
 var speed_level: int = 0
 var jump_level: int = 0
+var ready_for_input = true
+var ready_for_combo = false
 
 @onready var HUD: CanvasLayer = $HUD
 @onready var points_label: Label = $HUD/BG/PointsLabel
 @onready var speed_slots: HBoxContainer = $HUD/BG/SpeedSlots
 @onready var jump_slots: HBoxContainer = $HUD/BG/JumpSlots
+@onready var InputCooldownTimer: Timer = $InputCooldown
+@onready var ComboCooldownTimer: Timer = $ComboCooldown
 
 const WATER_IMPULSE_DELAY: float = 0.5  # Delay before impulse starts
+const DASH_COOLDOWN: float = 0.5
+const COMBO_COOLDOWN: float = 0.25
 
 func _ready():
+	InputCooldownTimer.wait_time = DASH_COOLDOWN
+	ComboCooldownTimer.wait_time = COMBO_COOLDOWN
 	mass = weight_multiplier
 	contact_monitor = true
 	max_contacts_reported = 4
@@ -89,15 +97,39 @@ func _input(event: InputEvent) -> void:
 			elif in_water:
 				apply_central_impulse(Vector2(0, -jump_strength * 0.3 * mass * jump_multiplier))
 		if event.is_action_pressed("up"):
-				apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier))
+			dash("up")
 		if event.is_action_pressed("down"):
-				apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier))
+			dash("down")
 		if event.is_action_pressed("left"):
-				apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier, 0))
+			dash("left")
 		if event.is_action_pressed("right"):
-				apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier, 0))
+			dash("right")
 	if event.is_action_pressed("restart"):
 		get_tree().reload_current_scene()
+		
+func dash(direction: String) -> void:
+	if(InputCooldownTimer.is_stopped()):
+		var combo_multiplier = 1
+		if(!ComboCooldownTimer.is_stopped()):
+			combo_multiplier = 10
+			print("KUH KUH KUH KOMBO")
+		match(direction):
+			"up":
+				apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
+			"down":
+				apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
+			"left":
+				apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+			"right":
+				apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+		InputCooldownTimer.start()
+
+func _on_input_cooldown_timeout() -> void:
+	ready_for_combo = true
+	ComboCooldownTimer.start()
+	
+func _on_combo_cooldown_timeout() -> void:
+	ready_for_combo = false
 
 # Determine roll direction based on input
 func get_roll_direction() -> int:

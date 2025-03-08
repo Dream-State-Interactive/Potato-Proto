@@ -253,6 +253,10 @@ func _on_fade_area_body_exited(body: Node) -> void:
 		if visual_node:
 			var tween = get_tree().create_tween()
 			tween.tween_property(visual_node, \"modulate\", Color(1, 1, 1, 1), fade_duration)
+
+
+func _on_input_cooldown_timeout() -> void:
+	pass # Replace with function body.
 "
 
 [node name="ShapeMaker" type="Node2D"]
