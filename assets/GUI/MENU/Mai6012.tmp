@@ -1,0 +1,207 @@
+[gd_scene load_steps=19 format=3 uid="uid://bd6spyrfc537y"]
+
+[ext_resource type="Script" path="res://assets/GUI/MENU/MainMenu.gd" id="1_30dhv"]
+[ext_resource type="Texture2D" uid="uid://r72r0r10taqu" path="res://assets/Images/TitleText.png" id="1_eb4w3"]
+[ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_fturo"]
+[ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="8_jfuhy"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="9_8dugi"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/skyscale.gd" id="11_3wij5"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="12_xho8u"]
+[ext_resource type="Shader" path="res://assets/Shaders/ScrollShader.gdshader" id="13_q4qwy"]
+[ext_resource type="AudioStream" uid="uid://b1wmtlyehendw" path="res://assets/Music/proto_pototo_v2.mp3" id="13_v7jc8"]
+[ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_0i57e"]
+[ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
+[ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
+[ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="20_3o2gw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
+shader = ExtResource("13_q4qwy")
+shader_parameter/uv_offset_x = 0.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kust7"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -500, 0)
+emission_shape = 3
+emission_box_extents = Vector3(950, 0, 1)
+gravity = Vector3(0, 69, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 3.0
+scale_min = 0.06
+scale_max = 0.13
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_30dhv")
+
+[node name="ShapeMaker" parent="." instance=ExtResource("1_fturo")]
+visible = false
+position = Vector2(-309, 541)
+shape_color = Color(0, 0, 0, 1)
+circle_radius = 50000.0
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
+scroll_ignore_camera_zoom = true
+script = ExtResource("8_jfuhy")
+
+[node name="ParallaxLayer_Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0, 0)
+
+[node name="FullscreenControl_Sky" type="Control" parent="ParallaxBackground/ParallaxLayer_Sky"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_8dugi")
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer_Sky/FullscreenControl_Sky"]
+script = ExtResource("11_3wij5")
+
+[node name="ParallaxLayer_Clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.005, 0.002)
+motion_offset = Vector2(-1024, 0)
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxBackground/ParallaxLayer_Clouds"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_xho8u")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer_Clouds/FullscreenControl_Clouds"]
+material = SubResource("ShaderMaterial_w05i3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_fmc4k")
+stretch_mode = 1
+script = ExtResource("15_0i57e")
+auto_scroll_speed = 0.04
+
+[node name="ParallaxLayer_Clouds2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.003, 0.002)
+motion_offset = Vector2(-1024, 0)
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxBackground/ParallaxLayer_Clouds2"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_xho8u")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer_Clouds2/FullscreenControl_Clouds"]
+material = SubResource("ShaderMaterial_w05i3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_gvvfn")
+stretch_mode = 1
+script = ExtResource("15_0i57e")
+auto_scroll_speed = 0.02
+
+[node name="ParallaxLayer_Ground" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(0, 378)
+motion_scale = Vector2(0.03, 0.01)
+motion_offset = Vector2(0, 150)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="FullscreenControl_Ground" type="Control" parent="ParallaxBackground/ParallaxLayer_Ground"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer_Ground/FullscreenControl_Ground"]
+position = Vector2(0, -32)
+texture = ExtResource("17_o6jqd")
+offset = Vector2(512, 0)
+script = ExtResource("18_kydx3")
+
+[node name="BG_Fun" type="GPUParticles2D" parent="."]
+position = Vector2(980, 101)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_kust7")
+texture = ExtResource("6_sb7rv")
+lifetime = 10.0
+visibility_rect = Rect2(-350, -100, 1920, 1080)
+
+[node name="ProtoPototoV2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_v7jc8")
+volume_db = -10.0
+autoplay = true
+
+[node name="Title" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1876.0
+offset_top = -763.0
+offset_right = 1876.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_eb4w3")
+
+[node name="StandardButtonLevelSelect" parent="." instance=ExtResource("20_3o2gw")]
+offset_left = 767.0
+offset_top = 516.0
+offset_right = 4618.0
+offset_bottom = 1766.0
+size_flags_horizontal = 4
+text = "Levels
+"
+metadata/destination = "res://Scenes/Levels/Menus/level_select.tscn"
+
+[node name="StandardButtonSettings" parent="." instance=ExtResource("20_3o2gw")]
+offset_left = 769.0
+offset_top = 664.0
+offset_right = 4620.0
+offset_bottom = 1914.0
+size_flags_horizontal = 4
+text = "Settings
+"
+
+[node name="StandardButtonQuit" parent="." instance=ExtResource("20_3o2gw")]
+offset_left = 770.0
+offset_top = 807.0
+offset_right = 4621.0
+offset_bottom = 2057.0
+size_flags_horizontal = 4
+text = "Quit
+"
+
+[node name="StandardButtonPlay" parent="." instance=ExtResource("20_3o2gw")]
+offset_left = 765.0
+offset_top = 373.0
+offset_right = 4616.0
+offset_bottom = 1623.0
+size_flags_horizontal = 4
+text = "Play"
+metadata/destination = "res://Scenes/Levels/main_world.tscn"
+
+[connection signal="pressed" from="StandardButtonQuit" to="." method="_on_quit_button_pressed"]

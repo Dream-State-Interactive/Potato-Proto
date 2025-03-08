@@ -1,0 +1,272 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0ponoq3fqag6"]
+
+[sub_resource type="GDScript" id="GDScript_bekdv"]
+script/source = "@tool
+extends Node2D
+
+enum ShapeType {
+	CIRCLE,
+	RECTANGLE
+}
+
+# Exported properties using inline setters that update visuals and collision.
+@export_enum(\"CIRCLE\", \"RECTANGLE\") var shape_type: int = ShapeType.CIRCLE:
+	set(value):
+		shape_type = value
+		_update_visuals()
+		_update_collision()
+
+@export var shape_color: Color = Color(1, 0, 0):
+	set(value):
+		shape_color = value
+		_update_visuals()
+
+@export var circle_radius: float = 50.0:
+	set(value):
+		circle_radius = value
+		_update_visuals()
+		_update_collision()
+
+@export var rectangle_size: Vector2 = Vector2(100, 50):
+	set(value):
+		rectangle_size = value
+		_update_visuals()
+		_update_collision()
+
+@export var create_collision: bool = false:
+	set(value):
+		create_collision = value
+		_update_collision()
+
+@export var enable_physics: bool = false:
+	set(value):
+		enable_physics = value
+		_update_collision()
+
+@export var collision_layer: int = 1
+@export var collision_mask: int = 1
+
+# Fade properties.
+@export var fade_on_player_contact: bool = false
+@export var opacity_fade_amount: float = 0.4
+@export var fade_duration: float = 0.5   # seconds for fade interpolation
+
+# Physical properties.
+@export var weight: float = 10.0  # Weight in pounds (used only if physics is enabled)
+@export var buoyancy_factor: float = 10.0  # Upward force per kg (only applied when in water)
+
+# Returns mass in kilograms (1 lb ≈ 0.453592 kg)
+func get_mass() -> float:
+	return weight * 0.453592
+
+# NEW: Tracks whether this shape is currently in water.
+var in_water: bool = false
+
+# NEW: Called by water volumes to mark the body as underwater.
+func set_in_water(val: bool) -> void:
+	in_water = val
+
+# These variables store our dynamic nodes.
+var visual_node: Node2D = null
+var collision_body: CollisionObject2D = null
+
+# Helper: Returns a node to use as owner.
+func _get_owner_node() -> Node:
+	if not is_inside_tree():
+		# Avoid calling get_tree() if not inside the scene tree.
+		return self
+	var tree = get_tree()
+	if tree and tree.edited_scene_root:
+		return tree.edited_scene_root
+	return self
+	# In runtime we want our nodes saved with the scene; in tool mode, return null.
+	if (get_tree() and not Engine.is_editor_hint()):
+		return get_tree().edited_scene_root
+	else:
+		return null
+
+#------------------------------------------------------------------------------
+# Inner Class: VisualShape
+#
+# This Node2D subclass draws the shape (circle or rectangle) using the exported settings.
+# When collision is enabled, it is reparented to the collision body so it moves with physics.
+#------------------------------------------------------------------------------
+class VisualShape extends Node2D:
+	@export var shape_type: int = 0  # 0 for circle, 1 for rectangle
+	@export var shape_color: Color = Color(1, 0, 0)
+	@export var circle_radius: float = 50.0
+	@export var rectangle_size: Vector2 = Vector2(100, 50)
+	
+	func _ready() -> void:
+		queue_redraw()
+	
+	func _draw() -> void:
+		if shape_type == ShapeType.CIRCLE:
+			draw_circle(Vector2.ZERO, circle_radius, shape_color)
+		elif shape_type == ShapeType.RECTANGLE:
+			draw_rect(Rect2(-rectangle_size / 2, rectangle_size), shape_color)
+
+#------------------------------------------------------------------------------
+# _ready()
+#
+# Called when the node enters the scene tree. Updates both visuals and collision.
+#------------------------------------------------------------------------------
+func _ready() -> void:
+	_update_visuals()
+	_update_collision()
+
+#------------------------------------------------------------------------------
+# _physics_process(delta)
+#
+# When physics is enabled and the shape is in water, apply an upward force (buoyancy)
+# proportional to the mass and the buoyancy_factor.
+#------------------------------------------------------------------------------
+func _physics_process(_delta: float) -> void:
+	if not Engine.is_editor_hint() and enable_physics and collision_body and (collision_body is RigidBody2D) and in_water:
+		(collision_body as RigidBody2D).apply_central_force(Vector2.UP * buoyancy_factor * get_mass())
+
+#------------------------------------------------------------------------------
+# _update_visuals()
+#
+# Creates a VisualShape node with the current settings.
+# If a collision body exists, the visual node is reparented to it so that it follows physics.
+#------------------------------------------------------------------------------
+func _update_visuals() -> void:
+	if visual_node:
+		visual_node.queue_free()
+		visual_node = null
+	
+	visual_node = VisualShape.new()
+	visual_node.name = \"VisualShape\"
+	visual_node.shape_type = shape_type
+	visual_node.shape_color = shape_color
+	visual_node.circle_radius = circle_radius
+	visual_node.rectangle_size = rectangle_size
+	
+	if create_collision and collision_body:
+		var parent = visual_node.get_parent()
+		if parent:
+			parent.remove_child(visual_node)
+		collision_body.add_child(visual_node)
+		visual_node.set_owner(_get_owner_node())
+	else:
+		add_child(visual_node)
+		visual_node.set_owner(_get_owner_node())
+	
+	visual_node.queue_redraw()
+	visual_node.modulate = Color(1, 1, 1, 1)
+
+#------------------------------------------------------------------------------
+# _update_collision()
+#
+# Creates (or re-creates) the collision body (a RigidBody2D or StaticBody2D) with a CollisionShape2D.
+# If fade_on_player_contact is enabled, an Area2D is added for detection.
+# Also reassigns the visual node so it follows the collision body.
+#
+# NOTE: When fade is enabled, the main collision shape is disabled so the player can pass through.
+#       When physics is enabled, the rigid body's mass is set based on the weight.
+#------------------------------------------------------------------------------
+func _update_collision() -> void:
+	_remove_existing_collision()
+	
+	if not create_collision:
+		return
+	
+	if enable_physics:
+		collision_body = RigidBody2D.new()
+		collision_body.collision_layer = collision_layer
+		collision_body.collision_mask = collision_mask
+		collision_body.name = \"PhysicsBody\"
+		collision_body.mass = get_mass()
+	else:
+		collision_body = StaticBody2D.new()
+		collision_body.name = \"CollisionParent\"
+	
+	add_child(collision_body)
+	collision_body.set_owner(_get_owner_node())
+	
+	var shape_node = CollisionShape2D.new()
+	var shape: Shape2D
+	if shape_type == ShapeType.CIRCLE:
+		shape = CircleShape2D.new()
+		shape.radius = circle_radius
+	elif shape_type == ShapeType.RECTANGLE:
+		shape = RectangleShape2D.new()
+		shape.size = rectangle_size
+	shape_node.shape = shape
+	shape_node.name = \"CollisionShape2D\"
+	collision_body.add_child(shape_node)
+	shape_node.set_owner(_get_owner_node())
+	
+	if fade_on_player_contact:
+		shape_node.disabled = true
+	
+	if fade_on_player_contact:
+		var fade_area = Area2D.new()
+		fade_area.name = \"FadeArea\"
+		collision_body.add_child(fade_area)
+		fade_area.set_owner(_get_owner_node())
+		
+		var fade_shape = CollisionShape2D.new()
+		fade_shape.name = \"FadeCollisionShape2D\"
+		fade_shape.shape = shape.duplicate()
+		fade_area.add_child(fade_shape)
+		fade_shape.set_owner(_get_owner_node())
+		
+		fade_area.body_entered.connect(self._on_fade_area_body_entered)
+		fade_area.body_exited.connect(self._on_fade_area_body_exited)
+	
+	if visual_node:
+		var vparent = visual_node.get_parent()
+		if vparent and vparent != collision_body:
+			vparent.remove_child(visual_node)
+		visual_node.set_owner(null)
+		collision_body.add_child(visual_node)
+		visual_node.set_owner(_get_owner_node())
+
+#------------------------------------------------------------------------------
+# _remove_existing_collision()
+#
+# Removes any existing collision bodies (RigidBody2D or StaticBody2D) to prevent duplicates.
+#------------------------------------------------------------------------------
+func _remove_existing_collision() -> void:
+	var existing_parent = get_node_or_null(\"CollisionParent\")
+	if existing_parent:
+		existing_parent.queue_free()
+	var existing_physics = get_node_or_null(\"PhysicsBody\")
+	if existing_physics:
+		existing_physics.queue_free()
+	collision_body = null
+
+#------------------------------------------------------------------------------
+# _on_fade_area_body_entered(body: Node)
+#
+# Called when a body enters the fade area. If it’s in the \"player\" group,
+# a Tween interpolates the visual’s opacity to opacity_fade_amount over fade_duration seconds.
+#------------------------------------------------------------------------------
+func _on_fade_area_body_entered(body: Node) -> void:
+	print(\"Body entered: \", body.name)
+	if fade_on_player_contact and body.is_in_group(\"player\"):
+		if visual_node:
+			var tween = get_tree().create_tween()
+			tween.tween_property(visual_node, \"modulate\", Color(1, 1, 1, opacity_fade_amount), fade_duration)
+
+#------------------------------------------------------------------------------
+# _on_fade_area_body_exited(body: Node)
+#
+# Called when a body exits the fade area. If it’s in the \"player\" group,
+# a Tween interpolates the visual’s opacity back to full (1) over fade_duration seconds.
+#------------------------------------------------------------------------------
+func _on_fade_area_body_exited(body: Node) -> void:
+	print(\"Body exited: \", body.name)
+	if fade_on_player_contact and body.is_in_group(\"player\"):
+		if visual_node:
+			var tween = get_tree().create_tween()
+			tween.tween_property(visual_node, \"modulate\", Color(1, 1, 1, 1), fade_duration)
+"
+
+[node name="ShapeMaker" type="Node2D"]
+process_mode = 3
+script = SubResource("GDScript_bekdv")
+
+[node name="ShapeContainer" type="Node2D" parent="."]
