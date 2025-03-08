@@ -4,9 +4,9 @@ extends StaticBody2D
 @export var path_texture: Texture2D
 @export var path_width: float = 10
 @export var extrude_texture: Texture2D
-@export var extrude_amount: float = 250
+@export var PathMaker_extrude_amount: float = 250
 @export var collision_resolution: int = 32 # Number of points for collision polygon
-@export var extrusion_resolution: int = 128 # Number of points for extrusion polygon
+@export var Pathmaker_extrusion_resolution: int = 128 # Number of points for extrusion polygon
 
 @onready var path_2d = $Path2D
 @onready var line_2d = $Line2D
@@ -27,7 +27,7 @@ func update_path():
 	line_2d.points = baked_points
 
 	# Generate extruded polygon points
-	var extruded_polygon_points = generate_extruded_polygon(baked_points, extrude_amount, extrusion_resolution)
+	var extruded_polygon_points = generate_extruded_polygon(baked_points, PathMaker_extrude_amount, Pathmaker_extrusion_resolution)
 
 	# Create and set the Polygon2D
 	extrude_polygon_2d.polygon = extruded_polygon_points

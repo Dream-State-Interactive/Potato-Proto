@@ -39,7 +39,7 @@ var ready_for_combo = false
 @onready var ComboCooldownTimer: Timer = $ComboCooldown
 
 const WATER_IMPULSE_DELAY: float = 0.5  # Delay before impulse starts
-const DASH_COOLDOWN: float = 0.5
+const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
 
 func _ready():
@@ -174,8 +174,8 @@ func apply_custom_impulse(delta: float, is_water: bool) -> void:
 		apply_central_impulse(impulse_dir * air_impulse_strength * air_build_multiplier * delta)
 
 # Adjust camera zoom
-func adjust_zoom(scale: float):
-	var zoom = $Camera2D.get_zoom() * scale
+func adjust_zoom(adjustScale: float):
+	var zoom = $Camera2D.get_zoom() * adjustScale
 	$Camera2D.set_zoom(zoom)
 	print(zoom)
 
