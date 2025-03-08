@@ -72,12 +72,14 @@ var collision_body: CollisionObject2D = null
 
 # Helper: Returns a node to use as owner.
 func _get_owner_node() -> Node:
-	if not is_inside_tree():
-		# Avoid calling get_tree() if not inside the scene tree.
-		return self
+	if Engine.is_editor_hint():
+		# In editor, return null so dynamic nodes aren't saved.
+		return null
 	var tree = get_tree()
-	if tree and tree.edited_scene_root:
-		return tree.edited_scene_root
+	if tree:
+		if tree.edited_scene_root:
+			return tree.edited_scene_root
+		return self
 	return self
 
 #------------------------------------------------------------------------------
