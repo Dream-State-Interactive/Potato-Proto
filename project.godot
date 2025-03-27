@@ -15,6 +15,11 @@ run/main_scene="res://assets/GUI/MENU/MainMenu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://assets/Images/icon.svg"
 
+[autoload]
+
+SettingsService="*res://tools/services/settingsService.gd"
+AudioService="*res://tools/services/audioService.gd"
+
 [display]
 
 window/size/viewport_width=1920

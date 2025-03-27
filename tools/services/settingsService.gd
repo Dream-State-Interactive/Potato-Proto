@@ -2,7 +2,7 @@
 
 extends Node
 
-var configFileName = "user://scores.cfg"
+var configFileName = "user://settings.cfg"
 var configFile = ConfigFile.new()
 
 func _set(setting: StringName, value: Variant) -> bool:
@@ -14,7 +14,7 @@ func _set(setting: StringName, value: Variant) -> bool:
 	config.set_value(setting, setting, value.toString())
 
 	# Save it to a file (overwrite if already exists).
-	return config.save("user://scores.cfg")
+	return config.save(configFileName)
 
 func _get(key: StringName) -> Variant:
 	var score_data = {}
