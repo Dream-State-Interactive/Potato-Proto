@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0ponoq3fqag6"]
+[gd_scene load_steps=4 format=3 uid="uid://c0ponoq3fqag6"]
 
 [sub_resource type="GDScript" id="GDScript_bekdv"]
 script/source = "@tool
@@ -260,8 +260,22 @@ func _on_fade_area_body_exited(body: Node) -> void:
 			tween.tween_property(visual_node, \"modulate\", Color(1, 1, 1, 1), fade_duration)
 "
 
+[sub_resource type="GDScript" id="GDScript_yi4j6"]
+
+[sub_resource type="GDScript" id="GDScript_lbwwv"]
+
 [node name="ShapeMaker" type="Node2D"]
 process_mode = 3
 script = SubResource("GDScript_bekdv")
 
 [node name="ShapeContainer" type="Node2D" parent="."]
+
+[node name="VisualShape" type="Node2D" parent="."]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17456" type="Node2D" parent="."]
+script = SubResource("GDScript_lbwwv")
+shape_type = 0
+shape_color = Color(1, 0, 0, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(100, 50)

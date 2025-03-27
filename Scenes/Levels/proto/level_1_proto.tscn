@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c4n4sr4ulry3i"]
+[gd_scene load_steps=58 format=3 uid="uid://c4n4sr4ulry3i"]
 
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_ytlsg"]
 [ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="2_cph5s"]
@@ -17,8 +17,120 @@
 [ext_resource type="PackedScene" uid="uid://nnjqyuomoq6c" path="res://Scenes/StarchPoint.tscn" id="15_c80rc"]
 [ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/sfx_proto_04.mp3" id="16_ph1ia"]
 
+[sub_resource type="GDScript" id="GDScript_yi4j6"]
+
+[sub_resource type="GDScript" id="GDScript_lbwwv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_whx1b"]
+size = Vector2(4000, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6wdx8"]
+size = Vector2(4000, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgbqg"]
+size = Vector2(3000, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nrv6a"]
+size = Vector2(3000, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tcwn3"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57w32"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f5u81"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qwhg"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kds2"]
+size = Vector2(1500, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6fsfp"]
+size = Vector2(1500, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hb55v"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8a2u6"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ic8q"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s2aus"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sw5qw"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rt7f"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ph7r"]
+size = Vector2(3000, 1800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cirim"]
+size = Vector2(3000, 1800)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
 size = Vector2(2932, 1521.33)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lgd8i"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1mjpi"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ac63p"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rum8r"]
+radius = 50.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyep6"]
+size = Vector2(100, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2pluk"]
+size = Vector2(100, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5c3w6"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rfhkn"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0u3qv"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66d0e"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qbsbe"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqjlm"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n8ums"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tipmo"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o34xn"]
+size = Vector2(700, 111)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tolmg"]
+size = Vector2(700, 111)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_my418"]
+size = Vector2(1400, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qcfvy"]
+size = Vector2(1400, 100)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
 shader = ExtResource("9_tudtg")
@@ -36,12 +148,32 @@ shape_color = Color(0, 0, 0, 1)
 rectangle_size = Vector2(40000, 40000)
 buoyancy_factor = 0.0
 
+[node name="@Node2D@17386" type="Node2D" parent="BG"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17420" type="Node2D" parent="BG"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0, 0, 0, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(40000, 40000)
+
 [node name="HouseWall" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(420.4, 498.2)
 shape_type = 1
 shape_color = Color(0.563578, 0.392251, 0.33158, 1)
 rectangle_size = Vector2(15000, 7000)
 buoyancy_factor = 0.0
+
+[node name="@Node2D@17387" type="Node2D" parent="HouseWall"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17421" type="Node2D" parent="HouseWall"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.563578, 0.392251, 0.33158, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(15000, 7000)
 
 [node name="KitchenShapesRoot" type="Control" parent="."]
 layout_mode = 3
@@ -60,6 +192,26 @@ rectangle_size = Vector2(4000, 2000)
 create_collision = true
 buoyancy_factor = 0.0
 
+[node name="@StaticBody2D@17388" type="StaticBody2D" parent="KitchenShapesRoot/Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@17388"]
+shape = SubResource("RectangleShape2D_whx1b")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@17388"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17422" type="StaticBody2D" parent="KitchenShapesRoot/Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@17422"]
+shape = SubResource("RectangleShape2D_6wdx8")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@17422"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.689971, 0.724568, 0.81013, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(4000, 2000)
+
 [node name="Sink" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(125, 2366)
 shape_type = 1
@@ -73,10 +225,30 @@ shape_type = 1
 shape_color = Color(0.584566, 0.648006, 0.6599, 1)
 rectangle_size = Vector2(150, 140)
 
+[node name="@Node2D@17389" type="Node2D" parent="KitchenShapesRoot/Sink/Knob"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17423" type="Node2D" parent="KitchenShapesRoot/Sink/Knob"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.584566, 0.648006, 0.6599, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(150, 140)
+
 [node name="Knob2" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
 position = Vector2(772, -939)
 shape_type = 1
 shape_color = Color(0.584566, 0.648006, 0.6599, 1)
+rectangle_size = Vector2(150, 140)
+
+[node name="@Node2D@17390" type="Node2D" parent="KitchenShapesRoot/Sink/Knob2"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17424" type="Node2D" parent="KitchenShapesRoot/Sink/Knob2"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.584566, 0.648006, 0.6599, 1)
+circle_radius = 50.0
 rectangle_size = Vector2(150, 140)
 
 [node name="Spout" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
@@ -85,20 +257,60 @@ shape_type = 1
 shape_color = Color(0.601876, 0.664139, 0.675871, 1)
 rectangle_size = Vector2(200, 1400)
 
+[node name="@Node2D@17391" type="Node2D" parent="KitchenShapesRoot/Sink/Spout"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17425" type="Node2D" parent="KitchenShapesRoot/Sink/Spout"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.601876, 0.664139, 0.675871, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(200, 1400)
+
 [node name="SpoutTip" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
 position = Vector2(0, -1820)
 shape_color = Color(0.6, 0.662745, 0.67451, 1)
 circle_radius = 100.0
+
+[node name="@Node2D@17392" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17426" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 0
+shape_color = Color(0.6, 0.662745, 0.67451, 1)
+circle_radius = 100.0
+rectangle_size = Vector2(100, 50)
 
 [node name="SpoutTip2" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
 position = Vector2(0, -1584)
 shape_color = Color(0.393171, 0.452063, 0.463095, 1)
 circle_radius = 100.0
 
+[node name="@Node2D@17393" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip2"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17427" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip2"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 0
+shape_color = Color(0.393171, 0.452063, 0.463095, 1)
+circle_radius = 100.0
+rectangle_size = Vector2(100, 50)
+
 [node name="SpoutTipFacade" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
 position = Vector2(0, -1673)
 shape_type = 1
 shape_color = Color(0.6, 0.662745, 0.67451, 1)
+rectangle_size = Vector2(200, 300)
+
+[node name="@Node2D@17394" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTipFacade"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17428" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTipFacade"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.6, 0.662745, 0.67451, 1)
+circle_radius = 50.0
 rectangle_size = Vector2(200, 300)
 
 [node name="Sink_Water" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
@@ -109,6 +321,16 @@ shape_color = Color(0.133333, 0.545098, 0.92549, 0.505882)
 rectangle_size = Vector2(3000, 1700)
 buoyancy_factor = 0.0
 
+[node name="@Node2D@17395" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Water"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17429" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Water"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.133333, 0.545098, 0.92549, 0.505882)
+circle_radius = 50.0
+rectangle_size = Vector2(3000, 1700)
+
 [node name="Sink_Back" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
 position = Vector2(0, 932)
 shape_type = 1
@@ -116,6 +338,26 @@ shape_color = Color(0.461711, 0.496825, 0.51173, 1)
 rectangle_size = Vector2(3000, 70)
 create_collision = true
 buoyancy_factor = 0.0
+
+[node name="@StaticBody2D@17396" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Back"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@17396"]
+shape = SubResource("RectangleShape2D_hgbqg")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@17396"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17430" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Back"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@17430"]
+shape = SubResource("RectangleShape2D_nrv6a")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@17430"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.461711, 0.496825, 0.51173, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(3000, 70)
 
 [node name="Sink_Front" parent="KitchenShapesRoot/Sink" instance=ExtResource("1_ytlsg")]
 z_index = 1
@@ -127,6 +369,48 @@ create_collision = true
 fade_on_player_contact = true
 buoyancy_factor = 0.0
 
+[node name="@StaticBody2D@17397" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Front"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17397"]
+shape = SubResource("RectangleShape2D_tcwn3")
+disabled = true
+
+[node name="FadeArea" type="Area2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17397"]
+
+[node name="FadeCollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17397/FadeArea"]
+shape = SubResource("RectangleShape2D_57w32")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17397"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17431" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Front"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17431"]
+shape = SubResource("RectangleShape2D_f5u81")
+disabled = true
+
+[node name="FadeArea" type="Area2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17431"]
+
+[node name="FadeCollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17431/FadeArea"]
+shape = SubResource("RectangleShape2D_3qwhg")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17431"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.562025, 0.519774, 0.582213, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(3000, 1750)
+
+[node name="@Node2D@17398" type="Node2D" parent="KitchenShapesRoot/Sink"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17432" type="Node2D" parent="KitchenShapesRoot/Sink"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.562025, 0.519774, 0.582213, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(3000, 1800)
+
 [node name="Counter2" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(2375, 2495)
 shape_type = 1
@@ -135,6 +419,26 @@ rectangle_size = Vector2(1500, 2000)
 create_collision = true
 buoyancy_factor = 0.0
 
+[node name="@StaticBody2D@17399" type="StaticBody2D" parent="KitchenShapesRoot/Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@17399"]
+shape = SubResource("RectangleShape2D_1kds2")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@17399"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17433" type="StaticBody2D" parent="KitchenShapesRoot/Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@17433"]
+shape = SubResource("RectangleShape2D_6fsfp")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@17433"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.689971, 0.724568, 0.81013, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(1500, 2000)
+
 [node name="Counter3" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(6430, 1912)
 shape_type = 1
@@ -142,6 +446,26 @@ shape_color = Color(0.689971, 0.724568, 0.81013, 1)
 rectangle_size = Vector2(700, 807.165)
 create_collision = true
 buoyancy_factor = 0.0
+
+[node name="@StaticBody2D@17400" type="StaticBody2D" parent="KitchenShapesRoot/Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@17400"]
+shape = SubResource("RectangleShape2D_hb55v")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@17400"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17434" type="StaticBody2D" parent="KitchenShapesRoot/Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@17434"]
+shape = SubResource("RectangleShape2D_8a2u6")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@17434"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.689971, 0.724568, 0.81013, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(700, 807.165)
 
 [node name="Oven" parent="KitchenShapesRoot" instance=ExtResource("1_ytlsg")]
 position = Vector2(4608, 2381)
@@ -159,6 +483,26 @@ rectangle_size = Vector2(750, 50)
 create_collision = true
 buoyancy_factor = 0.0
 
+[node name="@StaticBody2D@17401" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@17401"]
+shape = SubResource("RectangleShape2D_8ic8q")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@17401"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17435" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@17435"]
+shape = SubResource("RectangleShape2D_s2aus")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@17435"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(750, 50)
+
 [node name="burner2" parent="KitchenShapesRoot/Oven" instance=ExtResource("1_ytlsg")]
 position = Vector2(751, -892)
 shape_type = 1
@@ -166,6 +510,46 @@ shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
 rectangle_size = Vector2(750, 50)
 create_collision = true
 buoyancy_factor = 0.0
+
+[node name="@StaticBody2D@17402" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@17402"]
+shape = SubResource("RectangleShape2D_sw5qw")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@17402"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17436" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@17436"]
+shape = SubResource("RectangleShape2D_0rt7f")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@17436"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(750, 50)
+
+[node name="@StaticBody2D@17403" type="StaticBody2D" parent="KitchenShapesRoot/Oven"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@17403"]
+shape = SubResource("RectangleShape2D_0ph7r")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@17403"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17437" type="StaticBody2D" parent="KitchenShapesRoot/Oven"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@17437"]
+shape = SubResource("RectangleShape2D_cirim")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@17437"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.387255, 0.429801, 0.538052, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(3000, 1800)
 
 [node name="EnvWater" type="Area2D" parent="KitchenShapesRoot"]
 position = Vector2(-529, 1727)
@@ -181,11 +565,41 @@ shape = SubResource("RectangleShape2D_aaeu4")
 position = Vector2(-3370.4, 1193.6)
 buoyancy_factor = 0.0
 
+[node name="VisualShape2" type="Node2D" parent="ShapeMaker"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@Node2D@17438" type="Node2D" parent="ShapeMaker"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 0
+shape_color = Color(1, 0, 0, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(100, 50)
+
 [node name="ShapeMaker2" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-3112, 1153)
 shape_color = Color(0.134611, 0.57279, 0.80361, 1)
 create_collision = true
 buoyancy_factor = 0.0
+
+[node name="@StaticBody2D@17405" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@17405"]
+shape = SubResource("CircleShape2D_lgd8i")
+
+[node name="@Node2D@17404" type="Node2D" parent="ShapeMaker2/@StaticBody2D@17405"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@StaticBody2D@17439" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@17439"]
+shape = SubResource("CircleShape2D_1mjpi")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker2/@StaticBody2D@17439"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 0
+shape_color = Color(0.134611, 0.57279, 0.80361, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(100, 50)
 
 [node name="ShapeMaker3" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-3284, 1023)
@@ -194,12 +608,56 @@ create_collision = true
 enable_physics = true
 buoyancy_factor = 0.0
 
+[node name="@RigidBody2D@17407" type="RigidBody2D" parent="ShapeMaker3"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3/@RigidBody2D@17407"]
+shape = SubResource("CircleShape2D_ac63p")
+
+[node name="@Node2D@17406" type="Node2D" parent="ShapeMaker3/@RigidBody2D@17407"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17440" type="RigidBody2D" parent="ShapeMaker3"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3/@RigidBody2D@17440"]
+shape = SubResource("CircleShape2D_rum8r")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker3/@RigidBody2D@17440"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 0
+shape_color = Color(0, 0.635138, 0.409444, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(100, 50)
+
 [node name="ShapeMaker4" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-2611, 260)
 shape_type = 1
 create_collision = true
 enable_physics = true
 buoyancy_factor = 0.0
+
+[node name="@RigidBody2D@17409" type="RigidBody2D" parent="ShapeMaker4"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker4/@RigidBody2D@17409"]
+shape = SubResource("RectangleShape2D_pyep6")
+
+[node name="@Node2D@17408" type="Node2D" parent="ShapeMaker4/@RigidBody2D@17409"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17441" type="RigidBody2D" parent="ShapeMaker4"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker4/@RigidBody2D@17441"]
+shape = SubResource("RectangleShape2D_2pluk")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker4/@RigidBody2D@17441"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(1, 0, 0, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(100, 50)
 
 [node name="ShapeMaker5" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-2645, 539)
@@ -211,6 +669,28 @@ enable_physics = true
 weight = 25.0
 buoyancy_factor = 0.0
 
+[node name="@RigidBody2D@17410" type="RigidBody2D" parent="ShapeMaker5"]
+mass = 11.3398
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker5/@RigidBody2D@17410"]
+shape = SubResource("RectangleShape2D_5c3w6")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker5/@RigidBody2D@17410"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17442" type="RigidBody2D" parent="ShapeMaker5"]
+mass = 11.3398
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker5/@RigidBody2D@17442"]
+shape = SubResource("RectangleShape2D_rfhkn")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker5/@RigidBody2D@17442"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.592833, 0.433506, 0.855568, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(420, 222)
+
 [node name="ShapeMaker6" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-2037, 798)
 shape_type = 1
@@ -219,6 +699,28 @@ rectangle_size = Vector2(420, 222)
 create_collision = true
 enable_physics = true
 buoyancy_factor = 0.0
+
+[node name="@RigidBody2D@17411" type="RigidBody2D" parent="ShapeMaker6"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker6/@RigidBody2D@17411"]
+shape = SubResource("RectangleShape2D_0u3qv")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker6/@RigidBody2D@17411"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17443" type="RigidBody2D" parent="ShapeMaker6"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker6/@RigidBody2D@17443"]
+shape = SubResource("RectangleShape2D_66d0e")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker6/@RigidBody2D@17443"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.665738, 0.380616, 0.865665, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(420, 222)
 
 [node name="ShapeMaker7" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-1294, -484)
@@ -230,6 +732,28 @@ enable_physics = true
 weight = 500.0
 buoyancy_factor = 750.0
 
+[node name="@RigidBody2D@17412" type="RigidBody2D" parent="ShapeMaker7"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker7/@RigidBody2D@17412"]
+shape = SubResource("RectangleShape2D_qbsbe")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker7/@RigidBody2D@17412"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17444" type="RigidBody2D" parent="ShapeMaker7"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker7/@RigidBody2D@17444"]
+shape = SubResource("RectangleShape2D_nqjlm")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker7/@RigidBody2D@17444"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.212855, 0.543923, 0.706466, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(420, 145)
+
 [node name="ShapeMaker9" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-442, -483)
 shape_type = 1
@@ -239,6 +763,28 @@ create_collision = true
 enable_physics = true
 weight = 500.0
 buoyancy_factor = 800.0
+
+[node name="@RigidBody2D@17413" type="RigidBody2D" parent="ShapeMaker9"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker9/@RigidBody2D@17413"]
+shape = SubResource("RectangleShape2D_n8ums")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker9/@RigidBody2D@17413"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17445" type="RigidBody2D" parent="ShapeMaker9"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker9/@RigidBody2D@17445"]
+shape = SubResource("RectangleShape2D_tipmo")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker9/@RigidBody2D@17445"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.0904595, 0.560993, 0.612702, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(420, 145)
 
 [node name="ShapeMaker8" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-886, -1073)
@@ -250,6 +796,28 @@ enable_physics = true
 weight = 395.0
 buoyancy_factor = 600.0
 
+[node name="@RigidBody2D@17414" type="RigidBody2D" parent="ShapeMaker8"]
+mass = 179.169
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker8/@RigidBody2D@17414"]
+shape = SubResource("RectangleShape2D_o34xn")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker8/@RigidBody2D@17414"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17446" type="RigidBody2D" parent="ShapeMaker8"]
+mass = 179.169
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker8/@RigidBody2D@17446"]
+shape = SubResource("RectangleShape2D_tolmg")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker8/@RigidBody2D@17446"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.904294, 0.842451, 0.860175, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(700, 111)
+
 [node name="CuttingBoard" parent="." instance=ExtResource("1_ytlsg")]
 position = Vector2(-3014, 1450)
 shape_type = 1
@@ -258,6 +826,28 @@ rectangle_size = Vector2(1400, 100)
 create_collision = true
 enable_physics = true
 buoyancy_factor = 0.0
+
+[node name="@RigidBody2D@17415" type="RigidBody2D" parent="CuttingBoard"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CuttingBoard/@RigidBody2D@17415"]
+shape = SubResource("RectangleShape2D_my418")
+
+[node name="VisualShape" type="Node2D" parent="CuttingBoard/@RigidBody2D@17415"]
+script = SubResource("GDScript_yi4j6")
+
+[node name="@RigidBody2D@17447" type="RigidBody2D" parent="CuttingBoard"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CuttingBoard/@RigidBody2D@17447"]
+shape = SubResource("RectangleShape2D_qcfvy")
+
+[node name="VisualShape" type="Node2D" parent="CuttingBoard/@RigidBody2D@17447"]
+script = SubResource("GDScript_lbwwv")
+shape_type = 1
+shape_color = Color(0.786201, 0.527853, 0.382834, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(1400, 100)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
 scroll_ignore_camera_zoom = true
