@@ -3,10 +3,12 @@ extends Node
 var MasterBus = AudioServer.get_bus_index("Master")
 
 func set_master_volume(volume: float):
-	if(volume > 1):
-		volume = 1
+	if(volume > 100):
+		volume = 100
 	elif (volume < 0):
 		volume = 0
+	
+	volume /= 100
 	
 	AudioServer.set_bus_volume_db(MasterBus, linear_to_db(volume))
 
