@@ -11,4 +11,4 @@ func set_master_volume(volume: float):
 	AudioServer.set_bus_volume_db(MasterBus, linear_to_db(volume))
 
 func get_master_volume() -> int:
-	return AudioServer.get_bus_volume_db(MasterBus)
+	return db_to_linear(AudioServer.get_bus_volume_db(MasterBus))

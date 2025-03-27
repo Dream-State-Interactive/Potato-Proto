@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgke5qoq85k6h"]
+
+[ext_resource type="Script" path="res://assets/GUI/MENU/main_menu_gui.gd" id="1_h2q6o"]
+[ext_resource type="Texture2D" uid="uid://r72r0r10taqu" path="res://assets/Images/TitleText.png" id="2_7kf0u"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -947.0
+offset_bottom = -523.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h2q6o")
+
+[node name="Title" type="TextureRect" parent="."]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 12.02
+anchor_bottom = 5.966
+offset_left = -1597.5
+offset_top = -254.5
+offset_right = 1693.7
+offset_bottom = 415.86
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_7kf0u")

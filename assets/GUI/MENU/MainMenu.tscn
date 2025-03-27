@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://assets/GUI/MENU/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://r72r0r10taqu" path="res://assets/Images/TitleText.png" id="1_eb4w3"]
-[ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_fturo"]
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="8_jfuhy"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="9_8dugi"]
@@ -12,14 +11,13 @@
 [ext_resource type="AudioStream" uid="uid://b1wmtlyehendw" path="res://assets/Music/proto_pototo_v2.mp3" id="13_v7jc8"]
 [ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_0i57e"]
+[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://assets/GUI/MENU/Slider.tscn" id="15_lprhh"]
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
+[ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://assets/GUI/MENU/StandardMenu.tscn" id="18_0l2vk"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
+[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://assets/GUI/MENU/MainMenuGUI.tscn" id="18_ne370"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="20_3o2gw"]
-
-[sub_resource type="GDScript" id="GDScript_yi4j6"]
-
-[sub_resource type="GDScript" id="GDScript_lbwwv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
 shader = ExtResource("13_q4qwy")
@@ -38,22 +36,6 @@ scale_max = 0.13
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_30dhv")
-
-[node name="ShapeMaker" parent="." instance=ExtResource("1_fturo")]
-visible = false
-position = Vector2(-309, 541)
-shape_color = Color(0, 0, 0, 1)
-circle_radius = 50000.0
-
-[node name="@Node2D@17422" type="Node2D" parent="ShapeMaker"]
-script = SubResource("GDScript_yi4j6")
-
-[node name="@Node2D@17455" type="Node2D" parent="ShapeMaker"]
-script = SubResource("GDScript_lbwwv")
-shape_type = 0
-shape_color = Color(0, 0, 0, 1)
-circle_radius = 50000.0
-rectangle_size = Vector2(100, 50)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
 scroll_ignore_camera_zoom = true
@@ -199,6 +181,7 @@ offset_bottom = 1914.0
 size_flags_horizontal = 4
 text = "Settings
 "
+metadata/destination = "res://assets/GUI/MENU/SettingsMenu.tscn"
 
 [node name="StandardButtonQuit" parent="." instance=ExtResource("20_3o2gw")]
 offset_left = 770.0
@@ -217,5 +200,23 @@ offset_bottom = 1623.0
 size_flags_horizontal = 4
 text = "Play"
 metadata/destination = "res://Scenes/Levels/main_world.tscn"
+
+[node name="StandardMenu" parent="." instance=ExtResource("18_0l2vk")]
+position = Vector2(200, 335)
+scale = Vector2(0.1, 0.1)
+
+[node name="Slider" parent="." instance=ExtResource("15_lprhh")]
+position = Vector2(-51, 903)
+
+[node name="Control" parent="." instance=ExtResource("18_ne370")]
+anchors_preset = -1
+anchor_left = -0.074
+anchor_top = -0.244
+anchor_right = -0.074
+anchor_bottom = -0.244
+offset_left = -671.92
+offset_top = 60.52
+offset_right = -345.92
+offset_bottom = 234.52
 
 [connection signal="pressed" from="StandardButtonQuit" to="." method="_on_quit_button_pressed"]

@@ -26,8 +26,7 @@ func _ready() -> void:
 	# Begin the pulsating animation for the title.
 	animate_title()
 	
-	SettingsService.set("Volume", 100)
-	
+	AudioService.set_master_volume(SettingsService.get("master_volume"))
 	
 
 # Recursively animate the title's scale to create a pulsing effect.
