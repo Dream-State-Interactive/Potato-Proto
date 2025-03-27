@@ -11,6 +11,7 @@ offset_left = 1568.0
 offset_top = 21.0
 offset_right = 5024.0
 offset_bottom = 1145.72
+text = "Volume"
 
 [node name="MasterVolumeSlider" type="HSlider" parent="."]
 offset_left = 154.0
