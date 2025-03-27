@@ -9,36 +9,44 @@ script = ExtResource("1_aqssb")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="StandardButton" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 745.0
-offset_top = 106.0
-offset_right = 4585.0
-offset_bottom = 1356.0
+offset_left = 756.0
+offset_top = 226.0
+offset_right = 4596.0
+offset_bottom = 1476.0
 size_flags_horizontal = 4
 text = "Level 1"
 metadata/destination = "res://Scenes/Levels/proto/level_1_proto.tscn"
 
 [node name="StandardButton2" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 745.0
-offset_top = 250.0
-offset_right = 4585.0
-offset_bottom = 1500.0
+offset_left = 756.0
+offset_top = 370.0
+offset_right = 4596.0
+offset_bottom = 1620.0
 size_flags_horizontal = 4
 text = "Level 2"
 metadata/destination = "res://Scenes/Levels/main_world.tscn"
 
 [node name="StandardButton3" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 747.0
-offset_top = 391.0
-offset_right = 4587.0
-offset_bottom = 1641.0
+offset_left = 758.0
+offset_top = 511.0
+offset_right = 4598.0
+offset_bottom = 1761.0
 size_flags_horizontal = 4
 text = "Level 3"
 metadata/destination = "res://Scenes/Levels/alex_proto.tscn"
 
 [node name="StandardButton4" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 749.0
-offset_top = 534.0
-offset_right = 4589.0
-offset_bottom = 1784.0
+offset_left = 760.0
+offset_top = 654.0
+offset_right = 4600.0
+offset_bottom = 1904.0
 size_flags_horizontal = 4
 text = "Level 4"
+
+[node name="StandardButton2" parent="." instance=ExtResource("2_aal82")]
+offset_left = 803.0
+offset_top = 44.0
+offset_right = 4259.0
+offset_bottom = 1168.72
+text = "Back"
+metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
