@@ -12,8 +12,7 @@ func _ready() -> void:
 			#button.mouse_entered.connect(func() -> void: _on_button_mouse_entered(button))
 			#button.mouse_exited.connect(func() -> void: _on_button_mouse_exited(button))
 			#button.pressed.connect(func() -> void: _on_button_pressed(button))
-
-	AudioService.set_master_volume(SettingsService.get("master_volume"))
+	SettingsService.initializeSettings()
 
 # Increase the button scale slightly when the mouse enters.
 func _on_button_mouse_entered(button: Button) -> void:
