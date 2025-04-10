@@ -17,7 +17,7 @@ config/icon="res://assets/Images/icon.svg"
 
 [autoload]
 
-SettingsService="*res://tools/services/settingsService.gd"
+SettingsService="*res://tools/services/settings/settingsService.gd"
 AudioService="*res://tools/services/audioService.gd"
 
 [display]
