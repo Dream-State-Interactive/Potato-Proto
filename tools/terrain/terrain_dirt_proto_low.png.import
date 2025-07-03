@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca271v4q4gpbe"
-path="res://.godot/imported/terrain_edge_grass_proto.png-54061ede5a9a254485c52cd64b98f821.ctex"
+uid="uid://jb501msdpxrl"
+path="res://.godot/imported/terrain_dirt_proto_low.png-8f6a9e7a6b16d1a462eec239eba483d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tools/tool/terrain_edge_grass_proto.png"
-dest_files=["res://.godot/imported/terrain_edge_grass_proto.png-54061ede5a9a254485c52cd64b98f821.ctex"]
+source_file="res://tools/terrain/terrain_dirt_proto_low.png"
+dest_files=["res://.godot/imported/terrain_dirt_proto_low.png-8f6a9e7a6b16d1a462eec239eba483d1.ctex"]
 
 [params]
 
