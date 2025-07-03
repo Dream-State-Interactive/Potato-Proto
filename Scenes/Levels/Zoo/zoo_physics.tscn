@@ -1,0 +1,178 @@
+[gd_scene load_steps=26 format=3 uid="uid://fx7bgvtyfi1y"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/Zoo/zoo_physics.gd" id="1_2fxsq"]
+[ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_mnqtr"]
+[ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="2_ldvdr"]
+[ext_resource type="Script" path="res://Scenes/Levels/Zoo/BreakableManager.gd" id="2_ymi26"]
+[ext_resource type="PackedScene" uid="uid://bmnfp5a5860v2" path="res://tools/collisionmaker/collisionmaker.tscn" id="3_khkef"]
+[ext_resource type="Texture2D" uid="uid://dxya7eujy7kim" path="res://assets/Images/bustin.png" id="4_5w54g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4bce1"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_apep2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqatf"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_yryus"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aa710"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_0peiv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p4j17"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqwu2"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmljf"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwby3"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgoku"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nwd4t"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_ulyal"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_omw2s"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_ou4rc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38kvq"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_lcvkb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sx4gw"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_1twsl"]
+
+[node name="ZooPhysics" type="Node2D"]
+script = ExtResource("1_2fxsq")
+
+[node name="BreakManager" type="Node2D" parent="."]
+script = ExtResource("2_ymi26")
+
+[node name="potato_base" parent="." instance=ExtResource("2_ldvdr")]
+position = Vector2(5237, 720)
+
+[node name="ShapeMaker" parent="." instance=ExtResource("1_mnqtr")]
+position = Vector2(4983, 1467)
+shape_type = 1
+shape_color = Color(0, 0.551577, 0.161029, 1)
+rectangle_size = Vector2(4850, 1024)
+create_collision = true
+
+[node name="@StaticBody2D@29573" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@29573"]
+shape = SubResource("RectangleShape2D_4bce1")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@29573"]
+script = SubResource("GDScript_apep2")
+
+[node name="@StaticBody2D@17358" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@17358"]
+shape = SubResource("RectangleShape2D_yqatf")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@17358"]
+script = SubResource("GDScript_yryus")
+
+[node name="@StaticBody2D@17360" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@17360"]
+shape = SubResource("RectangleShape2D_aa710")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@17360"]
+script = SubResource("GDScript_0peiv")
+
+[node name="@StaticBody2D@85112" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@85112"]
+shape = SubResource("RectangleShape2D_p4j17")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@85112"]
+script = SubResource("GDScript_0peiv")
+
+[node name="@StaticBody2D@89254" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@89254"]
+shape = SubResource("RectangleShape2D_hqwu2")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@89254"]
+script = SubResource("GDScript_0peiv")
+
+[node name="@StaticBody2D@94229" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@94229"]
+shape = SubResource("RectangleShape2D_rmljf")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@94229"]
+script = SubResource("GDScript_0peiv")
+
+[node name="@StaticBody2D@132910" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@132910"]
+shape = SubResource("RectangleShape2D_dwby3")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@132910"]
+script = SubResource("GDScript_0peiv")
+
+[node name="@StaticBody2D@257068" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@257068"]
+shape = SubResource("RectangleShape2D_vgoku")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@257068"]
+script = SubResource("GDScript_0peiv")
+
+[node name="@StaticBody2D@262462" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@262462"]
+shape = SubResource("RectangleShape2D_nwd4t")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@262462"]
+script = SubResource("GDScript_ulyal")
+
+[node name="@StaticBody2D@17356" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@17356"]
+shape = SubResource("RectangleShape2D_omw2s")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@17356"]
+script = SubResource("GDScript_ou4rc")
+
+[node name="@StaticBody2D@17355" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@17355"]
+shape = SubResource("RectangleShape2D_38kvq")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@17355"]
+script = SubResource("GDScript_lcvkb")
+
+[node name="@StaticBody2D@17362" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@17362"]
+shape = SubResource("RectangleShape2D_sx4gw")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@17362"]
+script = SubResource("GDScript_1twsl")
+shape_type = 1
+shape_color = Color(0, 0.551577, 0.161029, 1)
+circle_radius = 50.0
+rectangle_size = Vector2(4850, 1024)
+
+[node name="Collisionmaker" parent="." groups=["breakable"] instance=ExtResource("3_khkef")]
+position = Vector2(6430, 288)
+potato_texture = ExtResource("4_5w54g")

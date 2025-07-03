@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0ponoq3fqag6"]
+[gd_scene load_steps=2 format=3 uid="uid://c0ponoq3fqag6"]
 
 [sub_resource type="GDScript" id="GDScript_bekdv"]
 script/source = "@tool
@@ -73,12 +73,17 @@ var collision_body: CollisionObject2D = null
 # Helper: Returns a node to use as owner.
 func _get_owner_node() -> Node:
 	if not is_inside_tree():
+		# Avoid calling get_tree() if not inside the scene tree.
 		return self
 	var tree = get_tree()
 	if tree and tree.edited_scene_root:
 		return tree.edited_scene_root
 	return self
-
+	# In runtime we want our nodes saved with the scene; in tool mode, return null.
+	if (get_tree() and not Engine.is_editor_hint()):
+		return get_tree().edited_scene_root
+	else:
+		return null
 
 #------------------------------------------------------------------------------
 # Inner Class: VisualShape
@@ -260,37 +265,8 @@ func _on_fade_area_body_exited(body: Node) -> void:
 			tween.tween_property(visual_node, \"modulate\", Color(1, 1, 1, 1), fade_duration)
 "
 
-[sub_resource type="GDScript" id="GDScript_yi4j6"]
-
-[sub_resource type="GDScript" id="GDScript_lbwwv"]
-
-[sub_resource type="GDScript" id="GDScript_v2tl7"]
-
-[sub_resource type="GDScript" id="GDScript_lcvkb"]
-
-[sub_resource type="GDScript" id="GDScript_1twsl"]
-
 [node name="ShapeMaker" type="Node2D"]
 process_mode = 3
 script = SubResource("GDScript_bekdv")
 
 [node name="ShapeContainer" type="Node2D" parent="."]
-
-[node name="VisualShape" type="Node2D" parent="."]
-script = SubResource("GDScript_yi4j6")
-
-[node name="@Node2D@17456" type="Node2D" parent="."]
-script = SubResource("GDScript_lbwwv")
-
-[node name="@Node2D@17346" type="Node2D" parent="."]
-script = SubResource("GDScript_v2tl7")
-
-[node name="_Node2D_17346" type="Node2D" parent="."]
-script = SubResource("GDScript_lcvkb")
-
-[node name="@Node2D@17353" type="Node2D" parent="."]
-script = SubResource("GDScript_1twsl")
-shape_type = 0
-shape_color = Color(1, 0, 0, 1)
-circle_radius = 50.0
-rectangle_size = Vector2(100, 50)
