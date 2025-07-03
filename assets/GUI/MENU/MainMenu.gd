@@ -28,8 +28,8 @@ func _on_button_pressed(button: Button) -> void:
 	#	- "child": the name of the child TextureRect node used for visual feedback.
 	#	- "scene": (optional) the scene path to load when this button is pressed.
 	var button_config = {
-		"Button_PLAY": { "child": "Play", "scene": "res://Scenes/Levels/main_world.tscn" },
-		"Button_LEVELS": { "child": "Levels", "scene": "res://Scenes/Levels/Menus/level_select.tscn" },
+		"Button_PLAY": { "child": "Play", "scene": "res://src/levels/main_world.tscn" },
+		"Button_LEVELS": { "child": "Levels", "scene": "res://src/levels/Menus/level_select.tscn" },
 		"Button_SETTINGS": { "child": "Settings" },
 		"Button_QUIT": { "child": "Quit" }
 	}

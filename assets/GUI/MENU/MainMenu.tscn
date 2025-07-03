@@ -155,7 +155,7 @@ offset_bottom = 1766.0
 size_flags_horizontal = 4
 text = "Levels
 "
-metadata/destination = "res://Scenes/Levels/Menus/level_select.tscn"
+metadata/destination = "res://src/levels/Menus/level_select.tscn"
 
 [node name="StandardButtonSettings" parent="." instance=ExtResource("20_3o2gw")]
 offset_left = 769.0

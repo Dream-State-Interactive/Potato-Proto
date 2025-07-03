@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6sk8c8ivubu"]
 
-[ext_resource type="Script" path="res://Scenes/Levels/Menus/level_select.gd" id="1_aqssb"]
+[ext_resource type="Script" path="res://src/levels/Menus/level_select.gd" id="1_aqssb"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="2_aal82"]
 
 [node name="LevelSelect" type="Node2D"]
@@ -15,7 +15,7 @@ offset_right = 4596.0
 offset_bottom = 1476.0
 size_flags_horizontal = 4
 text = "Level 1"
-metadata/destination = "res://Scenes/Levels/proto/level_1_proto.tscn"
+metadata/destination = "res://src/levels/proto/level_1_proto.tscn"
 
 [node name="StandardButton2" parent="CanvasLayer" instance=ExtResource("2_aal82")]
 offset_left = 756.0
@@ -24,7 +24,7 @@ offset_right = 4596.0
 offset_bottom = 1620.0
 size_flags_horizontal = 4
 text = "Level 2"
-metadata/destination = "res://Scenes/Levels/main_world.tscn"
+metadata/destination = "res://Scenes/Levels/Menus/main_world.tscn"
 
 [node name="StandardButton3" parent="CanvasLayer" instance=ExtResource("2_aal82")]
 offset_left = 758.0
@@ -42,6 +42,7 @@ offset_right = 4600.0
 offset_bottom = 1904.0
 size_flags_horizontal = 4
 text = "Level 4"
+metadata/destination = "res://src/levels/level_proto/level_proto.tscn"
 
 [node name="StandardButton2" parent="." instance=ExtResource("2_aal82")]
 offset_left = 803.0

@@ -12,15 +12,15 @@ func _process(delta: float) -> void:
 
 
 func _on_level_1_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Levels/proto/level_1_proto.tscn")
+	get_tree().change_scene_to_file("res://src/levels/proto/level_1_proto.tscn")
 
 
 func _on_level_2_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Levels/main_world.tscn")
+	get_tree().change_scene_to_file("res://src/levels/main_world.tscn")
 
 
 func _on_level_3_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Levels/alex_proto.tscn")
+	get_tree().change_scene_to_file("res://src/levels/alex_proto.tscn")
 
 
 func _on_level_4_button_pressed() -> void:
