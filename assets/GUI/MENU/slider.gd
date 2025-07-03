@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var masterVolumeSlider = $MasterVolumeSlider
+@onready var settingName = get_meta("setting_name")
 
 
 # Called when the node enters the scene tree for the first time.
