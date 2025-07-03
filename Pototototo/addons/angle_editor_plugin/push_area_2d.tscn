@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo57ultu3ebg0"]
+
+[ext_resource type="Script" path="res://addons/angle_editor_plugin/push_area_2d.gd" id="1_eh33e"]
+[ext_resource type="PackedScene" uid="uid://b176bqb5uiawq" path="res://addons/angle_editor_plugin/angle_gizmo_2d.tscn" id="2_mko7y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sb47h"]
+size = Vector2(2368, 744)
+
+[node name="PushArea2d" type="Area2D"]
+script = ExtResource("1_eh33e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sb47h")
+
+[node name="AngleGizmo2D" parent="." instance=ExtResource("2_mko7y")]
+
+[node name="OriginHandle" type="Node2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

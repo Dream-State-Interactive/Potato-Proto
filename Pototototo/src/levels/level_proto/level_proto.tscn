@@ -1,0 +1,590 @@
+[gd_scene load_steps=20 format=3 uid="uid://ddenat04hgjrs"]
+
+[ext_resource type="PackedScene" uid="uid://dkw86e8mfcgdq" path="res://src/player/player.tscn" id="1_1snx7"]
+[ext_resource type="PackedScene" uid="uid://cv7x1kq2rucuc" path="res://src/env/water/water.tscn" id="1_5ruyx"]
+[ext_resource type="Script" path="res://src/env/water/water.gd" id="1_oyse2"]
+[ext_resource type="PackedScene" uid="uid://dwja6ji5hvuya" path="res://src/hazards/hazard_base.tscn" id="2_bgp88"]
+[ext_resource type="PackedScene" uid="uid://cg5no13kqh8hv" path="res://src/collectibles/starch_point.tscn" id="3_opomh"]
+[ext_resource type="Script" path="res://addons/angle_editor_plugin/push_area_2d.gd" id="4_das8e"]
+[ext_resource type="PackedScene" uid="uid://b176bqb5uiawq" path="res://addons/angle_editor_plugin/angle_gizmo_2d.tscn" id="5_a4kam"]
+[ext_resource type="PackedScene" uid="uid://cifnswa6rff4v" path="res://src/env/breakable/FracturePolygon2D.tscn" id="8_7q2dc"]
+[ext_resource type="Script" path="res://src/env/breakable/fracturable2D.gd" id="8_ocq57"]
+[ext_resource type="Texture2D" uid="uid://c8r7ip8m4sfgw" path="res://assets/graphics/sprites/_dev/test.png" id="10_tqfo4"]
+[ext_resource type="PackedScene" uid="uid://mpxbenmev5la" path="res://src/hazards/knife/knife.tscn" id="11_s71ax"]
+[ext_resource type="PackedScene" uid="uid://cvub7kkptluj1" path="res://src/hazards/launcher.tscn" id="12_i86by"]
+
+[sub_resource type="Curve2D" id="Curve2D_olal5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 192, 0)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ks6vr"]
+resource_local_to_scene = true
+size = Vector2(192, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ha0r0"]
+size = Vector2(12, 3.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b2kwl"]
+size = Vector2(320, 24)
+
+[sub_resource type="Curve2D" id="Curve2D_rl4y1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2280, 0)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k20l5"]
+resource_local_to_scene = true
+size = Vector2(2280, 1304)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sb47h"]
+size = Vector2(2368, 744)
+
+[node name="LevelProto" type="Node2D"]
+
+[node name="Sky" type="Polygon2D" parent="."]
+color = Color(0.246157, 0.691342, 0.749188, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 832.559, 0, 0, 0)
+
+[node name="Floor2" type="StaticBody2D" parent="."]
+position = Vector2(-320, 512)
+scale = Vector2(0.111111, 0.209877)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor2"]
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="Ground2" type="Polygon2D" parent="Floor2"]
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Floor2"]
+position = Vector2(-1166.4, 651.811)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="Ground3" type="Polygon2D" parent="Floor2"]
+position = Vector2(-1166.4, 651.811)
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Floor2"]
+position = Vector2(-2318.4, 3.81232)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="Ground4" type="Polygon2D" parent="Floor2"]
+position = Vector2(-2318.4, 3.81232)
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Floor2"]
+polygon = PackedVector2Array(1152, 190.588, 2880, 190.588, 2880, 647.999, 1152, 647.999)
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor2"]
+color = Color(0.941176, 0.392157, 0, 1)
+polygon = PackedVector2Array(1152, 190.588, 2880, 190.588, 2880, 647.999, 1152, 647.999)
+
+[node name="StartingFloor" type="StaticBody2D" parent="."]
+position = Vector2(0, 512)
+scale = Vector2(1, 0.209877)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StartingFloor"]
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="Ground" type="Polygon2D" parent="StartingFloor"]
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="StartingFloor2" type="StaticBody2D" parent="."]
+position = Vector2(-3.05176e-05, 304)
+rotation = -1.57771
+scale = Vector2(1, 0.209877)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StartingFloor2"]
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="Ground" type="Polygon2D" parent="StartingFloor2"]
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(128, -568)
+scale = Vector2(1, 0.209877)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+color = Color(0.941176, 0.392157, 0, 1)
+polygon = PackedVector2Array(-704, 5183.99, -880, 4993.4, -1232, 4269.17, -1448, 2477.64, -1408, -343.058, -1240, -2325.17, -944, -4154.81, -648, -5031.52, -224, -5908.22, 120, -5755.75, 480, -5641.4, 776, -5069.64, 976, -4231.05, 1128, -2782.58, 1168, -1181.64, 1168, -762.351, 1264, -762.351, 1264, -7204.22, -1696, -7166.1, -1728, 5145.87)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-704, 5183.99, -880, 4993.4, -1232, 4269.17, -1448, 2477.64, -1408, -343.058, -1240, -2325.17, -944, -4154.81, -648, -5031.52, -224, -5908.22, 120, -5755.75, 480, -5641.4, 776, -5069.64, 976, -4231.05, 1128, -2782.58, 1168, -1181.64, 1168, -762.351, 1264, -762.351, 1264, -7204.22, -1696, -7166.1, -1728, 5145.87)
+
+[node name="StartingFloor3" type="StaticBody2D" parent="."]
+position = Vector2(128, -576)
+scale = Vector2(1, 0.209877)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StartingFloor3"]
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="Ground" type="Polygon2D" parent="StartingFloor3"]
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="SlidingThing" type="Node2D" parent="."]
+position = Vector2(4280, -233)
+rotation = -0.495599
+
+[node name="GrooveJoint2D" type="GrooveJoint2D" parent="SlidingThing"]
+position = Vector2(81.6676, 48.6967)
+rotation = -1.57079
+node_a = NodePath("../GroovePlatform")
+node_b = NodePath("../Cart")
+length = 2755.0
+initial_offset = 2730.0
+
+[node name="GroovePlatform" type="StaticBody2D" parent="SlidingThing"]
+position = Vector2(342.245, 1.9563)
+scale = Vector2(1, 0.209877)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlidingThing/GroovePlatform"]
+polygon = PackedVector2Array(-456, 628.94, 2536, 647.999, 2528, 457.411, -456, 438.352)
+
+[node name="Rail" type="Polygon2D" parent="SlidingThing/GroovePlatform"]
+color = Color(0.77665, 0.624445, 0.947491, 1)
+polygon = PackedVector2Array(-456, 628.94, 2536, 647.999, 2528, 457.411, -456, 438.352)
+
+[node name="Cart" type="RigidBody2D" parent="SlidingThing"]
+position = Vector2(2829.99, 30.4958)
+lock_rotation = true
+
+[node name="Polygon2D" type="Polygon2D" parent="SlidingThing/Cart"]
+position = Vector2(-170.239, -83.712)
+color = Color(0.263529, 0.583746, 0.778461, 1)
+polygon = PackedVector2Array(0, 4, 10, 70, 29, 138, 284, 139, 321, 70, 342, 6, 302, -27, 271, 14, 262, 73, 115, 98, 61, 92, 38, 55, 27, -34, -20, -49)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SlidingThing/Cart"]
+position = Vector2(-170.239, -83.712)
+polygon = PackedVector2Array(0, 4, 10, 70, 29, 138, 284, 139, 321, 70, 342, 6, 302, -27, 271, 14, 262, 73, 115, 98, 61, 92, 38, 55, 27, -34, -20, -49)
+
+[node name="2ndPlatform" type="StaticBody2D" parent="."]
+position = Vector2(0, 512)
+scale = Vector2(1, 0.209877)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="2ndPlatform"]
+position = Vector2(1900, 643.234)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
+
+[node name="Ground" type="Polygon2D" parent="2ndPlatform"]
+position = Vector2(1901, 600.352)
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 324.626, 1152, 0, 0, 0)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(0, 512)
+scale = Vector2(1, 0.209877)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
+position = Vector2(2932, 2644.41)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 324.626, 1152, 0, 0, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D3"]
+position = Vector2(2941, 1272.17)
+polygon = PackedVector2Array(3, 1396.06, 107, 1396.06, 120, 786.175, 91, 9.5293, 0, 0)
+
+[node name="Ground" type="Polygon2D" parent="StaticBody2D3"]
+position = Vector2(2936, 2639.64)
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 324.626, 1152, 0, 0, 0)
+
+[node name="Ground2" type="Polygon2D" parent="StaticBody2D3"]
+position = Vector2(2411, 1739.11)
+color = Color(0.941356, 0.392152, 0, 1)
+polygon = PackedVector2Array(529, 924.351, 633, 919.586, 652, 324.626, 622, -519.352, 533, -519.352)
+
+[node name="Player" parent="." instance=ExtResource("1_1snx7")]
+position = Vector2(2160, 328)
+mid_speed_threshold = 200.0
+high_speed_threshold = 400.0
+
+[node name="Water" type="Node2D" parent="."]
+position = Vector2(-192, 520)
+script = ExtResource("1_oyse2")
+water_color = Color(0.301961, 0.447059, 0.831373, 0.8)
+water_top_color = Color(0.755243, 0.882401, 1, 0.129412)
+water_top_width = 2.0
+width = 192.0
+height = 32.0
+
+[node name="Path2D" type="Path2D" parent="Water"]
+curve = SubResource("Curve2D_olal5")
+
+[node name="Polygon2D" type="Polygon2D" parent="Water"]
+color = Color(0.301961, 0.447059, 0.831373, 0.8)
+polygon = PackedVector2Array(0, 0, 192, 0, 192, 32, 0, 32)
+
+[node name="Area2D" type="Area2D" parent="Water"]
+gravity_space_override = 1
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+gravity = 490.0
+linear_damp_space_override = 1
+linear_damp = 1.0
+angular_damp_space_override = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water/Area2D"]
+position = Vector2(96, 16)
+shape = SubResource("RectangleShape2D_ks6vr")
+
+[node name="Line2D" type="Line2D" parent="Water"]
+points = PackedVector2Array(0, 0, 2.15625, 0, 4.74609, 0, 8.25, 0, 12.5977, 0, 15.0659, 0, 17.7188, 0, 20.5474, 0, 23.543, 0, 26.6968, 0, 30, 0, 33.4438, 0, 37.0195, 0, 40.7183, 0, 44.5313, 0, 48.4497, 0, 52.4648, 0, 56.5679, 0, 60.75, 0, 65.0024, 0, 69.3164, 0, 73.6831, 0, 78.0938, 0, 82.5396, 0, 87.0117, 0, 91.5015, 0, 96, 0, 100.499, 0, 104.988, 0, 109.46, 0, 113.906, 0, 118.317, 0, 122.684, 0, 126.998, 0, 131.25, 0, 135.432, 0, 139.535, 0, 143.55, 0, 147.469, 0, 151.282, 0, 154.98, 0, 158.556, 0, 162, 0, 165.303, 0, 168.457, 0, 171.453, 0, 174.281, 0, 176.934, 0, 179.402, 0, 183.75, 0, 187.254, 0, 189.844, 0, 192, 0)
+width = 2.0
+default_color = Color(0.755243, 0.882401, 1, 0.129412)
+
+[node name="HazardBase" parent="." instance=ExtResource("2_bgp88")]
+position = Vector2(431, 451)
+
+[node name="StarchPoints" type="Node2D" parent="."]
+
+[node name="StarchPoint" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(306, 420)
+
+[node name="StarchPoint2" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(448, 320)
+
+[node name="StarchPoint3" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(629, 446)
+
+[node name="StarchPoint4" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(779, 450)
+
+[node name="StarchPoint5" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(844, 451)
+
+[node name="StarchPoint6" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(910, 434)
+
+[node name="StarchPoint7" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(960, 449)
+
+[node name="StarchPoint8" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1004, 433)
+rotation = -0.218669
+
+[node name="StarchPoint9" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1054, 456)
+rotation = -0.218669
+
+[node name="StarchPoint10" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1126, 466)
+rotation = -0.218669
+
+[node name="StarchPoint11" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1313, 322)
+rotation = -0.218669
+
+[node name="StarchPoint12" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1516, 233)
+rotation = -0.218669
+
+[node name="StarchPoint13" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1821, 339)
+rotation = -0.218669
+
+[node name="StarchPoint14" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1267, 531)
+rotation = -0.218669
+
+[node name="StarchPoint15" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1427, 588)
+rotation = -0.218669
+
+[node name="StarchPoint16" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1571, 599)
+rotation = -0.218669
+
+[node name="StarchPoint17" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1738, 589)
+rotation = -0.218669
+
+[node name="StarchPoint18" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1936, 557)
+rotation = -0.532195
+
+[node name="StarchPoint19" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(2230, 541)
+rotation = -0.532195
+
+[node name="StarchPoint20" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(2543, 533)
+rotation = -0.532195
+
+[node name="StarchPoint21" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(2846, 533)
+rotation = -0.532195
+
+[node name="StarchPoint22" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3171, 549)
+rotation = -0.532195
+
+[node name="StarchPoint23" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3277, 700)
+rotation = -0.532195
+
+[node name="StarchPoint24" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3360, 903)
+rotation = -0.532195
+
+[node name="StarchPoint25" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3120, 1019)
+rotation = -0.532195
+
+[node name="StarchPoint26" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3268, 1025)
+rotation = -0.532195
+
+[node name="StarchPoint27" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3574, 1009)
+rotation = -0.532195
+
+[node name="StarchPoint28" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3804, 1014)
+rotation = -0.532195
+
+[node name="StarchPoint29" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(3966, 1006)
+rotation = -0.532195
+
+[node name="PlankJoint1" type="RigidBody2D" parent="."]
+position = Vector2(1171.84, 659.219)
+rotation = 0.523598
+
+[node name="Polygon2D" type="Polygon2D" parent="PlankJoint1"]
+color = Color(0.776471, 0.176471, 0.329412, 1)
+polygon = PackedVector2Array(-26.5258, -2.2583, 26.3114, -2.74158, 26.5795, 1.72253, -26.2577, 2.20575)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlankJoint1"]
+position = Vector2(0.526855, 0)
+shape = SubResource("RectangleShape2D_ha0r0")
+
+[node name="PlankJoint2" type="RigidBody2D" parent="."]
+position = Vector2(1872, 667)
+rotation = -0.358124
+
+[node name="Polygon2D" type="Polygon2D" parent="PlankJoint2"]
+color = Color(0.776471, 0.176471, 0.329412, 1)
+polygon = PackedVector2Array(-26.5258, -2.2583, 26.3114, -2.74158, 26.5795, 1.72253, -26.2577, 2.20575)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlankJoint2"]
+shape = SubResource("RectangleShape2D_ha0r0")
+
+[node name="PlankJoint3" type="RigidBody2D" parent="."]
+position = Vector2(1523, 676)
+
+[node name="Polygon2D" type="Polygon2D" parent="PlankJoint3"]
+color = Color(0.776471, 0.176471, 0.329412, 1)
+polygon = PackedVector2Array(-8, -1, 5, -1, 5, 1.72253, -8, 2.20575)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlankJoint3"]
+position = Vector2(-2, 0.75)
+shape = SubResource("RectangleShape2D_ha0r0")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(1151, 645)
+node_a = NodePath("../StartingFloor")
+node_b = NodePath("../PlankJoint1")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="."]
+position = Vector2(1196, 674)
+node_a = NodePath("../PlankJoint1")
+node_b = NodePath("../Plank1")
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="."]
+position = Vector2(1515, 678)
+node_a = NodePath("../Plank1")
+node_b = NodePath("../PlankJoint3")
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="."]
+position = Vector2(1527, 678)
+node_a = NodePath("../Plank2")
+node_b = NodePath("../PlankJoint3")
+
+[node name="PinJoint2D5" type="PinJoint2D" parent="."]
+position = Vector2(1848, 678)
+node_a = NodePath("../PlankJoint2")
+node_b = NodePath("../Plank2")
+
+[node name="PinJoint2D6" type="PinJoint2D" parent="."]
+position = Vector2(1900, 657)
+node_a = NodePath("../2ndPlatform")
+node_b = NodePath("../PlankJoint2")
+
+[node name="Plank1" type="RigidBody2D" parent="."]
+position = Vector2(1195, 676)
+
+[node name="Polygon2D" type="Polygon2D" parent="Plank1"]
+color = Color(0.508366, 0.298462, 0.185717, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 24, 0, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plank1"]
+position = Vector2(160, 12)
+shape = SubResource("RectangleShape2D_b2kwl")
+
+[node name="Plank2" type="RigidBody2D" parent="."]
+position = Vector2(1527, 677)
+
+[node name="Polygon2D" type="Polygon2D" parent="Plank2"]
+color = Color(0.508366, 0.298462, 0.185717, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 24, 0, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plank2"]
+position = Vector2(160, 12)
+shape = SubResource("RectangleShape2D_b2kwl")
+
+[node name="levelfloor" type="StaticBody2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="levelfloor"]
+
+[node name="wallfloor" type="CollisionPolygon2D" parent="levelfloor/StaticBody2D"]
+polygon = PackedVector2Array(3896, 1192, 3896, 2552, 6432, 2552, 6432, 2432, 4032, 2432, 4032, 1192)
+
+[node name="pool_wall" type="CollisionPolygon2D" parent="levelfloor/StaticBody2D"]
+polygon = PackedVector2Array(8824, 3792, 8824, 2328, 8712, 2328, 8712, 3792)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="levelfloor/StaticBody2D"]
+position = Vector2(2400, 1334)
+polygon = PackedVector2Array(3896, 1192, 3896, 2552, 6432, 2552, 6432, 2442, 4032, 2442, 4032, 1192)
+
+[node name="wallfloor" type="Polygon2D" parent="levelfloor"]
+color = Color(0.941176, 0.392157, 0, 1)
+polygon = PackedVector2Array(3896, 1192, 3896, 2552, 6432, 2552, 6432, 2432, 4032, 2432, 4032, 1192)
+
+[node name="pool" type="Polygon2D" parent="levelfloor"]
+position = Vector2(2400, 1344)
+color = Color(0.941176, 0.392157, 0, 1)
+polygon = PackedVector2Array(3896, 1192, 3896, 2552, 6432, 2552, 6432, 2432, 4032, 2432, 4032, 1192)
+
+[node name="pool_wall" type="Polygon2D" parent="levelfloor/pool"]
+position = Vector2(-2400, -1344)
+color = Color(0.941176, 0.392157, 0, 1)
+polygon = PackedVector2Array(8824, 3792, 8824, 2328, 8712, 2328, 8712, 3792)
+
+[node name="Fan" type="Polygon2D" parent="levelfloor"]
+position = Vector2(104, 0)
+color = Color(1, 1, 0.141176, 1)
+polygon = PackedVector2Array(3456, 1720, 3456, 2552, 3920, 2552, 3920, 1704)
+
+[node name="Button" type="Button" parent="levelfloor/Fan"]
+offset_left = 3600.0
+offset_top = 2072.0
+offset_right = 3806.0
+offset_bottom = 2217.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "FAN"
+
+[node name="Water2" type="Node2D" parent="."]
+position = Vector2(6432, 2472)
+script = ExtResource("1_oyse2")
+water_color = Color(0.249541, 0.535878, 0.438301, 0.8)
+water_top_color = Color(0.890155, 1, 0.212346, 1)
+water_top_width = 8.0
+width = 2280.0
+height = 1304.0
+damping = 2.0
+wave_spread = 2.0
+splash_force_multiplier = 0.8
+buoyancy_gravity_scale = 0.2
+water_linear_damp = 4.0
+water_angular_damp = 6.0
+
+[node name="Path2D" type="Path2D" parent="Water2"]
+curve = SubResource("Curve2D_rl4y1")
+
+[node name="Polygon2D" type="Polygon2D" parent="Water2"]
+color = Color(0.249541, 0.535878, 0.438301, 0.8)
+polygon = PackedVector2Array(0, 0, 2280, 0, 2280, 1304, 0, 1304)
+
+[node name="Area2D" type="Area2D" parent="Water2"]
+gravity_space_override = 1
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+gravity = 196.0
+linear_damp_space_override = 1
+linear_damp = 4.0
+angular_damp_space_override = 1
+angular_damp = 6.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water2/Area2D"]
+position = Vector2(1140, 652)
+shape = SubResource("RectangleShape2D_k20l5")
+
+[node name="Line2D" type="Line2D" parent="Water2"]
+points = PackedVector2Array(0, 0, 1.65253, 0, 6.54053, 0, 10.1652, 0, 14.5596, 0, 17.0414, 0, 19.7107, 0, 22.566, 0, 25.6055, 0, 28.8276, 0, 32.2308, 0, 35.8134, 0, 39.5737, 0, 43.5101, 0, 47.621, 0, 51.9048, 0, 56.3599, 0, 60.9845, 0, 65.7771, 0, 70.736, 0, 73.2774, 0, 75.8597, 0, 78.4828, 0, 81.1464, 0, 83.8504, 0, 86.5946, 0, 89.3787, 0, 92.2026, 0, 95.066, 0, 97.9688, 0, 100.911, 0, 103.891, 0, 106.911, 0, 109.969, 0, 113.066, 0, 116.2, 0, 119.373, 0, 122.583, 0, 125.83, 0, 129.115, 0, 132.437, 0, 135.796, 0, 139.192, 0, 142.624, 0, 146.093, 0, 149.597, 0, 153.138, 0, 156.714, 0, 160.325, 0, 163.972, 0, 167.654, 0, 171.371, 0, 175.122, 0, 178.908, 0, 182.728, 0, 186.582, 0, 190.47, 0, 194.392, 0, 198.347, 0, 202.335, 0, 206.356, 0, 210.41, 0, 214.497, 0, 218.616, 0, 222.767, 0, 226.951, 0, 231.166, 0, 235.413, 0, 239.691, 0, 244, 0, 248.34, 0, 252.711, 0, 257.113, 0, 261.545, 0, 266.007, 0, 270.499, 0, 275.021, 0, 279.573, 0, 284.154, 0, 288.764, 0, 293.403, 0, 298.07, 0, 302.766, 0, 307.491, 0, 312.244, 0, 317.024, 0, 321.833, 0, 326.668, 0, 331.532, 0, 336.422, 0, 341.339, 0, 346.283, 0, 351.253, 0, 356.25, 0, 358.758, 0, 361.273, 0, 363.794, 0, 366.321, 0, 368.855, 0, 371.396, 0, 373.943, 0, 376.496, 0, 379.055, 0, 381.621, 0, 384.193, 0, 386.771, 0, 389.355, 0, 391.946, 0, 394.543, 0, 397.146, 0, 399.755, 0, 402.37, 0, 404.991, 0, 407.618, 0, 410.252, 0, 412.891, 0, 415.536, 0, 418.187, 0, 420.844, 0, 423.507, 0, 426.176, 0, 428.851, 0, 431.531, 0, 434.217, 0, 436.909, 0, 439.607, 0, 442.31, 0, 445.019, 0, 447.734, 0, 450.455, 0, 453.181, 0, 455.912, 0, 458.649, 0, 461.392, 0, 464.14, 0, 466.894, 0, 469.653, 0, 472.417, 0, 475.187, 0, 477.963, 0, 480.743, 0, 483.529, 0, 486.321, 0, 489.117, 0, 491.919, 0, 494.726, 0, 497.538, 0, 500.356, 0, 503.178, 0, 506.006, 0, 508.839, 0, 511.677, 0, 514.519, 0, 517.367, 0, 520.22, 0, 523.078, 0, 525.941, 0, 528.809, 0, 531.681, 0, 534.559, 0, 537.441, 0, 540.328, 0, 543.22, 0, 546.117, 0, 549.018, 0, 551.924, 0, 554.835, 0, 557.751, 0, 560.671, 0, 563.596, 0, 566.525, 0, 569.459, 0, 572.397, 0, 575.34, 0, 578.288, 0, 581.24, 0, 584.196, 0, 587.157, 0, 590.122, 0, 593.091, 0, 596.065, 0, 599.043, 0, 602.026, 0, 605.012, 0, 608.003, 0, 610.998, 0, 613.997, 0, 617.001, 0, 620.008, 0, 623.02, 0, 626.036, 0, 629.055, 0, 632.079, 0, 635.107, 0, 638.139, 0, 641.175, 0, 644.214, 0, 647.258, 0, 650.305, 0, 653.357, 0, 656.412, 0, 659.47, 0, 662.533, 0, 665.599, 0, 668.67, 0, 671.744, 0, 674.821, 0, 677.902, 0, 680.987, 0, 684.075, 0, 687.167, 0, 690.263, 0, 693.362, 0, 696.464, 0, 699.57, 0, 702.679, 0, 705.792, 0, 708.908, 0, 712.028, 0, 715.151, 0, 718.277, 0, 721.406, 0, 724.539, 0, 727.675, 0, 730.814, 0, 733.957, 0, 737.102, 0, 740.251, 0, 743.402, 0, 746.557, 0, 749.715, 0, 752.876, 0, 756.04, 0, 759.207, 0, 762.377, 0, 765.55, 0, 768.725, 0, 771.904, 0, 775.085, 0, 778.27, 0, 781.457, 0, 784.647, 0, 787.839, 0, 791.035, 0, 794.233, 0, 797.433, 0, 800.637, 0, 803.843, 0, 807.051, 0, 810.262, 0, 813.476, 0, 816.692, 0, 819.911, 0, 823.132, 0, 826.356, 0, 829.582, 0, 832.81, 0, 836.041, 0, 839.274, 0, 842.51, 0, 845.748, 0, 848.988, 0, 852.23, 0, 855.475, 0, 858.721, 0, 861.97, 0, 865.221, 0, 868.474, 0, 871.73, 0, 874.987, 0, 878.246, 0, 881.508, 0, 884.771, 0, 888.036, 0, 891.303, 0, 894.573, 0, 897.844, 0, 901.116, 0, 904.391, 0, 907.668, 0, 910.946, 0, 914.226, 0, 917.508, 0, 920.791, 0, 924.076, 0, 927.363, 0, 930.652, 0, 933.942, 0, 937.233, 0, 940.527, 0, 943.821, 0, 947.118, 0, 950.415, 0, 953.715, 0, 957.015, 0, 960.317, 0, 963.62, 0, 966.925, 0, 970.231, 0, 973.539, 0, 976.847, 0, 980.157, 0, 983.468, 0, 986.781, 0, 990.094, 0, 993.409, 0, 996.724, 0, 1000.04, 0, 1003.36, 0, 1006.68, 0, 1010, 0, 1013.32, 0, 1016.64, 0, 1019.96, 0, 1023.29, 0, 1026.61, 0, 1029.94, 0, 1033.26, 0, 1036.59, 0, 1039.92, 0, 1043.25, 0, 1046.58, 0, 1049.91, 0, 1053.24, 0, 1056.57, 0, 1059.9, 0, 1063.24, 0, 1066.57, 0, 1069.9, 0, 1073.24, 0, 1076.57, 0, 1079.91, 0, 1083.24, 0, 1086.58, 0, 1089.92, 0, 1093.25, 0, 1096.59, 0, 1099.93, 0, 1103.27, 0, 1106.61, 0, 1109.94, 0, 1113.28, 0, 1116.62, 0, 1119.96, 0, 1123.3, 0, 1126.64, 0, 1129.98, 0, 1133.32, 0, 1136.66, 0, 1140, 0, 1143.34, 0, 1146.68, 0, 1150.02, 0, 1153.36, 0, 1156.7, 0, 1160.04, 0, 1163.38, 0, 1166.72, 0, 1170.06, 0, 1173.39, 0, 1176.73, 0, 1180.07, 0, 1183.41, 0, 1186.75, 0, 1190.08, 0, 1193.42, 0, 1196.76, 0, 1200.09, 0, 1203.43, 0, 1206.76, 0, 1210.1, 0, 1213.43, 0, 1216.76, 0, 1220.1, 0, 1223.43, 0, 1226.76, 0, 1230.09, 0, 1233.42, 0, 1236.75, 0, 1240.08, 0, 1243.41, 0, 1246.74, 0, 1250.06, 0, 1253.39, 0, 1256.71, 0, 1260.04, 0, 1263.36, 0, 1266.68, 0, 1270, 0, 1273.32, 0, 1276.64, 0, 1279.96, 0, 1283.28, 0, 1286.59, 0, 1289.91, 0, 1293.22, 0, 1296.53, 0, 1299.84, 0, 1303.15, 0, 1306.46, 0, 1309.77, 0, 1313.07, 0, 1316.38, 0, 1319.68, 0, 1322.98, 0, 1326.29, 0, 1329.58, 0, 1332.88, 0, 1336.18, 0, 1339.47, 0, 1342.77, 0, 1346.06, 0, 1349.35, 0, 1352.64, 0, 1355.92, 0, 1359.21, 0, 1362.49, 0, 1365.77, 0, 1369.05, 0, 1372.33, 0, 1375.61, 0, 1378.88, 0, 1382.16, 0, 1385.43, 0, 1388.7, 0, 1391.96, 0, 1395.23, 0, 1398.49, 0, 1401.75, 0, 1405.01, 0, 1408.27, 0, 1411.53, 0, 1414.78, 0, 1418.03, 0, 1421.28, 0, 1424.53, 0, 1427.77, 0, 1431.01, 0, 1434.25, 0, 1437.49, 0, 1440.73, 0, 1443.96, 0, 1447.19, 0, 1450.42, 0, 1453.64, 0, 1456.87, 0, 1460.09, 0, 1463.31, 0, 1466.52, 0, 1469.74, 0, 1472.95, 0, 1476.16, 0, 1479.36, 0, 1482.57, 0, 1485.77, 0, 1488.97, 0, 1492.16, 0, 1495.35, 0, 1498.54, 0, 1501.73, 0, 1504.91, 0, 1508.1, 0, 1511.27, 0, 1514.45, 0, 1517.62, 0, 1520.79, 0, 1523.96, 0, 1527.12, 0, 1530.28, 0, 1533.44, 0, 1536.6, 0, 1539.75, 0, 1542.9, 0, 1546.04, 0, 1549.19, 0, 1552.32, 0, 1555.46, 0, 1558.59, 0, 1561.72, 0, 1564.85, 0, 1567.97, 0, 1571.09, 0, 1574.21, 0, 1577.32, 0, 1580.43, 0, 1583.54, 0, 1586.64, 0, 1589.74, 0, 1592.83, 0, 1595.92, 0, 1599.01, 0, 1602.1, 0, 1605.18, 0, 1608.26, 0, 1611.33, 0, 1614.4, 0, 1617.47, 0, 1620.53, 0, 1623.59, 0, 1626.64, 0, 1629.69, 0, 1632.74, 0, 1635.79, 0, 1638.83, 0, 1641.86, 0, 1644.89, 0, 1647.92, 0, 1650.94, 0, 1653.96, 0, 1656.98, 0, 1659.99, 0, 1663, 0, 1666, 0, 1669, 0, 1672, 0, 1674.99, 0, 1677.97, 0, 1680.96, 0, 1683.94, 0, 1686.91, 0, 1689.88, 0, 1692.84, 0, 1695.8, 0, 1698.76, 0, 1701.71, 0, 1704.66, 0, 1707.6, 0, 1710.54, 0, 1713.47, 0, 1716.4, 0, 1719.33, 0, 1722.25, 0, 1725.16, 0, 1728.08, 0, 1730.98, 0, 1733.88, 0, 1736.78, 0, 1739.67, 0, 1742.56, 0, 1745.44, 0, 1748.32, 0, 1751.19, 0, 1754.06, 0, 1756.92, 0, 1759.78, 0, 1762.63, 0, 1765.48, 0, 1768.32, 0, 1771.16, 0, 1773.99, 0, 1776.82, 0, 1779.64, 0, 1782.46, 0, 1785.27, 0, 1788.08, 0, 1790.88, 0, 1793.68, 0, 1796.47, 0, 1799.26, 0, 1802.04, 0, 1804.81, 0, 1807.58, 0, 1810.35, 0, 1813.11, 0, 1815.86, 0, 1818.61, 0, 1821.35, 0, 1824.09, 0, 1826.82, 0, 1829.55, 0, 1832.27, 0, 1834.98, 0, 1837.69, 0, 1840.39, 0, 1843.09, 0, 1845.78, 0, 1848.47, 0, 1851.15, 0, 1853.82, 0, 1856.49, 0, 1859.16, 0, 1861.81, 0, 1864.46, 0, 1867.11, 0, 1869.75, 0, 1872.38, 0, 1875.01, 0, 1877.63, 0, 1880.25, 0, 1882.85, 0, 1885.46, 0, 1888.05, 0, 1890.64, 0, 1893.23, 0, 1895.81, 0, 1898.38, 0, 1900.95, 0, 1903.5, 0, 1906.06, 0, 1908.6, 0, 1911.14, 0, 1913.68, 0, 1916.21, 0, 1918.73, 0, 1921.24, 0, 1923.75, 0, 1928.75, 0, 1933.72, 0, 1938.66, 0, 1943.58, 0, 1948.47, 0, 1953.33, 0, 1958.17, 0, 1962.98, 0, 1967.76, 0, 1972.51, 0, 1977.23, 0, 1981.93, 0, 1986.6, 0, 1991.24, 0, 1995.85, 0, 2000.43, 0, 2004.98, 0, 2009.5, 0, 2013.99, 0, 2018.45, 0, 2022.89, 0, 2027.29, 0, 2031.66, 0, 2036, 0, 2040.31, 0, 2044.59, 0, 2048.83, 0, 2053.05, 0, 2057.23, 0, 2061.38, 0, 2065.5, 0, 2069.59, 0, 2073.64, 0, 2077.67, 0, 2081.65, 0, 2085.61, 0, 2089.53, 0, 2093.42, 0, 2097.27, 0, 2101.09, 0, 2104.88, 0, 2108.63, 0, 2112.35, 0, 2116.03, 0, 2119.67, 0, 2123.29, 0, 2126.86, 0, 2130.4, 0, 2133.91, 0, 2137.38, 0, 2140.81, 0, 2144.2, 0, 2147.56, 0, 2150.88, 0, 2154.17, 0, 2157.42, 0, 2160.63, 0, 2163.8, 0, 2166.93, 0, 2170.03, 0, 2173.09, 0, 2176.11, 0, 2179.09, 0, 2182.03, 0, 2184.93, 0, 2187.8, 0, 2190.62, 0, 2193.41, 0, 2196.15, 0, 2198.85, 0, 2201.52, 0, 2204.14, 0, 2206.72, 0, 2209.26, 0, 2214.22, 0, 2219.02, 0, 2223.64, 0, 2228.1, 0, 2232.38, 0, 2236.49, 0, 2240.43, 0, 2244.19, 0, 2247.77, 0, 2251.17, 0, 2254.39, 0, 2257.43, 0, 2260.29, 0, 2262.96, 0, 2265.44, 0, 2269.83, 0, 2273.46, 0, 2278.35, 0, 2280, 0)
+width = 8.0
+default_color = Color(0.890155, 1, 0.212346, 1)
+
+[node name="WaterVolume" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, 1500)
+
+[node name="water" type="Polygon2D" parent="WaterVolume"]
+color = Color(0, 0.752941, 1, 0.580392)
+polygon = PackedVector2Array(6432, 2560, 6432, 3776, 8712, 3776, 8712, 2560)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WaterVolume"]
+polygon = PackedVector2Array(6432, 2560, 6432, 3776, 8712, 3776, 8712, 2560)
+
+[node name="PushArea2d" type="Area2D" parent="."]
+position = Vector2(5176, 2144)
+script = ExtResource("4_das8e")
+push_force = 1250.0
+origin_handle = NodePath("OriginHandle")
+push_origin_offset = Vector2(-1144, 40)
+push_falloff = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PushArea2d"]
+shape = SubResource("RectangleShape2D_sb47h")
+
+[node name="AngleGizmo2D" parent="PushArea2d" instance=ExtResource("5_a4kam")]
+
+[node name="OriginHandle" type="Node2D" parent="PushArea2d"]
+position = Vector2(-1144, 40)
+
+[node name="WUDDER" type="Node2D" parent="."]
+
+[node name="Water3" parent="." instance=ExtResource("1_5ruyx")]
+position = Vector2(-448, 520)
+show_top_line = false
+water_top_color = Color(0.878431, 0.941176, 1, 0.866667)
+water_top_width = 1.0
+
+[node name="FracturePolygon2D" parent="." instance=ExtResource("8_7q2dc")]
+position = Vector2(520, 504)
+
+[node name="FracturePolygon2D2" type="RigidBody2D" parent="."]
+position = Vector2(2352, 544)
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("8_ocq57")
+min_break_impulse = 210.0
+
+[node name="Polygon2D" type="Polygon2D" parent="FracturePolygon2D2"]
+texture_repeat = 2
+texture = ExtResource("10_tqfo4")
+polygon = PackedVector2Array(-64, -31.2, -40, -79.2, 144, -87.2, 152, 88.8, -48, 72.8)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FracturePolygon2D2"]
+polygon = PackedVector2Array(-64, -31.2, -40, -79.2, 144, -87.2, 152, 88.8, -48, 72.8)
+
+[node name="Knife" parent="." instance=ExtResource("11_s71ax")]
+position = Vector2(32, 376)
+
+[node name="Launcher" parent="." instance=ExtResource("12_i86by")]
+position = Vector2(840, -8)
+projectile_scene = ExtResource("11_s71ax")
+launch_degree_angle = 129.094
+
+[connection signal="body_entered" from="Water/Area2D" to="Water" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Water/Area2D" to="Water" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Water2/Area2D" to="Water2" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Water2/Area2D" to="Water2" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="PushArea2d" to="PushArea2d" method="_on_body_entered"]

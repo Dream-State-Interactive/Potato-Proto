@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://mpxbenmev5la"]
+
+[ext_resource type="Script" path="res://src/components/c_hazard.gd" id="1_yxv8q"]
+
+[node name="Knife" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="Handle" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 4)
+polygon = PackedVector2Array(80, -16, 112, -16, 112, -8, 80, -8)
+
+[node name="HandleViz" type="Polygon2D" parent="."]
+position = Vector2(0, 4)
+color = Color(0.412145, 0.239496, 0.130966, 1)
+polygon = PackedVector2Array(80, -16, 112, -16, 112, -8, 80, -8)
+
+[node name="Blade_hazard" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-56, -16, 80, -16, 80, 0, -32, 0)
+
+[node name="BladeViz" type="Polygon2D" parent="."]
+color = Color(0.724643, 0.724643, 0.724643, 1)
+polygon = PackedVector2Array(-56, -16, 80, -16, 80, 0, -32, 0)
+
+[node name="CHazard" type="Node" parent="."]
+script = ExtResource("1_yxv8q")

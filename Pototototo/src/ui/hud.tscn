@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://benqvi8jf1a3v"]
+
+[ext_resource type="Script" path="res://src/ui/hud.gd" id="1_1wsu8"]
+[ext_resource type="Texture2D" uid="uid://bcd8k243yithf" path="res://assets/graphics/ui/panel.png" id="2_pv7ps"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qn7c4"]
+bg_color = Color(0.168627, 0.168627, 0.168627, 0.482353)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3bum"]
+bg_color = Color(0.911162, 0.444643, 0.294971, 1)
+
+[node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_1wsu8")
+
+[node name="ScreenMarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TopLeft_VBox" type="VBoxContainer" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 1132.0
+offset_bottom = 628.0
+theme_override_constants/separation = 10
+
+[node name="HealthBar" type="ProgressBar" parent="TopLeft_VBox"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+
+[node name="StarchLabel" type="Label" parent="TopLeft_VBox"]
+layout_mode = 2
+text = "Starch: 0"
+
+[node name="BottomRight_HBox" type="HBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1172.0
+offset_top = -668.0
+offset_right = -60.0
+offset_bottom = -60.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 15
+alignment = 2
+
+[node name="Ability1_Icon" type="TextureRect" parent="BottomRight_HBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("2_pv7ps")
+
+[node name="Ability1_CooldownBar" type="ProgressBar" parent="BottomRight_HBox/Ability1_Icon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qn7c4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_y3bum")
+
+[node name="Ability2_Icon" type="TextureRect" parent="BottomRight_HBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("2_pv7ps")
+
+[node name="Ability2_CooldownBar" type="ProgressBar" parent="BottomRight_HBox/Ability2_Icon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvub7kkptluj1"]
+
+[ext_resource type="Script" path="res://src/components/c_launcher.gd" id="1_3l67x"]
+[ext_resource type="PackedScene" uid="uid://b176bqb5uiawq" path="res://addons/angle_editor_plugin/angle_gizmo_2d.tscn" id="2_3anw5"]
+
+[node name="Launcher" type="Node2D"]
+script = ExtResource("1_3l67x")
+
+[node name="LaunchPoint" type="Marker2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AngleGizmo2D" parent="." instance=ExtResource("2_3anw5")]

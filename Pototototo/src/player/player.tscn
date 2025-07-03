@@ -1,0 +1,80 @@
+[gd_scene load_steps=14 format=3 uid="uid://dkw86e8mfcgdq"]
+
+[ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="1_h0bpx"]
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_x7tc1"]
+[ext_resource type="Texture2D" uid="uid://86main4wf7jk" path="res://assets/graphics/sprites/player/potato_skin.png" id="2_1icgn"]
+[ext_resource type="Shader" path="res://src/player/aging_shader.gdshader" id="2_hgswh"]
+[ext_resource type="PackedScene" uid="uid://vr57o4egxbu" path="res://src/abilities/stop_on_a_fry.tscn" id="3_6ycsf"]
+[ext_resource type="Shader" path="res://src/player/peel_shader.gdshader" id="4_es8q4"]
+[ext_resource type="PackedScene" uid="uid://dud168e6yjyca" path="res://src/abilities/extreme_torque.tscn" id="4_u11me"]
+[ext_resource type="Script" path="res://src/components/c_health.gd" id="6_7bv2p"]
+[ext_resource type="Script" path="res://src/components/c_grip.gd" id="10_8vpk7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vodgh"]
+shader = ExtResource("2_hgswh")
+shader_parameter/aging_factor = 0.0
+shader_parameter/aged_color = Color(0.4, 0.3, 0.15, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hain8"]
+shader = ExtResource("4_es8q4")
+shader_parameter/hit_points = null
+shader_parameter/hit_count = 0
+shader_parameter/peel_radius = 0.15
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vakpd"]
+resource_local_to_scene = true
+radius = 22.0
+height = 90.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b3mnu"]
+resource_local_to_scene = true
+radius = 45.0
+
+[node name="Player" type="RigidBody2D"]
+collision_mask = 5
+continuous_cd = 2
+script = ExtResource("1_x7tc1")
+equipped_ability1 = ExtResource("3_6ycsf")
+equipped_ability2 = ExtResource("4_u11me")
+seconds_to_fully_age = 100.0
+
+[node name="FleshSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_vodgh")
+texture = ExtResource("2_1icgn")
+
+[node name="SkinSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_hain8")
+texture = ExtResource("1_h0bpx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(0.1, 0.1)
+polygon = PackedVector2Array(90.8, -454, -32.3, -454, -104.4, -427, -109.7, -427, -173.6, -337, -177, -337, -221, -187, -223.4, -187, -250.3, 35, -253.8, 35, -225.5, 263, -225.5, 270.2, -187.5, 354.1, -187.5, 358, -129.5, 418.9, -129.5, 422.9, -54.5, 450.9, -54.5, 454, -33.9, 454, 38.5, 447, 43.6, 447, 111.6, 400, 114.9, 400, 169.9, 315, 172.7, 315, 209.7, 202, 212.2, 202, 233.2, 53, 235.6, 53, 234.5, -115.1, 234.5, -137.7, 213.5, -286.7, 213.5, -292.8, 184.5, -368.8, 184.5, -373.7, 136.5, -429.7, 136.5, -433.5)
+
+[node name="CollisionCapsule2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_vakpd")
+
+[node name="CollisionCircle2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_b3mnu")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Ability1_Slot" type="Node2D" parent="."]
+
+[node name="Ability2_Slot" type="Node2D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("6_7bv2p")
+
+[node name="GripComponent" type="Node" parent="."]
+script = ExtResource("10_8vpk7")
+
+[node name="DamageCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
