@@ -24,7 +24,7 @@ offset_right = 4596.0
 offset_bottom = 1620.0
 size_flags_horizontal = 4
 text = "Level 2"
-metadata/destination = "res://Scenes/Levels/Menus/main_world.tscn"
+metadata/destination = "res://src/levels/main_world.tscn"
 
 [node name="StandardButton3" parent="CanvasLayer" instance=ExtResource("2_aal82")]
 offset_left = 758.0
@@ -33,7 +33,7 @@ offset_right = 4598.0
 offset_bottom = 1761.0
 size_flags_horizontal = 4
 text = "Level 3"
-metadata/destination = "res://Scenes/Levels/alex_proto.tscn"
+metadata/destination = "res://src/levels/alex_proto.tscn"
 
 [node name="StandardButton4" parent="CanvasLayer" instance=ExtResource("2_aal82")]
 offset_left = 760.0
