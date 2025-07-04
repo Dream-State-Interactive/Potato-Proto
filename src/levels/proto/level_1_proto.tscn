@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://c4n4sr4ulry3i"]
+[gd_scene load_steps=173 format=3 uid="uid://c4n4sr4ulry3i"]
 
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_lrejh"]
 [ext_resource type="Script" path="res://tools/env_water.gd" id="2_hqkrk"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="11_2njje"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="12_jcw0m"]
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/Images/potato_proto_peeled.png" id="13_borfi"]
-[ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="14_d4omp"]
+[ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://src/Player - OG/potato.tscn" id="14_d4omp"]
 [ext_resource type="PackedScene" uid="uid://nnjqyuomoq6c" path="res://Scenes/StarchPoint.tscn" id="15_8jwi8"]
 [ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/sfx_proto_04.mp3" id="16_kmtxt"]
 
@@ -26,6 +26,12 @@
 [sub_resource type="GDScript" id="GDScript_1twsl"]
 
 [sub_resource type="GDScript" id="GDScript_f833l"]
+
+[sub_resource type="GDScript" id="GDScript_m51ja"]
+
+[sub_resource type="GDScript" id="GDScript_kp3b0"]
+
+[sub_resource type="GDScript" id="GDScript_yfapf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_whx1b"]
 size = Vector2(4000, 2000)
@@ -42,6 +48,15 @@ size = Vector2(4000, 2000)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gp1h5"]
 size = Vector2(4000, 2000)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rjxgt"]
+size = Vector2(4000, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rwim"]
+size = Vector2(4000, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2uxb8"]
+size = Vector2(4000, 2000)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hgbqg"]
 size = Vector2(3000, 70)
 
@@ -55,6 +70,15 @@ size = Vector2(3000, 70)
 size = Vector2(3000, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n23rr"]
+size = Vector2(3000, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ssmm5"]
+size = Vector2(3000, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6fhjg"]
+size = Vector2(3000, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clv7d"]
 size = Vector2(3000, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tcwn3"]
@@ -87,6 +111,24 @@ size = Vector2(3000, 1750)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i5ene"]
 size = Vector2(3000, 1750)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h5oa"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfujw"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vavbw"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7teaj"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7xsgs"]
+size = Vector2(3000, 1750)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nj8n"]
+size = Vector2(3000, 1750)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1kds2"]
 size = Vector2(1500, 2000)
 
@@ -100,6 +142,15 @@ size = Vector2(1500, 2000)
 size = Vector2(1500, 2000)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7xqe"]
+size = Vector2(1500, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pagis"]
+size = Vector2(1500, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjyaf"]
+size = Vector2(1500, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sbnxo"]
 size = Vector2(1500, 2000)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hb55v"]
@@ -117,6 +168,15 @@ size = Vector2(700, 807.165)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_en4rh"]
 size = Vector2(700, 807.165)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tpy6d"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8met"]
+size = Vector2(700, 807.165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fg2oy"]
+size = Vector2(700, 807.165)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ic8q"]
 size = Vector2(750, 50)
 
@@ -130,6 +190,15 @@ size = Vector2(750, 50)
 size = Vector2(750, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hkt4j"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a4337"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yjj4"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8su00"]
 size = Vector2(750, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sw5qw"]
@@ -147,6 +216,15 @@ size = Vector2(750, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7v14s"]
 size = Vector2(750, 50)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rssn"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdygq"]
+size = Vector2(750, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m8m03"]
+size = Vector2(750, 50)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ph7r"]
 size = Vector2(3000, 1800)
 
@@ -160,6 +238,15 @@ size = Vector2(3000, 1800)
 size = Vector2(3000, 1800)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t88mu"]
+size = Vector2(3000, 1800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s32wj"]
+size = Vector2(3000, 1800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mju0e"]
+size = Vector2(3000, 1800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8hs1"]
 size = Vector2(3000, 1800)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaeu4"]
@@ -182,6 +269,15 @@ radius = 50.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_de2bc"]
 radius = 50.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_0rwat"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pmlct"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k3glb"]
+radius = 50.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_ac63p"]
 radius = 50.0
 
@@ -195,6 +291,15 @@ radius = 50.0
 radius = 50.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_je1as"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n257c"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wvdru"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rhgug"]
 radius = 50.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pyep6"]
@@ -212,6 +317,15 @@ size = Vector2(100, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_isncc"]
 size = Vector2(100, 50)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_srh3t"]
+size = Vector2(100, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ftkoi"]
+size = Vector2(100, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iinmb"]
+size = Vector2(100, 50)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5c3w6"]
 size = Vector2(420, 222)
 
@@ -225,6 +339,15 @@ size = Vector2(420, 222)
 size = Vector2(420, 222)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa030"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_esndw"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_36fch"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2y6we"]
 size = Vector2(420, 222)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0u3qv"]
@@ -242,6 +365,15 @@ size = Vector2(420, 222)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m5f6y"]
 size = Vector2(420, 222)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubbxd"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lffyu"]
+size = Vector2(420, 222)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0t0nm"]
+size = Vector2(420, 222)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qbsbe"]
 size = Vector2(420, 145)
 
@@ -255,6 +387,15 @@ size = Vector2(420, 145)
 size = Vector2(420, 145)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8xur"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxmhy"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f57oe"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4hb1r"]
 size = Vector2(420, 145)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n8ums"]
@@ -272,6 +413,15 @@ size = Vector2(420, 145)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4qyy"]
 size = Vector2(420, 145)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_172vu"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cq5u8"]
+size = Vector2(420, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2wdv"]
+size = Vector2(420, 145)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o34xn"]
 size = Vector2(700, 111)
 
@@ -287,6 +437,15 @@ size = Vector2(700, 111)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j0rnn"]
 size = Vector2(700, 111)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kw3a5"]
+size = Vector2(700, 111)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ct1ae"]
+size = Vector2(700, 111)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40875"]
+size = Vector2(700, 111)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_my418"]
 size = Vector2(1400, 100)
 
@@ -300,6 +459,15 @@ size = Vector2(1400, 100)
 size = Vector2(1400, 100)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3b076"]
+size = Vector2(1400, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6l1m6"]
+size = Vector2(1400, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8al01"]
+size = Vector2(1400, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v6us4"]
 size = Vector2(1400, 100)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
@@ -332,6 +500,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20528" type="Node2D" parent="BG"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17426" type="Node2D" parent="BG"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26933" type="Node2D" parent="BG"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34183" type="Node2D" parent="BG"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0, 0, 0, 1)
 circle_radius = 50.0
@@ -358,6 +535,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20529" type="Node2D" parent="HouseWall"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17427" type="Node2D" parent="HouseWall"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26934" type="Node2D" parent="HouseWall"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34184" type="Node2D" parent="HouseWall"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.563578, 0.392251, 0.33158, 1)
 circle_radius = 50.0
@@ -419,6 +605,30 @@ shape = SubResource("RectangleShape2D_gp1h5")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@20530"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17428" type="StaticBody2D" parent="KitchenShapesRoot/Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@17428"]
+shape = SubResource("RectangleShape2D_rjxgt")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@17428"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26935" type="StaticBody2D" parent="KitchenShapesRoot/Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@26935"]
+shape = SubResource("RectangleShape2D_4rwim")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@26935"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34185" type="StaticBody2D" parent="KitchenShapesRoot/Counter"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@34185"]
+shape = SubResource("RectangleShape2D_2uxb8")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter/@StaticBody2D@34185"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
 circle_radius = 50.0
@@ -451,6 +661,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20531" type="Node2D" parent="KitchenShapesRoot/Sink/Knob"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17429" type="Node2D" parent="KitchenShapesRoot/Sink/Knob"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26936" type="Node2D" parent="KitchenShapesRoot/Sink/Knob"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34186" type="Node2D" parent="KitchenShapesRoot/Sink/Knob"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.584566, 0.648006, 0.6599, 1)
 circle_radius = 50.0
@@ -476,6 +695,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20532" type="Node2D" parent="KitchenShapesRoot/Sink/Knob2"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17430" type="Node2D" parent="KitchenShapesRoot/Sink/Knob2"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26937" type="Node2D" parent="KitchenShapesRoot/Sink/Knob2"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34187" type="Node2D" parent="KitchenShapesRoot/Sink/Knob2"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.584566, 0.648006, 0.6599, 1)
 circle_radius = 50.0
@@ -501,6 +729,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20533" type="Node2D" parent="KitchenShapesRoot/Sink/Spout"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17431" type="Node2D" parent="KitchenShapesRoot/Sink/Spout"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26938" type="Node2D" parent="KitchenShapesRoot/Sink/Spout"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34188" type="Node2D" parent="KitchenShapesRoot/Sink/Spout"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.601876, 0.664139, 0.675871, 1)
 circle_radius = 50.0
@@ -525,6 +762,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20534" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17432" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26939" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34189" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip"]
+script = SubResource("GDScript_yfapf")
 shape_type = 0
 shape_color = Color(0.6, 0.662745, 0.67451, 1)
 circle_radius = 100.0
@@ -549,6 +795,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20535" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip2"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17433" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip2"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26940" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip2"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34190" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTip2"]
+script = SubResource("GDScript_yfapf")
 shape_type = 0
 shape_color = Color(0.393171, 0.452063, 0.463095, 1)
 circle_radius = 100.0
@@ -574,6 +829,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20536" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTipFacade"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17434" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTipFacade"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26941" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTipFacade"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34191" type="Node2D" parent="KitchenShapesRoot/Sink/SpoutTipFacade"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.6, 0.662745, 0.67451, 1)
 circle_radius = 50.0
@@ -601,6 +865,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20537" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Water"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17435" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Water"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26942" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Water"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34192" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Water"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.133333, 0.545098, 0.92549, 0.505882)
 circle_radius = 50.0
@@ -653,6 +926,30 @@ shape = SubResource("RectangleShape2D_n23rr")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@20538"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17436" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Back"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@17436"]
+shape = SubResource("RectangleShape2D_ssmm5")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@17436"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26943" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Back"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@26943"]
+shape = SubResource("RectangleShape2D_6fhjg")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@26943"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34193" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Back"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@34193"]
+shape = SubResource("RectangleShape2D_clv7d")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Back/@StaticBody2D@34193"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.461711, 0.496825, 0.51173, 1)
 circle_radius = 50.0
@@ -737,6 +1034,48 @@ shape = SubResource("RectangleShape2D_i5ene")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@20539"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17437" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Front"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17437"]
+shape = SubResource("RectangleShape2D_5h5oa")
+disabled = true
+
+[node name="FadeArea" type="Area2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17437"]
+
+[node name="FadeCollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17437/FadeArea"]
+shape = SubResource("RectangleShape2D_yfujw")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@17437"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26944" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Front"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@26944"]
+shape = SubResource("RectangleShape2D_vavbw")
+disabled = true
+
+[node name="FadeArea" type="Area2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@26944"]
+
+[node name="FadeCollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@26944/FadeArea"]
+shape = SubResource("RectangleShape2D_7teaj")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@26944"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34194" type="StaticBody2D" parent="KitchenShapesRoot/Sink/Sink_Front"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@34194"]
+shape = SubResource("RectangleShape2D_7xsgs")
+disabled = true
+
+[node name="FadeArea" type="Area2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@34194"]
+
+[node name="FadeCollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@34194/FadeArea"]
+shape = SubResource("RectangleShape2D_4nj8n")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Sink/Sink_Front/@StaticBody2D@34194"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.562025, 0.519774, 0.582213, 1)
 circle_radius = 50.0
@@ -756,6 +1095,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20540" type="Node2D" parent="KitchenShapesRoot/Sink"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17438" type="Node2D" parent="KitchenShapesRoot/Sink"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26945" type="Node2D" parent="KitchenShapesRoot/Sink"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34195" type="Node2D" parent="KitchenShapesRoot/Sink"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.562025, 0.519774, 0.582213, 1)
 circle_radius = 50.0
@@ -808,6 +1156,30 @@ shape = SubResource("RectangleShape2D_v7xqe")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@20541"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17439" type="StaticBody2D" parent="KitchenShapesRoot/Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@17439"]
+shape = SubResource("RectangleShape2D_pagis")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@17439"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26946" type="StaticBody2D" parent="KitchenShapesRoot/Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@26946"]
+shape = SubResource("RectangleShape2D_kjyaf")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@26946"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34196" type="StaticBody2D" parent="KitchenShapesRoot/Counter2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@34196"]
+shape = SubResource("RectangleShape2D_sbnxo")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter2/@StaticBody2D@34196"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
 circle_radius = 50.0
@@ -860,6 +1232,30 @@ shape = SubResource("RectangleShape2D_en4rh")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@20542"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17440" type="StaticBody2D" parent="KitchenShapesRoot/Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@17440"]
+shape = SubResource("RectangleShape2D_tpy6d")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@17440"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26947" type="StaticBody2D" parent="KitchenShapesRoot/Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@26947"]
+shape = SubResource("RectangleShape2D_u8met")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@26947"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34197" type="StaticBody2D" parent="KitchenShapesRoot/Counter3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@34197"]
+shape = SubResource("RectangleShape2D_fg2oy")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Counter3/@StaticBody2D@34197"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.689971, 0.724568, 0.81013, 1)
 circle_radius = 50.0
@@ -920,6 +1316,30 @@ shape = SubResource("RectangleShape2D_hkt4j")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@20543"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17441" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@17441"]
+shape = SubResource("RectangleShape2D_a4337")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@17441"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26948" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@26948"]
+shape = SubResource("RectangleShape2D_5yjj4")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@26948"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34198" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@34198"]
+shape = SubResource("RectangleShape2D_8su00")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner1/@StaticBody2D@34198"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
 circle_radius = 50.0
@@ -972,6 +1392,30 @@ shape = SubResource("RectangleShape2D_7v14s")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@20544"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17442" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@17442"]
+shape = SubResource("RectangleShape2D_0rssn")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@17442"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26949" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@26949"]
+shape = SubResource("RectangleShape2D_kdygq")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@26949"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34199" type="StaticBody2D" parent="KitchenShapesRoot/Oven/burner2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@34199"]
+shape = SubResource("RectangleShape2D_m8m03")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/burner2/@StaticBody2D@34199"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.0919438, 0.0923957, 0.0936307, 1)
 circle_radius = 50.0
@@ -1016,6 +1460,30 @@ shape = SubResource("RectangleShape2D_t88mu")
 
 [node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@20545"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17443" type="StaticBody2D" parent="KitchenShapesRoot/Oven"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@17443"]
+shape = SubResource("RectangleShape2D_s32wj")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@17443"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26950" type="StaticBody2D" parent="KitchenShapesRoot/Oven"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@26950"]
+shape = SubResource("RectangleShape2D_mju0e")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@26950"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34200" type="StaticBody2D" parent="KitchenShapesRoot/Oven"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@34200"]
+shape = SubResource("RectangleShape2D_v8hs1")
+
+[node name="VisualShape" type="Node2D" parent="KitchenShapesRoot/Oven/@StaticBody2D@34200"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.387255, 0.429801, 0.538052, 1)
 circle_radius = 50.0
@@ -1052,6 +1520,15 @@ script = SubResource("GDScript_1twsl")
 
 [node name="@Node2D@20546" type="Node2D" parent="ShapeMaker"]
 script = SubResource("GDScript_f833l")
+
+[node name="@Node2D@17444" type="Node2D" parent="ShapeMaker"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@Node2D@26951" type="Node2D" parent="ShapeMaker"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@Node2D@34201" type="Node2D" parent="ShapeMaker"]
+script = SubResource("GDScript_yfapf")
 shape_type = 0
 shape_color = Color(1, 0, 0, 1)
 circle_radius = 50.0
@@ -1102,6 +1579,30 @@ shape = SubResource("CircleShape2D_de2bc")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker2/@StaticBody2D@20547"]
 script = SubResource("GDScript_f833l")
+
+[node name="@StaticBody2D@17445" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@17445"]
+shape = SubResource("CircleShape2D_0rwat")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker2/@StaticBody2D@17445"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@StaticBody2D@26952" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@26952"]
+shape = SubResource("CircleShape2D_pmlct")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker2/@StaticBody2D@26952"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@StaticBody2D@34202" type="StaticBody2D" parent="ShapeMaker2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker2/@StaticBody2D@34202"]
+shape = SubResource("CircleShape2D_k3glb")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker2/@StaticBody2D@34202"]
+script = SubResource("GDScript_yfapf")
 shape_type = 0
 shape_color = Color(0.134611, 0.57279, 0.80361, 1)
 circle_radius = 50.0
@@ -1158,6 +1659,33 @@ shape = SubResource("CircleShape2D_je1as")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker3/@RigidBody2D@20548"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17446" type="RigidBody2D" parent="ShapeMaker3"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3/@RigidBody2D@17446"]
+shape = SubResource("CircleShape2D_n257c")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker3/@RigidBody2D@17446"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26953" type="RigidBody2D" parent="ShapeMaker3"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3/@RigidBody2D@26953"]
+shape = SubResource("CircleShape2D_wvdru")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker3/@RigidBody2D@26953"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34203" type="RigidBody2D" parent="ShapeMaker3"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker3/@RigidBody2D@34203"]
+shape = SubResource("CircleShape2D_rhgug")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker3/@RigidBody2D@34203"]
+script = SubResource("GDScript_yfapf")
 shape_type = 0
 shape_color = Color(0, 0.635138, 0.409444, 1)
 circle_radius = 50.0
@@ -1214,6 +1742,33 @@ shape = SubResource("RectangleShape2D_isncc")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker4/@RigidBody2D@20549"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17447" type="RigidBody2D" parent="ShapeMaker4"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker4/@RigidBody2D@17447"]
+shape = SubResource("RectangleShape2D_srh3t")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker4/@RigidBody2D@17447"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26954" type="RigidBody2D" parent="ShapeMaker4"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker4/@RigidBody2D@26954"]
+shape = SubResource("RectangleShape2D_ftkoi")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker4/@RigidBody2D@26954"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34204" type="RigidBody2D" parent="ShapeMaker4"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker4/@RigidBody2D@34204"]
+shape = SubResource("RectangleShape2D_iinmb")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker4/@RigidBody2D@34204"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(1, 0, 0, 1)
 circle_radius = 50.0
@@ -1273,6 +1828,33 @@ shape = SubResource("RectangleShape2D_aa030")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker5/@RigidBody2D@20550"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17448" type="RigidBody2D" parent="ShapeMaker5"]
+mass = 11.3398
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker5/@RigidBody2D@17448"]
+shape = SubResource("RectangleShape2D_esndw")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker5/@RigidBody2D@17448"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26955" type="RigidBody2D" parent="ShapeMaker5"]
+mass = 11.3398
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker5/@RigidBody2D@26955"]
+shape = SubResource("RectangleShape2D_36fch")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker5/@RigidBody2D@26955"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34205" type="RigidBody2D" parent="ShapeMaker5"]
+mass = 11.3398
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker5/@RigidBody2D@34205"]
+shape = SubResource("RectangleShape2D_2y6we")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker5/@RigidBody2D@34205"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.592833, 0.433506, 0.855568, 1)
 circle_radius = 50.0
@@ -1331,6 +1913,33 @@ shape = SubResource("RectangleShape2D_m5f6y")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker6/@RigidBody2D@20551"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17449" type="RigidBody2D" parent="ShapeMaker6"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker6/@RigidBody2D@17449"]
+shape = SubResource("RectangleShape2D_ubbxd")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker6/@RigidBody2D@17449"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26956" type="RigidBody2D" parent="ShapeMaker6"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker6/@RigidBody2D@26956"]
+shape = SubResource("RectangleShape2D_lffyu")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker6/@RigidBody2D@26956"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34206" type="RigidBody2D" parent="ShapeMaker6"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker6/@RigidBody2D@34206"]
+shape = SubResource("RectangleShape2D_0t0nm")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker6/@RigidBody2D@34206"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.665738, 0.380616, 0.865665, 1)
 circle_radius = 50.0
@@ -1390,6 +1999,33 @@ shape = SubResource("RectangleShape2D_k8xur")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker7/@RigidBody2D@20552"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17450" type="RigidBody2D" parent="ShapeMaker7"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker7/@RigidBody2D@17450"]
+shape = SubResource("RectangleShape2D_nxmhy")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker7/@RigidBody2D@17450"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26957" type="RigidBody2D" parent="ShapeMaker7"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker7/@RigidBody2D@26957"]
+shape = SubResource("RectangleShape2D_f57oe")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker7/@RigidBody2D@26957"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34207" type="RigidBody2D" parent="ShapeMaker7"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker7/@RigidBody2D@34207"]
+shape = SubResource("RectangleShape2D_4hb1r")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker7/@RigidBody2D@34207"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.212855, 0.543923, 0.706466, 1)
 circle_radius = 50.0
@@ -1449,6 +2085,33 @@ shape = SubResource("RectangleShape2D_v4qyy")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker9/@RigidBody2D@20553"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17451" type="RigidBody2D" parent="ShapeMaker9"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker9/@RigidBody2D@17451"]
+shape = SubResource("RectangleShape2D_172vu")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker9/@RigidBody2D@17451"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26958" type="RigidBody2D" parent="ShapeMaker9"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker9/@RigidBody2D@26958"]
+shape = SubResource("RectangleShape2D_cq5u8")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker9/@RigidBody2D@26958"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34208" type="RigidBody2D" parent="ShapeMaker9"]
+mass = 226.796
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker9/@RigidBody2D@34208"]
+shape = SubResource("RectangleShape2D_t2wdv")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker9/@RigidBody2D@34208"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.0904595, 0.560993, 0.612702, 1)
 circle_radius = 50.0
@@ -1508,6 +2171,33 @@ shape = SubResource("RectangleShape2D_j0rnn")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker8/@RigidBody2D@20554"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17452" type="RigidBody2D" parent="ShapeMaker8"]
+mass = 179.169
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker8/@RigidBody2D@17452"]
+shape = SubResource("RectangleShape2D_kw3a5")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker8/@RigidBody2D@17452"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26959" type="RigidBody2D" parent="ShapeMaker8"]
+mass = 179.169
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker8/@RigidBody2D@26959"]
+shape = SubResource("RectangleShape2D_ct1ae")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker8/@RigidBody2D@26959"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34209" type="RigidBody2D" parent="ShapeMaker8"]
+mass = 179.169
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker8/@RigidBody2D@34209"]
+shape = SubResource("RectangleShape2D_40875")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker8/@RigidBody2D@34209"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.904294, 0.842451, 0.860175, 1)
 circle_radius = 50.0
@@ -1566,6 +2256,33 @@ shape = SubResource("RectangleShape2D_3b076")
 
 [node name="VisualShape" type="Node2D" parent="CuttingBoard/@RigidBody2D@20555"]
 script = SubResource("GDScript_f833l")
+
+[node name="@RigidBody2D@17453" type="RigidBody2D" parent="CuttingBoard"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CuttingBoard/@RigidBody2D@17453"]
+shape = SubResource("RectangleShape2D_6l1m6")
+
+[node name="VisualShape" type="Node2D" parent="CuttingBoard/@RigidBody2D@17453"]
+script = SubResource("GDScript_m51ja")
+
+[node name="@RigidBody2D@26960" type="RigidBody2D" parent="CuttingBoard"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CuttingBoard/@RigidBody2D@26960"]
+shape = SubResource("RectangleShape2D_8al01")
+
+[node name="VisualShape" type="Node2D" parent="CuttingBoard/@RigidBody2D@26960"]
+script = SubResource("GDScript_kp3b0")
+
+[node name="@RigidBody2D@34210" type="RigidBody2D" parent="CuttingBoard"]
+mass = 4.53592
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CuttingBoard/@RigidBody2D@34210"]
+shape = SubResource("RectangleShape2D_v6us4")
+
+[node name="VisualShape" type="Node2D" parent="CuttingBoard/@RigidBody2D@34210"]
+script = SubResource("GDScript_yfapf")
 shape_type = 1
 shape_color = Color(0.786201, 0.527853, 0.382834, 1)
 circle_radius = 50.0

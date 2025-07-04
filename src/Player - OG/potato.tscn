@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bq8n4uhvlw7ns"]
 
-[ext_resource type="Script" path="res://Scenes/Player/potato.gd" id="1_haj8d"]
+[ext_resource type="Script" path="res://src/Player - OG/potato.gd" id="1_haj8d"]
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="2_hu54r"]
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/Images/potato_proto_peeled.png" id="3_nrxwc"]
 [ext_resource type="Texture2D" uid="uid://ddjrr5t5m5fwc" path="res://assets/Images/potato_proto_aged.png" id="4_l4l2i"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/levels/Zoo/zoo_physics.gd" id="1_2fxsq"]
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_mnqtr"]
-[ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://Scenes/Player/potato.tscn" id="2_ldvdr"]
+[ext_resource type="PackedScene" uid="uid://bq8n4uhvlw7ns" path="res://src/Player - OG/potato.tscn" id="2_ldvdr"]
 [ext_resource type="Script" path="res://src/levels/Zoo/BreakableManager.gd" id="2_ymi26"]
 [ext_resource type="PackedScene" uid="uid://bmnfp5a5860v2" path="res://tools/collisionmaker/collisionmaker.tscn" id="3_khkef"]
 [ext_resource type="Texture2D" uid="uid://dxya7eujy7kim" path="res://assets/Images/bustin.png" id="4_5w54g"]
