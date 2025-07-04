@@ -42,7 +42,7 @@ offset_right = 4600.0
 offset_bottom = 1904.0
 size_flags_horizontal = 4
 text = "Level 4"
-metadata/destination = "res://src/levels/level_proto/level_proto.tscn"
+metadata/destination = "res://src/main.tscn"
 
 [node name="StandardButton2" parent="." instance=ExtResource("2_aal82")]
 offset_left = 803.0
