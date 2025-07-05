@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="1_jj0s2"]
 [ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/Images/button.png" id="2_kwnkb"]
-[ext_resource type="Script" path="res://assets/GUI/MENU/standard_button.gd" id="2_otd6r"]
+[ext_resource type="Script" path="res://src/ui/standard_button.gd" id="2_otd6r"]
 
 [node name="StandardButton" type="Button"]
 z_index = 7

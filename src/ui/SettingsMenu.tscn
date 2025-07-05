@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://rhte4n1lb3va"]
 
-[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="1_4e72a"]
-[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://assets/GUI/MENU/Slider.tscn" id="2_y6h66"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/StandardButton.tscn" id="1_4e72a"]
+[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/Slider.tscn" id="2_y6h66"]
 
 [node name="SettingsMenu" type="Node2D"]
 

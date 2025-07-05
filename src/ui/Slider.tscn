@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0bdl6jfm8t3a"]
 
-[ext_resource type="Script" path="res://assets/GUI/MENU/slider.gd" id="1_83mba"]
-[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="2_btt2i"]
+[ext_resource type="Script" path="res://src/ui/slider.gd" id="1_83mba"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/StandardButton.tscn" id="2_btt2i"]
 
 [node name="Slider" type="Node2D"]
 script = ExtResource("1_83mba")

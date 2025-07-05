@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://bd6spyrfc537y"]
 
-[ext_resource type="Script" path="res://assets/GUI/MENU/MainMenu.gd" id="1_30dhv"]
+[ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="8_jfuhy"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="9_8dugi"]
@@ -10,13 +10,13 @@
 [ext_resource type="AudioStream" uid="uid://b1wmtlyehendw" path="res://assets/Music/proto_pototo_v2.mp3" id="13_v7jc8"]
 [ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_0i57e"]
-[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://assets/GUI/MENU/Slider.tscn" id="15_lprhh"]
+[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/Slider.tscn" id="15_lprhh"]
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
-[ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://assets/GUI/MENU/StandardMenu.tscn" id="18_0l2vk"]
+[ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://src/ui/StandardMenu.tscn" id="18_0l2vk"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
-[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://assets/GUI/MENU/MainMenuGUI.tscn" id="18_ne370"]
-[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://assets/GUI/MENU/StandardButton.tscn" id="20_3o2gw"]
+[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://src/ui/MainMenuGUI.tscn" id="18_ne370"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/StandardButton.tscn" id="20_3o2gw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
 shader = ExtResource("13_q4qwy")
@@ -155,7 +155,7 @@ offset_bottom = 1766.0
 size_flags_horizontal = 4
 text = "Levels
 "
-metadata/destination = "res://Scenes/Levels/Menus/level_select.tscn"
+metadata/destination = "res://src/levels/Menus/level_select.tscn"
 
 [node name="StandardButtonSettings" parent="." instance=ExtResource("20_3o2gw")]
 offset_left = 769.0
