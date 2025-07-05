@@ -15,7 +15,15 @@ offset_right = 4596.0
 offset_bottom = 1476.0
 size_flags_horizontal = 4
 text = "Level 1"
-metadata/destination = "res://src/levels/proto/level_1_proto.tscn"
+
+[node name="Dev Level 0" parent="CanvasLayer" instance=ExtResource("2_aal82")]
+offset_left = 197.0
+offset_top = 95.0
+offset_right = 4037.0
+offset_bottom = 1345.0
+size_flags_horizontal = 4
+text = "Level 0"
+metadata/destination = "src/main.tscn"
 
 [node name="StandardButton2" parent="CanvasLayer" instance=ExtResource("2_aal82")]
 offset_left = 756.0
@@ -33,7 +41,6 @@ offset_right = 4598.0
 offset_bottom = 1761.0
 size_flags_horizontal = 4
 text = "Level 3"
-metadata/destination = "res://src/levels/alex_proto.tscn"
 
 [node name="StandardButton4" parent="CanvasLayer" instance=ExtResource("2_aal82")]
 offset_left = 760.0
@@ -42,7 +49,6 @@ offset_right = 4600.0
 offset_bottom = 1904.0
 size_flags_horizontal = 4
 text = "Level 4"
-metadata/destination = "res://src/main.tscn"
 
 [node name="StandardButton2" parent="." instance=ExtResource("2_aal82")]
 offset_left = 803.0

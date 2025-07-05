@@ -183,7 +183,7 @@ offset_right = 4617.0
 offset_bottom = 1547.0
 size_flags_horizontal = 4
 text = "Play"
-metadata/destination = "res://Scenes/Levels/main_world.tscn"
+metadata/destination = "src/main.tscn"
 
 [node name="StandardButtonSaveLoad" parent="." instance=ExtResource("20_3o2gw")]
 offset_left = 770.0
