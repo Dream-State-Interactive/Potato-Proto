@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://dkw86e8mfcgdq"]
 
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="1_h0bpx"]
-[ext_resource type="Script" path="res://src/player - Kyle/player.gd" id="1_x7tc1"]
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_x7tc1"]
 [ext_resource type="Texture2D" uid="uid://86main4wf7jk" path="res://assets/graphics/sprites/player/potato_skin.png" id="2_1icgn"]
 [ext_resource type="Shader" path="res://assets/Shaders/aging_shader.gdshader" id="2_hgswh"]
 [ext_resource type="PackedScene" uid="uid://vr57o4egxbu" path="res://src/abilities/stop_on_a_fry.tscn" id="3_6ycsf"]
@@ -73,6 +73,14 @@ one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.2
+one_shot = true
+
+[node name="InputCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="ComboCooldown" type="Timer" parent="."]
+wait_time = 0.25
 one_shot = true
 
 [connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]

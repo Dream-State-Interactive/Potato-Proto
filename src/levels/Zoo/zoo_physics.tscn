@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://fx7bgvtyfi1y"]
+[gd_scene load_steps=28 format=3 uid="uid://fx7bgvtyfi1y"]
 
 [ext_resource type="Script" path="res://src/levels/Zoo/zoo_physics.gd" id="1_2fxsq"]
 [ext_resource type="PackedScene" uid="uid://c0ponoq3fqag6" path="res://tools/ShapeMaker/ShapeMaker.tscn" id="1_mnqtr"]
@@ -56,6 +56,11 @@ size = Vector2(4850, 1024)
 size = Vector2(4850, 1024)
 
 [sub_resource type="GDScript" id="GDScript_1twsl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cou2c"]
+size = Vector2(4850, 1024)
+
+[sub_resource type="GDScript" id="GDScript_3p6ti"]
 
 [node name="ZooPhysics" type="Node2D"]
 script = ExtResource("1_2fxsq")
@@ -168,6 +173,14 @@ shape = SubResource("RectangleShape2D_sx4gw")
 
 [node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@17362"]
 script = SubResource("GDScript_1twsl")
+
+[node name="@StaticBody2D@209289" type="StaticBody2D" parent="ShapeMaker"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeMaker/@StaticBody2D@209289"]
+shape = SubResource("RectangleShape2D_cou2c")
+
+[node name="VisualShape" type="Node2D" parent="ShapeMaker/@StaticBody2D@209289"]
+script = SubResource("GDScript_3p6ti")
 shape_type = 1
 shape_color = Color(0, 0.551577, 0.161029, 1)
 circle_radius = 50.0

@@ -26,6 +26,8 @@ extends RigidBody2D
 ## GameManager at runtime to ensure consistency across new games and loaded games.
 var stats: StatBlock
 
+@export var DEV_ROLL_MULTIPLIER: float = 1.0
+
 ## A PackedScene (.tscn file) for the ability in the first slot (Q key).
 @export var equipped_ability1: PackedScene
 ## A PackedScene (.tscn file) for the ability in the second slot (E key).
@@ -61,6 +63,13 @@ var stats: StatBlock
 ## The target radius for the final circle shape at high speed.
 @export var target_circle_radius: float = 45.0
 
+@export var roll_strength: float = 5000.0
+@export var roll_multiplier: float = 1000.0
+@export var jump_strength: float = 50.0
+@export var jump_multiplier: float = 5.0
+const DASH_COOLDOWN: float = 0.125
+const COMBO_COOLDOWN: float = 0.25
+
 
 # =============================================================================
 # --- NODE REFERENCES (@onready vars) ---
@@ -87,6 +96,8 @@ var stats: StatBlock
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
 @onready var collision_capsule: CollisionShape2D = $CollisionCapsule2D
 @onready var collision_circle: CollisionShape2D = $CollisionCircle2D
+@onready var InputCooldownTimer: Timer = $InputCooldown
+@onready var ComboCooldownTimer: Timer = $ComboCooldown
 
 
 # =============================================================================
@@ -99,6 +110,7 @@ var aging_rate: float = 0.0                # How fast the aging level increases 
 var can_jump: bool = false                 # A flag for the Coyote Time system.
 var original_polygon_points: PackedVector2Array # A backup of the detailed collision shape.
 var _is_gripping: bool = false             # Tracks if the CGrip component is currently active.
+var ready_for_combo = false
 
 
 # =============================================================================
@@ -108,6 +120,8 @@ var _is_gripping: bool = false             # Tracks if the CGrip component is cu
 # _ready() runs once when the node is added to the scene tree and ready.
 # It's used for one-time setup.
 func _ready():
+	InputCooldownTimer.wait_time = DASH_COOLDOWN
+	ComboCooldownTimer.wait_time = COMBO_COOLDOWN
 	# --- Physics Setup ---
 	contact_monitor = true  # Essential for RigidBody2D to report collisions.
 	max_contacts_reported = 8 # How many simultaneous collisions to track.
@@ -155,6 +169,27 @@ func _process(delta: float):
 		var flesh_material = flesh_sprite.material as ShaderMaterial
 		if flesh_material:
 			flesh_material.set_shader_parameter("aging_factor", current_aging_level)
+			
+	if Input.is_action_just_released("scroll_up"):
+		adjust_zoom(1.2)
+	elif Input.is_action_just_released("scroll_down"):
+		adjust_zoom(1 / 1.2)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("up"):
+		dash("up")
+	if event.is_action_pressed("down"):
+		dash("down")
+	if event.is_action_pressed("left"):
+		dash("left")
+	if event.is_action_pressed("right"):
+		dash("right")
+
+# Adjust camera zoom
+func adjust_zoom(adjustScale: float):
+	var zoom = $Camera2D.get_zoom() * adjustScale
+	$Camera2D.set_zoom(zoom)
+	print(zoom)
 
 # _integrate_forces(state) is a special physics callback for RigidBody2D.
 # It runs BEFORE the physics engine solves collisions for the frame, giving us
@@ -255,7 +290,7 @@ func _physics_process(delta: float):
 	if not _is_gripping and roll_input != 0:
 		# Note: We do not multiply by delta here. `apply_torque` is an acceleration,
 		# and the physics engine handles the time step integration for us.
-		apply_torque(roll_input * stats.roll_speed)
+		apply_torque(roll_input * stats.roll_speed * DEV_ROLL_MULTIPLIER)
 	
 	# The horizontal nudge helps counter friction and makes movement feel more responsive.
 	if is_physically_on_ground and roll_input != 0:
@@ -272,6 +307,30 @@ func _physics_process(delta: float):
 		apply_central_impulse(Vector2.UP * stats.jump_force)
 		
 		_is_gripping = false # Ensure grip is broken immediately on jump.
+
+func dash(direction: String) -> void:
+	if(InputCooldownTimer.is_stopped()):
+		var combo_multiplier = 1
+		if(!ComboCooldownTimer.is_stopped()):
+			combo_multiplier = 10
+			print("KUH KUH KUH KOMBO")
+		match(direction):
+			"up":
+				apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
+			"down":
+				apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
+			"left":
+				apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+			"right":
+				apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+		InputCooldownTimer.start()
+
+func _on_input_cooldown_timeout() -> void:
+	ready_for_combo = true
+	ComboCooldownTimer.start()
+	
+func _on_combo_cooldown_timeout() -> void:
+	ready_for_combo = false
 
 # _unhandled_input(event) processes input events that haven't been consumed by the UI.
 # It's the best place for single-press game actions like abilities.

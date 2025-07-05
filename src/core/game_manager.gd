@@ -47,7 +47,7 @@ var save_load_menu_instance = null
 # --- Constants ---
 ## Preloading the default stats resource ensures we always have a clean template
 ## to create new StatBlocks from for a "New Game".
-const DEFAULT_STATS = preload("res://src/player - Kyle/default_potato_stats.tres")
+const DEFAULT_STATS = preload("res://src/player/default_potato_stats.tres")
 
 
 # --- Godot Functions ---
