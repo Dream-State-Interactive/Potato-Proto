@@ -170,10 +170,10 @@ func _process(delta: float):
 		if flesh_material:
 			flesh_material.set_shader_parameter("aging_factor", current_aging_level)
 			
-	if Input.is_action_just_released("scroll_up"):
-		adjust_zoom(1.2)
-	elif Input.is_action_just_released("scroll_down"):
-		adjust_zoom(1 / 1.2)
+	#if Input.is_action_just_released("scroll_up"):
+		#adjust_zoom(1.2)
+	#elif Input.is_action_just_released("scroll_down"):
+		#adjust_zoom(1 / 1.2)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("up"):
@@ -185,11 +185,11 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("right"):
 		dash("right")
 
-# Adjust camera zoom
-func adjust_zoom(adjustScale: float):
-	var zoom = $Camera2D.get_zoom() * adjustScale
-	$Camera2D.set_zoom(zoom)
-	print(zoom)
+## Adjust camera zoom
+#func adjust_zoom(adjustScale: float):
+	#var zoom = $Camera2D.get_zoom() * adjustScale
+	#$Camera2D.set_zoom(zoom)
+	#print(zoom)
 
 # _integrate_forces(state) is a special physics callback for RigidBody2D.
 # It runs BEFORE the physics engine solves collisions for the frame, giving us

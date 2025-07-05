@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dkw86e8mfcgdq"]
+[gd_scene load_steps=15 format=3 uid="uid://dkw86e8mfcgdq"]
 
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="1_h0bpx"]
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_x7tc1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Shader" path="res://assets/Shaders/peel_shader.gdshader" id="4_es8q4"]
 [ext_resource type="PackedScene" uid="uid://dud168e6yjyca" path="res://src/abilities/extreme_torque.tscn" id="4_u11me"]
 [ext_resource type="Script" path="res://src/components/c_health.gd" id="6_7bv2p"]
+[ext_resource type="Script" path="res://src/components/c_zoom.gd" id="8_cd3gd"]
 [ext_resource type="Script" path="res://src/components/c_grip.gd" id="10_8vpk7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vodgh"]
@@ -57,6 +58,7 @@ shape = SubResource("CapsuleShape2D_vakpd")
 shape = SubResource("CircleShape2D_b3mnu")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("8_cd3gd")
 
 [node name="Ability1_Slot" type="Node2D" parent="."]
 
