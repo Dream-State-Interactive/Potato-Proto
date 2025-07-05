@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="2_hu54r"]
 [ext_resource type="Texture2D" uid="uid://t5os6tib4v57" path="res://assets/Images/potato_proto_peeled.png" id="3_nrxwc"]
 [ext_resource type="Texture2D" uid="uid://ddjrr5t5m5fwc" path="res://assets/Images/potato_proto_aged.png" id="4_l4l2i"]
-[ext_resource type="PackedScene" uid="uid://csuhjhv5e8pj3" path="res://assets/GUI/HUD/hud.tscn" id="5_slxtj"]
+[ext_resource type="PackedScene" uid="uid://csuhjhv5e8pj3" path="res://src/ui/old-hud.tscn" id="5_slxtj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_054cc"]
 friction = 0.8

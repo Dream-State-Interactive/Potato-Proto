@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mcmdcc8e35nl"
-path="res://.godot/imported/proto_bg_hills_01.png-009cd9c2653e33509cdf24fae8a1798a.ctex"
+uid="uid://dj0as7rpsdv6x"
+path="res://.godot/imported/proto_clouds_01_B.png-a46a1871bb7011df81de767ecd89bab5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/env/proto_bg_hills_01.png"
-dest_files=["res://.godot/imported/proto_bg_hills_01.png-009cd9c2653e33509cdf24fae8a1798a.ctex"]
+source_file="res://assets/graphics/textures/env/proto_clouds_01_B.png"
+dest_files=["res://.godot/imported/proto_clouds_01_B.png-a46a1871bb7011df81de767ecd89bab5.ctex"]
 
 [params]
 

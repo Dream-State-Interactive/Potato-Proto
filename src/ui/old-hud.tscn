@@ -1,12 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://csuhjhv5e8pj3"]
 
-[ext_resource type="Script" path="res://assets/GUI/HUD/hud.gd" id="1_b1jsc"]
-[ext_resource type="Texture2D" uid="uid://c0rgqdgt8gtdh" path="res://assets/Images/GUI_Panel.png" id="2_10bfv"]
-[ext_resource type="Texture2D" uid="uid://co1sbc5131rlm" path="res://assets/Images/GUI_Panel_greyscale.png" id="3_b71ge"]
-[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/StandardButton.tscn" id="4_ufet7"]
+[ext_resource type="Script" path="res://src/ui/old-hud.gd" id="1_gfetw"]
+[ext_resource type="Texture2D" uid="uid://c0rgqdgt8gtdh" path="res://assets/Images/GUI_Panel.png" id="2_vt8dh"]
+[ext_resource type="Texture2D" uid="uid://co1sbc5131rlm" path="res://assets/Images/GUI_Panel_greyscale.png" id="3_gip8x"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="4_37edx"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
-script = ExtResource("1_b1jsc")
+script = ExtResource("1_gfetw")
 
 [node name="FPSLabel" type="Label" parent="."]
 offset_left = 1831.0
@@ -31,7 +31,7 @@ offset_left = 6.0
 offset_top = -2.0
 offset_right = 790.0
 offset_bottom = 706.0
-texture = ExtResource("2_10bfv")
+texture = ExtResource("2_vt8dh")
 
 [node name="SpeedLabel" type="Label" parent="BG"]
 layout_mode = 2
@@ -57,17 +57,17 @@ scale = Vector2(0.6, 0.6)
 [node name="Speed1" type="TextureButton" parent="BG/SpeedSlots"]
 layout_mode = 2
 toggle_mode = true
-texture_normal = ExtResource("3_b71ge")
+texture_normal = ExtResource("3_gip8x")
 
 [node name="Speed2" type="TextureButton" parent="BG/SpeedSlots"]
 layout_mode = 2
 toggle_mode = true
-texture_normal = ExtResource("3_b71ge")
+texture_normal = ExtResource("3_gip8x")
 
 [node name="Speed3" type="TextureButton" parent="BG/SpeedSlots"]
 layout_mode = 2
 toggle_mode = true
-texture_normal = ExtResource("3_b71ge")
+texture_normal = ExtResource("3_gip8x")
 
 [node name="JumpLabel" type="Label" parent="BG"]
 layout_mode = 0
@@ -93,17 +93,17 @@ scale = Vector2(0.6, 0.6)
 [node name="Jump1" type="TextureButton" parent="BG/JumpSlots"]
 layout_mode = 2
 toggle_mode = true
-texture_normal = ExtResource("3_b71ge")
+texture_normal = ExtResource("3_gip8x")
 
 [node name="Jump2" type="TextureButton" parent="BG/JumpSlots"]
 layout_mode = 2
 toggle_mode = true
-texture_normal = ExtResource("3_b71ge")
+texture_normal = ExtResource("3_gip8x")
 
 [node name="Jump3" type="TextureButton" parent="BG/JumpSlots"]
 layout_mode = 2
 toggle_mode = true
-texture_normal = ExtResource("3_b71ge")
+texture_normal = ExtResource("3_gip8x")
 
 [node name="TitleLabel" type="Label" parent="BG"]
 layout_mode = 0
@@ -127,7 +127,7 @@ theme_override_font_sizes/font_size = 50
 text = "Points Available: 
 "
 
-[node name="RestartButton" parent="." instance=ExtResource("4_ufet7")]
+[node name="RestartButton" parent="." instance=ExtResource("4_37edx")]
 offset_left = 1511.0
 offset_top = 10.0
 offset_right = 5362.0
@@ -135,7 +135,7 @@ offset_bottom = 1260.0
 text = "Restart
 "
 
-[node name="MainMenuButton" parent="." instance=ExtResource("4_ufet7")]
+[node name="MainMenuButton" parent="." instance=ExtResource("4_37edx")]
 offset_left = 1513.0
 offset_top = 141.0
 offset_right = 5364.0

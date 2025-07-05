@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://bd6spyrfc537y"]
 
-[ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1_30dhv"]
+[ext_resource type="Script" path="res://src/ui/menus/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="8_jfuhy"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="9_8dugi"]
@@ -8,15 +8,15 @@
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="12_xho8u"]
 [ext_resource type="Shader" path="res://assets/Shaders/ScrollShader.gdshader" id="13_q4qwy"]
 [ext_resource type="AudioStream" uid="uid://b1wmtlyehendw" path="res://assets/Music/proto_pototo_v2.mp3" id="13_v7jc8"]
-[ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
+[ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/graphics/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_0i57e"]
-[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/Slider.tscn" id="15_lprhh"]
-[ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
-[ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
-[ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://src/ui/StandardMenu.tscn" id="18_0l2vk"]
+[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/components/Slider.tscn" id="15_lprhh"]
+[ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/graphics/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
+[ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/graphics/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
+[ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://src/ui/components/StandardMenu.tscn" id="18_0l2vk"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
-[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://src/ui/MainMenuGUI.tscn" id="18_ne370"]
-[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/StandardButton.tscn" id="20_3o2gw"]
+[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://src/ui/components/MainTitle.tscn" id="18_ne370"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="20_3o2gw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
 shader = ExtResource("13_q4qwy")
@@ -148,49 +148,57 @@ volume_db = -10.0
 autoplay = true
 
 [node name="StandardButtonLevelSelect" parent="." instance=ExtResource("20_3o2gw")]
-offset_left = 767.0
-offset_top = 516.0
-offset_right = 4618.0
-offset_bottom = 1766.0
+offset_left = 771.0
+offset_top = 578.0
+offset_right = 4622.0
+offset_bottom = 1828.0
 size_flags_horizontal = 4
 text = "Levels
 "
 metadata/destination = "res://src/levels/Menus/level_select.tscn"
 
 [node name="StandardButtonSettings" parent="." instance=ExtResource("20_3o2gw")]
-offset_left = 769.0
-offset_top = 664.0
-offset_right = 4620.0
-offset_bottom = 1914.0
+offset_left = 776.0
+offset_top = 720.0
+offset_right = 4627.0
+offset_bottom = 1970.0
 size_flags_horizontal = 4
 text = "Settings
 "
-metadata/destination = "res://assets/GUI/MENU/SettingsMenu.tscn"
+metadata/destination = "res://src/ui/menus/SettingsMenu.tscn"
 
 [node name="StandardButtonQuit" parent="." instance=ExtResource("20_3o2gw")]
-offset_left = 770.0
-offset_top = 807.0
-offset_right = 4621.0
-offset_bottom = 2057.0
+offset_left = 785.0
+offset_top = 862.0
+offset_right = 4636.0
+offset_bottom = 2112.0
 size_flags_horizontal = 4
 text = "Quit
 "
 
 [node name="StandardButtonPlay" parent="." instance=ExtResource("20_3o2gw")]
-offset_left = 765.0
-offset_top = 373.0
-offset_right = 4616.0
-offset_bottom = 1623.0
+offset_left = 766.0
+offset_top = 297.0
+offset_right = 4617.0
+offset_bottom = 1547.0
 size_flags_horizontal = 4
 text = "Play"
 metadata/destination = "res://Scenes/Levels/main_world.tscn"
+
+[node name="StandardButtonSaveLoad" parent="." instance=ExtResource("20_3o2gw")]
+offset_left = 770.0
+offset_top = 436.0
+offset_right = 4621.0
+offset_bottom = 1686.0
+size_flags_horizontal = 4
+text = "Save/Load"
 
 [node name="StandardMenu" parent="." instance=ExtResource("18_0l2vk")]
 position = Vector2(200, 335)
 scale = Vector2(0.1, 0.1)
 
 [node name="Slider" parent="." instance=ExtResource("15_lprhh")]
-position = Vector2(-51, 903)
+position = Vector2(-41, 941)
 
 [node name="Control" parent="." instance=ExtResource("18_ne370")]
 offset_left = -1340.0

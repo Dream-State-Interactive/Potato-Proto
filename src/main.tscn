@@ -1,15 +1,15 @@
 [gd_scene load_steps=11 format=3 uid="uid://bgqr8sofrouy0"]
 
-[ext_resource type="PackedScene" uid="uid://bun67yf8js03y" path="res://src/ui/level_up_menu.tscn" id="1_ksiiy"]
+[ext_resource type="PackedScene" uid="uid://bun67yf8js03y" path="res://src/ui/menus/level_up_menu.tscn" id="1_ksiiy"]
 [ext_resource type="Script" path="res://src/main.gd" id="1_kv8bx"]
-[ext_resource type="PackedScene" uid="uid://benqvi8jf1a3v" path="res://src/ui/hud.tscn" id="2_4n6w4"]
+[ext_resource type="PackedScene" uid="uid://benqvi8jf1a3v" path="res://src/ui/hud/hud.tscn" id="2_4n6w4"]
 [ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="2_sm1wt"]
 [ext_resource type="Script" path="res://src/upgrades/upgrade_data.gd" id="4_bhbk5"]
 [ext_resource type="Resource" uid="uid://y6x6fm0k75vk" path="res://src/upgrades/upgrade_roll_speed.tres" id="5_hgckn"]
 [ext_resource type="Resource" uid="uid://b6yxv5owe76nm" path="res://src/upgrades/upgrade_grip.tres" id="6_2jrla"]
 [ext_resource type="Resource" uid="uid://c7sdfy3ngd2cq" path="res://src/upgrades/upgrade_jump_force.tres" id="7_b0sp6"]
-[ext_resource type="PackedScene" uid="uid://bw5rd3vkqwpk4" path="res://src/ui/pause_menu.tscn" id="9_e2eet"]
-[ext_resource type="PackedScene" uid="uid://bmf5xebhmjeyv" path="res://src/ui/save_load_menu.tscn" id="10_lh464"]
+[ext_resource type="PackedScene" uid="uid://bw5rd3vkqwpk4" path="res://src/ui/menus/pause_menu.tscn" id="9_e2eet"]
+[ext_resource type="PackedScene" uid="uid://bmf5xebhmjeyv" path="res://src/ui/menus/save_load_menu.tscn" id="10_lh464"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_kv8bx")

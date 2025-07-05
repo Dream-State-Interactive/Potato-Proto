@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj86amgv2wme7"
-path="res://.godot/imported/proto_sky_02.png-a87c60a091cbdd4bbc849aa906f64f87.ctex"
+uid="uid://q34kk5g40bqq"
+path="res://.godot/imported/proto_stars_02.png-d72879625d6ecfcb9743bb4c16a71303.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/env/proto_sky_02.png"
-dest_files=["res://.godot/imported/proto_sky_02.png-a87c60a091cbdd4bbc849aa906f64f87.ctex"]
+source_file="res://assets/graphics/textures/env/proto_stars_02.png"
+dest_files=["res://.godot/imported/proto_stars_02.png-d72879625d6ecfcb9743bb4c16a71303.ctex"]
 
 [params]
 

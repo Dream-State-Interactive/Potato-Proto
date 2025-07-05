@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bmf5xebhmjeyv"]
 
-[ext_resource type="Script" path="res://src/ui/save_load_menu.gd" id="1_b4yfc"]
+[ext_resource type="Script" path="res://src/ui/menus/save_load_menu.gd" id="1_b4yfc"]
 
 [node name="SaveLoadMenu" type="CanvasLayer"]
 process_mode = 3

@@ -1,10 +1,10 @@
 # src/ui/pause_menu.gd
 extends CanvasLayer
 
-@onready var resume_button: Button = $MarginContainer/PanelContainer/VBoxContainer/ResumeButton
-@onready var save_load_button: Button = $MarginContainer/PanelContainer/VBoxContainer/SaveLoadButton
-@onready var settings_button: Button = $MarginContainer/PanelContainer/VBoxContainer/SettingsButton
-@onready var quit_button: Button = $MarginContainer/PanelContainer/VBoxContainer/QuitButton
+@onready var resume_button: Button = $ColorRect/ResumeButton
+@onready var save_load_button: Button = $ColorRect/SaveLoadButton
+@onready var settings_button: Button = $ColorRect/SettingsButton
+@onready var quit_button: Button = $ColorRect/MainMenuButton
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -26,7 +26,7 @@ func _unhandled_input(event: InputEvent):
 
 func open_menu():
 	show()
-	get_tree().paused = true
+	get_tree().paused = true	
 
 func hide_menu():
 	hide()
@@ -41,4 +41,4 @@ func on_settings_pressed():
 
 func on_quit_pressed():
 	get_tree().paused = false
-	SceneLoader.change_scene("res://src/ui/main_menu.tscn") # Use the new loader
+	SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn") # Use the new loader

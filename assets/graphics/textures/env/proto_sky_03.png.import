@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c3cksuwgrxk8j"
-path="res://.godot/imported/proto_sky_03.png-a45ebd2134a90b8075d6dfbea4263fb0.ctex"
+path="res://.godot/imported/proto_sky_03.png-ac83d18e0084b2c60aef1b104c5a3c20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/env/proto_sky_03.png"
-dest_files=["res://.godot/imported/proto_sky_03.png-a45ebd2134a90b8075d6dfbea4263fb0.ctex"]
+source_file="res://assets/graphics/textures/env/proto_sky_03.png"
+dest_files=["res://.godot/imported/proto_sky_03.png-ac83d18e0084b2c60aef1b104c5a3c20.ctex"]
 
 [params]
 
