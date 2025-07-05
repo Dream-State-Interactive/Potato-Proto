@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6sk8c8ivubu"]
 
-[ext_resource type="Script" path="res://src/levels/Menus/level_select.gd" id="1_aqssb"]
+[ext_resource type="Script" path="res://src/ui/menus/level_select.gd" id="1_aqssb"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_aal82"]
 
 [node name="LevelSelect" type="Node2D"]
@@ -50,4 +50,4 @@ offset_top = 44.0
 offset_right = 4259.0
 offset_bottom = 1168.72
 text = "Back"
-metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
+metadata/destination = "res://src/ui/menus/MainMenu.tscn"

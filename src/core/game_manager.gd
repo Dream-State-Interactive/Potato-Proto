@@ -49,7 +49,6 @@ var save_load_menu_instance = null
 ## to create new StatBlocks from for a "New Game".
 const DEFAULT_STATS = preload("res://src/player/default_potato_stats.tres")
 
-
 # --- Godot Functions ---
 # _ready() on an Autoload runs ONCE when the game first launches.
 func _ready():
