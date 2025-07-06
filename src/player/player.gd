@@ -50,9 +50,9 @@ var stats: StatBlock
 @export var low_speed_threshold: float = 100.0
 ## The speed at which the blend to the capsule is complete, and the blend
 ## from capsule to a perfect circle begins.
-@export var mid_speed_threshold: float = 400.0
+@export var mid_speed_threshold: float = 500.0
 ## The speed at which the player's collision is a perfect circle for smooth rolling.
-@export var high_speed_threshold: float = 800.0
+@export var high_speed_threshold: float = 1000.0
 
 
 @export_group("Target Collision Sizes", "collision_")

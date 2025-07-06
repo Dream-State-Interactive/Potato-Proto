@@ -65,7 +65,7 @@ func hide_menu():
 	get_tree().paused = false
 
 func on_upgrade_button_pressed(upgrade_data: UpgradeData):
-	var cost = upgrade_data.base_cost
+	var cost = get_current_cost(upgrade_data)
 	var current_starch = GameManager.current_starch_points
 	
 	print("--- UPGRADE ATTEMPT ---")
@@ -94,7 +94,7 @@ func update_ui_elements():
 	# Loop through our data-driven upgrades and update the corresponding UI row.
 	for i in range(min(buttons.size(), upgrades.size())):
 		var upgrade_data = upgrades[i]
-		var cost = upgrade_data.base_cost
+		var cost = get_current_cost(upgrade_data)
 		
 		# Update the cost label for this row.
 		if i < cost_labels.size():
@@ -102,3 +102,41 @@ func update_ui_elements():
 		
 		# Disable the button for this row if the player can't afford it.
 		buttons[i].disabled = current_starch < cost
+
+# This function calculates the current cost of an upgrade dynamically.
+func get_current_cost(upgrade_data: UpgradeData) -> int:
+	# --- THIS IS THE CORRECTED LOGIC ---
+	var current_stat_value: float = 0.0
+	var default_stat_value: float = 0.0
+
+	# 1. Get the player's CURRENT value for this stat.
+	# We use the 'in' keyword to check if the property exists on the object before getting it.
+	if upgrade_data.stat_identifier in GameManager.player_stats:
+		current_stat_value = GameManager.player_stats.get(upgrade_data.stat_identifier)
+	else:
+		push_warning("Stat '%s' not found in player_stats!" % upgrade_data.stat_identifier)
+		return 99999 # Return a high cost to prevent purchase if misconfigured.
+
+	# 2. Get the DEFAULT value for this stat from our clean resource.
+	if upgrade_data.stat_identifier in GameManager.DEFAULT_STATS:
+		default_stat_value = GameManager.DEFAULT_STATS.get(upgrade_data.stat_identifier)
+	else:
+		push_warning("Stat '%s' not found in DEFAULT_STATS resource!" % upgrade_data.stat_identifier)
+		return 99999
+	
+	# ----------------------------------------
+	
+	# 3. Calculate how many times this stat has been upgraded.
+	# Use max(0, ...) to prevent negative levels if a stat can be reduced.
+	# Use roundi() to handle potential floating point inaccuracies.
+	if upgrade_data.upgrade_value == 0:
+		push_warning("UpgradeData for '%s' has an upgrade_value of 0!" % upgrade_data.stat_identifier)
+		return 99999
+
+	var upgrade_levels_purchased = roundi(max(0, (current_stat_value - default_stat_value) / upgrade_data.upgrade_value))
+	
+	# 4. Calculate the final cost.
+	var current_cost = upgrade_data.base_cost + (upgrade_levels_purchased * upgrade_data.cost_increase_per_level)
+	
+	
+	return current_cost
