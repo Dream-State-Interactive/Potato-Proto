@@ -18,6 +18,8 @@
 # =============================================================================
 extends Node
 
+var FPS
+
 # --- Exported Variables ---
 ## This allows you to choose which level scene (.tscn) will be loaded first
 ## when the game starts. You set this in the Inspector on the Main node.
@@ -39,6 +41,10 @@ func _ready():
 		change_level(starting_level)
 	else:
 		print("ERROR: No starting level assigned to Main.tscn in the Inspector.")
+		
+func _process(delta: float):
+	FPS = 1/delta
+	$FPSLabel.text = str(FPS)
 
 # --- Public API ---
 ## This function handles swapping between levels.

@@ -25,3 +25,10 @@ upgrades = Array[ExtResource("4_bhbk5")]([ExtResource("5_hgckn"), ExtResource("6
 [node name="SaveLoadMenu" parent="." instance=ExtResource("10_lh464")]
 
 [node name="LevelContainer" type="Node2D" parent="."]
+
+[node name="FPSLabel" type="Label" parent="."]
+offset_left = 1831.0
+offset_top = 1013.0
+offset_right = 1917.0
+offset_bottom = 1085.0
+theme_override_font_sizes/font_size = 30

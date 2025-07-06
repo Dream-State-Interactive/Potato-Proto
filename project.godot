@@ -17,11 +17,12 @@ config/icon="res://assets/Images/icon.svg"
 
 [autoload]
 
-SettingsService="*res://tools/services/settings/settingsService.gd"
-AudioService="*res://tools/services/audioService.gd"
+SettingsService="*res://src/core/settingsService.gd"
+AudioService="*res://src/core/audioService.gd"
 GameManager="*res://src/core/game_manager.gd"
 SaveManager="*res://src/core/save_manager.gd"
 SceneLoader="*res://src/core/scene_loader.gd"
+GUIManager="*res://src/core/GUI_manager.gd"
 
 [display]
 
