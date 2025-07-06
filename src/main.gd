@@ -35,6 +35,7 @@ func _ready():
 	# The GameManager then checks if this is a "New Game" or a "Load Game"
 	# and handles the data initialization accordingly.
 	GameManager.on_game_scene_ready()
+	SettingsService.initializeSettings()
 
 	# If a starting level has been assigned in the Inspector, load it.
 	if starting_level:
