@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwja6ji5hvuya"]
+
+[ext_resource type="Texture2D" uid="uid://dlx5yi8kj8av8" path="res://assets/graphics/sprites/hazards/HAZARD.png" id="1_3oiw7"]
+[ext_resource type="Script" path="res://src/components/c_hazard.gd" id="2_e85b2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ylfuj"]
+resource_local_to_scene = true
+size = Vector2(102, 102)
+
+[node name="HazardBase" type="StaticBody2D"]
+
+[node name="CollisionShape2D_hazard" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ylfuj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_3oiw7")
+
+[node name="CHazard" type="Node" parent="."]
+script = ExtResource("2_e85b2")

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://y6x6fm0k75vk"]
+
+[ext_resource type="Script" path="res://src/upgrades/upgrade_data.gd" id="1_moo7u"]
+
+[resource]
+script = ExtResource("1_moo7u")
+stat_identifier = "roll_speed"
+upgrade_value = 5000.0
+base_cost = 100
+cost_increase_per_level = 50

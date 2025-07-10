@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="Potato-Proto"
-run/main_scene="res://assets/GUI/MENU/MainMenu.tscn"
+run/main_scene="res://src/ui/menus/MainMenu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://assets/Images/icon.svg"
 
 [autoload]
 
-SettingsService="*res://tools/services/settings/settingsService.gd"
-AudioService="*res://tools/services/audioService.gd"
+SettingsService="*res://src/core/settingsService.gd"
+AudioService="*res://src/core/audioService.gd"
+GameManager="*res://src/core/game_manager.gd"
+SaveManager="*res://src/core/save_manager.gd"
+SceneLoader="*res://src/core/scene_loader.gd"
+GUIManager="*res://src/core/GUI_manager.gd"
 
 [display]
 
@@ -34,6 +38,10 @@ project/assembly_name="Potato-Proto"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/angle_editor_plugin/plugin.cfg")
 
 [global_group]
 
@@ -122,6 +130,35 @@ right={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null)
 ]
 }
+ability_1={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":81,"key_label":0,"unicode":113,"location":0,"echo":false,"script":null)
+]
+}
+ability_2={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
+]
+}
+toggle_upgrades={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+pause={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_render/layer_1="world"
+2d_render/layer_2="player"
+2d_render/layer_3="hazard"
+2d_physics/layer_1="world"
+2d_physics/layer_2="player"
+2d_physics/layer_3="hazard"
 
 [rendering]
 

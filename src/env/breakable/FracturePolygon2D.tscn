@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cifnswa6rff4v"]
+
+[ext_resource type="Script" path="res://src/env/breakable/fracturable2D.gd" id="1_l5oy6"]
+
+[node name="FracturePolygon2D" type="RigidBody2D"]
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_l5oy6")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, -64.8)
+polygon = PackedVector2Array(0, 0, 24, -40, 64, -40, 64, 64, 0, 64)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -64.8)
+polygon = PackedVector2Array(0, 0, 24, -40, 64, -40, 64, 64, 0, 64)

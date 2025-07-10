@@ -1,0 +1,48 @@
+# === GODOT 2D DIRECTION CHEATSHEET ===
+
+# COORDINATE SYSTEM
+#  +X → right
+#  +Y ↓ down
+
+# STANDARD UNIT VECTORS
+# Vector2.RIGHT  = ( 1,  0)
+# Vector2.LEFT   = (-1,  0)
+# Vector2.DOWN   = ( 0,  1)
+# Vector2.UP     = ( 0, -1)
+
+# SURFACE NORMALS
+# • Floor    normal: Vector2.UP      # (0, -1)
+# • Ceiling  normal: Vector2.DOWN    # (0,  1)
+# • Right Wall normal: Vector2.LEFT  # (-1, 0)
+# • Left Wall  normal: Vector2.RIGHT # ( 1, 0)
+
+# DOT PRODUCT
+# v.dot(u):
+#  > 0 → angle < 90° (same general dir)
+#  = 0 → angle = 90° (perpendicular)
+#  < 0 → angle > 90° (opposite dir)
+# e.g. surface_normal.dot(Vector2.DOWN):
+#  •  1.0 on ceilings    (normal = DOWN)
+#  •  0.0 on walls       (normal = LEFT or RIGHT)
+#  • -1.0 on floors      (normal = UP)
+
+# DETERMINING “CEILINGNESS”
+# var ceiling_factor = max(0.0, surface_normal.dot(Vector2.DOWN))
+#  → 1.0 on ceilings, 0.0 on walls (floors clamp to 0)
+
+# TANGENT / ALONG-SURFACE DIRECTION
+# var tangent = surface_normal.orthogonal()
+#  # (x, y).orthogonal() → (y, -x)  # 90° rotation
+
+# INTO-SURFACE DIRECTION
+# var into_surface = -surface_normal
+
+# EXAMPLE USAGE IN CLIMBING:
+# climb_dir = tangent * player_input * climb_speed
+#   move along surface
+
+# stick_force = into_surface * lerp(min_stick, max_stick, ceiling_factor)
+#   push into surface (weak on walls, strong on ceilings)
+
+# state.linear_velocity = climb_dir + stick_force
+#   set velocity = move + push

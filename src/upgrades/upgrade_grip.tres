@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://b6yxv5owe76nm"]
+
+[ext_resource type="Script" path="res://src/upgrades/upgrade_data.gd" id="1_83ifl"]
+
+[resource]
+script = ExtResource("1_83ifl")
+stat_identifier = "grip"
+upgrade_value = 1.0
+base_cost = 75
+cost_increase_per_level = 25

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://c7sdfy3ngd2cq"]
+
+[ext_resource type="Script" path="res://src/upgrades/upgrade_data.gd" id="1_uqmvm"]
+
+[resource]
+script = ExtResource("1_uqmvm")
+stat_identifier = "jump_force"
+upgrade_value = 500.0
+base_cost = 150
+cost_increase_per_level = 100
