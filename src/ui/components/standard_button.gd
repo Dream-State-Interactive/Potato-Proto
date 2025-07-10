@@ -18,9 +18,8 @@ func _process(_delta: float) -> void:
 func _on_pressed() -> void:
 	if(destination):
 		SceneLoader.change_scene(destination)
-	#elif (load(replaceMenu)):
-		#self.remove_child($Menu)
-		#self.add_child(replaceMenu.instantiate())
+	#elif (replaceMenu):
+		#HUDLoader.replace_menu(replaceMenu)
 		
 func _on_button_mouse_entered() -> void:
 	self.scale *= 1.1
