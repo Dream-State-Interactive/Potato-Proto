@@ -3,8 +3,10 @@ name: Release Godot Project
 # Whenever a tag push matching pattern "v*" then run the job
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - development # This should be changed to main
+    # tags:
+    #   - "v*"
 
 
   # bump-version:
