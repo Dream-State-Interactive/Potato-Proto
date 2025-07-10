@@ -35,10 +35,10 @@ jobs:
       uses: actions/checkout@v4
   
     - name: export game
+      needs: checkout
       id: export
       # Use latest version (see releases for all versions)
       uses: firebelley/godot-export@v6.0.0
-      needs: checkout
       with:
         # Defining all the required inputs
         godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
@@ -49,8 +49,8 @@ jobs:
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
       # https://github.com/ncipollo/release-action
     - name: create release
-      uses: ncipollo/release-action@v1.14.0
       needs: export_game
+      uses: ncipollo/release-action@v1.14.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: true
