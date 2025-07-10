@@ -21,12 +21,9 @@ on:
 
 jobs:
   export_game:
-    # Always use ubuntu-latest for this action
-    runs-on: ubuntu-latest
-    # Add permission for release creation. Can be made narrower according to your needs
-    permissions: write-all
-    # Job name, can be anything
     name: Export Game
+    runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       # Always include the checkout step so that 
       # your project is available for Godot to export
@@ -35,7 +32,6 @@ jobs:
   
     - name: export game
       id: export
-      # Use latest version (see releases for all versions)
       uses: firebelley/godot-export@v6.0.0
       with:
         # Defining all the required inputs
@@ -48,6 +44,9 @@ jobs:
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
       # https://github.com/ncipollo/release-action
     name: Create Release
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: export_game
     steps:
     - name: Create Release
       uses: ncipollo/release-action@v1.14.0
