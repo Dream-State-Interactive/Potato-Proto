@@ -37,7 +37,6 @@ continuous_cd = 2
 script = ExtResource("1_x7tc1")
 equipped_ability1 = ExtResource("3_6ycsf")
 equipped_ability2 = ExtResource("4_u11me")
-seconds_to_fully_age = 100.0
 
 [node name="FleshSprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_vodgh")
