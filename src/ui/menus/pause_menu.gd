@@ -20,6 +20,16 @@ func _ready():
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("pause") and event.is_pressed():
 		get_viewport().set_input_as_handled()
+		
+		# Instead of checking visibility, let the MenuManager decide.
+		# If the current menu is this one, we resume. Otherwise, we open it.
+		if MenuManager._current_menu_path == self.scene_file_path:
+			resume_game()
+		else:
+			# If another menu (like settings) is open, we don't want the pause
+			# key to do anything. We only open the pause menu if NO menu is open.
+			if MenuManager._current_menu_path == "":
+				MenuManager.replace_menu(self.scene_file_path)
 
 		if not visible:
 			# If no other menus are open, show the pause menu.
