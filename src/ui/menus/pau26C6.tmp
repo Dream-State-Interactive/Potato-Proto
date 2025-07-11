@@ -50,6 +50,7 @@ theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Save/Load
 "
+metadata/ReplacementMenu = "res://src/ui/menus/save_load_menu.tscn"
 
 [node name="SettingsButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
@@ -67,4 +68,4 @@ text = "Main Menu
 "
 metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resumepressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="hide_menu"]

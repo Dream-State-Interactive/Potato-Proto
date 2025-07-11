@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://c738srpu3ow4k"]
+
+[ext_resource type="Script" path="res://src/core/ui_overlay.gd" id="1_tahpa"]
+[ext_resource type="PackedScene" uid="uid://bmf5xebhmjeyv" path="res://src/ui/menus/save_load_menu.tscn" id="2_epxkg"]
+[ext_resource type="PackedScene" uid="uid://rhte4n1lb3va" path="res://src/ui/menus/settings_menu.tscn" id="3_8lf2x"]
+[ext_resource type="PackedScene" uid="uid://c6sk8c8ivubu" path="res://src/ui/menus/level_select.tscn" id="4_5j3v4"]
+
+[node name="UiOverlay" type="CanvasLayer"]
+script = ExtResource("1_tahpa")
+
+[node name="SaveLoadMenu" parent="." instance=ExtResource("2_epxkg")]
+
+[node name="SettingsMenu" parent="." instance=ExtResource("3_8lf2x")]
+
+[node name="LevelSelect" parent="." instance=ExtResource("4_5j3v4")]

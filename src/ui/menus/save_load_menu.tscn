@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmf5xebhmjeyv"]
+[gd_scene load_steps=3 format=3 uid="uid://bmf5xebhmjeyv"]
 
 [ext_resource type="Script" path="res://src/ui/menus/save_load_menu.gd" id="1_b4yfc"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_np0gr"]
 
 [node name="SaveLoadMenu" type="CanvasLayer"]
 process_mode = 3
+layer = 5
 script = ExtResource("1_b4yfc")
+back_button_paths = Array[NodePath]([NodePath("MarginContainer/PanelContainer/VBoxContainer/BackButton")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -20,10 +23,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -244.5
+offset_top = -187.5
+offset_right = 244.5
+offset_bottom = 187.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
@@ -76,6 +79,8 @@ text = "Load  Game Slot 2"
 layout_mode = 2
 text = "Load  Game Slot 3"
 
-[node name="BackButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="BackButton" parent="MarginContainer/PanelContainer/VBoxContainer" instance=ExtResource("2_np0gr")]
 layout_mode = 2
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 55
 text = "Back"
