@@ -47,7 +47,7 @@ func open_menu():
 ## Hides this menu and tells the GameManager to re-open the main pause menu.
 func hide_menu():
 	print("[SaveLoadMenu] hide_menu()")
-	hide()
+	super()
 	#GameManager.open_pause_menu()
 
 func _exit_tree():
