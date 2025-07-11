@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://rhte4n1lb3va"]
+
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="1_0gned"]
+[ext_resource type="Script" path="res://src/ui/menus/settings_menu.gd" id="1_8rfx4"]
+[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/components/Slider.tscn" id="2_t2od3"]
+
+[node name="SettingsMenu" type="CanvasLayer"]
+layer = 4
+script = ExtResource("1_8rfx4")
+back_button_paths = Array[NodePath]([NodePath("BackButton")])
+
+[node name="BackButton" parent="." instance=ExtResource("1_0gned")]
+offset_left = 775.0
+offset_top = 738.0
+offset_right = 4231.0
+offset_bottom = 1862.72
+text = "Back"
+
+[node name="Slider" parent="." instance=ExtResource("2_t2od3")]
+position = Vector2(-9, 421)

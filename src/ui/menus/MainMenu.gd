@@ -1,19 +1,42 @@
+# src/ui/main_menu.gd (Final Corrected Version)
 extends CanvasLayer
 
-# @onready var button_container: Node = $VBoxContainer
+@onready var button_container: VBoxContainer = $ButtonContainer
+@onready var standard_button_play: Button = $ButtonContainer/StandardButtonPlay
+@onready var standard_button_save_load: Button = $ButtonContainer/StandardButtonSaveLoad
+@onready var standard_button_level_select: Button = $ButtonContainer/StandardButtonLevelSelect
+@onready var standard_button_settings: Button = $ButtonContainer/StandardButtonSettings
 
-func _ready() -> void:
-	# Loop through all children of the button container to configure each button.
-	#for button in button_container.get_children():
-		#if button is Button:
-			## Center the button's pivot so that scaling occurs from the center.
-			#button.pivot_offset = button.size * 0.5
-			## Connect hover and press signals using inline lambda functions.
-			#button.mouse_entered.connect(func() -> void: _on_button_mouse_entered(button))
-			#button.mouse_exited.connect(func() -> void: _on_button_mouse_exited(button))
-			#button.pressed.connect(func() -> void: _on_button_pressed(button))
-	pass
+# --- GODOT FUNCTIONS ---
+func _ready():
+	# hide submenus at start
+	MenuManager.register_menu(self)
+	#save_load_menu.visible  = false
+	#settings_menu.visible   = false
 
+func _on_SaveLoadButton_pressed():
+	print("[MainMenu] SaveLoad pressed")
+	MenuManager.replace_menu("res://src/ui/menus/save_load_menu.tscn")
+
+func _on_SettingsButton_pressed():
+	print("[MainMenu] Settings pressed")
+	MenuManager.replace_menu("res://src/ui/menus/settings_menu.tscn")
+
+func _on_LevelSelectButton_pressed():
+	MenuManager.replace_menu("res://src/ui/menus/level_select.tscn")
+
+func _exit_tree():
+	# When this scene is being destroyed, it tells the manager to remove it.
+	MenuManager.unregister_menu(self)
+	
+func open_menu():
+	# show just the main-button container
+	button_container.show()
+
+func hide_menu():
+	# hide just the main-button container
+	button_container.hide()
+	
 # Increase the button scale slightly when the mouse enters.
 func _on_button_mouse_entered(button: Button) -> void:
 	button.scale = Vector2(1.1, 1.1)
@@ -24,3 +47,7 @@ func _on_button_mouse_exited(button: Button) -> void:
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()
+
+func on_load_game_pressed():
+	GameManager.set_next_game_state(false, 1)
+	SceneLoader.change_scene("res://src/levels/level_proto/level_proto.tscn") # Use the new loader

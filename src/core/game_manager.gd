@@ -43,6 +43,7 @@ var hud_instance = null
 var level_up_menu_instance = null
 var pause_menu_instance = null
 var save_load_menu_instance = null
+var level_path_to_load: String = ""
 
 # --- Constants ---
 ## Preloading the default stats resource ensures we always have a clean template
@@ -77,10 +78,44 @@ func prepare_for_scene_change():
 ## This is called by the main game scene (Main.tscn) when it becomes ready.
 func on_game_scene_ready():
 	print("GameManager: Game scene is ready. Checking game state.")
+	
+	# Get safe reference to the Main node.
+	# Can't use an @onready var because the GameManager is global,
+	# so we find it in the tree when we need it.
+	var main_node = get_tree().get_root().find_child("Main", true, false)
+	
+	# If we can't find the Main node, something is very wrong.
+	if not is_instance_valid(main_node):
+		print("ERROR: Could not find the 'Main' node in the scene tree!")
+		return
+
+	# Now we can safely execute our logic.
 	if next_scene_is_new_game:
 		reset_game_state()
+		# --- THIS IS THE MISSING LINE ---
+		# After resetting the state, we tell the now-existing Main node
+		# to load the level whose path we stored earlier.
+		main_node.change_level(level_path_to_load)
+		# --------------------------------
 	else:
+		# The load logic should also be here.
 		load_game_after_player_ready()
+
+## NEW GAME
+func start_new_game_at_level(level_path: String):
+	# 1. Set the flags for what to do AFTER Main.tscn loads.
+	set_next_game_state(true, 1) # true = is a new game
+	level_path_to_load = level_path
+	
+	# 2. Prepare for the scene change and load Main.tscn.
+	prepare_for_scene_change()
+	get_tree().change_scene_to_file(SceneLoader.MAIN_GAME_SCENE)
+
+## LOAD GAME
+func start_loaded_game(slot: int):
+	set_next_game_state(false, slot) # false = is NOT a new game
+	prepare_for_scene_change()
+	get_tree().change_scene_to_file(SceneLoader.MAIN_GAME_SCENE)
 
 ## This function ensures we don't try to load data into a player that doesn't exist yet.
 func load_game_after_player_ready():
