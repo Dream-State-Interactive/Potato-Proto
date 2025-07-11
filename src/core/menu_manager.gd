@@ -75,6 +75,10 @@ func _show_menu(path: String):
 			push_error("MenuManager: registered menu freed unexpectedly: " + path)
 			return
 		
+		# Only set _current_menu_path if the menu WANTS to be tracked (i.e., dont_track == false)
+		if not menu_to_show.has_meta("dont_track") or not menu_to_show.dont_track:
+			_current_menu_path = path
+		
 		# Use the menu's `open_menu` method if it exists for custom open logic,
 		# otherwise, just set its visibility to true.
 		if menu_to_show.has_method("open_menu"):
@@ -89,28 +93,39 @@ func _show_menu(path: String):
 func back():
 	_cleanup_invalid()
 
-	# Step 1: Find and hide the currently visible menu.
-	for path in _registered_menus.keys():
-		var menu = _registered_menus[path]
-		if is_instance_valid(menu) and menu.visible:
-			if menu.has_method("hide_menu"):
-				menu.hide_menu()
+	# The old implementation looped through all menus and hid the FIRST one it found that was visible.
+	# This is unreliable when multiple menus are visible (I.E. when using push_menu).
+	# The fix is specifically hiding the menu so it's tracked as the "current" one.
+
+	# Step 1: Find and hide the currently active menu using its tracked path.
+	if _current_menu_path != "" and _registered_menus.has(_current_menu_path):
+		var current_menu = _registered_menus[_current_menu_path]
+		if is_instance_valid(current_menu):
+			if current_menu.has_method("hide_menu"):
+				current_menu.hide_menu()
 			else:
-				menu.visible = false
-			break
+				# Fallback just in case
+				current_menu.hide()
+	else:
+		# This case can be triggered if back() is called when no menu is "current".
+		# Add a warning for debugging.
+		push_warning("MenuManager.back() called, but no _current_menu_path is set.")
+
 
 	# Step 2: Pop the last path from the history stack and show that menu.
 	if _menu_stack.is_empty():
-		push_warning("MenuManager: Back stack empty")
+		push_warning("MenuManager: Back stack empty. No menu to return to.")
+		# After hiding the current menu, there's nothing else to show. NOTHING.
+		# Clear the current path since we're at the bottom of the stack.
+		_current_menu_path = ""
 		return
 	
 	var previous_menu_path = _menu_stack.pop_back()
-	_show_menu(previous_menu_path)
+	_show_menu(previous_menu_path) # Show the previous menu and set it as current.
 
 
-# if you want to  layer a Menu over another Menu (instead of replace), use push_menu()  instead of replace_menu()
+# if you want to layer a Menu over another Menu (instead of replace), use push_menu() instead of replace_menu()
 # This makes the current menu remain open and overlay the new one
-# -- This currently isn't used but having it exist might help eventually --
 func push_menu(new_menu_path: String):
 	_cleanup_invalid()
 
@@ -118,13 +133,16 @@ func push_menu(new_menu_path: String):
 	for path in _registered_menus.keys():
 		var menu = _registered_menus[path]
 		if is_instance_valid(menu) and menu.visible:
-			print("[MenuManager] push_menu() stacking on top of:", path)
+			# Notify the underlying menu that it is being covered by a child menu.
+			# This allows it to hide its interactive elements without hiding itself entirely.
+			if menu.has_method("on_child_menu_opened"):
+				menu.on_child_menu_opened()
+				
 			_menu_stack.push_back(path)
 			break
 
 	# Show the new menu on top
 	_show_menu(new_menu_path)
-	print("→ stack after push:", _menu_stack)
 
 
 # Hides all registered menus and clears the navigation history stack.
@@ -139,3 +157,4 @@ func hide_all_menus():
 			else:
 				menu.hide()
 	_menu_stack.clear()
+	_current_menu_path = ""

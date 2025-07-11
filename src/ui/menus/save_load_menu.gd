@@ -30,7 +30,7 @@ func _ready():
 	# Connect buttons to their respective functions.
 	save_button_1.pressed.connect(on_save_pressed.bind(1))
 	load_button_1.pressed.connect(on_load_pressed.bind(1))
-	back_button.pressed.connect(MenuManager.back)
+	#back_button.pressed.connect(MenuManager.back)
 	
 	# Announce readiness to the GameManager.
 	await get_tree().process_frame
