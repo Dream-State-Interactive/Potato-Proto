@@ -5,7 +5,7 @@ extends CanvasLayer
 @onready var level_select: CanvasLayer = $LevelSelect
 
 func _ready():
-	# Register these two so MenuManager can hide/show them:
+	# Register these so MenuManager can hide/show them:
 	MenuManager.register_menu(save_load_menu)
 	MenuManager.register_menu(settings_menu)
 	MenuManager.register_menu(level_select)
