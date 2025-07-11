@@ -45,6 +45,8 @@ var pause_menu_instance = null
 var save_load_menu_instance = null
 var level_path_to_load: String = ""
 
+var is_game_explicitly_paused: bool = false
+
 # --- Constants ---
 ## Preloading the default stats resource ensures we always have a clean template
 ## to create new StatBlocks from for a "New Game".
@@ -164,9 +166,15 @@ func on_level_up_menu_ready(menu):
 func on_pause_menu_ready(menu):
 	pause_menu_instance = menu
 
+func is_pause_menu_open() -> bool:
+	return is_instance_valid(pause_menu_instance) and pause_menu_instance.visible
+
+func refresh_pause_state():
+	get_tree().paused = is_game_explicitly_paused
+
 func on_saveload_menu_ready(menu):
 	save_load_menu_instance = menu
-	
+
 func register_player(player, health_comp: CHealth):
 	print("GameManager: Player has registered.")
 	player_instance = player

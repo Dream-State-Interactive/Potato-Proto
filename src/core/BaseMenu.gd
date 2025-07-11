@@ -4,6 +4,7 @@ class_name BaseMenu
 
 @export var back_button_paths: Array[NodePath] = []
 @export var start_visible: bool = false
+@export var dont_track: bool = false
 
 func _ready():
 	# Always register / unregister
@@ -23,7 +24,10 @@ func open_menu():
 	show()
 
 func hide_menu():
+	if MenuManager._current_menu_path == scene_file_path:
+		MenuManager._current_menu_path = ""
 	hide()
+
 
 func _exit_tree():
 	MenuManager.unregister_menu(self)

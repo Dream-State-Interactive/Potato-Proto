@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmf5xebhmjeyv"]
+[gd_scene load_steps=6 format=3 uid="uid://bmf5xebhmjeyv"]
 
 [ext_resource type="Script" path="res://src/ui/menus/save_load_menu.gd" id="1_b4yfc"]
-[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_np0gr"]
+[ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="2_08emj"]
+[ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/Images/button.png" id="3_dpk4f"]
+[ext_resource type="Script" path="res://src/ui/components/standard_button.gd" id="4_godmm"]
+[ext_resource type="Script" path="res://src/components/c_gui_scale.gd" id="5_vxdbw"]
 
 [node name="SaveLoadMenu" type="CanvasLayer"]
 process_mode = 3
@@ -79,8 +82,30 @@ text = "Load  Game Slot 2"
 layout_mode = 2
 text = "Load  Game Slot 3"
 
-[node name="BackButton" parent="MarginContainer/PanelContainer/VBoxContainer" instance=ExtResource("2_np0gr")]
+[node name="BackButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+z_index = 7
+y_sort_enabled = true
+texture_filter = 3
+custom_minimum_size = Vector2(385.74, 140)
 layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_08emj")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.807843, 0.423529, 0.156863, 1)
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 55
 text = "Back"
+icon = ExtResource("3_dpk4f")
+flat = true
+autowrap_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_godmm")
+metadata/destination = ""
+metadata/ReplacementMenu = ""
+
+[node name="Node" type="Node" parent="MarginContainer/PanelContainer/VBoxContainer/BackButton"]
+script = ExtResource("5_vxdbw")
+
+[connection signal="mouse_entered" from="MarginContainer/PanelContainer/VBoxContainer/BackButton" to="MarginContainer/PanelContainer/VBoxContainer/BackButton" method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/PanelContainer/VBoxContainer/BackButton" to="MarginContainer/PanelContainer/VBoxContainer/BackButton" method="_on_button_mouse_exited"]
