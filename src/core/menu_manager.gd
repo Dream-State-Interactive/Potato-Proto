@@ -143,7 +143,6 @@ func push_menu(new_menu_path: String):
 
 	# Show the new menu on top
 	_show_menu(new_menu_path)
-	print("→ stack after push:", _menu_stack)
 
 
 # Hides all registered menus and clears the navigation history stack.

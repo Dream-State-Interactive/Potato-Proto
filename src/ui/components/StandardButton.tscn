@@ -34,5 +34,8 @@ metadata/PushMenu = ""
 [node name="Node" type="Node" parent="."]
 script = ExtResource("4_0gg5f")
 
+[node name="Node" type="Node" parent="."]
+script = ExtResource("4_0gg5f")
+
 [connection signal="mouse_entered" from="." to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_button_mouse_exited"]
