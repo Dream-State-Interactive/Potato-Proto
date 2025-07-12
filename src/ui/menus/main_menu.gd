@@ -8,10 +8,6 @@ extends Control
 @onready var exit_button: Button = $VBoxContainer/ExitButton
 
 func _ready():
-	new_game_button.pressed.connect(on_new_game_pressed)
-	load_game_button.pressed.connect(on_load_game_pressed)
-	exit_button.pressed.connect(get_tree().quit)
-	
 	# Check for any save file to enable the button. You can add more slots here.
 	load_game_button.disabled = not SaveManager.save_file_exists(1)
 

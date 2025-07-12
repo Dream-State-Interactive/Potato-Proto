@@ -14,17 +14,6 @@ func _ready():
 	#save_load_menu.visible  = false
 	#settings_menu.visible   = false
 
-func _on_SaveLoadButton_pressed():
-	print("[MainMenu] SaveLoad pressed")
-	MenuManager.replace_menu("res://src/ui/menus/save_load_menu.tscn")
-
-func _on_SettingsButton_pressed():
-	print("[MainMenu] Settings pressed")
-	MenuManager.replace_menu("res://src/ui/menus/settings_menu.tscn")
-
-func _on_LevelSelectButton_pressed():
-	MenuManager.replace_menu("res://src/ui/menus/level_select.tscn")
-
 func _exit_tree():
 	# When this scene is being destroyed, it tells the manager to remove it.
 	MenuManager.unregister_menu(self)

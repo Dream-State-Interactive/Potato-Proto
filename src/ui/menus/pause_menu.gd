@@ -12,8 +12,6 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	resume_button.pressed.connect(resume_game)
-	save_load_button.pressed.connect(on_saveload_pressed)
-	settings_button.pressed.connect(on_settings_pressed)
 	menu_button.pressed.connect(on_quit_pressed)
 	
 	await get_tree().process_frame
@@ -57,12 +55,6 @@ func resume_game():
 
 func _exit_tree():
 	MenuManager.unregister_menu(self)
-
-func on_saveload_pressed():
-	MenuManager.push_menu("res://src/ui/menus/save_load_menu.tscn")
-
-func on_settings_pressed():
-	MenuManager.push_menu("res://src/ui/menus/settings_menu.tscn")
 
 func on_quit_pressed():
 	get_tree().paused = false

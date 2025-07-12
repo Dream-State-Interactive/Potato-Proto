@@ -50,6 +50,7 @@ theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Save/Load
 "
+metadata/ReplacementMenu = "res://src/ui/menus/save_load_menu.tscn"
 
 [node name="SettingsButton" parent="MarginContainer/ButtonContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
@@ -57,6 +58,7 @@ theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Settings
 "
+metadata/ReplacementMenu = "res://src/ui/menus/settings_menu.tscn"
 
 [node name="MainMenuButton" parent="MarginContainer/ButtonContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
