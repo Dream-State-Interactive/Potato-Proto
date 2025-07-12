@@ -4,6 +4,7 @@ extends Button
 @onready var standard_button: Button = $"."
 @onready var destination = get_meta("destination")
 @onready var replaceMenu = get_meta("ReplacementMenu")
+@onready var pushMenu = get_meta("PushMenu")
 
 var action
 
@@ -32,6 +33,9 @@ func _on_pressed() -> void:
 		SceneLoader.change_scene(destination)
 	elif replaceMenu and not replaceMenu.is_empty():
 		MenuManager.replace_menu(replaceMenu)
+		menu_requested.emit(replaceMenu)
+	elif pushMenu and not pushMenu.is_empty():
+		MenuManager.push_menu(pushMenu)
 		menu_requested.emit(replaceMenu)
 
 

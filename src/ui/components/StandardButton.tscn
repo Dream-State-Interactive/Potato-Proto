@@ -29,6 +29,7 @@ expand_icon = true
 script = ExtResource("2_otd6r")
 metadata/destination = ""
 metadata/ReplacementMenu = ""
+metadata/PushMenu = ""
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("4_0gg5f")
