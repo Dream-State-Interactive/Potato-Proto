@@ -32,28 +32,8 @@ func _ready():
 	load_button_1.pressed.connect(on_load_pressed.bind(1))
 	#back_button.pressed.connect(MenuManager.back)
 	
-	# Announce readiness to the GameManager.
-	await get_tree().process_frame
-	GameManager.on_saveload_menu_ready(self)
-	hide()
 
 # --- Public & Internal Functions ---
-## Shows the menu.
-func open_menu():
-	print("[SaveLoadMenu] open_menu()")
-	update_buttons() # Refresh button states before showing.
-	super() # calls BaseMenu.open_menu(self), i.e. show()
-
-## Hides this menu and tells the GameManager to re-open the main pause menu.
-func hide_menu():
-	print("[SaveLoadMenu] hide_menu()")
-	super()
-	#GameManager.open_pause_menu()
-
-func _exit_tree():
-	MenuManager.unregister_menu(self)
-
-
 ## Called when a "Save" button is pressed.
 func on_save_pressed(slot_number: int):
 	SaveManager.save_game(slot_number)

@@ -41,12 +41,12 @@ func _ready():
 
 # This function receives all unhandled input events and will run even when the game is paused.
 func _unhandled_input(event: InputEvent):
-	print("Upgrade toggle check — pause visible?: ", GameManager.is_pause_menu_open())
+	print("Upgrade toggle check — pause visible?: ", GameManager.game_paused)
 	# --- THIS IS THE FINAL, CORRECT FIX ---
 	# 1. We ask the EVENT itself if it matches our "toggle_upgrades" action.
 	# 2. We also check if 'event.pressed' is true, so this only fires on the key-down,
 	#    not on the key-up (release). This correctly mimics "just_pressed" behavior.
-	if GameManager.is_pause_menu_open():
+	if GameManager.game_paused:
 		return
 	if event.is_action_pressed("toggle_upgrades") and event.pressed:
 		if is_visible():
@@ -58,15 +58,6 @@ func _unhandled_input(event: InputEvent):
 	# ---------------------------------------------
 
 # --- PUBLIC FUNCTIONS ---
-func open_menu():
-	update_ui_elements()
-	show()
-	get_tree().paused = true
-
-func hide_menu():
-	hide()
-	get_tree().paused = false
-
 func on_upgrade_button_pressed(upgrade_data: UpgradeData):
 	var cost = get_current_cost(upgrade_data)
 	var current_starch = GameManager.current_starch_points
