@@ -31,28 +31,5 @@ func _ready():
 	# and handles the data initialization accordingly.
 	GameManager.on_game_scene_ready()
 	SettingsService.initializeSettings()
-
-		
-func _process(delta: float):
-	FPS = 1/delta
-	$FPSLabel.text = str(FPS)
-
-# --- Public API ---
-## This function handles swapping between levels.
-func change_level(level_scene_path: String):
-	if level_scene_path.is_empty():
-		print("ERROR: change_level called with an empty path.")
-		return
-	# --- 1. Clean up the old level ---
-	# It's crucial to free the old level's nodes to prevent memory leaks.
-	# This loop iterates through all children of the container and queues them
-	# for safe deletion at the end of the frame.
-	for child in level_container.get_children():
-		child.queue_free()
-
-	# --- 2. Instance and add the new level ---
-	# We create a new instance from the provided scene path.
-	var new_level = load(level_scene_path).instantiate()
-	# We add the new level as a child of our container. It will now appear in the game.
-	level_container.add_child(new_level)
-	print("Main: Successfully loaded level '", level_scene_path, "'")
+	SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn")
+	MenuManager.push_menu("res://src/ui/menus/home_menu.tscn")
