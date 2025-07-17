@@ -8,10 +8,6 @@ extends Button
 
 var action
 
-# This signal will be emitted when the button wants to open a sub-menu.
-# The 'menu_path' will be the string from the 'replaceMenu' metadata.
-signal menu_requested(menu_path_string)
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# This is a robust way to ensure the logic always runs on click.
@@ -29,14 +25,12 @@ func _process(_delta: float) -> void:
 
 func _on_pressed() -> void:
 	if destination and not destination.is_empty():
-		MenuManager.hide_all_menus()
 		SceneLoader.change_scene(destination)
+		MenuManager.clear_history()
 	elif replaceMenu and not replaceMenu.is_empty():
 		MenuManager.replace_menu(replaceMenu)
-		menu_requested.emit(replaceMenu)
 	elif pushMenu and not pushMenu.is_empty():
 		MenuManager.push_menu(pushMenu)
-		menu_requested.emit(replaceMenu)
 
 
 ## ---------------------------------------------------------------------------------------------------------------
