@@ -40,12 +40,9 @@ var slot_to_load: int = 1
 var player_instance = null
 var player_stats: StatBlock = null # The "source of truth" StatBlock for the current game.
 var hud_instance = null
-var level_up_menu_instance = null
-var pause_menu_instance = null
-var save_load_menu_instance = null
 var level_path_to_load: String = ""
 
-var is_game_explicitly_paused: bool = false
+@export var game_paused: bool = false
 
 # --- Constants ---
 ## Preloading the default stats resource ensures we always have a clean template
@@ -61,6 +58,14 @@ func _ready():
 
 # --- Public API (Called from other scripts) ---
 
+func pause():
+	game_paused = true
+	get_tree().paused = true
+	
+func resume():
+	game_paused = false
+	get_tree().paused = false
+
 ## This is called by the Main Menu before changing scenes to tell us what to do.
 func set_next_game_state(is_new: bool, slot: int):
 	next_scene_is_new_game = is_new
@@ -73,9 +78,6 @@ func prepare_for_scene_change():
 	print("GameManager: Clearing all node references before scene change.")
 	player_instance = null
 	hud_instance = null
-	level_up_menu_instance = null
-	pause_menu_instance = null
-	save_load_menu_instance = null
 
 ## This is called by the main game scene (Main.tscn) when it becomes ready.
 func on_game_scene_ready():
@@ -97,7 +99,8 @@ func on_game_scene_ready():
 		# --- THIS IS THE MISSING LINE ---
 		# After resetting the state, we tell the now-existing Main node
 		# to load the level whose path we stored earlier.
-		main_node.change_level(level_path_to_load)
+		#main_node.change_level(level_path_to_load)
+		pass
 		# --------------------------------
 	else:
 		# The load logic should also be here.
@@ -160,21 +163,6 @@ func on_hud_ready(hud):
 		hud_instance.connect_ability_signals(player_instance)
 		hud_instance.update_health_bar(player_instance.health_component.current_health, player_instance.health_component.max_health)
 
-func on_level_up_menu_ready(menu):
-	level_up_menu_instance = menu
-
-func on_pause_menu_ready(menu):
-	pause_menu_instance = menu
-
-func is_pause_menu_open() -> bool:
-	return is_instance_valid(pause_menu_instance) and pause_menu_instance.visible
-
-func refresh_pause_state():
-	get_tree().paused = is_game_explicitly_paused
-
-func on_saveload_menu_ready(menu):
-	save_load_menu_instance = menu
-
 func register_player(player, health_comp: CHealth):
 	print("GameManager: Player has registered.")
 	player_instance = player
@@ -195,11 +183,6 @@ func register_player(player, health_comp: CHealth):
 		hud_instance.update_health_bar(health_comp.current_health, health_comp.max_health)
 
 # --- Game Logic Functions ---
-func open_pause_menu():
-	if pause_menu_instance: pause_menu_instance.open_menu()
-func open_saveload_menu():
-	if save_load_menu_instance: save_load_menu_instance.open_menu()
-	
 ## This is a "setter" function. It's the one safe way to change starch points.
 func set_starch_points(amount: int):
 	current_starch_points = amount
