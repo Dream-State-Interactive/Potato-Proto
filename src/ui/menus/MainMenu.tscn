@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bd6spyrfc537y"]
+[gd_scene load_steps=19 format=3 uid="uid://bd6spyrfc537y"]
 
 [ext_resource type="Script" path="res://src/ui/menus/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://src/ui/components/StandardMenu.tscn" id="18_0l2vk"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
 [ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://src/ui/components/MainTitle.tscn" id="18_ne370"]
-[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="20_3o2gw"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kust7"]
 particle_flag_disable_z = true
@@ -147,61 +146,6 @@ texture = ExtResource("17_o6jqd")
 offset = Vector2(512, 0)
 script = ExtResource("18_kydx3")
 
-[node name="ButtonContainer" type="VBoxContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -192.5
-offset_top = -264.0
-offset_right = 192.5
-offset_bottom = 452.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="StandardButtonPlay" parent="ButtonContainer" instance=ExtResource("20_3o2gw")]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 49
-text = "Play"
-metadata/destination = "res://src/levels/level_proto/level_proto.tscn"
-
-[node name="StandardButtonSaveLoad" parent="ButtonContainer" instance=ExtResource("20_3o2gw")]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 49
-text = "Save/Load"
-metadata/ReplacementMenu = "res://src/ui/menus/save_load_menu.tscn"
-
-[node name="StandardButtonLevelSelect" parent="ButtonContainer" instance=ExtResource("20_3o2gw")]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 49
-text = "Levels
-"
-metadata/ReplacementMenu = "res://src/ui/menus/level_select.tscn"
-
-[node name="StandardButtonSettings" parent="ButtonContainer" instance=ExtResource("20_3o2gw")]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 49
-text = "Settings
-"
-metadata/ReplacementMenu = "res://src/ui/menus/settings_menu.tscn"
-
-[node name="StandardButtonQuit" parent="ButtonContainer" instance=ExtResource("20_3o2gw")]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 49
-text = "Quit
-"
-
 [node name="StandardMenu" parent="." instance=ExtResource("18_0l2vk")]
 position = Vector2(200, 335)
 scale = Vector2(0.1, 0.1)
@@ -214,10 +158,3 @@ offset_left = -1340.0
 offset_top = -278.0
 offset_right = -2287.0
 offset_bottom = -801.0
-
-[connection signal="pressed" from="ButtonContainer/StandardButtonPlay" to="ButtonContainer/StandardButtonPlay" method="_on_new_game_pressed"]
-[connection signal="pressed" from="ButtonContainer/StandardButtonSaveLoad" to="." method="_on_SaveLoadButton_pressed"]
-[connection signal="pressed" from="ButtonContainer/StandardButtonLevelSelect" to="." method="_on_LevelSelectButton_pressed"]
-[connection signal="pressed" from="ButtonContainer/StandardButtonSettings" to="." method="_on_SettingsButton_pressed"]
-[connection signal="pressed" from="ButtonContainer/StandardButtonQuit" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="ButtonContainer/StandardButtonQuit" to="ButtonContainer/StandardButtonPlay" method="_on_standard_button_quit_pressed"]

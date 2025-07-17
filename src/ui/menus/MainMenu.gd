@@ -8,24 +8,6 @@ extends CanvasLayer
 @onready var standard_button_settings: Button = $ButtonContainer/StandardButtonSettings
 
 # --- GODOT FUNCTIONS ---
-func _ready():
-	# hide submenus at start
-	MenuManager.register_menu(self)
-	#save_load_menu.visible  = false
-	#settings_menu.visible   = false
-
-func _exit_tree():
-	# When this scene is being destroyed, it tells the manager to remove it.
-	MenuManager.unregister_menu(self)
-	
-func open_menu():
-	# show just the main-button container
-	button_container.show()
-
-func hide_menu():
-	# hide just the main-button container
-	button_container.hide()
-	
 # Increase the button scale slightly when the mouse enters.
 func _on_button_mouse_entered(button: Button) -> void:
 	button.scale = Vector2(1.1, 1.1)
