@@ -24,7 +24,6 @@ SaveManager="*res://src/core/save_manager.gd"
 SceneLoader="*res://src/core/scene_loader.gd"
 GUIManager="*res://src/core/GUI_manager.gd"
 MenuManager="*res://src/core/menu_manager.gd"
-UiOverlay="*res://src/core/UIOverlay.tscn"
 
 [display]
 
