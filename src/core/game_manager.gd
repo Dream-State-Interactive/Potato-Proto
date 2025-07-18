@@ -120,7 +120,7 @@ func start_new_game_at_level(level_path: String):
 func start_loaded_game(slot: int):
 	set_next_game_state(false, slot) # false = is NOT a new game
 	prepare_for_scene_change()
-	get_tree().change_scene_to_file(SceneLoader.MAIN_GAME_SCENE)
+	SceneLoader.change_scene(SceneLoader.MAIN_GAME_SCENE)
 
 ## This function ensures we don't try to load data into a player that doesn't exist yet.
 func load_game_after_player_ready():

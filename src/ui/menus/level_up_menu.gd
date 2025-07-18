@@ -18,8 +18,6 @@ func _ready():
 	# This property makes the menu and all its children (Buttons) immune to pause.
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
-	# Connect button signals. This is correct and now works because of the process_mode.
-	close_menu_button.pressed.connect(hide_menu)
 	if upgrades.size() > 0:
 		var upgrade = upgrades[0]
 		upgrade_roll_speed_button.pressed.connect(func(): on_upgrade_button_pressed(upgrade))
@@ -31,13 +29,9 @@ func _ready():
 	if upgrades.size() > 2:
 		var upgrade = upgrades[2]
 		upgrade_jump_force_button.pressed.connect(func(): on_upgrade_button_pressed(upgrade))
-
-
-	# Announce readiness to the GameManager.
-	await get_tree().process_frame
-	GameManager.on_level_up_menu_ready(self)
 	
-	hide_menu()
+	MenuManager.back()
+	
 
 # This function receives all unhandled input events and will run even when the game is paused.
 func _unhandled_input(event: InputEvent):
@@ -50,9 +44,9 @@ func _unhandled_input(event: InputEvent):
 		return
 	if event.is_action_pressed("toggle_upgrades") and event.pressed:
 		if is_visible():
-			hide_menu()
+			MenuManager.back()
 		else:
-			open_menu()
+			MenuManager.push_menu("res://src/ui/menus/level_up_menu.tscn")
 		# Mark the event as handled to prevent any other node from processing it.
 		get_viewport().set_input_as_handled()
 	# ---------------------------------------------
