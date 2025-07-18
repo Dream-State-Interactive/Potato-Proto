@@ -32,4 +32,3 @@ func _ready():
 	GameManager.on_game_scene_ready()
 	SettingsService.initializeSettings()
 	SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn")
-	MenuManager.push_menu("res://src/ui/menus/home_menu.tscn")

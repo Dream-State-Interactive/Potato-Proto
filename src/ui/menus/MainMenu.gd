@@ -15,6 +15,9 @@ func _on_button_mouse_entered(button: Button) -> void:
 # Reset the button scale when the mouse exits.
 func _on_button_mouse_exited(button: Button) -> void:
 	button.scale = Vector2(1, 1)
+	
+func _ready() -> void:
+	MenuManager.replace_menu("res://src/ui/menus/home_menu.tscn")
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()
