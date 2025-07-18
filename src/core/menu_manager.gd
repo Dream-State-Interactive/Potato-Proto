@@ -5,6 +5,11 @@
 # #################################################################################
 extends Node
 
+@property
+var active_menu:
+  get:
+    return _menu_stack[_menu_stack.size() - 1]
+
 # A stack of menu scene paths used to track navigation history for the "back" function.
 var _menu_stack: Array = []
 
@@ -20,7 +25,7 @@ func pause():
 		# Using `replace_menu` ensures the stack starts clean.
 		GameManager.pause()
 		push_menu("res://src/ui/menus/pause_menu.tscn")
-	elif _menu_stack[_menu_stack.size() - 1] == "res://src/ui/menus/pause_menu.tscn":
+	elif active_menu == "res://src/ui/menus/pause_menu.tscn":
 		resume()
 	else:
 		print("BACK")
@@ -53,7 +58,7 @@ func show_current_menu():
 	hide_current_menu()
 	if(_menu_stack.size() > 0):
 		print(_menu_stack)
-		var menu = await load(_menu_stack[_menu_stack.size() - 1]).instantiate()
+		var menu = await load(active_menu).instantiate()
 		print(menu)
 		get_tree().current_scene.get_node("MenuContainer").add_child(menu)
 	
