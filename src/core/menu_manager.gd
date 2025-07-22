@@ -5,10 +5,9 @@
 # #################################################################################
 extends Node
 
-@property
 var active_menu:
-  get:
-    return _menu_stack[_menu_stack.size() - 1]
+	get:
+		return _menu_stack[_menu_stack.size() - 1]
 
 # A stack of menu scene paths used to track navigation history for the "back" function.
 var _menu_stack: Array = []
