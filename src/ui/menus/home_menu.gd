@@ -1,3 +1,5 @@
+# src/ui/menus/home_menu.tscn
+
 extends BaseMenu
 
 @onready var quit_button = $ButtonContainer/StandardButtonQuit

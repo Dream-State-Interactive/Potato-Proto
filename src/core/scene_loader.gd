@@ -23,18 +23,21 @@ const MAIN_GAME_SCENE = "res://src/main.tscn"
 
 ## This is now the one and only safe way to change to a new scene.
 func change_scene(scene_path: String):
-	MenuManager.hide_current_menu()
+	MenuManager.clear_history()
+	var level_container = get_tree().current_scene.get_node_or_null("LevelContainer")
 	
-	for child in get_tree().current_scene.get_node("LevelContainer").get_children():
-		child.queue_free()
+	if level_container:
+		for child in level_container.get_children():
+			child.queue_free()
 		
-	var scene = await load(scene_path).instantiate()
-	get_tree().current_scene.get_node("LevelContainer").add_child(scene)
+		var scene = await load(scene_path).instantiate()
+		level_container.add_child(scene)
+	
 	GameManager.resume()
 
 ## This is the one and only safe way to reload the current scene.
 func reload_current_scene():
-	MenuManager.hide_current_menu()
+	MenuManager.clear_history()
 	print("SceneLoader: Reloading current scene.")
 	
 	GameManager.prepare_for_scene_change()

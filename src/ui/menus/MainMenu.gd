@@ -1,4 +1,4 @@
-# src/ui/main_menu.gd (Final Corrected Version)
+# src/ui/main_menu.gd
 extends CanvasLayer
 
 @onready var button_container: VBoxContainer = $ButtonContainer

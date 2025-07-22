@@ -26,7 +26,6 @@ func _process(_delta: float) -> void:
 func _on_pressed() -> void:
 	if destination and not destination.is_empty():
 		SceneLoader.change_scene(destination)
-		MenuManager.clear_history()
 	elif replaceMenu and not replaceMenu.is_empty():
 		MenuManager.replace_menu(replaceMenu)
 	elif pushMenu and not pushMenu.is_empty():

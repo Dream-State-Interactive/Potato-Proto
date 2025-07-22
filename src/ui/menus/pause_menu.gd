@@ -11,14 +11,6 @@ func _ready():
 	super()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	resume_button.pressed.connect(resume_game)
-	menu_button.pressed.connect(on_quit_pressed)
+	resume_button.pressed.connect(MenuManager.resume)
 	
 	await get_tree().process_frame
-
-
-func resume_game():
-	MenuManager.hide_current_menu() # Use the manager to hide self and clear stack
-	GameManager.resume()
-func on_quit_pressed():
-	SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn") # Use the new loader
