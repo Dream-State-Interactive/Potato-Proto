@@ -20,9 +20,11 @@ extends Node
 
 
 const MAIN_GAME_SCENE = "res://src/main.tscn"
+var current_scene_path: String = ""
 
 ## This is now the one and only safe way to change to a new scene.
 func change_scene(scene_path: String):
+	current_scene_path = scene_path
 	MenuManager.clear_history()
 	var level_container = get_tree().current_scene.get_node_or_null("LevelContainer")
 	
@@ -35,11 +37,20 @@ func change_scene(scene_path: String):
 	
 	GameManager.resume()
 
-## This is the one and only safe way to reload the current scene.
+## Restarts the current level
 func reload_current_scene():
+	if current_scene_path.is_empty():
+		printerr("SceneLoader: Cannot restart level, no level path is stored.")
+		return
+		
+	print("Restarting level: ", current_scene_path)
+	GameManager.reset_game_state()
+	change_scene(current_scene_path)
+
+## Restarts the Main scene itself
+func hard_reset_game():
 	MenuManager.clear_history()
 	print("SceneLoader: Reloading current scene.")
-	
 	GameManager.prepare_for_scene_change()
 	get_tree().reload_current_scene()
 	GameManager.resume()
