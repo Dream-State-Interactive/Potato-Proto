@@ -2,10 +2,6 @@
 extends CanvasLayer
 
 @onready var button_container: VBoxContainer = $ButtonContainer
-@onready var standard_button_play: Button = $ButtonContainer/StandardButtonPlay
-@onready var standard_button_save_load: Button = $ButtonContainer/StandardButtonSaveLoad
-@onready var standard_button_level_select: Button = $ButtonContainer/StandardButtonLevelSelect
-@onready var standard_button_settings: Button = $ButtonContainer/StandardButtonSettings
 
 # --- GODOT FUNCTIONS ---
 # Increase the button scale slightly when the mouse enters.

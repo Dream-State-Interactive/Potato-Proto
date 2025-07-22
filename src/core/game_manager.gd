@@ -65,6 +65,9 @@ func pause():
 func resume():
 	game_paused = false
 	get_tree().paused = false
+	
+func quit():
+	get_tree().quit()
 
 ## This is called by the Main Menu before changing scenes to tell us what to do.
 func set_next_game_state(is_new: bool, slot: int):
