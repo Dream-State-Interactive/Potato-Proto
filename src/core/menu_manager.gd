@@ -50,7 +50,7 @@ func resume():
 		
 func push_menu(menu_path: String):
 	_menu_stack.push_back(menu_path)
-	show_menu_requested.emit(active_menu) # SIGNAL (rc/core/gui.gd)
+	show_menu_requested.emit(active_menu) # SIGNAL (rc/core/gui_manager.gd)
 	#show_current_menu()
 	#pass
 	
@@ -66,7 +66,7 @@ func back():
 	if not _menu_stack.is_empty():
 		show_menu_requested.emit(active_menu)
 	else:
-		hide_all_menus_requested.emit() # SIGNAL (rc/core/gui.gd)
+		hide_all_menus_requested.emit() # SIGNAL (rc/core/gui_manager.gd)
 		if get_tree().paused:
 			GameManager.resume()
 	
@@ -85,5 +85,5 @@ func back():
 			#child.queue_free()
 
 func clear_history():
-	hide_all_menus_requested.emit() # SIGNAL (rc/core/gui.gd)
+	hide_all_menus_requested.emit() # SIGNAL (rc/core/gui_manager.gd)
 	_menu_stack = []

@@ -1,4 +1,4 @@
-# src/core/gui.gd
+# src/core/gui_manager.gd
 extends CanvasLayer
 class_name GameGUI
 
