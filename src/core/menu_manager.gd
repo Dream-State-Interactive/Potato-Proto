@@ -5,6 +5,9 @@
 # #################################################################################
 extends Node
 
+signal show_menu_requested(menu_path)
+signal hide_all_menus_requested
+
 var active_menu:
 	get:
 		return _menu_stack[_menu_stack.size() - 1]
@@ -28,8 +31,8 @@ func pause():
 			# Using `replace_menu` ensures the stack starts clean.
 			GameManager.pause()
 			push_menu("res://src/ui/menus/pause_menu.tscn")
-		elif active_menu == "res://src/ui/menus/pause_menu.tscn":
-			resume()
+		#elif active_menu == "res://src/ui/menus/pause_menu.tscn":
+			#resume()
 		else:
 			print("BACK")
 			back()
@@ -47,33 +50,40 @@ func resume():
 		
 func push_menu(menu_path: String):
 	_menu_stack.push_back(menu_path)
-	show_current_menu()
-	pass
+	show_menu_requested.emit(active_menu) # SIGNAL (rc/core/gui.gd)
+	#show_current_menu()
+	#pass
 	
 func replace_menu(menu_path: String):
 	clear_history()
 	push_menu(menu_path)
-	pass
+	#pass
 	
 func back():
 	if not _menu_stack.is_empty():
 		_menu_stack.pop_back()
-	show_current_menu()
 	
-func show_current_menu():
-	hide_current_menu()
-	if(_menu_stack.size() > 0):
-		print(_menu_stack)
-		var menu = await load(active_menu).instantiate()
-		print(menu)
-		get_tree().current_scene.get_node("MenuContainer").add_child(menu)
+	if not _menu_stack.is_empty():
+		show_menu_requested.emit(active_menu)
+	else:
+		hide_all_menus_requested.emit() # SIGNAL (rc/core/gui.gd)
+		if get_tree().paused:
+			GameManager.resume()
 	
-func hide_current_menu():
-	var menu_container = get_tree().current_scene.get_node_or_null("MenuContainer")
-	if menu_container:
-		for child in menu_container.get_children():
-			child.queue_free()
+#func show_current_menu():
+	#hide_current_menu()
+	#if(_menu_stack.size() > 0):
+		#print(_menu_stack)
+		#var menu = await load(active_menu).instantiate()
+		#print(menu)
+		#GUI.get_node("MenuContainer").add_child(menu)
+	##
+#func hide_current_menu():
+	#var menu_container = GUI.get_node_or_null("MenuContainer")
+	#if menu_container:
+		#for child in menu_container.get_children():
+			#child.queue_free()
 
 func clear_history():
-	hide_current_menu()
+	hide_all_menus_requested.emit() # SIGNAL (rc/core/gui.gd)
 	_menu_stack = []

@@ -120,6 +120,7 @@ var ready_for_combo = false
 # _ready() runs once when the node is added to the scene tree and ready.
 # It's used for one-time setup.
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	InputCooldownTimer.wait_time = DASH_COOLDOWN
 	ComboCooldownTimer.wait_time = COMBO_COOLDOWN
 	# --- Physics Setup ---
@@ -141,13 +142,15 @@ func _ready():
 		skin_material.set_shader_parameter("hit_count", 0)
 		skin_material.set_shader_parameter("hit_points", []) 
 	
+	# Equip the abilities assigned in the Inspector.
+	equip_ability(equipped_ability1, 1)
+	equip_ability(equipped_ability2, 2)
+	
 	# Announce our existence to the GameManager, which will give us our stats
 	# and wire us up to the rest of the game.
 	GameManager.register_player(self, health_component)
 	
-	# Equip the abilities assigned in the Inspector.
-	equip_ability(equipped_ability1, 1)
-	equip_ability(equipped_ability2, 2)
+
 	
 	# --- Dynamic Collision Setup ---
 	# Store the original shape of the polygon so we can scale it down later without losing data.
@@ -347,6 +350,10 @@ func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("ability_2"):
 		if ability2_slot.get_child_count() > 0:
 			(ability2_slot.get_child(0) as Ability).activate(self)
+			
+	if event.is_action_pressed("toggle_upgrades"):
+		# We use GUI manager to open the level up menu.
+		GUI.toggle_level_up_menu()
 
 # =============================================================================
 # --- CUSTOM FUNCTIONS ---

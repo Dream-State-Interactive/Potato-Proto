@@ -31,4 +31,4 @@ func _ready():
 	# and handles the data initialization accordingly.
 	GameManager.on_game_scene_ready()
 	SettingsService.initializeSettings()
-	SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn")
+	#SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn")

@@ -24,8 +24,14 @@ var current_scene_path: String = ""
 
 ## This is now the one and only safe way to change to a new scene.
 func change_scene(scene_path: String):
+	if scene_path.is_empty():
+		printerr("SceneLoader: change_scene was called with an empty path! Aborting scene change.")
+		return
+	
+	GameManager.prepare_for_scene_change()
 	current_scene_path = scene_path
 	MenuManager.clear_history()
+	
 	var level_container = get_tree().current_scene.get_node_or_null("LevelContainer")
 	
 	if level_container:

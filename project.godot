@@ -22,8 +22,8 @@ AudioService="*res://src/core/audioService.gd"
 GameManager="*res://src/core/game_manager.gd"
 SaveManager="*res://src/core/save_manager.gd"
 SceneLoader="*res://src/core/scene_loader.gd"
-GUIManager="*res://src/core/GUI_manager.gd"
 MenuManager="*res://src/core/menu_manager.gd"
+GUI="*res://src/core/GUI.tscn"
 
 [display]
 
