@@ -120,7 +120,6 @@ var ready_for_combo = false
 # _ready() runs once when the node is added to the scene tree and ready.
 # It's used for one-time setup.
 func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
 	InputCooldownTimer.wait_time = DASH_COOLDOWN
 	ComboCooldownTimer.wait_time = COMBO_COOLDOWN
 	# --- Physics Setup ---
@@ -351,9 +350,9 @@ func _unhandled_input(event: InputEvent):
 		if ability2_slot.get_child_count() > 0:
 			(ability2_slot.get_child(0) as Ability).activate(self)
 			
-	if event.is_action_pressed("toggle_upgrades"):
-		# We use GUI manager to open the level up menu.
-		GUI.toggle_level_up_menu()
+	#if event.is_action_pressed("toggle_upgrades"):
+		## We use GUI manager to open the level up menu.
+		#GUI.toggle_level_up_menu()
 
 # =============================================================================
 # --- CUSTOM FUNCTIONS ---

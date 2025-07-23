@@ -12,6 +12,7 @@ var hud_instance: CanvasLayer
 var level_up_menu_instance: CanvasLayer
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	print("GUI RUNNING")
 	hud_instance = HUD.instantiate()
 	add_child(hud_instance)
@@ -32,6 +33,29 @@ func _ready():
 	GameManager.scene_changed.connect(_on_leaving_game_world)
 	# Listen for when a stat is upgraded
 	GameManager.stat_upgraded.connect(_on_stat_upgraded)
+
+func _unhandled_input(event: InputEvent):
+	# Handle the Pause action.
+	# We just pass the request to the MenuManager, which already has all the logic.
+	if event.is_action_pressed("pause"):
+		MenuManager.pause()
+		# We use accept_event() to stop the input from propagating further,
+		# preventing any other node (like the player) from also reacting to it.
+		get_viewport().set_input_as_handled()
+
+	# Handle the Level Up Menu action.
+	if event.is_action_pressed("toggle_upgrades"):
+		# We add the critical check here: DO NOT open the level-up menu
+		# if the game is already paused by something else (like the main pause menu).
+		if get_tree().paused:
+			# Optional: print a message to know why it's not opening
+			# print("Blocked opening Level Up Menu because game is paused.")
+			return
+
+		# If not paused, proceed with the normal toggle logic.
+		toggle_level_up_menu()
+		get_viewport().set_input_as_handled()
+
 
 func toggle_level_up_menu():
 	# Prevent level_up_menu from being opened in Main Menu.
@@ -67,11 +91,13 @@ func _on_show_menu_requested(menu_path: String):
 	# Load and add the new menu scene.
 	var menu_scene = await load(menu_path).instantiate()
 	menu_container.add_child(menu_scene)
+	hud_instance.hide()
 
 # This function reacts to the MenuManager's request to hide everything.
 func _on_hide_all_menus_requested():
 	for child in menu_container.get_children():
 		child.queue_free()
+	hud_instance.show()
 
 func _on_player_is_ready(player_node: Player):
 	print("GUI: Player is ready. Connecting HUD.")
