@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - development # This should be changed to main
-    # tags:
-    #   - "v*"
+    tags:
+      - "v*"
 
 
   # bump-version:
