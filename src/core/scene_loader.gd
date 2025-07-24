@@ -40,6 +40,7 @@ func change_scene(scene_path: String):
 		
 		var scene = await load(scene_path).instantiate()
 		level_container.add_child(scene)
+		GameManager.on_level_loaded()
 	
 	GameManager.resume()
 

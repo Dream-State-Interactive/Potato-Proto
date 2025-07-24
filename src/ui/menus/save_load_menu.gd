@@ -48,9 +48,9 @@ func on_load_pressed(slot_number: int):
 	# 2. ALWAYS unpause the game before changing or reloading a scene.
 	get_tree().paused = false
 	
-	# 3. Use our safe SceneLoader to reload the current scene. The GameManager
-	#    is now prepared for what to do after the reload finishes.
-	SceneLoader.reload_current_scene()
+	# 3. Use our safe SceneLoader to load the current scene again. The GameManager
+	# (We do not use SceneLoader.reload_current_scene, of which resets the game's state | used for Restart, not Load).
+	SceneLoader.change_scene(SceneLoader.current_scene_path)
 
 ## Updates button text and disabled states based on whether save files exist.
 func update_buttons():

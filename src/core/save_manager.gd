@@ -64,7 +64,10 @@ func save_game(slot_number: int):
 	if is_instance_valid(player):
 		save_data["player_state"]["health"] = player.health_component.current_health
 		# Save the array of peel decal UV coordinates.
-		save_data["player_state"]["peel_decals"] = player.damage_points
+		var peel_decals = []
+		for point in player.damage_points:
+			peel_decals.append({"x": point.x, "y": point.y})
+		save_data["player_state"]["peel_decals"] = peel_decals
 	
 	# --- 4. Write to File ---
 	var save_path = get_save_path(slot_number)
@@ -102,6 +105,9 @@ func load_game(slot_number: int):
 	if is_instance_valid(player) and "player_state" in json_data:
 		var loaded_player_state = json_data["player_state"]
 		
+		# Ensure the health component's max_health is up-to-date with stats from GameManager.player_stats
+		player.health_component.max_health = player_stats.max_health
+		
 		# Set health on the HealthComponent.
 		player.health_component.current_health = loaded_player_state.get("health", player.stats.max_health)
 		
@@ -109,14 +115,13 @@ func load_game(slot_number: int):
 		# JSON doesn't know what a Vector2 is, so it saves it as a dictionary.
 		# We must manually convert it back.
 		var loaded_peel_data = loaded_player_state.get("peel_decals", [])
-		var converted_peel_points: Array[Vector2] = []
+		var converted_peel_points: PackedVector2Array = []
 		for point_dict in loaded_peel_data:
 			if point_dict is Dictionary and "x" in point_dict and "y" in point_dict:
 				converted_peel_points.append(Vector2(point_dict.x, point_dict.y))
 		player.damage_points = converted_peel_points
 		# --- End Conversion ---
 		
-		# After loading all the data, tell the player to update its visuals.
-		player.force_visual_update()
+
 		
 	print("Game loaded from slot %d!" % slot_number)

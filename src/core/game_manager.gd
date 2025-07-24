@@ -107,17 +107,6 @@ func on_game_scene_ready():
 	else:
 		load_game_after_player_ready()
 
-	# Now we can safely execute our logic.
-	if next_scene_is_new_game:
-		reset_game_state()
-		# --- THIS IS THE MISSING LINE ---
-		# After resetting the state, we tell the now-existing Main node
-		# to load the level whose path we stored earlier.
-		SceneLoader.change_scene(level_path_to_load)
-	else:
-		# The load logic should also be here.
-		load_game_after_player_ready()
-
 ## NEW GAME
 func start_new_game_at_level(level_path: String):
 	# 1. Set the flags for what to do AFTER Main.tscn loads.
@@ -143,6 +132,9 @@ func load_game_after_player_ready():
 	# Now that we know they exist, it's safe to load.
 	SaveManager.load_game(slot_to_load)
 	player_instance.apply_stats_from_resource()
+	
+	# After loading all the data, tell the player to update its visuals.
+	player_instance.call_deferred("force_visual_update")
 
 ## This resets all persistent data for a "New Game".
 func reset_game_state():
@@ -157,6 +149,17 @@ func reset_game_state():
 	if is_instance_valid(player_instance):
 		player_instance.stats = player_stats
 		player_instance.apply_stats_from_resource()
+
+## This is called by the SceneLoader AFTER a new level has been instanced.
+## It decides whether to reset for a new game or trigger a load.
+func on_level_loaded():
+	print("GameManager: A level has finished loading. Checking state.")
+	if next_scene_is_new_game:
+		reset_game_state()
+	else:
+		print("GameManager: State is 'Load Game'. Initiating load sequence.")
+		load_game_after_player_ready()
+
 
 # --- Registration Callbacks (Called by nodes from their _ready() functions) ---
 
