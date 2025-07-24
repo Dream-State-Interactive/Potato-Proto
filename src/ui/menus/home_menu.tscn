@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://c31vir1on6ec1"]
+
+[ext_resource type="Script" path="res://src/ui/menus/home_menu.gd" id="1_ui71n"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_8wmdh"]
+
+[node name="HomeMenu" type="CanvasLayer"]
+script = ExtResource("1_ui71n")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.5
+offset_top = -264.0
+offset_right = 192.5
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StandardButtonPlay" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 49
+text = "Play"
+metadata/destination = "res://src/levels/level_proto/level_proto.tscn"
+
+[node name="StandardButtonSaveLoad" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 49
+text = "Save/Load"
+metadata/PushMenu = "res://src/ui/menus/save_load_menu.tscn"
+
+[node name="StandardButtonLevelSelect" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 49
+text = "Levels
+"
+metadata/PushMenu = "res://src/ui/menus/level_select.tscn"
+
+[node name="StandardButtonSettings" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 49
+text = "Settings
+"
+metadata/PushMenu = "res://src/ui/menus/settings_menu.tscn"
+
+[node name="StandardButtonQuit" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 49
+text = "Quit
+"
+
+[connection signal="pressed" from="ButtonContainer/StandardButtonPlay" to="ButtonContainer/StandardButtonPlay" method="_on_new_game_pressed"]
+[connection signal="pressed" from="ButtonContainer/StandardButtonQuit" to="ButtonContainer/StandardButtonPlay" method="_on_standard_button_quit_pressed"]

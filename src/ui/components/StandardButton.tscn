@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://p2m0x21yemk2"]
+[gd_scene load_steps=5 format=3 uid="uid://p2m0x21yemk2"]
 
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="1_jj0s2"]
 [ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/Images/button.png" id="2_kwnkb"]
 [ext_resource type="Script" path="res://src/ui/components/standard_button.gd" id="2_otd6r"]
+[ext_resource type="Script" path="res://src/components/c_gui_scale.gd" id="4_0gg5f"]
 
 [node name="StandardButton" type="Button"]
 z_index = 7
@@ -28,7 +29,13 @@ expand_icon = true
 script = ExtResource("2_otd6r")
 metadata/destination = ""
 metadata/ReplacementMenu = ""
+metadata/PushMenu = ""
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("4_0gg5f")
+
+[node name="Node2" type="Node" parent="."]
+script = ExtResource("4_0gg5f")
 
 [connection signal="mouse_entered" from="." to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_button_mouse_exited"]
-[connection signal="pressed" from="." to="." method="_on_pressed"]

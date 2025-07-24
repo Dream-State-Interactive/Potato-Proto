@@ -1,0 +1,111 @@
+==============================================================================
+||
+||   MENU SYSTEM - CHEATSHEET & USAGE GUIDE
+||
+==============================================================================
+
+
+*******************************************************************************
+---[ 1. MenuManager API (The Global Controller) ]-----------------------------
+*******************************************************************************
+
+   The MenuManager is a global singleton for handling all menu navigation.
+
+   * To REPLACE the current menu (e.g., Main Menu -> Level Select):
+	 MenuManager.replace_menu("res://path/to/new_menu.tscn")
+
+   * To PUSH a menu ON TOP of another (e.g., Pause Menu -> Settings):
+	 MenuManager.push_menu("res://path/to/overlay_menu.tscn")
+
+   * To go BACK to the previous menu:
+	 MenuManager.back()
+
+   * To HIDE ALL menus and reset navigation:
+	 MenuManager.hide_all_menus()
+
+
+*******************************************************************************
+---[ 2. BaseMenu Usage (The Foundation for All Menus) ]-----------------------
+*******************************************************************************
+   All menus you create must have a script that `extends BaseMenu`.
+
+   --- SETUP ---
+
+   1.  BASIC SCRIPT STRUCTURE:
+	   Your script must call `super._ready()` to register itself with the manager.
+
+	   // Example: my_new_menu.gd
+	   extends BaseMenu
+
+	   func _ready():
+		   super._ready()  // CRITICAL: This line registers the menu.
+		   // Your custom setup code here...
+
+
+   2.  WIRING "BACK" BUTTONS (NO CODE NEEDED):
+	   - In the editor, select your menu's root node (the CanvasLayer).
+	   - In the Inspector, find the "Back Button Paths" array.
+	   - Drag your back button(s) from the Scene Tree into the array slots.
+	   - The system will automatically connect them to `MenuManager.back()`.
+
+
+   --- COMMON CUSTOMIZATIONS ---
+
+   *   ADDING CUSTOM BEHAVIOR (e.g., Inventory Menu):
+	   Override the `open_menu()` and `hide_menu()` functions.
+
+	   func open_menu():
+		   super.open_menu()         // IMPORTANT: Runs the base logic (makes menu visible).
+		   update_inventory_icons()
+		   play_sound()
+
+	   func hide_menu():
+		   super.hide_menu()         // IMPORTANT: Runs base logic (hides menu, updates state).
+		   play_exit_animation()
+
+
+   *   HANDLING OVERLAYS (when a menu is PUSHED on top):
+	   Implement `on_child_menu_opened()` to hide your main buttons and
+	   prevent visual overlap.
+
+	   func on_child_menu_opened():
+		   $ButtonContainer.hide()
+		
+	   So any menu with an openable submenu will use this if it needs to do anything else when that submenu opens
+		- In our case it was to hide the main buttons [Play], [Save/Load], [Settings], [Quit] <--- All within a VBoxContainer "button_container"
+		- But we can also use this for things like do_fancy_gui_animation() or spawn_uwu_particle()
+		- NOTE: It's worth making sure that if you're hiding something that it's somehow opened in it's open_menu() function
+					- EX: open_menu() -> button_container.show()
+			   on_child_menu_opened() -> button_container.hide()
+
+
+*******************************************************************************
+---[ 3. CGuiScale Component (Reusable Visual Effects) ]-----------------------
+*******************************************************************************
+
+   Add visual flair to any UI element (Button, Panel, etc.) with this component.
+
+   --- SETUP ---
+
+   1.  In the scene for your UI element, add a child `Node`.
+   2.  Rename this new node to "CGuiScale".
+   3.  Attach the `c_gui_scale.gd` script to it.
+
+
+   --- CONFIGURATION ---
+
+   Select the `CGuiScale` node and edit these properties in the Inspector:
+
+   *   HOVER EFFECT:
+	   - enable_hover_effect: bool
+	   - hover_scale: float         (e.g., 1.1)
+	   - transition_duration: float (e.g., 0.1)
+
+   *   PULSE EFFECT:
+	   - enable_pulse_effect: bool
+	   - pulse_min_scale: float     (e.g., 1.0)
+	   - pulse_max_scale: float     (e.g., 1.05)
+	   - pulse_duration: float      (e.g., 2.0)
+
+   NOTE: The component handles all pivot calculations automatically.
+		 The hover effect will correctly override the pulse effect.

@@ -15,7 +15,7 @@
 #   loading data, which is a critical step to apply loaded states correctly.
 #
 # =============================================================================
-extends CanvasLayer
+extends BaseMenu
 
 # --- Node References ---
 @onready var save_button_1: Button = $MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/SaveSlot1Button
@@ -25,31 +25,15 @@ extends CanvasLayer
 
 # --- Godot Functions ---
 func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	super() # calls BaseMenu._ready(self)
 	
 	# Connect buttons to their respective functions.
 	save_button_1.pressed.connect(on_save_pressed.bind(1))
 	load_button_1.pressed.connect(on_load_pressed.bind(1))
-	back_button.pressed.connect(hide_menu)
+	back_button.pressed.connect(MenuManager.back)
 	
-	# Announce readiness to the GameManager.
-	await get_tree().process_frame
-	GameManager.on_saveload_menu_ready(self)
-	
-	hide()
 
 # --- Public & Internal Functions ---
-## Shows the menu.
-func open_menu():
-	update_buttons() # Refresh button states before showing.
-	show()
-	# The game is already paused by the PauseMenu, so we don't need to pause it again.
-
-## Hides this menu and tells the GameManager to re-open the main pause menu.
-func hide_menu():
-	hide()
-	GameManager.open_pause_menu()
-
 ## Called when a "Save" button is pressed.
 func on_save_pressed(slot_number: int):
 	SaveManager.save_game(slot_number)

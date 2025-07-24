@@ -28,44 +28,44 @@ offset_bottom = 358.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ButtonContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="ResumeButton" parent="MarginContainer/ButtonContainer" instance=ExtResource("2_swutv")]
+[node name="ResumeButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Resume"
 
-[node name="RestartButton" parent="MarginContainer/ButtonContainer" instance=ExtResource("2_swutv")]
+[node name="RestartButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Restart
 "
 
-[node name="SaveLoadButton" parent="MarginContainer/ButtonContainer" instance=ExtResource("2_swutv")]
+[node name="SaveLoadButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Save/Load
 "
-metadata/PushMenu = "res://src/ui/menus/save_load_menu.tscn"
+metadata/ReplacementMenu = "res://src/ui/menus/save_load_menu.tscn"
 
-[node name="SettingsButton" parent="MarginContainer/ButtonContainer" instance=ExtResource("2_swutv")]
+[node name="SettingsButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Settings
 "
-metadata/PushMenu = "res://src/ui/menus/settings_menu.tscn"
+metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
 
-[node name="MainMenuButton" parent="MarginContainer/ButtonContainer" instance=ExtResource("2_swutv")]
+[node name="MainMenuButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
 layout_mode = 2
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 45
 text = "Main Menu
 "
-metadata/destination = "res://src/ui/menus/MainMenu.tscn"
+metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
 
-[connection signal="pressed" from="MarginContainer/ButtonContainer/ResumeButton" to="." method="_on_resumepressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="hide_menu"]
