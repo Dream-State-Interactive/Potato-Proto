@@ -44,9 +44,13 @@ func save_file_exists(slot_number: int) -> bool:
 # --- Core Public API ---
 ## Saves the entire game state to a specific slot.
 func save_game(slot_number: int):
+	var player = GameManager.player_instance
 	# We create a dictionary to act as a container for all our save data.
 	# This keeps the JSON file organized.
 	var save_data = {"player_stats": {}, "game_state": {}, "player_state": {}}
+	
+	var pos = player.global_position
+	save_data["player_state"]["global_position"] = {"x": pos.x, "y": pos.y}
 	
 	# --- 1. Save Player Stats ---
 	var player_stats = GameManager.player_stats
@@ -57,10 +61,11 @@ func save_game(slot_number: int):
 				save_data["player_stats"][stat_name] = player_stats.get(stat_name)
 	
 	# --- 2. Save Global Game State ---
+	save_data["game_state"]["collected_items"] = GameManager.collected_items.keys()
 	save_data["game_state"]["starch_points"] = GameManager.current_starch_points
+	save_data["game_state"]["current_level_path"] = GameManager.current_level_path
 
 	# --- 3. Save Specific Player State ---
-	var player = GameManager.player_instance
 	if is_instance_valid(player):
 		save_data["player_state"]["health"] = player.health_component.current_health
 		# Save the array of peel decal UV coordinates.
@@ -78,10 +83,10 @@ func save_game(slot_number: int):
 	save_file.store_string(json_string)
 	print("Game saved to slot %d!" % slot_number)
 
+
 ## Loads the entire game state from a specific slot.
 func load_game(slot_number: int):
 	if not save_file_exists(slot_number): return
-
 	var save_file = FileAccess.open(get_save_path(slot_number), FileAccess.READ)
 	# parse_string() converts the text from the file back into a Godot Dictionary.
 	var json_data = JSON.parse_string(save_file.get_as_text())
@@ -96,9 +101,12 @@ func load_game(slot_number: int):
 				player_stats.set(stat_name, loaded_stats[stat_name])
 	
 	# --- 2. Load Global Game State ---
-	# We call the GameManager's setter function to ensure the UI updates correctly.
 	if "game_state" in json_data:
 		GameManager.set_starch_points(json_data["game_state"].get("starch_points", 0))
+		GameManager.collected_items.clear()
+		var loaded_ids = json_data["game_state"].get("collected_items", [])
+		for id in loaded_ids:
+			GameManager.collected_items[id] = true
 		
 	# --- 3. Load Specific Player State ---
 	var player = GameManager.player_instance
@@ -125,3 +133,14 @@ func load_game(slot_number: int):
 
 		
 	print("Game loaded from slot %d!" % slot_number)
+
+## Reads a save file and returns its contents as a Dictionary without applying it.
+func get_save_data(slot_number: int) -> Dictionary:
+	if not save_file_exists(slot_number):
+		return {}
+	
+	var save_file = FileAccess.open(get_save_path(slot_number), FileAccess.READ)
+	var json_data = JSON.parse_string(save_file.get_as_text())
+	
+	# Return the parsed data, or an empty dictionary if parsing failed.
+	return json_data if json_data else {}

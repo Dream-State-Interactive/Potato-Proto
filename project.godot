@@ -24,6 +24,7 @@ SaveManager="*res://src/core/save_manager.gd"
 SceneLoader="*res://src/core/scene_loader.gd"
 MenuManager="*res://src/core/menu_manager.gd"
 GUI="*res://src/core/GUI.tscn"
+CollectibleBaker="*res://addons/id_assigner_plugin/collectible_baker.gd"
 
 [display]
 
@@ -42,7 +43,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/angle_editor_plugin/plugin.cfg")
+enabled=PackedStringArray("res://addons/angle_editor_plugin/plugin.cfg", "res://addons/id_assigner_plugin/plugin.cfg")
 
 [global_group]
 
