@@ -34,11 +34,7 @@ func assign_missing_collectible_ids():
 			collectible.set_unique_id(new_id)
 			assigned_count += 1
 			
-			# --- THIS IS THE SIMPLE, CRITICAL FIX ---
-			# We explicitly tell the editor that this specific node has changed
-			# and needs to be saved. This marks the scene as dirty.
 			collectible.property_list_changed.emit()
-			# --- END FIX ---
 
 			print("  - Assigned new ID '%s' to node: %s" % [new_id, collectible.name])
 

@@ -7,7 +7,7 @@
 radius = 23.0
 
 [node name="StarchPoint" type="Area2D"]
-scale = Vector2(0.957756, 0.957756)
+scale = Vector2(0.900627, 0.900627)
 script = ExtResource("1_n6wye")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
