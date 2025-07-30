@@ -497,7 +497,7 @@ func equip_ability(ability_scene: PackedScene, slot_number: int):
 # This function handles the smooth blending between our three collision shapes
 # based on the player's current speed. It is called every physics frame.
 func update_collision_shapes(current_speed: float):
-	
+
 	# --- STAGE 1: Blending from Detailed Polygon to Smooth Capsule ---
 	
 	# `smoothstep` is a mathematical function that creates a smooth S-curve interpolation.

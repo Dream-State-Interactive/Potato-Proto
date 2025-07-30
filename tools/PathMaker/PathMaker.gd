@@ -1,27 +1,93 @@
 @tool
 extends StaticBody2D
 
-@export var path_texture: Texture2D
-@export var path_width: float = 10
-@export var extrude_texture: Texture2D
-@export var PathMaker_extrude_amount: float = 250
-@export var collision_resolution: int = 32 # Number of points for collision polygon
-@export var Pathmaker_extrusion_resolution: int = 128 # Number of points for extrusion polygon
+# --- Change: Added setters with call_deferred for stability ---
+@export var path_texture: Texture2D:
+	set(value):
+		path_texture = value
+		if is_inside_tree(): call_deferred("update_path")
 
-@onready var path_2d = $Path2D
-@onready var line_2d = $Line2D
-@onready var extrude_polygon_2d = $ExtrudePolygon2D
-@onready var collision_polygon_2d = $CollisionPolygon2D
+@export var path_width: float = 10:
+	set(value):
+		path_width = value
+		if is_inside_tree(): call_deferred("update_path")
 
-func _ready():
+@export var extrude_texture: Texture2D:
+	set(value):
+		extrude_texture = value
+		if is_inside_tree(): call_deferred("update_path")
+
+@export var PathMaker_extrude_amount: float = 250:
+	set(value):
+		PathMaker_extrude_amount = value
+		if is_inside_tree(): call_deferred("update_path")
+
+@export var collision_resolution: int = 32: # Number of points for collision polygon
+	set(value):
+		collision_resolution = value
+		if is_inside_tree(): call_deferred("update_path")
+
+@export var Pathmaker_extrusion_resolution: int = 128: # Number of points for extrusion polygon
+	set(value):
+		Pathmaker_extrusion_resolution = value
+		if is_inside_tree(): call_deferred("update_path")
+
+# --- Change: Removed @onready vars. We will get nodes manually. ---
+
+func _enter_tree():
+	# Using call_deferred ensures that all nodes are ready when we first update.
+	call_deferred("_initial_setup")
+
+# This now connects to the correct signal on the Curve2D resource itself.
+func _initial_setup():
+	var path_2d = get_node_or_null("Path2D")
+	# We must check if both the node and its curve resource exist before connecting.
+	if path_2d and path_2d.curve:
+		# Connect to the curve's 'changed' signal for live updates
+		if not path_2d.curve.changed.is_connected(update_path):
+			path_2d.curve.changed.connect(update_path)
 	update_path()
 
+# This now disconnects from the correct signal to prevent memory leaks.
+func _exit_tree():
+	var path_2d = get_node_or_null("Path2D")
+	# Check if the curve exists before trying to disconnect.
+	if path_2d and path_2d.curve:
+		# Disconnect the signal when the node exits the scene to prevent errors.
+		if path_2d.curve.changed.is_connected(update_path):
+			path_2d.curve.changed.disconnect(update_path)
+
 func update_path():
-	if not path_texture or not extrude_texture:
+	# --- Change: Get node references every time for maximum safety in the editor ---
+	var path_2d = get_node_or_null("Path2D")
+	var line_2d = get_node_or_null("Line2D")
+	var extrude_polygon_2d = get_node_or_null("ExtrudePolygon2D")
+	var collision_polygon_2d = get_node_or_null("CollisionPolygon2D")
+
+	# This check is now the most important one. If it fails, the node setup is wrong.
+	if not path_2d or not line_2d or not extrude_polygon_2d or not collision_polygon_2d:
 		return
+
+	# --- Change: Made texture check less strict so geometry updates anyway ---
+	if not path_2d.curve:
+		return
+
+	# This makes the children "belong" to this script, which is vital for instanced scenes in the editor.
+	# Without this, they can get "lost" when the scene is saved or reloaded.
+	if line_2d.owner != self: line_2d.owner = self
+	if extrude_polygon_2d.owner != self: extrude_polygon_2d.owner = self
+	if collision_polygon_2d.owner != self: collision_polygon_2d.owner = self
+
 
 	var curve = path_2d.curve
 	var baked_points = curve.get_baked_points()
+
+	# check to prevent errors if the path is empty
+	if baked_points == null or baked_points.size() < 2:
+		line_2d.points = PackedVector2Array()
+		extrude_polygon_2d.polygon = PackedVector2Array()
+		collision_polygon_2d.polygon = PackedVector2Array()
+		return
 
 	line_2d.texture = path_texture
 	line_2d.points = baked_points
@@ -36,13 +102,17 @@ func update_path():
 	# Generate collision polygon with specified resolution
 	collision_polygon_2d.polygon = generate_path_polygon(baked_points, path_width, collision_resolution)
 
-
 # Generates a closed polygon for collision, using simplified points for performance.
 func generate_path_polygon(points: PackedVector2Array, width: float, resolution: int) -> PackedVector2Array:
 	# Initialize a PackedVector2Array to store the collision polygon's vertices.
 	var polygon = PackedVector2Array()
+	if points.size() < 2:
+		return polygon
 	# Simplify the path to the specified resolution.
 	var simplified_points = simplify_path(points, resolution)
+	# check to prevent errors if there are not enough simplified points
+	if simplified_points.size() < 2:
+		return polygon
 
 	# Generate the first side of the collision polygon (offset along the normal).
 	for i in range(simplified_points.size()):
@@ -67,8 +137,14 @@ func generate_path_polygon(points: PackedVector2Array, width: float, resolution:
 func generate_extruded_polygon(points: PackedVector2Array, extrude_amount: float, resolution: int) -> PackedVector2Array:
 	# Initialize a PackedVector2Array to store the extruded polygon's vertices.
 	var extruded_points: PackedVector2Array = []
+	# check to prevent errors if there are not enough points
+	if points.size() < 2:
+		return extruded_points
 	# Simplify the path to the specified resolution.
 	var simplified_points = simplify_path(points, resolution)
+	# check to prevent errors if there are not enough simplified points
+	if simplified_points.size() < 2:
+		return extruded_points
 	# Find the lowest y-coordinate among the simplified points to determine the flat bottom edge.
 	var lowest_y = simplified_points[0].y
 	for point in simplified_points:
@@ -93,6 +169,10 @@ func generate_extruded_polygon(points: PackedVector2Array, extrude_amount: float
 func simplify_path(points: PackedVector2Array, target_points: int) -> PackedVector2Array:
 	# If the original path has fewer points than the target, return the original points (no simplification needed).
 	if points.size() <= target_points:
+		return points
+
+	# check to prevent division by zero ---
+	if target_points < 2:
 		return points
 
 	# Calculate the interval at which to select points for simplification.
