@@ -37,14 +37,21 @@ var stats: StatBlock
 ## high-speed circle collider is active.
 @export var invincible_at_high_speed: bool = true
 
+# player.gd
 
-@export_group("Aging", "aging_")
+# ... (add this with your other exported variables) ...
+
+@export_group("Visuals")
+## The radius of the peel effect in the shader (in UV space, 0.0 to 1.0).
+@export var peel_shader_radius: float = 0.2
+
+@export_group("Aging")
 ## How many seconds it takes for the player to go from 0% health to fully "aged"
 ## (i.e., the flesh sprite becomes fully darkened).
 @export var seconds_to_fully_age: float = 20.0
 
 
-@export_group("Collision Blending", "collision_")
+@export_group("Collision Blending")
 ## The speed (in pixels/sec) at which the collision shape starts blending
 ## from the detailed polygon to the smoother capsule shape.
 @export var low_speed_threshold: float = 100.0
@@ -55,7 +62,7 @@ var stats: StatBlock
 @export var high_speed_threshold: float = 1000.0
 
 
-@export_group("Target Collision Sizes", "collision_")
+@export_group("Target Collision Sizes")
 ## The target radius for the capsule shape at medium speed.
 @export var target_capsule_radius: float = 22.0
 ## The target height for the capsule shape at medium speed.
@@ -63,10 +70,12 @@ var stats: StatBlock
 ## The target radius for the final circle shape at high speed.
 @export var target_circle_radius: float = 45.0
 
+@export_group("Stat Properties")
 @export var roll_strength: float = 5000.0
 @export var roll_multiplier: float = 1000.0
 @export var jump_strength: float = 50.0
 @export var jump_multiplier: float = 5.0
+
 const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
 
@@ -104,13 +113,14 @@ const COMBO_COOLDOWN: float = 0.25
 # --- INTERNAL STATE VARIABLES ---
 # =============================================================================
 var roll_input: float = 0.0                # The current player input (-1 for left, 1 for right).
-var damage_points: Array[Vector2] = []     # Stores the UV coordinates for each peel decal.
+var damage_points: PackedVector2Array = []     # Stores the UV coordinates for each peel decal.
 var current_aging_level: float = 0.0       # The current "darkness" of the flesh (0.0 to 1.0).
 var aging_rate: float = 0.0                # How fast the aging level increases per second.
 var can_jump: bool = false                 # A flag for the Coyote Time system.
 var original_polygon_points: PackedVector2Array # A backup of the detailed collision shape.
 var _is_gripping: bool = false             # Tracks if the CGrip component is currently active.
 var ready_for_combo = false
+var _skin_material_made_unique: bool = false
 
 
 # =============================================================================
@@ -134,6 +144,13 @@ func _ready():
 	health_component.health_changed.connect(_on_health_changed)
 	health_component.died.connect(_on_died)
 	
+	# Make the materials unique to this player instance.
+	# This prevents them from being reset to default on scene reload.
+	#if skin_sprite.material:
+		#skin_sprite.material = skin_sprite.material.duplicate()
+	#if flesh_sprite.material:
+		#flesh_sprite.material = flesh_sprite.material.duplicate()
+	
 	# --- Visuals & Ability Setup ---
 	# Initialize the peeling shader to have zero holes at the start.
 	var skin_material = skin_sprite.material as ShaderMaterial
@@ -148,8 +165,6 @@ func _ready():
 	# Announce our existence to the GameManager, which will give us our stats
 	# and wire us up to the rest of the game.
 	GameManager.register_player(self, health_component)
-	
-
 	
 	# --- Dynamic Collision Setup ---
 	# Store the original shape of the polygon so we can scale it down later without losing data.
@@ -361,19 +376,28 @@ func _unhandled_input(event: InputEvent):
 # This function is called by the SaveManager after loading data.
 # It forces all visuals to update to the new loaded state.
 func force_visual_update():
+	
+	# For debugging, let's be 100% sure the data is correct right here.
+	print("Forcing visual update. Damage points count: ", damage_points.size())
+	if not damage_points.is_empty():
+		print("First damage point: ", damage_points[0])
+	
 	# Update the peel shader
 	var skin_material = skin_sprite.material as ShaderMaterial
 	if skin_material:
+		skin_material.set_shader_parameter("peel_radius", peel_shader_radius)
 		skin_material.set_shader_parameter("hit_points", damage_points)
 		skin_material.set_shader_parameter("hit_count", damage_points.size())
-		skin_sprite.material = skin_material
 		
+	print(skin_material.get_shader_parameter("hit_count"))
+	print(skin_material.get_shader_parameter("hit_points"))
 	# Update the aging shader and the HUD health bar.
 	_on_health_changed(health_component.current_health, stats.max_health)
 
 # This function is connected to the HealthComponent's 'damaged' signal.
 # It handles the visual effect of peeling the skin.
 func _on_damaged(amount: float, global_contact_point: Vector2, contact_normal: Vector2):
+	_ensure_skin_material_is_unique()
 	if damage_points.size() >= 64: return
 
 	# This block converts the global collision point into a 0-1 UV coordinate
@@ -393,6 +417,7 @@ func _on_damaged(amount: float, global_contact_point: Vector2, contact_normal: V
 	# Send the updated list of damage points to the shader.
 	var skin_material = skin_sprite.material as ShaderMaterial
 	if skin_material:
+		skin_material.set_shader_parameter("peel_radius", peel_shader_radius)
 		skin_material.set_shader_parameter("hit_points", damage_points)
 		skin_material.set_shader_parameter("hit_count", damage_points.size())
 
@@ -417,7 +442,7 @@ func heal(amount: float):
 	
 	# Visually "un-peel" by removing the most recent damage point.
 	if not damage_points.is_empty():
-		damage_points.pop_back()
+		damage_points.resize(damage_points.size() - 1)
 		# Force the shader to update with the smaller list of damage points.
 		var skin_material = skin_sprite.material as ShaderMaterial
 		if skin_material:
@@ -472,7 +497,7 @@ func equip_ability(ability_scene: PackedScene, slot_number: int):
 # This function handles the smooth blending between our three collision shapes
 # based on the player's current speed. It is called every physics frame.
 func update_collision_shapes(current_speed: float):
-	
+
 	# --- STAGE 1: Blending from Detailed Polygon to Smooth Capsule ---
 	
 	# `smoothstep` is a mathematical function that creates a smooth S-curve interpolation.
@@ -521,3 +546,13 @@ func update_collision_shapes(current_speed: float):
 	collision_circle.shape.radius = lerp(0.01, target_circle_radius, t_capsule_to_circle)
 	# We enable the circle shape only when it starts to grow, to be efficient.
 	collision_circle.disabled = (t_capsule_to_circle < 0.01)
+
+func _ensure_skin_material_is_unique():
+	if _skin_material_made_unique:
+		return # Do nothing if we've already done this.
+	
+	if skin_sprite.material:
+		skin_sprite.material = skin_sprite.material.duplicate()
+		print("Player: Skin material has been made unique.")
+	
+	_skin_material_made_unique = true

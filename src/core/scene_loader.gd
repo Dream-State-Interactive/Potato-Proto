@@ -29,6 +29,7 @@ func change_scene(scene_path: String):
 		return
 	
 	GameManager.prepare_for_scene_change()
+	GameManager.current_level_path = scene_path
 	current_scene_path = scene_path
 	MenuManager.clear_history()
 	
@@ -40,6 +41,7 @@ func change_scene(scene_path: String):
 		
 		var scene = await load(scene_path).instantiate()
 		level_container.add_child(scene)
+		GameManager.on_level_loaded()
 	
 	GameManager.resume()
 

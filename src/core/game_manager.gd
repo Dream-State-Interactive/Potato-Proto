@@ -51,6 +51,8 @@ var slot_to_load: int = 1
 var player_instance = null
 var player_stats: StatBlock = null # The "source of truth" StatBlock for the current game.
 var level_path_to_load: String = ""
+var current_level_path: String = ""
+var collected_items: Dictionary = {}
 
 @export var game_paused: bool = false
 
@@ -107,17 +109,6 @@ func on_game_scene_ready():
 	else:
 		load_game_after_player_ready()
 
-	# Now we can safely execute our logic.
-	if next_scene_is_new_game:
-		reset_game_state()
-		# --- THIS IS THE MISSING LINE ---
-		# After resetting the state, we tell the now-existing Main node
-		# to load the level whose path we stored earlier.
-		SceneLoader.change_scene(level_path_to_load)
-	else:
-		# The load logic should also be here.
-		load_game_after_player_ready()
-
 ## NEW GAME
 func start_new_game_at_level(level_path: String):
 	# 1. Set the flags for what to do AFTER Main.tscn loads.
@@ -142,11 +133,29 @@ func load_game_after_player_ready():
 
 	# Now that we know they exist, it's safe to load.
 	SaveManager.load_game(slot_to_load)
+	var scene_root = get_tree().current_scene
+	var collectibles_in_scene = scene_root.find_children("*", "Collectible", true, false)
+	for item in collectibles_in_scene:
+		# Check if the item is a valid Collectible with an ID
+		if item is Collectible and not item.unique_id.is_empty():
+			# If its ID is in our newly loaded dictionary, remove it.
+			if is_item_collected(item.unique_id):
+				item.queue_free()
+	
+	var save_data = SaveManager.get_save_data(slot_to_load)
+	if "player_state" in save_data and "global_position" in save_data["player_state"]:
+		var pos_dict = save_data["player_state"]["global_position"]
+		player_instance.global_position = Vector2(pos_dict.x, pos_dict.y)
+	
 	player_instance.apply_stats_from_resource()
+	
+	# After loading all the data, tell the player to update its visuals.
+	player_instance.call_deferred("force_visual_update")
 
 ## This resets all persistent data for a "New Game".
 func reset_game_state():
 	print("Game state is being reset for a new game.")
+	collected_items.clear()
 	current_starch_points = 0
 	# We create a fresh, clean copy of the default stats. This prevents stats
 	# from a previous game from "leaking" into the new one.
@@ -157,6 +166,17 @@ func reset_game_state():
 	if is_instance_valid(player_instance):
 		player_instance.stats = player_stats
 		player_instance.apply_stats_from_resource()
+
+## This is called by the SceneLoader AFTER a new level has been instanced.
+## It decides whether to reset for a new game or trigger a load.
+func on_level_loaded():
+	print("GameManager: A level has finished loading. Checking state.")
+	if next_scene_is_new_game:
+		reset_game_state()
+	else:
+		print("GameManager: State is 'Load Game'. Initiating load sequence.")
+		load_game_after_player_ready()
+
 
 # --- Registration Callbacks (Called by nodes from their _ready() functions) ---
 
@@ -183,6 +203,17 @@ func register_player(player, health_comp: CHealth):
 		ability2.cooldown_updated.connect(on_ability2_cooldown_updated)
 	
 	player_is_ready.emit(player)
+
+
+func register_collected_item(id: String):
+	if not id.is_empty():
+		collected_items[id] = true
+
+func is_item_collected(id: String) -> bool:
+	if not id.is_empty():
+		return collected_items.has(id)
+	return false
+
 
 # --- Game Logic Functions ---
 ## This is a "setter" function. It's the one safe way to change starch points.

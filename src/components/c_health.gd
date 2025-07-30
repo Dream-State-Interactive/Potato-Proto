@@ -31,29 +31,56 @@ signal died
 
 # --- Properties ---
 ## The maximum health of this object. Can be set in the Inspector.
-@export var max_health: float = 100.0
-## The current health of this object.
-var current_health: float
+@export var max_health: float = 100.0:
+	set(value):
+		max_health = value
+		# When max_health changes, re-validate current_health
+		if self.is_node_ready(): # Don't run this before _ready()
+			self.current_health = _current_health # Re-trigger the setter for clamping
+
+## internal reference for current health
+var _current_health: float
+## The current health of this object | Setter triggers anytime 'health_component.current_health = X' is performed
+var current_health: float:
+	get:
+		return _current_health
+	set(value):
+		# 1. Clamp the new value to be between 0 and max_health.
+		var new_health = clamp(value, 0, max_health)
+		
+		# 2. Only proceed if the value has actually changed.
+		if new_health == _current_health:
+			return
+			
+		# 3. Update the internal variable.
+		_current_health = new_health
+		
+		# 4. ALWAYS emit the signal when the value changes.
+		health_changed.emit(_current_health, max_health)
+		print("CHealth setter: Health is now %f / %f" % [_current_health, max_health])
+		
+		# 5. Check for death.
+		if _current_health == 0:
+			died.emit()
 
 # --- Godot Functions ---
 func _ready():
-	# Initialize current health to the maximum when the object is created.
-	# Note: The GameManager overrides this for the Player to apply loaded save data.
-	current_health = max_health
+	# Set the property and run setter logic.
+	self.current_health = max_health
 
 # --- Public API ---
 ## The main function for dealing damage. It's called by the Player script.
 func take_damage(amount: float, contact_point: Vector2, contact_normal: Vector2):
 	# Don't process damage if already dead.
-	if current_health <= 0: return
+	if _current_health <= 0: 
+		return
 
-	# Reduce health, using max() to clamp it at 0 so it can't go negative.
-	current_health = max(0, current_health - amount)
+	# Assign to the current_health, not the internal variable _current_health.
+	self.current_health -= amount
 	
 	print("HealthComponent: Taking damage! Health is now ", current_health)
 	
 	# Emit signals to notify any listeners (like the Player or UI).
-	health_changed.emit(current_health, max_health)
 	damaged.emit(amount, contact_point, contact_normal)
 
 	# Check for death.
@@ -63,13 +90,8 @@ func take_damage(amount: float, contact_point: Vector2, contact_normal: Vector2)
 ## The main function for healing.
 func heal(amount: float):
 	# Don't process healing if already at full health.
-	if current_health >= max_health:
+	if _current_health >= max_health:
 		return
 
-	# Increase health, using min() to clamp it at the maximum value.
-	current_health = min(current_health + amount, max_health)
-	
-	# Emit the health_changed signal. The Player's _on_health_changed function
-	# listens for this and will automatically reverse the aging visual.
-	health_changed.emit(current_health, max_health)
+	self.current_health += amount
 	print("HealthComponent: Healed! Health is now ", current_health)
