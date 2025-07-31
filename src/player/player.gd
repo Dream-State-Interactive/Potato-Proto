@@ -72,7 +72,7 @@ const COMBO_COOLDOWN: float = 0.25
 const low_speed_threshold: float = 5
 ## The speed at which the blend to the capsule is complete, and the blend
 ## from capsule to a perfect circle begins.
-const mid_speed_threshold: float = 8
+const mid_speed_threshold: float = 10
 ## The speed at which the player's collision is a perfect circle for smooth rolling.
 const high_speed_threshold: float = 12
 
