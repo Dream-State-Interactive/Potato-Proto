@@ -202,8 +202,6 @@ polygon = PackedVector2Array(529, 924.351, 633, 919.586, 652, 324.626, 622, -519
 
 [node name="Player" parent="." instance=ExtResource("1_1snx7")]
 position = Vector2(299, 287)
-mid_speed_threshold = 200.0
-high_speed_threshold = 400.0
 
 [node name="Water" type="Node2D" parent="."]
 position = Vector2(-192, 520)

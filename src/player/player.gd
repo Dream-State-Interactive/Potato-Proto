@@ -50,18 +50,6 @@ var stats: StatBlock
 ## (i.e., the flesh sprite becomes fully darkened).
 @export var seconds_to_fully_age: float = 20.0
 
-
-@export_group("Collision Blending")
-## The speed (in pixels/sec) at which the collision shape starts blending
-## from the detailed polygon to the smoother capsule shape.
-@export var low_speed_threshold: float = 100.0
-## The speed at which the blend to the capsule is complete, and the blend
-## from capsule to a perfect circle begins.
-@export var mid_speed_threshold: float = 500.0
-## The speed at which the player's collision is a perfect circle for smooth rolling.
-@export var high_speed_threshold: float = 1000.0
-
-
 @export_group("Target Collision Sizes")
 ## The target radius for the capsule shape at medium speed.
 @export var target_capsule_radius: float = 22.0
@@ -78,6 +66,15 @@ var stats: StatBlock
 
 const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
+
+## The speed (in pixels/sec) at which the collision shape starts blending
+## from the detailed polygon to the smoother capsule shape.
+const low_speed_threshold: float = 5
+## The speed at which the blend to the capsule is complete, and the blend
+## from capsule to a perfect circle begins.
+const mid_speed_threshold: float = 8
+## The speed at which the player's collision is a perfect circle for smooth rolling.
+const high_speed_threshold: float = 12
 
 
 # =============================================================================
@@ -288,7 +285,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 # _physics_process(delta) runs on every physics frame. Ideal for applying forces and input.
 func _physics_process(delta: float):
 	# Update collision shapes based on current speed.
-	update_collision_shapes(linear_velocity.length())
+	update_collision_shapes(angular_velocity)
 	
 	# --- COYOTE TIME LOGIC ---
 	var is_physically_on_ground = get_colliding_bodies().size() > 0
