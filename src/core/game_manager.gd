@@ -143,9 +143,6 @@ func load_game_after_player_ready():
 				item.queue_free()
 	
 	var save_data = SaveManager.get_save_data(slot_to_load)
-	if "player_state" in save_data and "global_position" in save_data["player_state"]:
-		var pos_dict = save_data["player_state"]["global_position"]
-		player_instance.global_position = Vector2(pos_dict.x, pos_dict.y)
 	
 	player_instance.apply_stats_from_resource()
 	
