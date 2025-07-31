@@ -117,7 +117,7 @@ func start_new_game_at_level(level_path: String):
 	
 	# 2. Prepare for the scene change and load Main.tscn.
 	prepare_for_scene_change()
-	get_tree().change_scene_to_file(SceneLoader.MAIN_GAME_SCENE)
+	SceneLoader.change_scene(SceneLoader.MAIN_GAME_SCENE)
 
 ## LOAD GAME
 func start_loaded_game(slot: int):
