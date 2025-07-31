@@ -33,15 +33,8 @@ func change_scene(scene_path: String):
 	current_scene_path = scene_path
 	MenuManager.clear_history()
 	
-	var level_container = get_tree().current_scene.get_node_or_null("LevelContainer")
-	
-	if level_container:
-		for child in level_container.get_children():
-			child.queue_free()
-		
-		var scene = await load(scene_path).instantiate()
-		level_container.add_child(scene)
-		GameManager.on_level_loaded()
+	get_tree().change_scene_to_file(scene_path)
+	GameManager.on_level_loaded()
 	
 	GameManager.resume()
 
