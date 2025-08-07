@@ -1,8 +1,6 @@
 # src/ui/main_menu.gd
 extends CanvasLayer
 
-@onready var button_container: VBoxContainer = $ButtonContainer
-
 # --- GODOT FUNCTIONS ---
 # Increase the button scale slightly when the mouse enters.
 func _on_button_mouse_entered(button: Button) -> void:

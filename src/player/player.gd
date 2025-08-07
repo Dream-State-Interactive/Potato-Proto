@@ -283,7 +283,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 						print("INVINCIBLE: Damage ignored!")
 
 # _physics_process(delta) runs on every physics frame. Ideal for applying forces and input.
-func _physics_process(delta: float):
+func _physics_process(_delta: float):
 	# Update collision shapes based on current speed.
 	update_collision_shapes(angular_velocity)
 	

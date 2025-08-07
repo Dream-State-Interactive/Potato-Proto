@@ -223,9 +223,9 @@ func add_starch_points(amount: int):
 	# We call our own setter to ensure the signal is always emitted.
 	set_starch_points(current_starch_points + amount)
 
-func on_player_health_updated(current: float, max: float):
+func on_player_health_updated(current: float, max_health: float):
 	# The GameManager acts as a middleman, re-broadcasting the signal to listeners.
-	player_health_updated.emit(current, max)
+	player_health_updated.emit(current, max_health)
 
 func on_ability1_cooldown_updated(progress: float):
 	ability1_cooldown_updated.emit(progress)

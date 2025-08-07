@@ -40,8 +40,8 @@ func connect_to_game_manager_signals():
 
 
 
-func update_health_bar(current: float, max: float):
-	health_bar.max_value = max
+func update_health_bar(current: float, max_health: float):
+	health_bar.max_value = max_health
 	health_bar.value = current
 
 func update_starch_label(new_amount: int):
