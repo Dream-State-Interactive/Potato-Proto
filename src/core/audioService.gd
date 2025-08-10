@@ -2,6 +2,9 @@ extends Node
 
 var MasterBus = AudioServer.get_bus_index("Master")
 
+func _ready():
+	set_master_volume(SettingsService.getSettingValue("audio.master_volume"))
+	
 func set_master_volume(volume: float):
 	if(volume > 100):
 		volume = 100

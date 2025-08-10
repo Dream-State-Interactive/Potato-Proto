@@ -12,8 +12,6 @@ func initializeSettings():
 	if !FileAccess.file_exists(PLAYER_CONFIG_FILE_NAME):
 		initializeConfigFile()
 	
-	AudioService.set_master_volume(SettingsService.getSettingValue("audio", "master_volume"))
-	
 
 func initializeConfigFile():
 	#IMPORTANT
@@ -27,7 +25,12 @@ func initializeConfigFile():
 	newConfigFile.close()
 	defaultsFile.close()
 
-func setSettingValue(section: StringName, key: StringName, value: Variant) -> bool:
+func setSettingValue(setting: String, value: Variant) -> bool:
+
+	var settingArray = setting.split('.')
+	var section = settingArray[0]
+	var key = settingArray[1]
+	
 	var err = configFile.load(PLAYER_CONFIG_FILE_NAME)
 	if(err):
 		print("Failed to set ", section, ".", key, " to ", value)
@@ -36,10 +39,20 @@ func setSettingValue(section: StringName, key: StringName, value: Variant) -> bo
 		
 	configFile.set_value(section, key, value)
 
+	handleSpecialSettings(section, key, value)
+
 	# Save it to a file (overwrite if already exists).
 	return configFile.save(PLAYER_CONFIG_FILE_NAME)
 
-func getSettingValue(section: StringName, key: StringName) -> Variant:
+func handleSpecialSettings(section: String, key: String, value: Variant) -> void:
+	if(section == "audio" && key == "master_volume"):
+		AudioService.set_master_volume(value)
+
+func getSettingValue(setting: String) -> Variant:
+	var settingArray = setting.split('.')
+	var section = settingArray[0]
+	var key = settingArray[1]
+	
 	var err = configFile.load(PLAYER_CONFIG_FILE_NAME)
 
 	# If the file didn't load, ignore it.

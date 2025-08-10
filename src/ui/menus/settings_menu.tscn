@@ -1,16 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://rhte4n1lb3va"]
+[gd_scene load_steps=3 format=3 uid="uid://rhte4n1lb3va"]
 
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="1_0gned"]
-[ext_resource type="Script" path="res://src/ui/menus/settings_menu.gd" id="1_8rfx4"]
 [ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/components/Slider.tscn" id="2_t2od3"]
 
 [node name="SettingsMenu" type="CanvasLayer"]
 layer = 4
-script = ExtResource("1_8rfx4")
-back_button_paths = Array[NodePath]([NodePath("CenterContainer/BackButton")])
-
-[node name="Slider" parent="." instance=ExtResource("2_t2od3")]
-position = Vector2(-9, 421)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 7
@@ -30,3 +24,8 @@ layout_mode = 2
 theme_override_constants/outline_size = 22
 theme_override_font_sizes/font_size = 45
 text = "Back"
+
+[node name="Slider" parent="." instance=ExtResource("2_t2od3")]
+position = Vector2(-85, 288)
+metadata/Description = "Volume"
+metadata/SettingName = "audio.master_volume"

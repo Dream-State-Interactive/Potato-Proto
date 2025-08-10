@@ -150,9 +150,6 @@ script = ExtResource("18_kydx3")
 position = Vector2(200, 335)
 scale = Vector2(0.1, 0.1)
 
-[node name="Slider" parent="." instance=ExtResource("15_lprhh")]
-position = Vector2(-41, 941)
-
 [node name="Control" parent="." instance=ExtResource("18_ne370")]
 offset_left = -1340.0
 offset_top = -278.0
