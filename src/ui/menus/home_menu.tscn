@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_8wmdh"]
 
 [node name="HomeMenu" type="CanvasLayer"]
+layer = 4
 script = ExtResource("1_ui71n")
 
 [node name="ButtonContainer" type="VBoxContainer" parent="."]
