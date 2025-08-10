@@ -24,6 +24,7 @@ layout_mode = 2
 theme_override_constants/outline_size = 22
 theme_override_font_sizes/font_size = 45
 text = "Back"
+metadata/PushMenu = "back"
 
 [node name="Slider" parent="." instance=ExtResource("2_t2od3")]
 position = Vector2(-85, 288)

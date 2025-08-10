@@ -24,6 +24,10 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_pressed() -> void:
+	if pushMenu == "back":
+		MenuManager.back()
+		return
+		
 	if destination and not destination.is_empty():
 		SceneLoader.change_scene(destination)
 	elif replaceMenu and not replaceMenu.is_empty():
