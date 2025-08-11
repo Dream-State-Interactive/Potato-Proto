@@ -553,3 +553,7 @@ func _ensure_skin_material_is_unique():
 		print("Player: Skin material has been made unique.")
 	
 	_skin_material_made_unique = true
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
