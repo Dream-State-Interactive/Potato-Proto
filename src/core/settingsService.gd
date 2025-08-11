@@ -39,14 +39,15 @@ func setSettingValue(setting: String, value: Variant) -> bool:
 		
 	configFile.set_value(section, key, value)
 
-	handleSpecialSettings(section, key, value)
+	setSpecialSettings(section, key, value)
 
 	# Save it to a file (overwrite if already exists).
 	return configFile.save(PLAYER_CONFIG_FILE_NAME)
 
-func handleSpecialSettings(section: String, key: String, value: Variant) -> void:
-	if(section == "audio" && key == "master_volume"):
-		AudioService.set_master_volume(value)
+func setSpecialSettings(section: String, key: String, value: Variant) -> void:
+	match section:
+		"audio":
+			AudioService.set(key, value)
 
 func getSettingValue(setting: String) -> Variant:
 	var settingArray = setting.split('.')
