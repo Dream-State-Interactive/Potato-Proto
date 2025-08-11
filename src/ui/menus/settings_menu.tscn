@@ -27,6 +27,9 @@ text = "Back"
 metadata/PushMenu = "back"
 
 [node name="Slider" parent="." instance=ExtResource("2_t2od3")]
-position = Vector2(-85, 288)
-metadata/Description = "Volume"
-metadata/SettingName = "audio.master_volume"
+offset_left = 72.0
+offset_top = 352.0
+offset_right = 1416.0
+offset_bottom = 520.0
+metadata/description = "Volume"
+metadata/settingName = "audio.master_volume"

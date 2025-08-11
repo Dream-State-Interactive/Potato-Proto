@@ -1,14 +1,16 @@
-extends Node2D
+extends Slider
 
-@onready var slider = $Slider
-@onready var description = get_meta("Description")
-@onready var settingName = get_meta("SettingName")
+@onready var slider = $"."
+@onready var description = get_meta("description")
+@onready var settingName = get_meta("settingName")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var slider_value = SettingsService.getSettingValue(settingName)
-	slider.set_value_no_signal(slider_value)
+	#$MarginContainer/StandardButton.text = description
 
-func _on_h_slider_drag_ended(value_changed: bool) -> void:
+	var slider_value = SettingsService.getSettingValue(settingName)
+	set_value_no_signal(slider_value)
+
+func _on_drag_ended(value_changed: bool) -> void:
 	if(value_changed):
-		SettingsService.setSettingValue(settingName, slider.get_value())
+		SettingsService.setSettingValue(settingName, get_value())
