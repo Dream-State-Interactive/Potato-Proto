@@ -40,6 +40,9 @@ autowrap_mode = 2
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("4_4hvaq")
+metadata/destination = ""
+metadata/ReplacementMenu = ""
+metadata/PushMenu = ""
 
 [connection signal="drag_ended" from="." to="." method="_on_drag_ended"]
 [connection signal="mouse_entered" from="MarginContainer/StandardButton" to="MarginContainer/StandardButton" method="_on_button_mouse_entered"]

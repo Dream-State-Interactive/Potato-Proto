@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bd6spyrfc537y"]
+[gd_scene load_steps=18 format=3 uid="uid://bd6spyrfc537y"]
 
 [ext_resource type="Script" path="res://src/ui/menus/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
@@ -10,7 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://b1wmtlyehendw" path="res://assets/Music/proto_pototo_v2.mp3" id="13_v7jc8"]
 [ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/graphics/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_0i57e"]
-[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/components/Slider.tscn" id="15_lprhh"]
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/graphics/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/graphics/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
 [ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://src/ui/components/StandardMenu.tscn" id="18_0l2vk"]
