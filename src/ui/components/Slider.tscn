@@ -11,6 +11,7 @@ offset_top = 28.0
 offset_right = 1431.0
 offset_bottom = 196.0
 scale = Vector2(1.00093, 1)
+scrollable = false
 script = ExtResource("1_83mba")
 metadata/description = ""
 metadata/settingName = ""
