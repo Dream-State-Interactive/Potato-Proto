@@ -35,6 +35,9 @@ var _tween: Tween
 # Track if the mouse is currently over the parent control.
 var _is_hovered: bool = false
 
+# When true, prevent dynamic animations & responses (for one-shot GUI scaling rather than Mouse-Event responses)
+var _is_locked: bool = false
+
 
 func _ready() -> void:
 	# Get parent node and verify it's a Control.
@@ -61,6 +64,10 @@ func _ready() -> void:
 
 # This decides which animation to play based on the current state (_is_hovered, enable_pulse_effect, etc.).
 func _update_animation_state() -> void:
+	# 0. Prevent dynamic responses if locked
+	if _is_locked:
+		return
+	
 	# 1. Stop any animation that is currently running.
 	if _tween:
 		_tween.kill()
@@ -75,6 +82,40 @@ func _update_animation_state() -> void:
 	# Priority 3: Default/Idle state. If no other effects are active, return to normal scale.
 	else:
 		_animate_to_idle()
+
+# --- Animations ---
+
+## Fades and scales the parent control in. Temporarily disables interactive effects.
+func pop_in():
+	# 1. Lock the component to prevent interference.
+	_is_locked = true
+	if _tween: _tween.kill()
+
+	# 2. Run the animation.
+	_tween = create_tween().set_parallel()
+	_tween.tween_property(_parent_control, "scale", Vector2.ONE, 0.2).from(Vector2(0.8, 0.8)).set_trans(Tween.TRANS_SPRING)
+	_tween.tween_property(_parent_control, "modulate:a", 1.0, 0.1).from(0.0)
+	
+	# 3. Wait for it to finish, then unlock and restore the correct interactive state.
+	await _tween.finished
+	_is_locked = false
+	_update_animation_state()
+
+
+## Fades the parent control out. Temporarily disables interactive effects.
+func pop_out():
+	# 1. Lock the component.
+	_is_locked = true
+	if _tween: _tween.kill()
+
+	# 2. Run the animation.
+	_tween = create_tween()
+	_tween.tween_property(_parent_control, "modulate:a", 0.0, 0.1)
+
+	# 3. Wait for it to finish, then unlock and restore the correct interactive state.
+	await _tween.finished
+	_is_locked = false
+	_update_animation_state()
 
 
 # --- Specific Animation Functions ---
