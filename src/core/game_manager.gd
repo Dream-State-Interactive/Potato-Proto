@@ -73,10 +73,12 @@ func _ready():
 func pause():
 	game_paused = true
 	get_tree().paused = true
+	GUI.show_pause_menu_backdrop()
 	
 func resume():
 	game_paused = false
 	get_tree().paused = false
+	GUI.hide_pause_menu_backdrop()
 	
 func quit():
 	get_tree().quit()

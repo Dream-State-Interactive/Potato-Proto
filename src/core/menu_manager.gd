@@ -20,40 +20,29 @@ func _ready():
 
 func pause():
 	if is_instance_valid(GameManager.player_instance):
-		print("PAUSE")
-		print(_menu_stack)
 		if _menu_stack.is_empty():
 			# If no other menus are open, show the pause menu.
 			# Using `replace_menu` ensures the stack starts clean.
 			GameManager.pause()
 			push_menu("res://src/ui/menus/pause_menu.tscn")
-		#elif active_menu == "res://src/ui/menus/pause_menu.tscn":
-			#resume()
 		else:
-			print("BACK")
 			back()
 	else:
 		if _menu_stack.size() > 1:
 			back()
 
 func resume():
-	print("RESUME")
-	# Step 1: Check if a menu needs to be closed.
 	clear_history()
-
-	# Step 2: ALWAYS resume the game.
 	GameManager.resume()
 		
 func push_menu(menu_path: String):
 	_menu_stack.push_back(menu_path)
 	show_menu_requested.emit(active_menu) # SIGNAL (rc/core/gui_manager.gd)
 	#show_current_menu()
-	#pass
 	
 func replace_menu(menu_path: String):
 	clear_history()
 	push_menu(menu_path)
-	#pass
 	
 func back():
 	if not _menu_stack.is_empty():

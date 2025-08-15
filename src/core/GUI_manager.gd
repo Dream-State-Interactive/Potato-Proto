@@ -6,10 +6,12 @@ class_name GameGUI
 const HUD = preload("res://src/ui/hud/hud.tscn")
 const LEVEL_UP_MENU = preload("res://src/ui/menus/level_up_menu.tscn")
 
-@onready var menu_container: Control = $MenuContainer
-
+@onready var GUI_root = $"."
+@onready var menu_container: CanvasLayer = $MenuContainer
+@onready var menu_backdrop_container: CanvasLayer = $MenuBackdropContainer
 var hud_instance: CanvasLayer 
 var level_up_menu_instance: CanvasLayer
+var _overlay: ColorRect
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -56,7 +58,6 @@ func _unhandled_input(event: InputEvent):
 		toggle_level_up_menu()
 		get_viewport().set_input_as_handled()
 
-
 func toggle_level_up_menu():
 	# Prevent level_up_menu from being opened in Main Menu.
 	if not is_instance_valid(GameManager.player_instance) or not GameManager.player_stats:
@@ -78,6 +79,32 @@ func toggle_level_up_menu():
 		# Reset keyboard focus on menu open
 		await get_tree().process_frame
 		level_up_menu_instance.set_initial_focus()
+
+func show_pause_menu_backdrop():
+	if _overlay and is_instance_valid(_overlay):
+		return
+	_overlay = ColorRect.new()
+	_overlay.color = Color(0.07, 0.07, 0.07, 0.60)
+	_overlay.process_mode = Node.PROCESS_MODE_ALWAYS
+	_overlay.mouse_filter = Control.MOUSE_FILTER_STOP  # swallows clicks
+	_overlay.z_index = 0
+
+	# Make it fill the screen
+	_overlay.anchor_left = 0
+	_overlay.anchor_top = 0
+	_overlay.anchor_right = 1
+	_overlay.anchor_bottom = 1
+	_overlay.offset_left = 0
+	_overlay.offset_top = 0
+	_overlay.offset_right = 0
+	_overlay.offset_bottom = 0
+
+	menu_backdrop_container.add_child(_overlay)
+
+func hide_pause_menu_backdrop():
+	if _overlay and is_instance_valid(_overlay):
+		_overlay.queue_free()
+		_overlay = null
 
 
 # --- Signals ---

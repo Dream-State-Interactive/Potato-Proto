@@ -5,8 +5,8 @@
 [node name="Gui" type="CanvasLayer"]
 script = ExtResource("1_2dyeh")
 
-[node name="MenuContainer" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="MenuContainer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="MenuBackdropContainer" type="CanvasLayer" parent="."]
+layer = 0
