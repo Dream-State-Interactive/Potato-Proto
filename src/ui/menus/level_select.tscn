@@ -50,6 +50,7 @@ size_flags_horizontal = 4
 theme_override_constants/outline_size = 22
 theme_override_font_sizes/font_size = 55
 text = "Level 2"
+metadata/destination = "res://src/modes/gauntlet/world.tscn"
 
 [node name="Level 3" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_aal82")]
 layout_mode = 2
