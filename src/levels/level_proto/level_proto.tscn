@@ -213,7 +213,7 @@ width = 192.0
 height = 32.0
 
 [node name="Path2D" type="Path2D" parent="Water"]
-curve = SubResource("Curve2D_kgnui")
+curve = SubResource("Curve2D_3a0g3")
 
 [node name="Polygon2D" type="Polygon2D" parent="Water"]
 color = Color(0.301961, 0.447059, 0.831373, 0.8)
@@ -683,7 +683,7 @@ water_linear_damp = 4.0
 water_angular_damp = 6.0
 
 [node name="Path2D" type="Path2D" parent="Water2"]
-curve = SubResource("Curve2D_m837d")
+curve = SubResource("Curve2D_30ms5")
 
 [node name="Polygon2D" type="Polygon2D" parent="Water2"]
 color = Color(0.249541, 0.535878, 0.438301, 0.8)
