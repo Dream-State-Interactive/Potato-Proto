@@ -460,7 +460,7 @@ func add_starch(amount: int):
 # This is connected to the HealthComponent's 'died' signal.
 func _on_died():
 	print("Player has died!")
-	queue_free() # Destroy the player node.
+	SceneLoader.reload_current_scene()
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
 # It ensures the player's physics properties match the current StatBlock resource.
