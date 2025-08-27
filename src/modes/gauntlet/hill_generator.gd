@@ -2,6 +2,9 @@
 @tool
 extends Node2D
 
+const SPAWN_STARCH_POINTS_EVERY_N_POINTS = 3
+const STARCH_POINT = preload("res://src/collectibles/starch_point.tscn")
+
 func generate_hill(params: Dictionary) -> Dictionary:
 	var hill = Node2D.new()
 	hill.name = "HillContainer"
@@ -44,6 +47,15 @@ func generate_hill(params: Dictionary) -> Dictionary:
 
 	# The collision polygon only needs the top surface points.
 	collision_polygon.polygon = points
+	
+	var i = 0
+	for point in points:
+		if i % SPAWN_STARCH_POINTS_EVERY_N_POINTS == 0:
+			var starch = STARCH_POINT.instantiate()
+			hill.add_child(starch)
+			starch.position = point
+			starch.position.y -= 100
+		i += 1
 
 	ground_body.add_child(collision_polygon)
 	hill.add_child(visual_polygon)

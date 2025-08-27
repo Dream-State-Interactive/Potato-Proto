@@ -1,6 +1,7 @@
 # src/collectibles/starch_point.gd
 @tool
-class_name StarchPoint extends Collectible
+class_name StarchPoint
+extends Collectible
 
 @export var starch_value: int = 10
 @export var pickup_sound: AudioStream
