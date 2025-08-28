@@ -2,6 +2,8 @@
 @tool
 extends Node2D
 
+const BOX_MASS = 1
+
 func generate_obstacle(complexity: int) -> Dictionary:
 	var obstacle_area = Node2D.new()
 	obstacle_area.name = "Obstacle"
@@ -34,7 +36,7 @@ func generate_obstacle(complexity: int) -> Dictionary:
 	var previous_box = null
 	for i in range(complexity):
 		var box = RigidBody2D.new()
-		box.mass = 2.0
+		box.mass = BOX_MASS
 		var box_shape = CollisionShape2D.new()
 		var box_rect = RectangleShape2D.new()
 		box_rect.size = Vector2(40, 40)

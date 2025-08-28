@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://benqvi8jf1a3v"]
+[gd_scene load_steps=6 format=3 uid="uid://benqvi8jf1a3v"]
 
 [ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="1_1wsu8"]
+[ext_resource type="FontFile" uid="uid://dmjdhsomc3fwp" path="res://assets/fonts/Coopers Town.otf" id="2_cpm4x"]
 [ext_resource type="Texture2D" uid="uid://bcd8k243yithf" path="res://assets/graphics/ui/panel.png" id="2_pv7ps"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qn7c4"]
@@ -37,7 +38,28 @@ layout_mode = 2
 
 [node name="StarchLabel" type="Label" parent="TopLeft_VBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_cpm4x")
+theme_override_font_sizes/font_size = 40
 text = "Starch: 0"
+
+[node name="SpeedLabel" type="Label" parent="TopLeft_VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_cpm4x")
+theme_override_font_sizes/font_size = 40
+
+[node name="FPSLabel" type="Label" parent="TopLeft_VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_cpm4x")
+theme_override_font_sizes/font_size = 40
 
 [node name="BottomRight_HBox" type="HBoxContainer" parent="."]
 anchors_preset = 3

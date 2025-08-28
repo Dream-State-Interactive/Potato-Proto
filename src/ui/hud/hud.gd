@@ -7,6 +7,10 @@ extends CanvasLayer
 @onready var ability1_cooldown_bar: ProgressBar = $BottomRight_HBox/Ability1_Icon/Ability1_CooldownBar
 @onready var ability2_cooldown_bar: ProgressBar = $BottomRight_HBox/Ability2_Icon/Ability2_CooldownBar
 
+var speed
+var FPS
+const SPEED_NORMALIZER = 100
+
 # --- Godot Functions ---
 func _ready():
 	# Configure progress bars for the 0.0-1.0 signal from the ability
@@ -21,6 +25,13 @@ func _ready():
 # --- Public API (Functions called from outside) ---
 # These functions are now guaranteed to be safe because they will only
 # be connected by the GameManager AFTER _ready() has fully completed.
+
+func _process(delta: float) -> void:
+	FPS = 1/delta
+	$TopLeft_VBox/FPSLabel.text = str("FPS: " + str(int(FPS)))
+	if GameManager.is_player_active():
+		speed = int(GameManager.player_instance.linear_velocity.length() / SPEED_NORMALIZER)
+		$TopLeft_VBox/SpeedLabel.text = (str(int(speed)) + " MPH")
 
 func connect_to_game_manager_signals():
 	print("HUD: Connecting to GameManager & Player signals.")
