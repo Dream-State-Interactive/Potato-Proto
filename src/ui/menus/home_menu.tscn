@@ -26,7 +26,7 @@ size_flags_horizontal = 4
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 49
 text = "Play"
-metadata/destination = "res://src/levels/level_proto/level_proto.tscn"
+metadata/destination = "res://src/modes/gauntlet/world.tscn"
 
 [node name="StandardButtonSaveLoad" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
 layout_mode = 2
