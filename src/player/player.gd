@@ -475,7 +475,9 @@ func apply_stats_from_resource():
 	
 	if grip_component:
 		grip_component.grip_strength = stats.grip
-	
+		
+	jump_strength = stats.jump_force
+
 	print("Player stats have been reapplied. New Grip value: ", stats.grip)
 
 # Loads a new ability scene into one of the designated slots.

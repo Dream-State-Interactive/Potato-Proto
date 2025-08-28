@@ -214,9 +214,7 @@ func is_item_collected(id: String) -> bool:
 	return false
 	
 func is_player_active() -> bool:
-	print("PLAYER ACTIVE: " + str(player_instance != null))
 	return player_instance != null
-
 
 # --- Game Logic Functions ---
 ## This is a "setter" function. It's the one safe way to change starch points.

@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_uqmvm")
 stat_identifier = "jump_force"
-upgrade_value = 500.0
+upgrade_value = 25.0
 base_cost = 150
-cost_increase_per_level = 100
+cost_increase_per_level = 75
