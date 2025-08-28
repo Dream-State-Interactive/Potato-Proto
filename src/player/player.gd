@@ -318,7 +318,7 @@ func _physics_process(_delta: float):
 		
 		# Reset vertical velocity for a consistent jump height.
 		linear_velocity.y = 0
-		apply_central_impulse(Vector2.UP * stats.jump_force)
+		apply_central_impulse(Vector2.UP * stats.jump_force * 20)
 		
 		_is_gripping = false # Ensure grip is broken immediately on jump.
 

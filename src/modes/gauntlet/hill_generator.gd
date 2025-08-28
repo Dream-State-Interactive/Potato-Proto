@@ -46,7 +46,7 @@ func generate_hill(params: Dictionary) -> Dictionary:
 	visual_polygon.color = params.get("color", Color.DARK_GREEN)
 
 	# The collision polygon only needs the top surface points.
-	collision_polygon.polygon = points
+	collision_polygon.polygon = filled_points
 	
 	var i = 0
 	for point in points:
