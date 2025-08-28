@@ -212,6 +212,10 @@ func is_item_collected(id: String) -> bool:
 	if not id.is_empty():
 		return collected_items.has(id)
 	return false
+	
+func is_player_active() -> bool:
+	print("PLAYER ACTIVE: " + str(player_instance != null))
+	return player_instance != null
 
 
 # --- Game Logic Functions ---

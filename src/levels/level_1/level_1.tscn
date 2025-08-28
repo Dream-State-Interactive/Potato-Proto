@@ -1,15 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://dathi73lenpye"]
 
-[ext_resource type="PackedScene" uid="uid://dkw86e8mfcgdq" path="res://src/player/player.tscn" id="2_nhoea"]
+[ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="2_ccbt2"]
 [ext_resource type="PackedScene" uid="uid://cg5no13kqh8hv" path="res://src/collectibles/starch_point.tscn" id="2_oq7c4"]
 
 [node name="Level1" type="Node2D"]
 
 [node name="EndMarker" type="Marker2D" parent="."]
 position = Vector2(42180, 1668)
-
-[node name="Player" parent="." instance=ExtResource("2_nhoea")]
-position = Vector2(327, 78)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(719, 334)
@@ -84,482 +81,482 @@ polygon = PackedVector2Array(465, 394, 10367.3, 365.168, 10370.5, 492.126, 471, 
 
 [node name="StarchPoint" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.07876, 1.07876)
+scale = Vector2(0.908407, 0.908407)
 unique_id = "67d73c24cfb315532ad348c57950b689"
 
 [node name="StarchPoint2" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.03652, 1.03652)
+scale = Vector2(1.09976, 1.09976)
 unique_id = "50ca180b36361e3428d68440ae8d0ec5"
 
 [node name="StarchPoint3" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.08262, 1.08262)
+scale = Vector2(0.918674, 0.918674)
 unique_id = "5be30f732e9cd1d01fcbf5d5552f7831"
 
 [node name="StarchPoint4" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.07642, 1.07642)
+scale = Vector2(0.97927, 0.97927)
 unique_id = "181c54f1c7202cc05d74d658762bcb26"
 
 [node name="StarchPoint5" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.976261, 0.976261)
+scale = Vector2(0.991014, 0.991014)
 unique_id = "8c3f5b31b882b4ecfc1f24a263f47a77"
 
 [node name="StarchPoint6" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.914227, 0.914227)
+scale = Vector2(1.04367, 1.04367)
 unique_id = "4ae3b44eb0bd20982b8fe17111afbe30"
 
 [node name="StarchPoint7" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.985959, 0.985959)
+scale = Vector2(0.941874, 0.941874)
 unique_id = "58e683f95cf8786e8d68132d6c5b4208"
 
 [node name="StarchPoint8" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.06201, 1.06201)
+scale = Vector2(0.900058, 0.900058)
 unique_id = "2dd1fca2ba7ac1dadb504f5007cf870c"
 
 [node name="StarchPoint9" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.07579, 1.07579)
+scale = Vector2(0.943072, 0.943072)
 unique_id = "a09cf28b03754ee8e73cd986c303fd7f"
 
 [node name="StarchPoint10" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09573, 1.09573)
+scale = Vector2(1.03351, 1.03351)
 unique_id = "5b768018c973922e0952315a14606939"
 
 [node name="StarchPoint11" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.996649, 0.996649)
+scale = Vector2(1.07883, 1.07883)
 unique_id = "a6df6f63c1a17a6cec72350b8c5304aa"
 
 [node name="StarchPoint12" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09533, 1.09533)
+scale = Vector2(1.05647, 1.05647)
 unique_id = "91da069ef251f9f7e0335d4b64ebcf3b"
 
 [node name="StarchPoint13" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.902962, 0.902962)
+scale = Vector2(1.02776, 1.02776)
 unique_id = "aee6234be07a80673b4755d4527cff54"
 
 [node name="StarchPoint14" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.900754, 0.900754)
+scale = Vector2(0.912351, 0.912351)
 unique_id = "b6d13e0b72b17cc2265ea814afa6741c"
 
 [node name="StarchPoint15" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.00532, 1.00532)
+scale = Vector2(1.02336, 1.02336)
 unique_id = "aea7d998df9d05b35260c72e8389d17a"
 
 [node name="StarchPoint16" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.07933, 1.07933)
+scale = Vector2(0.962138, 0.962138)
 unique_id = "628a26aa6f5afb7b0d8a4306f258b5ce"
 
 [node name="StarchPoint17" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.02564, 1.02564)
+scale = Vector2(0.932353, 0.932353)
 unique_id = "900fed8f443612b9453a0bcce0c2275d"
 
 [node name="StarchPoint18" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.970631, 0.970631)
+scale = Vector2(0.900235, 0.900235)
 unique_id = "b45c9db1fd92b018416d3c683ebce390"
 
 [node name="StarchPoint19" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.940666, 0.940666)
+scale = Vector2(1.06772, 1.06772)
 unique_id = "088ec97288d9a1ba8a8c9dccc9a0d4bf"
 
 [node name="StarchPoint20" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.900012, 0.900012)
+scale = Vector2(1.06905, 1.06905)
 unique_id = "5cb90c38d9e7b95523b4ce6ef843a072"
 
 [node name="StarchPoint21" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.0225, 1.0225)
+scale = Vector2(1.0802, 1.0802)
 unique_id = "6c5f9bc5c629c3c7c99cfa5582cb410d"
 
 [node name="StarchPoint22" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.995874, 0.995874)
+scale = Vector2(0.965898, 0.965898)
 unique_id = "a353cd474d9012ec6e584c5859737fbe"
 
 [node name="StarchPoint23" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.927706, 0.927706)
+scale = Vector2(0.911964, 0.911964)
 unique_id = "ae80f9f010b0ccc259329ecb5ef7e63b"
 
 [node name="StarchPoint24" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.938122, 0.938122)
+scale = Vector2(1.09991, 1.09991)
 unique_id = "f45b48a69426f68671d770fde682b019"
 
 [node name="StarchPoint25" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.08762, 1.08762)
+scale = Vector2(1.04599, 1.04599)
 unique_id = "67d73c24cfb315532ad348c57950b689"
 
 [node name="StarchPoint26" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.900002, 0.900002)
+scale = Vector2(1.05397, 1.05397)
 unique_id = "50ca180b36361e3428d68440ae8d0ec5"
 
 [node name="StarchPoint27" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.0878, 1.0878)
+scale = Vector2(1.00104, 1.00104)
 unique_id = "5be30f732e9cd1d01fcbf5d5552f7831"
 
 [node name="StarchPoint28" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.0982, 1.0982)
+scale = Vector2(1.06807, 1.06807)
 unique_id = "181c54f1c7202cc05d74d658762bcb26"
 
 [node name="StarchPoint29" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.02512, 1.02512)
+scale = Vector2(1.09908, 1.09908)
 unique_id = "8c3f5b31b882b4ecfc1f24a263f47a77"
 
 [node name="StarchPoint30" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.908843, 0.908843)
+scale = Vector2(0.925983, 0.925983)
 unique_id = "4ae3b44eb0bd20982b8fe17111afbe30"
 
 [node name="StarchPoint31" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.932843, 0.932843)
+scale = Vector2(1.08775, 1.08775)
 unique_id = "58e683f95cf8786e8d68132d6c5b4208"
 
 [node name="StarchPoint32" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.900285, 0.900285)
+scale = Vector2(1.09867, 1.09867)
 unique_id = "2dd1fca2ba7ac1dadb504f5007cf870c"
 
 [node name="StarchPoint33" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09806, 1.09806)
+scale = Vector2(0.95169, 0.95169)
 unique_id = "a09cf28b03754ee8e73cd986c303fd7f"
 
 [node name="StarchPoint34" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.08858, 1.08858)
+scale = Vector2(0.900671, 0.900671)
 unique_id = "5b768018c973922e0952315a14606939"
 
 [node name="StarchPoint35" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09482, 1.09482)
+scale = Vector2(1.08911, 1.08911)
 unique_id = "a6df6f63c1a17a6cec72350b8c5304aa"
 
 [node name="StarchPoint36" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.06768, 1.06768)
+scale = Vector2(0.976651, 0.976651)
 unique_id = "91da069ef251f9f7e0335d4b64ebcf3b"
 
 [node name="StarchPoint37" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.972826, 0.972826)
+scale = Vector2(1.08002, 1.08002)
 unique_id = "aee6234be07a80673b4755d4527cff54"
 
 [node name="StarchPoint38" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09752, 1.09752)
+scale = Vector2(0.911564, 0.911564)
 unique_id = "b6d13e0b72b17cc2265ea814afa6741c"
 
 [node name="StarchPoint39" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.03041, 1.03041)
+scale = Vector2(1.09484, 1.09484)
 unique_id = "aea7d998df9d05b35260c72e8389d17a"
 
 [node name="StarchPoint40" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.965051, 0.965051)
+scale = Vector2(0.941316, 0.941316)
 unique_id = "628a26aa6f5afb7b0d8a4306f258b5ce"
 
 [node name="StarchPoint41" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.954016, 0.954016)
+scale = Vector2(0.924849, 0.924849)
 unique_id = "900fed8f443612b9453a0bcce0c2275d"
 
 [node name="StarchPoint42" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.06479, 1.06479)
+scale = Vector2(0.9163, 0.9163)
 unique_id = "b45c9db1fd92b018416d3c683ebce390"
 
 [node name="StarchPoint43" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09798, 1.09798)
+scale = Vector2(1.08487, 1.08487)
 unique_id = "088ec97288d9a1ba8a8c9dccc9a0d4bf"
 
 [node name="StarchPoint44" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09706, 1.09706)
+scale = Vector2(1.02483, 1.02483)
 unique_id = "5cb90c38d9e7b95523b4ce6ef843a072"
 
 [node name="StarchPoint45" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.952147, 0.952147)
+scale = Vector2(0.939309, 0.939309)
 unique_id = "6c5f9bc5c629c3c7c99cfa5582cb410d"
 
 [node name="StarchPoint46" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.05292, 1.05292)
+scale = Vector2(0.910932, 0.910932)
 unique_id = "a353cd474d9012ec6e584c5859737fbe"
 
 [node name="StarchPoint47" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.900204, 0.900204)
+scale = Vector2(1.09681, 1.09681)
 unique_id = "ae80f9f010b0ccc259329ecb5ef7e63b"
 
 [node name="StarchPoint48" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.08104, 1.08104)
+scale = Vector2(1.098, 1.098)
 unique_id = "f45b48a69426f68671d770fde682b019"
 
 [node name="StarchPoint49" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.00479, 1.00479)
+scale = Vector2(1.06708, 1.06708)
 unique_id = "67d73c24cfb315532ad348c57950b689"
 
 [node name="StarchPoint50" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.909958, 0.909958)
+scale = Vector2(1.09984, 1.09984)
 unique_id = "50ca180b36361e3428d68440ae8d0ec5"
 
 [node name="StarchPoint51" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.926128, 0.926128)
+scale = Vector2(0.928257, 0.928257)
 unique_id = "5be30f732e9cd1d01fcbf5d5552f7831"
 
 [node name="StarchPoint52" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.983855, 0.983855)
+scale = Vector2(1.06195, 1.06195)
 unique_id = "181c54f1c7202cc05d74d658762bcb26"
 
 [node name="StarchPoint53" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.918579, 0.918579)
+scale = Vector2(0.982167, 0.982167)
 unique_id = "8c3f5b31b882b4ecfc1f24a263f47a77"
 
 [node name="StarchPoint54" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09239, 1.09239)
+scale = Vector2(0.944825, 0.944825)
 unique_id = "4ae3b44eb0bd20982b8fe17111afbe30"
 
 [node name="StarchPoint55" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.08561, 1.08561)
+scale = Vector2(1.06704, 1.06704)
 unique_id = "58e683f95cf8786e8d68132d6c5b4208"
 
 [node name="StarchPoint56" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.945869, 0.945869)
+scale = Vector2(0.929784, 0.929784)
 unique_id = "2dd1fca2ba7ac1dadb504f5007cf870c"
 
 [node name="StarchPoint57" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.01906, 1.01906)
+scale = Vector2(1.05174, 1.05174)
 unique_id = "a09cf28b03754ee8e73cd986c303fd7f"
 
 [node name="StarchPoint58" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09032, 1.09032)
+scale = Vector2(0.904194, 0.904194)
 unique_id = "5b768018c973922e0952315a14606939"
 
 [node name="StarchPoint59" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09983, 1.09983)
+scale = Vector2(0.926582, 0.926582)
 unique_id = "a6df6f63c1a17a6cec72350b8c5304aa"
 
 [node name="StarchPoint60" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.957058, 0.957058)
+scale = Vector2(0.910959, 0.910959)
 unique_id = "91da069ef251f9f7e0335d4b64ebcf3b"
 
 [node name="StarchPoint61" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.926597, 0.926597)
+scale = Vector2(0.900064, 0.900064)
 unique_id = "aee6234be07a80673b4755d4527cff54"
 
 [node name="StarchPoint62" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.981749, 0.981749)
+scale = Vector2(0.92169, 0.92169)
 unique_id = "b6d13e0b72b17cc2265ea814afa6741c"
 
 [node name="StarchPoint63" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.902382, 0.902382)
+scale = Vector2(1.00248, 1.00248)
 unique_id = "aea7d998df9d05b35260c72e8389d17a"
 
 [node name="StarchPoint64" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09596, 1.09596)
+scale = Vector2(0.968792, 0.968792)
 unique_id = "628a26aa6f5afb7b0d8a4306f258b5ce"
 
 [node name="StarchPoint65" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.06089, 1.06089)
+scale = Vector2(0.970668, 0.970668)
 unique_id = "900fed8f443612b9453a0bcce0c2275d"
 
 [node name="StarchPoint66" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09766, 1.09766)
+scale = Vector2(0.940406, 0.940406)
 unique_id = "b45c9db1fd92b018416d3c683ebce390"
 
 [node name="StarchPoint67" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.06049, 1.06049)
+scale = Vector2(1.04725, 1.04725)
 unique_id = "088ec97288d9a1ba8a8c9dccc9a0d4bf"
 
 [node name="StarchPoint68" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.02815, 1.02815)
+scale = Vector2(1.08096, 1.08096)
 unique_id = "5cb90c38d9e7b95523b4ce6ef843a072"
 
 [node name="StarchPoint69" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.05555, 1.05555)
+scale = Vector2(0.983095, 0.983095)
 unique_id = "6c5f9bc5c629c3c7c99cfa5582cb410d"
 
 [node name="StarchPoint70" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.9, 0.9)
+scale = Vector2(1.09951, 1.09951)
 unique_id = "a353cd474d9012ec6e584c5859737fbe"
 
 [node name="StarchPoint71" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(1.09155, 1.09155)
+scale = Vector2(0.916924, 0.916924)
 unique_id = "ae80f9f010b0ccc259329ecb5ef7e63b"
 
 [node name="StarchPoint72" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 146)
-scale = Vector2(0.996058, 0.996058)
+scale = Vector2(1.08036, 1.08036)
 unique_id = "f45b48a69426f68671d770fde682b019"
 
 [node name="StarchPoint73" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.906244, 0.906244)
+scale = Vector2(1.09206, 1.09206)
 unique_id = "67d73c24cfb315532ad348c57950b689"
 
 [node name="StarchPoint74" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.946964, 0.946964)
+scale = Vector2(1.02417, 1.02417)
 unique_id = "50ca180b36361e3428d68440ae8d0ec5"
 
 [node name="StarchPoint75" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.998962, 0.998962)
+scale = Vector2(0.928611, 0.928611)
 unique_id = "5be30f732e9cd1d01fcbf5d5552f7831"
 
 [node name="StarchPoint76" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09775, 1.09775)
+scale = Vector2(1.0528, 1.0528)
 unique_id = "181c54f1c7202cc05d74d658762bcb26"
 
 [node name="StarchPoint77" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.04949, 1.04949)
+scale = Vector2(0.900005, 0.900005)
 unique_id = "8c3f5b31b882b4ecfc1f24a263f47a77"
 
 [node name="StarchPoint78" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.900678, 0.900678)
+scale = Vector2(0.909442, 0.909442)
 unique_id = "4ae3b44eb0bd20982b8fe17111afbe30"
 
 [node name="StarchPoint79" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.05951, 1.05951)
+scale = Vector2(1.07113, 1.07113)
 unique_id = "58e683f95cf8786e8d68132d6c5b4208"
 
 [node name="StarchPoint80" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.974681, 0.974681)
+scale = Vector2(1.06651, 1.06651)
 unique_id = "2dd1fca2ba7ac1dadb504f5007cf870c"
 
 [node name="StarchPoint81" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.02764, 1.02764)
+scale = Vector2(0.943659, 0.943659)
 unique_id = "a09cf28b03754ee8e73cd986c303fd7f"
 
 [node name="StarchPoint82" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.923754, 0.923754)
+scale = Vector2(1.04987, 1.04987)
 unique_id = "5b768018c973922e0952315a14606939"
 
 [node name="StarchPoint83" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.04264, 1.04264)
+scale = Vector2(0.901713, 0.901713)
 unique_id = "a6df6f63c1a17a6cec72350b8c5304aa"
 
 [node name="StarchPoint84" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.98275, 0.98275)
+scale = Vector2(1.0525, 1.0525)
 unique_id = "91da069ef251f9f7e0335d4b64ebcf3b"
 
 [node name="StarchPoint85" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09906, 1.09906)
+scale = Vector2(1.08975, 1.08975)
 unique_id = "aee6234be07a80673b4755d4527cff54"
 
 [node name="StarchPoint86" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09125, 1.09125)
+scale = Vector2(1.04556, 1.04556)
 unique_id = "b6d13e0b72b17cc2265ea814afa6741c"
 
 [node name="StarchPoint87" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.0843, 1.0843)
+scale = Vector2(1.09912, 1.09912)
 unique_id = "aea7d998df9d05b35260c72e8389d17a"
 
 [node name="StarchPoint88" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.939266, 0.939266)
+scale = Vector2(0.988729, 0.988729)
 unique_id = "628a26aa6f5afb7b0d8a4306f258b5ce"
 
 [node name="StarchPoint89" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.909903, 0.909903)
+scale = Vector2(1.0606, 1.0606)
 unique_id = "900fed8f443612b9453a0bcce0c2275d"
 
 [node name="StarchPoint90" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.913193, 0.913193)
+scale = Vector2(1.05281, 1.05281)
 unique_id = "b45c9db1fd92b018416d3c683ebce390"
 
 [node name="StarchPoint91" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.00693, 1.00693)
+scale = Vector2(1.01974, 1.01974)
 unique_id = "088ec97288d9a1ba8a8c9dccc9a0d4bf"
 
 [node name="StarchPoint92" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.912476, 0.912476)
+scale = Vector2(1.09999, 1.09999)
 unique_id = "5cb90c38d9e7b95523b4ce6ef843a072"
 
 [node name="StarchPoint93" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.926242, 0.926242)
+scale = Vector2(0.981096, 0.981096)
 unique_id = "6c5f9bc5c629c3c7c99cfa5582cb410d"
 
 [node name="StarchPoint94" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(0.975261, 0.975261)
+scale = Vector2(1.03327, 1.03327)
 unique_id = "a353cd474d9012ec6e584c5859737fbe"
 
 [node name="StarchPoint95" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.09876, 1.09876)
+scale = Vector2(1.09095, 1.09095)
 unique_id = "ae80f9f010b0ccc259329ecb5ef7e63b"
 
 [node name="StarchPoint96" parent="." instance=ExtResource("2_oq7c4")]
 position = Vector2(765, 149)
-scale = Vector2(1.04846, 1.04846)
+scale = Vector2(1.0751, 1.0751)
 unique_id = "f45b48a69426f68671d770fde682b019"
 
 [node name="StaticBody2D7" type="StaticBody2D" parent="."]
@@ -609,3 +606,6 @@ polygon = PackedVector2Array(465, 394, 10367.3, 365.168, 10370.5, 492.126, 471, 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D10"]
 position = Vector2(-839.6, -461.3)
 polygon = PackedVector2Array(465, 394, 10367.3, 365.168, 10370.5, 492.126, 471, 517)
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("2_ccbt2")]
+position = Vector2(371, 81)

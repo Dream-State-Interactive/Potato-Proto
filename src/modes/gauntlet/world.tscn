@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dathi73lenpye" path="res://src/levels/level_1/level_1.tscn" id="3_vl8ep"]
 [ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="4_4wyg8"]
 [ext_resource type="Script" path="res://src/modes/gauntlet/obstacle_generator.gd" id="4_e8qkv"]
-[ext_resource type="PackedScene" uid="uid://dkw86e8mfcgdq" path="res://src/player/player.tscn" id="5_h5oua"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="9_0gcb4"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="10_c68oe"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/skyscale.gd" id="11_naj30"]
@@ -18,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/graphics/textures/env/proto_clouds_01_B.png" id="16_8sedu"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/graphics/textures/env/proto_bg_hills_01.png" id="17_1hrms"]
 [ext_resource type="Script" path="res://tools/ParallaxBackground/groundscale.gd" id="18_552qs"]
+[ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="18_aclwq"]
 
 [sub_resource type="Resource" id="Resource_o0cro"]
 script = ExtResource("2_3yl0h")
@@ -44,7 +44,6 @@ shader_parameter/uv_offset_x = 0.0
 [node name="LevelGenerator" type="Node2D" parent="."]
 script = ExtResource("2_epjwl")
 max_active_segments = 5
-player_path = NodePath("../Player")
 special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
@@ -60,10 +59,6 @@ script = ExtResource("4_e8qkv")
 script = SubResource("GDScript_4ied8")
 
 [node name="SpecialGenerator" type="Node2D" parent="LevelGenerator"]
-
-[node name="Player" parent="." instance=ExtResource("5_h5oua")]
-
-position = Vector2(1194, -1987)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
 scroll_ignore_camera_zoom = true
@@ -163,3 +158,5 @@ texture = ExtResource("17_1hrms")
 offset = Vector2(512, 0)
 script = ExtResource("18_552qs")
 
+[node name="PlayerSpawn" parent="." instance=ExtResource("18_aclwq")]
+position = Vector2(197, -99)
