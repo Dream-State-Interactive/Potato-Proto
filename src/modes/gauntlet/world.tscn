@@ -30,9 +30,7 @@ script/source = "extends Node2D
 [node name="LevelGenerator" type="Node2D" parent="."]
 script = ExtResource("2_epjwl")
 max_active_segments = 5
-runtime_bootstrap_segments = null
-player_path = null
-cull_margin_px = null
+player_path = NodePath("../Player")
 special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
@@ -50,4 +48,4 @@ script = SubResource("GDScript_4ied8")
 [node name="SpecialGenerator" type="Node2D" parent="LevelGenerator"]
 
 [node name="Player" parent="." instance=ExtResource("5_h5oua")]
-position = Vector2(2182, -2032)
+position = Vector2(1194, -1987)
