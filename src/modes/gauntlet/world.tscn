@@ -1,10 +1,25 @@
-[gd_scene load_steps=7 format=3 uid="uid://c42sfrnl684n0"]
+[gd_scene load_steps=12 format=3 uid="uid://c42sfrnl684n0"]
 
+[ext_resource type="Script" path="res://src/modes/gauntlet/special_segment_config.gd" id="2_3yl0h"]
 [ext_resource type="Script" path="res://src/modes/gauntlet/level_generator.gd" id="2_epjwl"]
 [ext_resource type="Script" path="res://src/modes/gauntlet/hill_generator.gd" id="2_ow8bn"]
 [ext_resource type="Script" path="res://src/modes/gauntlet/hazard_generator.gd" id="3_k2vux"]
+[ext_resource type="PackedScene" uid="uid://dathi73lenpye" path="res://src/levels/level_1/level_1.tscn" id="3_vl8ep"]
+[ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="4_4wyg8"]
 [ext_resource type="Script" path="res://src/modes/gauntlet/obstacle_generator.gd" id="4_e8qkv"]
 [ext_resource type="PackedScene" uid="uid://dkw86e8mfcgdq" path="res://src/player/player.tscn" id="5_h5oua"]
+
+[sub_resource type="Resource" id="Resource_o0cro"]
+script = ExtResource("2_3yl0h")
+scene = ExtResource("3_vl8ep")
+number_of_hills_required = 10
+number_of_times_to_repeat = 1
+
+[sub_resource type="Resource" id="Resource_uj73j"]
+script = ExtResource("2_3yl0h")
+scene = ExtResource("4_4wyg8")
+number_of_hills_required = 20
+number_of_times_to_repeat = 1
 
 [sub_resource type="GDScript" id="GDScript_4ied8"]
 script/source = "extends Node2D
@@ -15,6 +30,10 @@ script/source = "extends Node2D
 [node name="LevelGenerator" type="Node2D" parent="."]
 script = ExtResource("2_epjwl")
 max_active_segments = 5
+runtime_bootstrap_segments = null
+player_path = null
+cull_margin_px = null
+special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("2_ow8bn")
