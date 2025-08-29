@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c31vir1on6ec1"]
 
-[ext_resource type="Script" path="res://src/ui/menus/home_menu.gd" id="1_ui71n"]
+[ext_resource type="Script" uid="uid://ir6uv1adbdqx" path="res://src/ui/menus/home_menu.gd" id="1_ui71n"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_8wmdh"]
 
 [node name="HomeMenu" type="CanvasLayer"]

@@ -1,15 +1,15 @@
 [gd_scene load_steps=15 format=3 uid="uid://dkw86e8mfcgdq"]
 
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="1_h0bpx"]
-[ext_resource type="Script" path="res://src/player/player.gd" id="1_x7tc1"]
+[ext_resource type="Script" uid="uid://67jayabmj46" path="res://src/player/player.gd" id="1_x7tc1"]
 [ext_resource type="Texture2D" uid="uid://86main4wf7jk" path="res://assets/graphics/sprites/player/potato_skin.png" id="2_1icgn"]
-[ext_resource type="Shader" path="res://assets/Shaders/aging_shader.gdshader" id="2_hgswh"]
+[ext_resource type="Shader" uid="uid://dilg0ml58mu0p" path="res://assets/Shaders/aging_shader.gdshader" id="2_hgswh"]
 [ext_resource type="PackedScene" uid="uid://vr57o4egxbu" path="res://src/abilities/stop_on_a_fry.tscn" id="3_6ycsf"]
-[ext_resource type="Shader" path="res://assets/Shaders/peel_shader.gdshader" id="4_es8q4"]
+[ext_resource type="Shader" uid="uid://c3geqt2v3kreb" path="res://assets/Shaders/peel_shader.gdshader" id="4_es8q4"]
 [ext_resource type="PackedScene" uid="uid://dud168e6yjyca" path="res://src/abilities/extreme_torque.tscn" id="4_u11me"]
-[ext_resource type="Script" path="res://src/components/c_health.gd" id="6_7bv2p"]
-[ext_resource type="Script" path="res://src/components/c_zoom.gd" id="8_cd3gd"]
-[ext_resource type="Script" path="res://src/components/c_grip.gd" id="10_8vpk7"]
+[ext_resource type="Script" uid="uid://nng3pnetj0a7" path="res://src/components/c_health.gd" id="6_7bv2p"]
+[ext_resource type="Script" uid="uid://deujvpuq0vmjm" path="res://src/components/c_zoom.gd" id="8_cd3gd"]
+[ext_resource type="Script" uid="uid://df432kertbp3q" path="res://src/components/c_grip.gd" id="10_8vpk7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vodgh"]
 shader = ExtResource("2_hgswh")
@@ -18,7 +18,7 @@ shader_parameter/aged_color = Color(0.4, 0.3, 0.15, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hain8"]
 shader = ExtResource("4_es8q4")
-shader_parameter/hit_points = null
+shader_parameter/hit_points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 shader_parameter/hit_count = 0
 shader_parameter/peel_radius = 0.15
 

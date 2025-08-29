@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://mpxbenmev5la"]
 
-[ext_resource type="Script" path="res://src/components/c_hazard.gd" id="1_yxv8q"]
+[ext_resource type="Script" uid="uid://47i2sq5oe4q6" path="res://src/components/c_hazard.gd" id="1_yxv8q"]
 
 [node name="Knife" type="RigidBody2D"]
 collision_layer = 4

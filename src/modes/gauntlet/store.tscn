@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cu4qjv18u2cmk"]
 
 [ext_resource type="Texture2D" uid="uid://by37wolcjeyg0" path="res://assets/graphics/sprites/_dev/bustin.png" id="1_g6tey"]
-[ext_resource type="Script" path="res://src/modes/gauntlet/store_interaction.gd" id="2_2bjau"]
+[ext_resource type="Script" uid="uid://bpv1vn614w3y5" path="res://src/modes/gauntlet/store_interaction.gd" id="2_2bjau"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7re1"]
 radius = 270.59

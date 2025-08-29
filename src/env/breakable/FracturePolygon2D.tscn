@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cifnswa6rff4v"]
 
-[ext_resource type="Script" path="res://src/env/breakable/fracturable2D.gd" id="1_l5oy6"]
+[ext_resource type="Script" uid="uid://h37ukhahwn5k" path="res://src/env/breakable/fracturable2D.gd" id="1_l5oy6"]
 
 [node name="FracturePolygon2D" type="RigidBody2D"]
 contact_monitor = true

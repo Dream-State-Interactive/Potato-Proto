@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://c6sk8c8ivubu"]
 
-[ext_resource type="Script" path="res://src/ui/menus/level_select.gd" id="1_aqssb"]
+[ext_resource type="Script" uid="uid://dtqsgq73203bk" path="res://src/ui/menus/level_select.gd" id="1_aqssb"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_aal82"]
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="3_5j5hl"]
 [ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/Images/button.png" id="4_c0x5s"]
-[ext_resource type="Script" path="res://src/ui/components/standard_button.gd" id="5_2i7eo"]
-[ext_resource type="Script" path="res://src/components/c_gui_scale.gd" id="6_ligq2"]
+[ext_resource type="Script" uid="uid://ynr08875x7ad" path="res://src/ui/components/standard_button.gd" id="5_2i7eo"]
+[ext_resource type="Script" uid="uid://raghio163m0c" path="res://src/components/c_gui_scale.gd" id="6_ligq2"]
 
 [node name="LevelSelect" type="CanvasLayer"]
 layer = 6

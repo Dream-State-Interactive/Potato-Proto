@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://bmf5xebhmjeyv"]
 
-[ext_resource type="Script" path="res://src/ui/menus/save_load_menu.gd" id="1_b4yfc"]
+[ext_resource type="Script" uid="uid://becmcj8tpa4jx" path="res://src/ui/menus/save_load_menu.gd" id="1_b4yfc"]
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="2_08emj"]
 [ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/Images/button.png" id="3_dpk4f"]
-[ext_resource type="Script" path="res://src/ui/components/standard_button.gd" id="4_godmm"]
-[ext_resource type="Script" path="res://src/components/c_gui_scale.gd" id="5_vxdbw"]
+[ext_resource type="Script" uid="uid://ynr08875x7ad" path="res://src/ui/components/standard_button.gd" id="4_godmm"]
+[ext_resource type="Script" uid="uid://raghio163m0c" path="res://src/components/c_gui_scale.gd" id="5_vxdbw"]
 
 [node name="SaveLoadMenu" type="CanvasLayer"]
 process_mode = 3

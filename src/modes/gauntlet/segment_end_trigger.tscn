@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://sdhjlv2r3s06"]
 
-[ext_resource type="Script" path="res://src/modes/gauntlet/segment_end_trigger.gd" id="1_608wp"]
+[ext_resource type="Script" uid="uid://ba4wtv5hc0dkf" path="res://src/modes/gauntlet/segment_end_trigger.gd" id="1_608wp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2eoue"]
 size = Vector2(20, 10000)

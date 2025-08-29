@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://benqvi8jf1a3v"]
 
-[ext_resource type="Script" path="res://src/ui/hud/hud.gd" id="1_1wsu8"]
+[ext_resource type="Script" uid="uid://bs5iogpvifrxp" path="res://src/ui/hud/hud.gd" id="1_1wsu8"]
 [ext_resource type="FontFile" uid="uid://dmjdhsomc3fwp" path="res://assets/fonts/Coopers Town.otf" id="2_cpm4x"]
 [ext_resource type="Texture2D" uid="uid://bcd8k243yithf" path="res://assets/graphics/ui/panel.png" id="2_pv7ps"]
 

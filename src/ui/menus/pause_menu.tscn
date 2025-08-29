@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bw5rd3vkqwpk4"]
 
-[ext_resource type="Script" path="res://src/ui/menus/pause_menu.gd" id="1_fc8qa"]
+[ext_resource type="Script" uid="uid://dv4bjgsd5skgk" path="res://src/ui/menus/pause_menu.gd" id="1_fc8qa"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_swutv"]
 
 [node name="PauseMenu" type="CanvasLayer"]

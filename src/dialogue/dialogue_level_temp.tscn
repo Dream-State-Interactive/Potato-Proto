@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="1_y6coa"]
 [ext_resource type="PackedScene" uid="uid://dkw86e8mfcgdq" path="res://src/player/player.tscn" id="2_h211x"]
-[ext_resource type="Script" path="res://src/dialogue/dialogue_player.gd" id="3_7g1tf"]
+[ext_resource type="Script" uid="uid://d2y1b4hdqvghj" path="res://src/dialogue/dialogue_player.gd" id="3_7g1tf"]
 [ext_resource type="Resource" uid="uid://cihgmc4rdcu4m" path="res://src/dialogue/proto_dialogue.tres" id="4_n86he"]
 [ext_resource type="PackedScene" uid="uid://cfkh6v6yhhyj0" path="res://src/ui/SpeechBubble/SpeechBubble.tscn" id="4_ybefn"]
 [ext_resource type="Texture2D" uid="uid://by37wolcjeyg0" path="res://assets/graphics/sprites/_dev/bustin.png" id="5_48lsp"]
-[ext_resource type="Script" path="res://src/dialogue/dialogue_trigger.gd" id="6_pingp"]
+[ext_resource type="Script" uid="uid://bqjtxjgqcnfwu" path="res://src/dialogue/dialogue_trigger.gd" id="6_pingp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d8456"]
 size = Vector2(199, 241)

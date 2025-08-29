@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cg5no13kqh8hv"]
 
-[ext_resource type="Script" path="res://src/collectibles/starch_point.gd" id="1_n6wye"]
+[ext_resource type="Script" uid="uid://u8ern3dq4i4x" path="res://src/collectibles/starch_point.gd" id="1_n6wye"]
 [ext_resource type="Texture2D" uid="uid://tkxsi2wm45t6" path="res://assets/graphics/sprites/collectibles/starch_point.png" id="1_rpace"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_55wb1"]

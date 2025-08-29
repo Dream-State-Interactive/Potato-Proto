@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cvub7kkptluj1"]
 
-[ext_resource type="Script" path="res://src/components/c_launcher.gd" id="1_3l67x"]
+[ext_resource type="Script" uid="uid://dvy6qn82ouqqm" path="res://src/components/c_launcher.gd" id="1_3l67x"]
 [ext_resource type="PackedScene" uid="uid://b176bqb5uiawq" path="res://addons/angle_editor_plugin/angle_gizmo_2d.tscn" id="2_3anw5"]
 
 [node name="Launcher" type="Node2D"]

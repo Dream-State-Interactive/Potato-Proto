@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://i56d1kpcqakb"]
 
-[ext_resource type="Script" path="res://tools/ParallaxBackground/Door/door.gd" id="1_7lp30"]
+[ext_resource type="Script" uid="uid://cgd8dyhl8bc4y" path="res://tools/ParallaxBackground/Door/door.gd" id="1_7lp30"]
 
 [sub_resource type="CurveTexture" id="CurveTexture_sqfc6"]
 
