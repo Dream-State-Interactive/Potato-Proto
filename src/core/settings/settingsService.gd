@@ -6,7 +6,7 @@ const DEFAULT_CONFIG_FILE_NAME = "res://src/core/defaults.cfg"
 var PLAYER_CONFIG_FILE_NAME = OS.get_data_dir() + "/Potato Game/settings.cfg"
 var configFile = ConfigFile.new()
 
-func _ready() -> void:
+func _ready() -> void:	
 	if !FileAccess.file_exists(PLAYER_CONFIG_FILE_NAME):
 		print(PLAYER_CONFIG_FILE_NAME + " does not exist. Creating file...")
 		await initializeConfigFile()
@@ -37,7 +37,7 @@ func setAllSettingsToDefault() -> void:
 			print("Setting " + section + "." + key + " to ")
 			print(defaultSettingValue)
 			setSettingValue(section + "." + key, defaultSettingValue)
-			
+
 func setSettingValue(setting: String, value: Variant) -> bool:
 	var settingArray = setting.split('.')
 	var section = settingArray[0]
@@ -53,8 +53,6 @@ func setSpecialSettings(section: String, key: String, value: Variant) -> void:
 	match section:
 		"audio":
 			AudioService.set(key, value)
-		"display":
-			DisplayManager.set(key, value)
 
 func getSettingValue(setting: String) -> Variant:
 	var settingArray = setting.split('.')
