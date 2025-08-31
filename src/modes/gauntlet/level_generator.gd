@@ -116,7 +116,10 @@ func _generate_standard_segment(allow_cull: bool):
 	segment.add_child(hill_node)
 
 	var hazard_density = ProgressionManager.get_hazard_density()
-	var hazards_node = hazard_generator.generate_on_surface(hill_result["surface_points"], hazard_density)
+	#var hazards_node = hazard_generator.generate_on_surface(hill_result["surface_points"], hazard_density)
+	#if hazards_node:
+		#hill_node.add_child(hazards_node)
+	var hazards_node: Node2D = hazard_generator.generate(hill_result["surface_points"])
 	if hazards_node:
 		hill_node.add_child(hazards_node)
 
@@ -127,7 +130,7 @@ func _generate_standard_segment(allow_cull: bool):
 
 	if ProgressionManager.hills_completed > 0 and (ProgressionManager.hills_completed % 5 == 4):
 		content_node = STORE_SCENE.instantiate()
-		content_width = 100.0
+		content_width = 1000.0
 		content_end_pos_local = hill_end_pos_local + Vector2(content_width, 0)
 	else:
 		var obstacle_result = obstacle_generator.generate_obstacle(ProgressionManager.get_obstacle_complexity())

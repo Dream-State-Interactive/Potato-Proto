@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxpjvkn1ixbls"]
+
+[ext_resource type="Script" uid="uid://bx1vd40y25kvc" path="res://src/hazards/worm/hazard_worm.gd" id="1_ojll1"]
+
+[node name="HazardWorm" type="Node2D"]
+script = ExtResource("1_ojll1")
