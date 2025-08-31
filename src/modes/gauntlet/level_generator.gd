@@ -33,6 +33,10 @@ const FALLBACK_SPECIAL_SCENE = preload("res://src/levels/level_proto/level_proto
 var _current_spawn_position: Vector2 = Vector2.ZERO
 var _active_segments: Array[Node2D] = []
 
+# State variables for hill generation
+var _noise_x: float = 0.0
+
+
 # State variables for the special segment progression
 var _special_sequence_index: int = 0
 var _special_sequence_repeats: int = 0
@@ -62,6 +66,8 @@ func _reset_runtime_state():
 	_special_sequence_repeats = 0
 	_is_in_special_chain = false
 	_last_special_trigger_hills = -1
+	_noise_x = 0.0
+
 
 func _generate_level_preview():
 	for child in get_children():
@@ -80,6 +86,8 @@ func _generate_level_preview():
 	_special_sequence_repeats = 0
 	_is_in_special_chain = false
 	_last_special_trigger_hills = -1
+	_noise_x = 0.0
+
 
 	for i in range(editor_preview_length):
 		_generate_next_segment(false) # no culling in editor preview
@@ -107,21 +115,28 @@ func _generate_standard_segment(allow_cull: bool):
 	segment.add_to_group("level_segment")
 	add_child(segment)
 	segment.global_position = _current_spawn_position
-
+	
 	# Part 1: Generate Hill and Hazards
 	var hill_params = ProgressionManager.get_hill_parameters()
+	# inject continuity params
+	hill_params["noise_x_start"] = _noise_x
 	var hill_result = hill_generator.generate_hill(hill_params)
 	var hill_node: Node2D = hill_result["node"]
 	var hill_end_pos_local: Vector2 = hill_result["end_position"]
 	segment.add_child(hill_node)
+	# after you have hill_result / hill_end_pos_local
+	_noise_x += float(hill_params.get("length", 1200.0))
 
-	var hazard_density = ProgressionManager.get_hazard_density()
-	#var hazards_node = hazard_generator.generate_on_surface(hill_result["surface_points"], hazard_density)
-	#if hazards_node:
-		#hill_node.add_child(hazards_node)
-	var hazards_node: Node2D = hazard_generator.generate(hill_result["surface_points"])
+
+	# Use sparse spawn points if provided; otherwise dense surface points
+	var spawn_pts: PackedVector2Array = hill_result["surface_points"]
+	if hill_result.has("spawn_points"):
+		spawn_pts = hill_result["spawn_points"]
+
+	var hazards_node: Node2D = hazard_generator.generate(spawn_pts)
 	if hazards_node:
 		hill_node.add_child(hazards_node)
+
 
 	# Part 2: Generate Content (Store or Obstacle)
 	var content_node: Node2D

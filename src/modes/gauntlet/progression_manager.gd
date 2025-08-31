@@ -24,16 +24,18 @@ func complete_segment():
 	print("Player completed segment. Total: ", hills_completed, " | New Level: ", current_level)
 
 func get_hill_parameters() -> Dictionary:
-	# Adjusted frequency to look better with the new scale.
-	var length = 200.0 + (current_level * 200.0)
-	var amplitude = 200.0 + (current_level * 25.0)
-	var frequency = 0.0015
+	var length := 800.0 + (current_level * 240.0)
+	var amplitude := 160.0 + (current_level * 22.0)
+	var frequency := 0.0012
+	var slope := 0.08 + current_level * 0.004
 	return {
 		"length": length,
 		"amplitude": amplitude,
 		"frequency": frequency,
+		"slope": slope,
 		"color": Color.DARK_OLIVE_GREEN
 	}
+
 
 func get_worm_params() -> Dictionary:
 	if hills_completed < worms_unlock_at:

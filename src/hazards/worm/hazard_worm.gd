@@ -4,8 +4,8 @@ class_name HazardWorm
 extends Node2D
 
 # --- Tuning ---
-@export var initial_stack: int = 3                        # fewer by default
-@export var box_size: Vector2 = Vector2(42, 69)           # longer segments
+@export var initial_stack: int = 1                        # fewer by default
+@export var box_size: Vector2 = Vector2(22, 42)           # longer segments
 @export var pin_break_speed: float = 7000.0
 @export var hazardous: bool = true
 @export var hazard_damage: float = 10.0
