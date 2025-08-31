@@ -37,10 +37,10 @@ script = ExtResource("1_30dhv")
 [node name="BG_Fun" type="GPUParticles2D" parent="."]
 position = Vector2(980, 101)
 amount = 100
-process_material = SubResource("ParticleProcessMaterial_kust7")
 texture = ExtResource("6_sb7rv")
 lifetime = 7.0
 visibility_rect = Rect2(-350, -100, 1920, 1080)
+process_material = SubResource("ParticleProcessMaterial_kust7")
 
 [node name="ProtoPototoV2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_v7jc8")
