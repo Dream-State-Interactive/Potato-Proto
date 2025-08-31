@@ -13,7 +13,7 @@ func generate_hill(params: Dictionary) -> Dictionary:
 	var collision_polygon = CollisionPolygon2D.new()
 	var visual_polygon = Polygon2D.new()
 
-	collision_polygon.build_mode = CollisionPolygon2D.BUILD_SEGMENTS
+	collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
 
 	var points = PackedVector2Array()
 	var noise = FastNoiseLite.new()

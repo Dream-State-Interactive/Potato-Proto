@@ -3,11 +3,10 @@
 [ext_resource type="Script" uid="uid://ba4wtv5hc0dkf" path="res://src/modes/gauntlet/segment_end_trigger.gd" id="1_608wp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2eoue"]
-size = Vector2(20, 10000)
+size = Vector2(200, 200000)
 
 [node name="SegmentEndTrigger" type="Area2D"]
 script = ExtResource("1_608wp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5000)
 shape = SubResource("RectangleShape2D_2eoue")

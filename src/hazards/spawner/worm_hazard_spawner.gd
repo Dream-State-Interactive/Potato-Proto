@@ -11,7 +11,8 @@ func spawn(surface_points: PackedVector2Array, into: Node2D) -> void:
 	var cfg := ProgressionManager.get_worm_params()
 	if not bool(cfg.get("enabled", false)): return
 
-	var stack_size: int = int(cfg.get("stack_size", 6))
+	var stack_size: int = int(cfg.get("stack_size", 3))
+	stack_size = min(stack_size, 6)
 	var chance: float = float(cfg.get("chance", 0.03))
 	var max_per_hill: int = int(cfg.get("max_per_hill", 3))
 	max_per_hill = min(max_per_hill, max_per_hill_cap)
