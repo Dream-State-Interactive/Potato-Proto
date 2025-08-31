@@ -19,6 +19,7 @@ config/icon="res://assets/Images/icon.svg"
 [autoload]
 
 SettingsService="*res://src/core/settingsService.gd"
+DisplayManager="*res://src/core/display_manager.gd"
 AudioService="*res://src/core/audioService.gd"
 GameManager="*res://src/core/game_manager.gd"
 SaveManager="*res://src/core/save_manager.gd"
