@@ -37,8 +37,25 @@ button_text = "Volume"
 metadata/settingName = "audio.master_volume"
 
 [node name="DropdownSelection" parent="." instance=ExtResource("3_iekqu")]
+offset_left = 890.0
+offset_top = 605.0
+offset_right = 922.0
+offset_bottom = 625.0
+item_count = 0
 linkedSettingValues = {
 "Fullscreen": 3,
 "Windowed": 0
 }
 metadata/linkedSettingName = "display.display_mode"
+
+[node name="DropdownSelection2" parent="." instance=ExtResource("3_iekqu")]
+offset_left = 890.0
+offset_top = 652.0
+offset_right = 922.0
+offset_bottom = 672.0
+item_count = 0
+linkedSettingValues = {
+"1280x720": Vector2i(1280, 720),
+"1920x1080": Vector2i(1920, 1080)
+}
+metadata/linkedSettingName = "display.display_resolution"
