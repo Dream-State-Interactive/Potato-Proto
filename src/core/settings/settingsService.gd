@@ -53,6 +53,8 @@ func setSpecialSettings(section: String, key: String, value: Variant) -> void:
 	match section:
 		"audio":
 			AudioService.set(key, value)
+		"display":
+			DisplayManager.set(key, value)
 
 func getSettingValue(setting: String) -> Variant:
 	var settingArray = setting.split('.')
