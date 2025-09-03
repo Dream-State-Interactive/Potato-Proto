@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://bd6spyrfc537y"]
 
 [ext_resource type="Script" uid="uid://wl8resu02dlg" path="res://src/ui/menus/MainMenu.gd" id="1_30dhv"]
-[ext_resource type="Texture2D" uid="uid://b85cbovxa3sue" path="res://assets/Images/potato_proto.png" id="6_sb7rv"]
+[ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="2_f3ram"]
 [ext_resource type="Script" uid="uid://l0naveqbhy5g" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="8_jfuhy"]
 [ext_resource type="Script" uid="uid://ctg3aejp4yvm3" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="9_8dugi"]
 [ext_resource type="Script" uid="uid://s1exbf3ei47v" path="res://tools/ParallaxBackground/skyscale.gd" id="11_3wij5"]
@@ -21,11 +21,13 @@ particle_flag_disable_z = true
 emission_shape_offset = Vector3(0, -500, 0)
 emission_shape = 3
 emission_box_extents = Vector3(950, 0, 1)
+angle_min = -9.99999
+angle_max = 11.0
 gravity = Vector3(0, 69, 0)
 radial_accel_min = -2.23517e-06
-radial_accel_max = 3.0
-scale_min = 0.06
-scale_max = 0.13
+radial_accel_max = 6.0
+scale_min = 0.69
+scale_max = 1.42
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w05i3"]
 shader = ExtResource("13_q4qwy")
@@ -37,7 +39,7 @@ script = ExtResource("1_30dhv")
 [node name="BG_Fun" type="GPUParticles2D" parent="."]
 position = Vector2(980, 101)
 amount = 100
-texture = ExtResource("6_sb7rv")
+texture = ExtResource("2_f3ram")
 lifetime = 7.0
 visibility_rect = Rect2(-350, -100, 1920, 1080)
 process_material = SubResource("ParticleProcessMaterial_kust7")
