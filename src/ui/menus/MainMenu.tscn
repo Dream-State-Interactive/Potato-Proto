@@ -46,6 +46,7 @@ process_material = SubResource("ParticleProcessMaterial_kust7")
 stream = ExtResource("13_v7jc8")
 volume_db = -10.0
 autoplay = true
+bus = &"Music"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
 scroll_ignore_camera_zoom = true
