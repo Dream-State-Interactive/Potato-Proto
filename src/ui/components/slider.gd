@@ -3,7 +3,7 @@ extends Slider
 
 @onready var slider = $"."
 @onready var button = $MarginContainer/StandardButton
-@onready var settingName = get_meta("settingName")
+@onready var LINKED_SETTING = get_meta("settingName")
 
 # Cache the value so the Inspector shows/serializes it even if the child isn't ready yet.
 var _button_text := "" as String
@@ -15,8 +15,12 @@ func _ready() -> void:
 	if btn:
 		btn.text = _button_text
 
-	var slider_value = SettingsService.getSettingValue(settingName)
-	set_value_no_signal(slider_value)
+	if(LINKED_SETTING):
+		var settingArray = LINKED_SETTING.split('.')
+		var section = settingArray[0]
+		var key = settingArray[1]
+		var slider_value = SettingsService.getSettingValue(section, key)
+		set_value_no_signal(slider_value)
 
 @export var button_text: String:
 	set(value):
@@ -29,5 +33,8 @@ func _ready() -> void:
 				return _button_text
 
 func _on_drag_ended(value_changed: bool) -> void:
-	if(value_changed):
-		SettingsService.setSettingValue(settingName, get_value())
+	if(value_changed && LINKED_SETTING):
+		var settingArray = LINKED_SETTING.split('.')
+		var section = settingArray[0]
+		var key = settingArray[1]
+		SettingsService.setSettingValue(section, key, get_value())
