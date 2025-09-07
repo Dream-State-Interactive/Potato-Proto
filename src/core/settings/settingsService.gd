@@ -6,6 +6,72 @@ const DEFAULT_CONFIG_FILE_NAME = "res://src/core/defaults.cfg"
 var PLAYER_CONFIG_FILE_NAME = OS.get_data_dir() + "/Potato Game/settings.cfg"
 var configFile = ConfigFile.new()
 
+const SECTION_META := "meta"
+const KEY_SCHEMA := "schema_version"
+const CURRENT_SCHEMA := 0 # bump when you change layout/types
+
+func _ready() -> void:
+	load_settings()
+
+func load_settings() -> void:
+	var err := configFile.load(PLAYER_CONFIG_FILE_NAME)
+	if err != OK:
+		# Start fresh if file missing/corrupt; still run migrations to apply defaults.
+		print("No existing settings file, creating new one")
+		configFile.set_value(SECTION_META, KEY_SCHEMA, 0)
+
+	var schema := int(configFile.get_value(SECTION_META, KEY_SCHEMA, 0))
+	if schema <= CURRENT_SCHEMA:
+		print("Executing migrations...")
+		_migrate(schema)
+		_safe_save()
+		print("Done!")
+
+func _migrate(from_schema: int) -> void:
+	var v := from_schema
+	while v <= CURRENT_SCHEMA:
+		print("Executing migration " + str(v))
+		match v:
+			0:
+				#0 → 1: introduce audio + display setting sections with default values
+				_ensure_section_defaults("audio", {
+					"master_volume": 100,
+					"music_volume":  80,
+					"sfx_volume":    80,
+				})
+				
+				_ensure_section_defaults("display", {
+					"display_mode": 0,
+					"display_resolution": Vector2i(1280, 720)
+				})
+			_:
+				push_warning("Unknown migration step from %d" % v)
+				break
+
+			#Further examples of how to update settings
+			#1:
+				## → 2: type change example: volumes were int 0..100 → float 0..1
+				#for key in ["master_volume", "music_volume", "sfx_volume"]:
+					#var old_val = configFile.get_value("audio", key, 100)
+					#if typeof(old_val) == TYPE_INT:
+						#configFile.set_value("audio", key, clamp(float(old_val) / 100.0, 0.0, 1.0))
+			#2:
+				## → 3: add a new gameplay setting with default, keep existing values
+				#_ensure_section_defaults("gameplay", {
+					#"auto_pause_on_focus_loss": true,
+				#})
+
+		#Increment version, run next migration
+		v+=1
+
+	setSettingValue(SECTION_META, KEY_SCHEMA, CURRENT_SCHEMA)
+
+#Given a section, ensure that default settings are set. Will not overwrite existing setting values if present
+func _ensure_section_defaults(section: String, defaults: Dictionary) -> void:
+	for k in defaults.keys():
+		if not configFile.has_section_key(section, k):
+			configFile.set_value(section, k, defaults[k])
+
 func _safe_save() -> void:
 	# Atomic-ish save: write to temp, then replace
 	var tmp := "%s.tmp" % PLAYER_CONFIG_FILE_NAME
@@ -25,37 +91,10 @@ func _safe_save() -> void:
 	DirAccess.remove_absolute(PLAYER_CONFIG_FILE_NAME)
 	DirAccess.rename_absolute(tmp, PLAYER_CONFIG_FILE_NAME)
 
-func _ready() -> void:	
-	if !FileAccess.file_exists(PLAYER_CONFIG_FILE_NAME):
-		print(PLAYER_CONFIG_FILE_NAME + " does not exist. Creating file...")
-		await initializeConfigFile()
-	var err = configFile.load(PLAYER_CONFIG_FILE_NAME)
-	if err:
-		print("Error: Config file failed to load")
-		print(err)
-
-func initializeConfigFile():
-	var newConfigFile = FileAccess.open(PLAYER_CONFIG_FILE_NAME, FileAccess.WRITE)
-	var defaultsFile = FileAccess.open(DEFAULT_CONFIG_FILE_NAME, FileAccess.READ)
-	var content = defaultsFile.get_as_text()
-	newConfigFile.store_string(content)
-	newConfigFile.close()
-	defaultsFile.close()
-	print("Config file initialized")
-
+#This doesn't work how it should right now, don't use it yet
 func setAllSettingsToDefault() -> void:
-	var defaultsConfigObject = ConfigFile.new()
-	var err = defaultsConfigObject.load(DEFAULT_CONFIG_FILE_NAME)
-	if err:
-		print("Error: Default config file failed to load")
-		print(err)
-		return
-	for section in defaultsConfigObject.get_sections():
-		for key in defaultsConfigObject.get_section_keys(section):
-			var defaultSettingValue = defaultsConfigObject.get_value(section, key)
-			print("Setting " + section + "." + key + " to ")
-			print(defaultSettingValue)
-			setSettingValue(section, key, defaultSettingValue)
+	#Delete the settings file and run migrate again
+	pass
 
 func setSettingValue(section: String, key: String, value: Variant) -> bool:
 	configFile.set_value(section, key, value)
