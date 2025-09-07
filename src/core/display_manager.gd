@@ -24,5 +24,5 @@ func _ready() -> void:
 	if(WINDOW == null):
 		print("Error: Window not found")
 	
-	display_mode = int(SettingsService.getSettingValue("display.display_mode"))
-	display_resolution = Vector2i(SettingsService.getSettingValue("display.display_resolution"))
+	display_mode = SettingsService.getSettingValue("display", "display_mode")
+	display_resolution = SettingsService.getSettingValue("display", "display_resolution")

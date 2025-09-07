@@ -16,4 +16,4 @@ var MasterBus = AudioServer.get_bus_index("Master")
 		return db_to_linear(AudioServer.get_bus_volume_db(MasterBus))
 
 func _ready():
-	master_volume = SettingsService.getSettingValue("audio.master_volume")
+	master_volume = SettingsService.getSettingValue("audio", "master_volume")

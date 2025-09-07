@@ -15,4 +15,7 @@ class_name DropdownSelection
 
 func _on_item_selected(index: int) -> void:
 	if(LINKED_SETTING):
-		SettingsService.setSettingValue(LINKED_SETTING, linkedSettingValues[linkedSettingValues.keys()[index]])
+		var settingArray = LINKED_SETTING.split('.')
+		var section = settingArray[0]
+		var key = settingArray[1]
+		SettingsService.setSettingValue(section, key, linkedSettingValues[linkedSettingValues.keys()[index]])

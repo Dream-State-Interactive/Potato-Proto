@@ -6,6 +6,25 @@ const DEFAULT_CONFIG_FILE_NAME = "res://src/core/defaults.cfg"
 var PLAYER_CONFIG_FILE_NAME = OS.get_data_dir() + "/Potato Game/settings.cfg"
 var configFile = ConfigFile.new()
 
+func _safe_save() -> void:
+	# Atomic-ish save: write to temp, then replace
+	var tmp := "%s.tmp" % PLAYER_CONFIG_FILE_NAME
+	var backup := "%s.bak" % PLAYER_CONFIG_FILE_NAME
+
+	var err := configFile.save(tmp)
+	if err != OK:
+		push_error("Failed to write temp settings: %s" % err)
+		return
+
+	# Make a backup of the last good file (optional but nice)
+	if FileAccess.file_exists(PLAYER_CONFIG_FILE_NAME):
+		DirAccess.remove_absolute(backup)
+		DirAccess.copy_absolute(PLAYER_CONFIG_FILE_NAME, backup)
+
+	# Replace original with temp
+	DirAccess.remove_absolute(PLAYER_CONFIG_FILE_NAME)
+	DirAccess.rename_absolute(tmp, PLAYER_CONFIG_FILE_NAME)
+
 func _ready() -> void:	
 	if !FileAccess.file_exists(PLAYER_CONFIG_FILE_NAME):
 		print(PLAYER_CONFIG_FILE_NAME + " does not exist. Creating file...")
@@ -36,15 +55,12 @@ func setAllSettingsToDefault() -> void:
 			var defaultSettingValue = defaultsConfigObject.get_value(section, key)
 			print("Setting " + section + "." + key + " to ")
 			print(defaultSettingValue)
-			setSettingValue(section + "." + key, defaultSettingValue)
+			setSettingValue(section, key, defaultSettingValue)
 
-func setSettingValue(setting: String, value: Variant) -> bool:
-	var settingArray = setting.split('.')
-	var section = settingArray[0]
-	var key = settingArray[1]
-	
+func setSettingValue(section: String, key: String, value: Variant) -> bool:
 	configFile.set_value(section, key, value)
 	setSpecialSettings(section, key, value)
+	_safe_save()
 
 	# Save it to a file (overwrite if already exists).
 	return configFile.save(PLAYER_CONFIG_FILE_NAME)
@@ -56,11 +72,5 @@ func setSpecialSettings(section: String, key: String, value: Variant) -> void:
 		"display":
 			DisplayManager.set(key, value)
 
-func getSettingValue(setting: String) -> Variant:
-	var settingArray = setting.split('.')
-	var section = settingArray[0]
-	var key = settingArray[1]
-
-	# Fetch the data for each section.
+func getSettingValue(section: String, key: String) -> Variant:
 	return configFile.get_value(section, key)
-	
