@@ -1,4 +1,3 @@
-# src/modes/gauntlet/level_generator.gd
 @tool
 extends Node2D
 
@@ -21,6 +20,9 @@ extends Node2D
 ## Array to control the special scene generation sequence.
 ## Create 'SpecialSegmentConfig' resources and add them in the Inspector.
 @export var special_segment_sequence: Array[SpecialSegmentConfig]
+
+## The scene that will always be generated first. Must contain a Marker2D named "EndMarker".
+@export var start_segment_scene: PackedScene = preload("res://src/modes/gauntlet/start_segment.tscn")
 
 const SEGMENT_END_TRIGGER = preload("res://src/modes/gauntlet/segment_end_trigger.tscn")
 const STORE_SCENE = preload("res://src/modes/gauntlet/store.tscn")
@@ -50,7 +52,12 @@ func _ready():
 
 	# Reset state without culling
 	_reset_runtime_state()
-	var to_spawn: int = clampi(runtime_bootstrap_segments, 1, max_active_segments)
+	
+	# Generate the mandatory start segment first
+	_generate_start_segment()
+	
+	# Then, generate the rest of the bootstrap segments
+	var to_spawn: int = clampi(runtime_bootstrap_segments - 1, 0, max_active_segments - 1)
 	for i in range(to_spawn):
 		_generate_next_segment(false) # no culling during bootstrap
 
@@ -88,9 +95,39 @@ func _generate_level_preview():
 	_last_special_trigger_hills = -1
 	_noise_x = 0.0
 
+	# Generate the mandatory start segment first for the preview
+	_generate_start_segment()
 
-	for i in range(editor_preview_length):
+	# Then, generate the rest of the preview segments
+	for i in range(editor_preview_length - 1):
 		_generate_next_segment(false) # no culling in editor preview
+
+func _generate_start_segment(allow_cull: bool = false):
+	if not start_segment_scene:
+		printerr("Start segment scene is not set in LevelGenerator!")
+		return
+
+	var segment = Node2D.new()
+	segment.name = "StartSegment"
+	segment.add_to_group("level_segment")
+	add_child(segment)
+	segment.global_position = _current_spawn_position # Initially Vector2.ZERO
+
+	var content_node: Node2D = start_segment_scene.instantiate()
+	content_node.position = Vector2.ZERO
+	segment.add_child(content_node)
+
+	# Compute end AFTER added to scene so transforms are valid
+	var segment_end_pos: Vector2
+	var end_marker = content_node.find_child("EndMarker", true, false)
+	if end_marker and end_marker is Node2D:
+		var end_global: Vector2 = (end_marker as Node2D).global_position
+		segment_end_pos = segment.to_local(end_global)
+	else:
+		printerr("Start scene '", start_segment_scene.resource_path, "' is missing an 'EndMarker' node! Using fallback width.")
+		segment_end_pos = Vector2(1000, 0)
+
+	_finalize_segment_generation(segment, segment_end_pos, allow_cull)
 
 func _generate_next_segment(allow_cull: bool = true):
 	# Determine if we should start or continue a special scene chain

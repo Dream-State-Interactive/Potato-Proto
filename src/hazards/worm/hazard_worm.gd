@@ -19,6 +19,7 @@ extends Node2D
 @export var player_path: NodePath
 @export var sleep_distance_px: float = 1800.0
 @export var wake_distance_px: float = 1500.0
+@export var despawn_distance_px: float = 15000.0
 
 const BOX_MASS := 1.0
 
@@ -39,7 +40,13 @@ func _physics_process(delta: float) -> void:
 		resolve_player()
 		if player == null:
 			return
+	# ========= Despawn =========
+	var dist2 := player.global_position.distance_squared_to(global_position)
+	if dist2 > despawn_distance_px * despawn_distance_px:
+		queue_free()
+		return
 
+	# ========= Sleep / Wake =========
 	var dx: float = abs(player.global_position.x - global_position.x)
 
 	if not is_sleeping and dx > sleep_distance_px:
