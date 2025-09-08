@@ -1,3 +1,4 @@
+# src/modes/gauntlet/level_generator.gd
 @tool
 extends Node2D
 
@@ -182,6 +183,8 @@ func _generate_standard_segment(allow_cull: bool):
 
 	if ProgressionManager.hills_completed > 0 and (ProgressionManager.hills_completed % 5 == 4):
 		content_node = STORE_SCENE.instantiate()
+		# Ensure store is behind player (player z_index = 0.
+		content_node.z_index = -1
 		content_width = 1000.0
 		content_end_pos_local = hill_end_pos_local + Vector2(content_width, 0)
 	else:
