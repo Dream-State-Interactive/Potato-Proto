@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/graphics/textures/env/proto_clouds_01_A.png" id="14_3a0wn"]
 [ext_resource type="Script" uid="uid://t3qcsqml1366" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_cvmua"]
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/graphics/textures/env/proto_clouds_01_B.png" id="16_8sedu"]
-[ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/graphics/textures/env/proto_bg_hills_01.png" id="17_1hrms"]
+[ext_resource type="Texture2D" uid="uid://carb1irq2dmma" path="res://assets/graphics/textures/env/proto_bg_hills_02.png" id="18_2aw0q"]
 [ext_resource type="Script" uid="uid://cq3ot5jn4y65b" path="res://tools/ParallaxBackground/groundscale.gd" id="18_552qs"]
 [ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="18_aclwq"]
 
@@ -147,7 +147,7 @@ script = ExtResource("15_cvmua")
 auto_scroll_speed = 0.02
 
 [node name="ParallaxLayer_Ground" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, 378)
+position = Vector2(0, 2547)
 motion_scale = Vector2(0.03, 0.01)
 motion_offset = Vector2(0, 150)
 motion_mirroring = Vector2(1920, 0)
@@ -164,7 +164,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer_Ground/FullscreenControl_Ground"]
 position = Vector2(0, -32)
-texture = ExtResource("17_1hrms")
+texture = ExtResource("18_2aw0q")
 offset = Vector2(512, 0)
 script = ExtResource("18_552qs")
 

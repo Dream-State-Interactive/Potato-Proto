@@ -17,13 +17,26 @@ func generate_obstacle(complexity: int) -> Dictionary:
 	var base := StaticBody2D.new()
 	var base_shape := CollisionShape2D.new()
 	var base_rect := RectangleShape2D.new()
-	base_rect.size = Vector2(obstacle_width, 20)
+	
+	var visual_height := 20.0
+	var collision_multiplier := 8.0 # Set the collision height multiplier to 8.
+	
+	# Set collision height to be four times the visual height.
+	base_rect.size = Vector2(obstacle_width, visual_height * collision_multiplier)
 	base_shape.shape = base_rect
-	base.position = Vector2(obstacle_width / 2.0, 10)
+	
+	# Position the StaticBody at the center of the VISUAL representation.
+	base.position = Vector2(obstacle_width / 2.0, visual_height / 2.0)
+	
+	# Offset the collision shape downwards to align its top edge with the visual's top edge.
+	# The offset is half the difference between the new collision height and the original visual height.
+	var collision_offset = (visual_height * collision_multiplier - visual_height) / 2.0
+	base_shape.position = Vector2(0, collision_offset)
 	base.add_child(base_shape)
 
 	var base_visual := Polygon2D.new()
-	var half_size_base := base_rect.size / 2.0
+	# The visual polygon is based on the original, smaller height.
+	var half_size_base := Vector2(obstacle_width / 2.0, visual_height / 2.0)
 	var base_corners := PackedVector2Array([
 		Vector2(-half_size_base.x, -half_size_base.y),
 		Vector2( half_size_base.x, -half_size_base.y),

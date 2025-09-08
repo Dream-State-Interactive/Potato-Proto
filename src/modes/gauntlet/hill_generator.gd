@@ -65,7 +65,7 @@ func generate_hill(params: Dictionary) -> Dictionary:
 	var hill: Node2D = Node2D.new()
 	hill.name = "HillContainer"
 
-	# Physics + visuals
+	# Physics & visuals
 	var ground_body: StaticBody2D = StaticBody2D.new()
 	var collision_polygon: CollisionPolygon2D = CollisionPolygon2D.new()
 	var visual_polygon: Polygon2D = Polygon2D.new()
@@ -74,13 +74,14 @@ func generate_hill(params: Dictionary) -> Dictionary:
 	# --- Noise-based height function ---
 	var noise: FastNoiseLite = FastNoiseLite.new()
 	noise.seed = 420 if Engine.is_editor_hint() else randi()
-	noise.frequency = float(params.get("frequency", 0.0009))
+	noise.frequency = float(params.get("frequency", 0.0015))
 	noise.fractal_octaves = 1
 
-	# Shape params
+	# --- Shape params for a downward-sloping hill ---
 	var length: float    = float(params.get("length", 1200.0))
-	var amplitude: float = float(params.get("amplitude", 180.0))
-	var slope: float     = float(params.get("slope", 0.10))  # +y is down
+	var amplitude: float = float(params.get("amplitude", 60.0))
+	var slope: float     = float(params.get("slope", 0.2))      # Steeper default slope
+	var steepness_increase: float   = float(params.get("steepness_increase", 0.00005)) # NEW: Makes hill steeper over time
 
 	# Continuity inputs (phase is typical, base_y optional)
 	var noise_x_start: float = float(params.get("noise_x_start", 0.0))
@@ -100,11 +101,16 @@ func generate_hill(params: Dictionary) -> Dictionary:
 	var spawn_points: PackedVector2Array = PackedVector2Array()
 	var dx: float = control_step * 0.5  # half-step for slope estimate
 
-	# Height functions
+	# --- Height functions for a "bobsled" style hill ---
 	var y_raw: Callable = func(x: float) -> float:
-		return noise.get_noise_1d(noise_x_start + x) * amplitude + base_y + x * slope
+		# 1. The base shape is a downward curve (linear + quadratic term).
+		var base_downward_curve: float = x * slope + x * x * steepness_increase
+		# 2. Add noise for bumps and texture.
+		var noise_component: float = noise.get_noise_1d(noise_x_start + x) * amplitude
+		# 3. Combine with base_y for continuity across function calls.
+		return base_downward_curve + noise_component + base_y
 
-	# Normalize so the seam starts exactly at 0
+	# Normalize so the seam starts exactly at y=0 (relative to this segment's origin).
 	var y0: float = float(y_raw.call(0.0))
 	var y_at: Callable = func(x: float) -> float:
 		return float(y_raw.call(x)) - y0
