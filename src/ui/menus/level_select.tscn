@@ -100,6 +100,7 @@ expand_icon = true
 script = ExtResource("5_2i7eo")
 metadata/destination = ""
 metadata/ReplacementMenu = ""
+metadata/PushMenu = ""
 
 [node name="Node" type="Node" parent="MarginContainer/VBoxContainer/BackButton"]
 script = ExtResource("6_ligq2")
