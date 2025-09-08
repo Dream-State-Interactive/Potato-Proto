@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://benqvi8jf1a3v"]
+[gd_scene load_steps=8 format=3 uid="uid://benqvi8jf1a3v"]
 
 [ext_resource type="Script" uid="uid://bs5iogpvifrxp" path="res://src/ui/hud/hud.gd" id="1_1wsu8"]
 [ext_resource type="FontFile" uid="uid://dmjdhsomc3fwp" path="res://assets/fonts/Coopers Town.otf" id="2_cpm4x"]
 [ext_resource type="Texture2D" uid="uid://bcd8k243yithf" path="res://assets/graphics/ui/panel.png" id="2_pv7ps"]
+[ext_resource type="Texture2D" uid="uid://ck3gg52jmti3m" path="res://assets/graphics/proto/howtoplay.png" id="4_ariom"]
+[ext_resource type="Script" uid="uid://raghio163m0c" path="res://src/components/c_gui_scale.gd" id="5_cio14"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qn7c4"]
 bg_color = Color(0.168627, 0.168627, 0.168627, 0.482353)
@@ -107,3 +109,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Howtoplay" type="Sprite2D" parent="."]
+position = Vector2(161, 977)
+scale = Vector2(0.237723, 0.237723)
+texture = ExtResource("4_ariom")
+
+[node name="Node" type="Node" parent="Howtoplay"]
+script = ExtResource("5_cio14")
+enable_hover_effect = false
+enable_pulse_effect = true
+pulse_min_scale = 0.2
+pulse_max_scale = 0.24
+pulse_duration = 6.0

@@ -36,6 +36,14 @@ theme_override_font_sizes/font_size = 49
 text = "Save/Load"
 metadata/PushMenu = "res://src/ui/menus/save_load_menu.tscn"
 
+[node name="StandardButtonLeaderboard" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 49
+text = "Highscores"
+metadata/PushMenu = "res://src/ui/menus/leaderboard.tscn"
+
 [node name="StandardButtonLevelSelect" parent="ButtonContainer" instance=ExtResource("2_8wmdh")]
 layout_mode = 2
 size_flags_horizontal = 4
