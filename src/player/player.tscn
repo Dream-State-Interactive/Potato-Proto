@@ -84,6 +84,8 @@ one_shot = true
 wait_time = 0.25
 one_shot = true
 
+[node name="GroundRay" type="RayCast2D" parent="."]
+
 [connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
 [connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
 [connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]

@@ -18,6 +18,17 @@
 class_name Player
 extends RigidBody2D
 
+signal landed
+signal left_ground
+
+var can_air_dash := false
+var dashes_used: int = 0
+var _was_on_floor := false
+
+const DASHES_AVAILABLE = 2
+
+const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this as floor
+
 # =============================================================================
 # --- EXPORTED VARIABLES (Configured in the Godot Inspector) ---
 # =============================================================================
@@ -104,6 +115,7 @@ const high_speed_threshold: float = 12
 @onready var collision_circle: CollisionShape2D = $CollisionCircle2D
 @onready var InputCooldownTimer: Timer = $InputCooldown
 @onready var ComboCooldownTimer: Timer = $ComboCooldown
+@onready var GroundRay: RayCast2D = $GroundRay
 
 
 # =============================================================================
@@ -284,18 +296,26 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 
 # _physics_process(delta) runs on every physics frame. Ideal for applying forces and input.
 func _physics_process(_delta: float):
+	var on_floor := _is_on_floor()
+
+	# --- DASH/JUMP LOGIC ---
+	if on_floor and not _was_on_floor:
+		emit_signal("landed")
+		coyote_timer.stop()
+		can_air_dash = false
+		dashes_used = 0
+		can_jump = true
+	elif not on_floor and _was_on_floor:
+		emit_signal("left_ground")
+		coyote_timer.start()
+		can_air_dash = true
+		can_jump = false
+
+	_was_on_floor = on_floor
+
 	# Update collision shapes based on current speed.
 	update_collision_shapes(angular_velocity)
-	
-	# --- COYOTE TIME LOGIC ---
-	var is_physically_on_ground = get_colliding_bodies().size() > 0
-	if is_physically_on_ground:
-		can_jump = true
-		coyote_timer.stop()
-	else:
-		if can_jump:
-			coyote_timer.start()
-		can_jump = false
+
 	
 	# --- MOVEMENT LOGIC ---
 	roll_input = Input.get_axis("roll_left", "roll_right")
@@ -307,12 +327,12 @@ func _physics_process(_delta: float):
 		apply_torque(roll_input * stats.roll_speed * DEV_ROLL_MULTIPLIER)
 	
 	# The horizontal nudge helps counter friction and makes movement feel more responsive.
-	if is_physically_on_ground and roll_input != 0:
+	if on_floor and roll_input != 0:
 		apply_central_force(Vector2(roll_input * stats.horizontal_nudge, 0))
 	
 	# --- JUMP LOGIC ---
 	# We can jump if we are physically on the ground OR if the coyote timer is still running.
-	if Input.is_action_just_pressed("jump") and (is_physically_on_ground or not coyote_timer.is_stopped()):
+	if Input.is_action_just_pressed("jump") and (on_floor or not coyote_timer.is_stopped()):
 		coyote_timer.stop() # Prevent double-jumps
 		can_jump = false
 		
@@ -321,23 +341,37 @@ func _physics_process(_delta: float):
 		apply_central_impulse(Vector2.UP * stats.jump_force * 10)
 		
 		_is_gripping = false # Ensure grip is broken immediately on jump.
+		
+func _is_on_floor() -> bool:
+	GroundRay.global_rotation = 0
+	if not GroundRay or not GroundRay.is_enabled():
+		return false
+	if not GroundRay.is_colliding():
+		return false
+	var n := GroundRay.get_collision_normal()
+	return n.angle_to(Vector2.UP) <= FLOOR_ANGLE_MAX
+
+func _is_colliding_with_object() -> bool:
+	return get_colliding_bodies().size() > 0
 
 func dash(direction: String) -> void:
-	if(InputCooldownTimer.is_stopped()):
-		var combo_multiplier = 1
-		if(!ComboCooldownTimer.is_stopped()):
-			combo_multiplier = 10
-			print("KUH KUH KUH KOMBO")
-		match(direction):
-			"up":
-				apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
-			"down":
-				apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
-			"left":
-				apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
-			"right":
-				apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
-		InputCooldownTimer.start()
+	if(can_air_dash and dashes_used < DASHES_AVAILABLE):
+		if(InputCooldownTimer.is_stopped()):
+			var combo_multiplier = 1
+			if(!ComboCooldownTimer.is_stopped()):
+				combo_multiplier = 10
+			match(direction):
+				"up":
+					apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
+				"down":
+					apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
+				"left":
+					apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+				"right":
+					apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+			InputCooldownTimer.start()
+			
+		dashes_used += 1
 
 func _on_input_cooldown_timeout() -> void:
 	ready_for_combo = true
