@@ -2,7 +2,6 @@
 
 extends Node
 
-const DEFAULT_CONFIG_FILE_NAME = "res://src/core/defaults.cfg"
 var PLAYER_CONFIG_FILE_NAME = OS.get_data_dir() + "/Potato Game/settings.cfg"
 var configFile = ConfigFile.new()
 
