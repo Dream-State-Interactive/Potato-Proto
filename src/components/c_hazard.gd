@@ -20,7 +20,7 @@ extends Node
 
 # --- Configuration ---
 ## The amount of damage this hazard will deal upon a successful hit.
-@export var damage: float = 10.0
+@export var damage: float = 25.0
 
 # --- Internal State ---
 # This array stores the unique IDs of the collision shapes on the parent body
