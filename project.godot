@@ -33,6 +33,7 @@ GUI="*res://src/core/GUI.tscn"
 CollectibleBaker="*res://addons/id_assigner_plugin/collectible_baker.gd"
 LanguageTester="*res://src/dialogue/language_tester.gd"
 ProgressionManager="*res://src/modes/gauntlet/progression_manager.gd"
+Leaderboard="*res://src/core/leaderboard_manager.gd"
 
 [display]
 

@@ -39,10 +39,10 @@ var MasterBus = AudioServer.get_bus_index("Master")
 
 		volume /= 100
 
-		var sfxBus = AudioServer.get_bus_index("SFX")
+		var sfxBus = AudioServer.get_bus_index("Effects")
 		AudioServer.set_bus_volume_db(sfxBus, linear_to_db(volume))
 	get:
-		var sfxBus = AudioServer.get_bus_index("SFX")
+		var sfxBus = AudioServer.get_bus_index("Effects")
 		return db_to_linear(AudioServer.get_bus_volume_db(sfxBus))
 
 func _ready():

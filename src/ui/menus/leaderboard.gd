@@ -4,13 +4,12 @@ extends Node2D
 
 @onready var LeaderboardTextbox = $LeaderboardText
 
-const DEFAULT_LEADERS: Dictionary = { "Spuds": 500, "Lil fry": 475, "Tony Starch": 420 }
+const NUM_LEADERS_SHOWN = 5
 
 func _ready() -> void:
+	refresh_leaderboard_text()
+		
+func refresh_leaderboard_text() -> void:
 	LeaderboardTextbox.text = ""
-	var leaderboard = assemble_leaderboard()
-	for key in leaderboard.keys():
-		LeaderboardTextbox.text = LeaderboardTextbox.text + key + ": " + str(DEFAULT_LEADERS[key]) + "\n"
-
-func assemble_leaderboard() -> Dictionary:
-	return DEFAULT_LEADERS
+	for i in range (NUM_LEADERS_SHOWN):
+		LeaderboardTextbox.text += Leaderboard.currentLeaderboard[i].name + ": " + str(Leaderboard.currentLeaderboard[i].score) + "\n"
