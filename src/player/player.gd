@@ -26,6 +26,7 @@ var dashes_used: int = 0
 var _was_on_floor := false
 
 const DASHES_AVAILABLE = 2
+const STARCH_HEAL_VALUE = 2
 
 const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this as floor
 
@@ -490,7 +491,7 @@ func heal(amount: float):
 # This is called by StarchPoint collectibles.
 func add_starch(amount: int):
 	GameManager.add_starch_points(amount)
-	heal(10.0) # Each starch point heals for a flat amount.
+	heal(STARCH_HEAL_VALUE) # Each starch point heals for a flat amount.
 
 # This is connected to the HealthComponent's 'died' signal.
 func _on_died():
