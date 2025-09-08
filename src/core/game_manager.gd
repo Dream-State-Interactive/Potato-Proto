@@ -54,7 +54,8 @@ var level_path_to_load: String = ""
 var current_level_path: String = ""
 var collected_items: Dictionary = {}
 
-@export var game_paused: bool = false
+var pause_requesters: int = 0
+#@export var game_paused: bool = false
 
 # --- Constants ---
 ## Preloading the default stats resource ensures we always have a clean template
@@ -71,14 +72,23 @@ func _ready():
 # --- Public API (Called from other scripts) ---
 
 func pause():
-	game_paused = true
+	pause_requesters += 1
+	#game_paused = true
 	get_tree().paused = true
 	GUI.show_pause_menu_backdrop()
 	
+
 func resume():
-	game_paused = false
-	get_tree().paused = false
-	GUI.hide_pause_menu_backdrop()
+	# Prevent the counter from going below zero.
+	if pause_requesters <= 0:
+		return
+
+	pause_requesters -= 1
+
+	# Only resume the tree when the LAST requester is gone.
+	if pause_requesters == 0 and get_tree().paused:
+		get_tree().paused = false
+		GUI.hide_pause_menu_backdrop()
 	
 func quit():
 	get_tree().quit()

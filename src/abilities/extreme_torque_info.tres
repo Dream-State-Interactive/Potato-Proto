@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityInfo" load_steps=4 format=3 uid="uid://dopeh7iejsvnm"]
+
+[ext_resource type="Script" uid="uid://cufp68wokqij0" path="res://src/abilities/ability_info.gd" id="1_0bdpe"]
+[ext_resource type="PackedScene" uid="uid://dud168e6yjyca" path="res://src/abilities/extreme_torque.tscn" id="1_3noej"]
+[ext_resource type="Texture2D" uid="uid://nfnuxpwtfepq" path="res://assets/graphics/ui/icons/ability/icon_ability_ExtremeTorque.png" id="2_ydkfm"]
+
+[resource]
+script = ExtResource("1_0bdpe")
+ability_name = "Extreme Torque"
+ability_description = "Spin really fast within a short period of time.
+(Helps to launch you)"
+icon = ExtResource("2_ydkfm")
+ability_scene = ExtResource("1_3noej")
+metadata/_custom_type_script = "uid://cufp68wokqij0"

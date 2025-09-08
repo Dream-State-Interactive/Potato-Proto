@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://owi7lmypfmwf"]
+
+[ext_resource type="Script" uid="uid://cqf88u876ods7" path="res://src/abilities/ability_icon.gd" id="1_4qqkr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qqkr"]
+bg_color = Color(0.258824, 0.258824, 0.258824, 0.886275)
+
+[node name="AbilityIcon" type="PanelContainer"]
+custom_minimum_size = Vector2(150, 150)
+theme_override_styles/panel = SubResource("StyleBoxFlat_4qqkr")
+script = ExtResource("1_4qqkr")
+
+[node name="IconVisual" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+stretch_mode = 5
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

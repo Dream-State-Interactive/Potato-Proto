@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityInfo" load_steps=4 format=3 uid="uid://cv6662e3d63hm"]
+
+[ext_resource type="Script" uid="uid://cufp68wokqij0" path="res://src/abilities/ability_info.gd" id="1_uqa5h"]
+[ext_resource type="PackedScene" uid="uid://vr57o4egxbu" path="res://src/abilities/stop_on_a_fry.tscn" id="1_uvdm3"]
+[ext_resource type="Texture2D" uid="uid://bb41jlbw1e64f" path="res://assets/graphics/ui/icons/ability/icon_ability_StopOnAFry.png" id="2_iw18i"]
+
+[resource]
+script = ExtResource("1_uqa5h")
+ability_name = "Stop On A Fry"
+ability_description = "Stops all speed and momentum immediately.
+(Useful to stop movement in-air & on-ground)"
+icon = ExtResource("2_iw18i")
+ability_scene = ExtResource("1_uvdm3")
+metadata/_custom_type_script = "uid://cufp68wokqij0"
