@@ -1,59 +1,108 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6sk8c8ivubu"]
+[gd_scene load_steps=7 format=3 uid="uid://c6sk8c8ivubu"]
 
-[ext_resource type="Script" path="res://src/ui/menus/level_select.gd" id="1_aqssb"]
+[ext_resource type="Script" uid="uid://dtqsgq73203bk" path="res://src/ui/menus/level_select.gd" id="1_aqssb"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_aal82"]
+[ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="3_5j5hl"]
+[ext_resource type="Texture2D" uid="uid://c4dl1grmfyx0a" path="res://assets/Images/button.png" id="4_c0x5s"]
+[ext_resource type="Script" uid="uid://ynr08875x7ad" path="res://src/ui/components/standard_button.gd" id="5_2i7eo"]
+[ext_resource type="Script" uid="uid://raghio163m0c" path="res://src/components/c_gui_scale.gd" id="6_ligq2"]
 
-[node name="LevelSelect" type="Node2D"]
+[node name="LevelSelect" type="CanvasLayer"]
+layer = 6
 script = ExtResource("1_aqssb")
+back_button_paths = Array[NodePath]([NodePath("MarginContainer/VBoxContainer/BackButton")])
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -323.0
+offset_top = -250.0
+offset_right = 477.0
+offset_bottom = 500.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
 
-[node name="StandardButton" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 756.0
-offset_top = 226.0
-offset_right = 4596.0
-offset_bottom = 1476.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Level 1" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_aal82")]
+layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 55
 text = "Level 1"
+metadata/destination = "res://src/levels/level_1/level_1.tscn"
 
-[node name="Dev Level 0" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 197.0
-offset_top = 95.0
-offset_right = 4037.0
-offset_bottom = 1345.0
+[node name="Level 2" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_aal82")]
+layout_mode = 2
 size_flags_horizontal = 4
-text = "Level 0"
-metadata/destination = "src/main.tscn"
-
-[node name="StandardButton2" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 756.0
-offset_top = 370.0
-offset_right = 4596.0
-offset_bottom = 1620.0
-size_flags_horizontal = 4
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 55
 text = "Level 2"
-metadata/destination = "res://src/levels/main_world.tscn"
+metadata/destination = "res://src/modes/gauntlet/world.tscn"
 
-[node name="StandardButton3" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 758.0
-offset_top = 511.0
-offset_right = 4598.0
-offset_bottom = 1761.0
+[node name="Level 3" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_aal82")]
+layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 55
 text = "Level 3"
 
-[node name="StandardButton4" parent="CanvasLayer" instance=ExtResource("2_aal82")]
-offset_left = 760.0
-offset_top = 654.0
-offset_right = 4600.0
-offset_bottom = 1904.0
+[node name="Level 4" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_aal82")]
+layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 55
 text = "Level 4"
 
-[node name="StandardButton2" parent="." instance=ExtResource("2_aal82")]
-offset_left = 803.0
-offset_top = 44.0
-offset_right = 4259.0
-offset_bottom = 1168.72
+[node name="Dev Level 0" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_aal82")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 55
+text = "Level 0"
+metadata/destination = "res://src/levels/level_proto/level_proto.tscn"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+z_index = 7
+y_sort_enabled = true
+texture_filter = 3
+custom_minimum_size = Vector2(385.74, 140)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("3_5j5hl")
+theme_override_colors/font_outline_color = Color(0.807843, 0.423529, 0.156863, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 55
 text = "Back"
-metadata/destination = "res://src/ui/menus/MainMenu.tscn"
+icon = ExtResource("4_c0x5s")
+flat = true
+autowrap_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_2i7eo")
+metadata/destination = ""
+metadata/ReplacementMenu = ""
+
+[node name="Node" type="Node" parent="MarginContainer/VBoxContainer/BackButton"]
+script = ExtResource("6_ligq2")
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/BackButton" to="MarginContainer/VBoxContainer/BackButton" method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/BackButton" to="MarginContainer/VBoxContainer/BackButton" method="_on_button_mouse_exited"]

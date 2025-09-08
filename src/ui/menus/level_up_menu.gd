@@ -15,72 +15,89 @@ extends CanvasLayer
 
 # --- GODOT FUNCTIONS ---
 func _ready():
-	# This property makes the menu and all its children (Buttons) immune to pause.
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	print(">>> This LevelUpMenu instance: ", self)
+	print(">>> _ready() CALLED | upgrades.size():", upgrades.size())
 
-	# Connect button signals. This is correct and now works because of the process_mode.
-	close_menu_button.pressed.connect(hide_menu)
-	if upgrades.size() > 0:
-		var upgrade = upgrades[0]
-		upgrade_roll_speed_button.pressed.connect(func(): on_upgrade_button_pressed(upgrade))
+	upgrade_roll_speed_button.focus_mode = Control.FOCUS_NONE
+	upgrade_grip_button.focus_mode = Control.FOCUS_NONE
+	upgrade_jump_force_button.focus_mode = Control.FOCUS_NONE
 
-	if upgrades.size() > 1:
-		var upgrade = upgrades[1]
-		upgrade_grip_button.pressed.connect(func(): on_upgrade_button_pressed(upgrade))
+	for upgrade in upgrades:
+		print(">>> UpgradeData: ", upgrade.stat_identifier, upgrade.upgrade_value)
 
-	if upgrades.size() > 2:
-		var upgrade = upgrades[2]
-		upgrade_jump_force_button.pressed.connect(func(): on_upgrade_button_pressed(upgrade))
+	# TEST the button references
+	print(">>> Buttons valid?", upgrade_roll_speed_button, upgrade_grip_button, upgrade_jump_force_button)
 
+	if is_instance_valid(close_menu_button):
+		close_menu_button.pressed.connect(_on_close_pressed)
 
-	# Announce readiness to the GameManager.
-	await get_tree().process_frame
-	GameManager.on_level_up_menu_ready(self)
-	
-	hide_menu()
+	connect_upgrade_buttons()
+	update_ui_elements()	
 
-# This function receives all unhandled input events and will run even when the game is paused.
-func _unhandled_input(event: InputEvent):
-	# --- THIS IS THE FINAL, CORRECT FIX ---
-	# 1. We ask the EVENT itself if it matches our "toggle_upgrades" action.
-	# 2. We also check if 'event.pressed' is true, so this only fires on the key-down,
-	#    not on the key-up (release). This correctly mimics "just_pressed" behavior.
-	if event.is_action_pressed("toggle_upgrades") and event.pressed:
-		if is_visible():
-			hide_menu()
-		else:
-			open_menu()
-		# Mark the event as handled to prevent any other node from processing it.
+# Prevents being unable to use "toggle_upgrades" after interacting with a level_up_menu button
+func _input(event: InputEvent):
+	if event.is_action_pressed("toggle_upgrades"):
+		GUI.toggle_level_up_menu()
 		get_viewport().set_input_as_handled()
-	# ---------------------------------------------
+
+func connect_upgrade_buttons():
+	print(">>> FORCED BUTTON CONNECT")
+
+	if upgrades.size() > 0:
+		print("Connecting ROLL SPEED")
+		upgrade_roll_speed_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(0))
+	if upgrades.size() > 1:
+		print("Connecting GRIP")
+		upgrade_grip_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(1))
+	if upgrades.size() > 2:
+		print("Connecting JUMP")
+		upgrade_jump_force_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(2))
+
+func _on_upgrade_pressed(index: int):
+	if index >= 0 and index < upgrades.size():
+		print(">>> Upgrade Button Pressed: ", upgrades[index].stat_identifier)
+		on_upgrade_button_pressed(upgrades[index])
+	clear_focus()
+
+func _on_close_pressed():
+	GUI.toggle_level_up_menu()
+
+func set_initial_focus():
+	var focused = get_viewport().gui_get_focus_owner()
+	if focused:
+		print("Resetting focus: ", focused.name)
+		focused.release_focus()
+	# immediately focus close button
+	if is_instance_valid(close_menu_button):
+		close_menu_button.grab_focus()
+
+func clear_focus():
+	var focused = get_viewport().gui_get_focus_owner()
+	if focused:
+		print("Clearing focus from: ", focused.name)
+		focused.release_focus()
 
 # --- PUBLIC FUNCTIONS ---
-func open_menu():
-	update_ui_elements()
-	show()
-	get_tree().paused = true
-
-func hide_menu():
-	hide()
-	get_tree().paused = false
-
 func on_upgrade_button_pressed(upgrade_data: UpgradeData):
+	# Get the CURRENT cost of the upgrade right now.
 	var cost = get_current_cost(upgrade_data)
-	var current_starch = GameManager.current_starch_points
 	
-	print("--- UPGRADE ATTEMPT ---")
-	print("Button for '", upgrade_data.stat_identifier, "' pressed.")
-	print("Required Starch: ", cost, " | Player Has: ", current_starch)
-	
-	# Check if the player can afford the upgrade.
-	if current_starch >= cost:
-		print("Affordable! Spending points and applying upgrade...")
+	# Check affordability against the GameManager's source of truth.
+	if GameManager.current_starch_points >= cost:
+		print("Affordable! Spending points and applying upgrade for '%s'." % upgrade_data.stat_identifier)
+		
+		# Perform state changes via the GameManager.
+		# These functions will modify the central data and emit signals.
 		GameManager.spend_starch_points(cost)
 		GameManager.upgrade_stat(upgrade_data.stat_identifier, upgrade_data.upgrade_value)
-		# After a successful purchase, refresh the UI.
+		
+		# Immediately after the state has changed, call the UI update function.
 		update_ui_elements()
+		
+		print("UI Updated. New Starch Points: ", GameManager.current_starch_points)
 	else:
-		print("Upgrade failed: Not enough Starch Points!")
+		print("Upgrade failed for '%s': Not enough Starch Points!" % upgrade_data.stat_identifier)
 
 # A central function to update all dynamic text and button states in the menu.
 func update_ui_elements():

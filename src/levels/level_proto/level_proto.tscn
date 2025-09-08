@@ -1,19 +1,19 @@
 [gd_scene load_steps=20 format=3 uid="uid://ddenat04hgjrs"]
 
-[ext_resource type="PackedScene" uid="uid://dkw86e8mfcgdq" path="res://src/player/player.tscn" id="1_1snx7"]
 [ext_resource type="PackedScene" uid="uid://cv7x1kq2rucuc" path="res://src/env/water/water.tscn" id="1_5ruyx"]
-[ext_resource type="Script" path="res://src/env/water/water.gd" id="1_oyse2"]
+[ext_resource type="Script" uid="uid://bkgshvnhcd1iq" path="res://src/env/water/water.gd" id="1_oyse2"]
 [ext_resource type="PackedScene" uid="uid://dwja6ji5hvuya" path="res://src/hazards/hazard_base.tscn" id="2_bgp88"]
 [ext_resource type="PackedScene" uid="uid://cg5no13kqh8hv" path="res://src/collectibles/starch_point.tscn" id="3_opomh"]
-[ext_resource type="Script" path="res://addons/angle_editor_plugin/push_area_2d.gd" id="4_das8e"]
+[ext_resource type="Script" uid="uid://c7qfkdmd34moi" path="res://addons/angle_editor_plugin/push_area_2d.gd" id="4_das8e"]
 [ext_resource type="PackedScene" uid="uid://b176bqb5uiawq" path="res://addons/angle_editor_plugin/angle_gizmo_2d.tscn" id="5_a4kam"]
 [ext_resource type="PackedScene" uid="uid://cifnswa6rff4v" path="res://src/env/breakable/FracturePolygon2D.tscn" id="8_7q2dc"]
-[ext_resource type="Script" path="res://src/env/breakable/fracturable2D.gd" id="8_ocq57"]
+[ext_resource type="Script" uid="uid://h37ukhahwn5k" path="res://src/env/breakable/fracturable2D.gd" id="8_ocq57"]
 [ext_resource type="Texture2D" uid="uid://c8r7ip8m4sfgw" path="res://assets/graphics/sprites/_dev/test.png" id="10_tqfo4"]
 [ext_resource type="PackedScene" uid="uid://mpxbenmev5la" path="res://src/hazards/knife/knife.tscn" id="11_s71ax"]
 [ext_resource type="PackedScene" uid="uid://cvub7kkptluj1" path="res://src/hazards/launcher.tscn" id="12_i86by"]
+[ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="12_xk2pu"]
 
-[sub_resource type="Curve2D" id="Curve2D_hanx8"]
+[sub_resource type="Curve2D" id="Curve2D_2r7n6"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 192, 0)
 }
@@ -29,7 +29,7 @@ size = Vector2(12, 3.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b2kwl"]
 size = Vector2(320, 24)
 
-[sub_resource type="Curve2D" id="Curve2D_60vmy"]
+[sub_resource type="Curve2D" id="Curve2D_486yn"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2280, 0)
 }
@@ -44,12 +44,16 @@ size = Vector2(2368, 744)
 
 [node name="LevelProto" type="Node2D"]
 
+[node name="EndMarker" type="Marker2D" parent="."]
+position = Vector2(10394, 4403)
+
 [node name="Sky" type="Polygon2D" parent="."]
+position = Vector2(1570, 2075)
 color = Color(0.246157, 0.691342, 0.749188, 1)
 polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 832.559, 0, 0, 0)
 
 [node name="Floor2" type="StaticBody2D" parent="."]
-position = Vector2(-320, 512)
+position = Vector2(1250, 2587)
 scale = Vector2(0.111111, 0.209877)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor2"]
@@ -85,7 +89,7 @@ color = Color(0.941176, 0.392157, 0, 1)
 polygon = PackedVector2Array(1152, 190.588, 2880, 190.588, 2880, 647.999, 1152, 647.999)
 
 [node name="StartingFloor" type="StaticBody2D" parent="."]
-position = Vector2(0, 512)
+position = Vector2(1570, 2587)
 scale = Vector2(1, 0.209877)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StartingFloor"]
@@ -96,7 +100,7 @@ color = Color(0.941356, 0.392152, 0, 1)
 polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
 
 [node name="StartingFloor2" type="StaticBody2D" parent="."]
-position = Vector2(-3.05176e-05, 304)
+position = Vector2(1570, 2379)
 rotation = -1.57771
 scale = Vector2(1, 0.209877)
 
@@ -108,7 +112,7 @@ color = Color(0.941356, 0.392152, 0, 1)
 polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(128, -568)
+position = Vector2(1698, 1507)
 scale = Vector2(1, 0.209877)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
@@ -119,7 +123,7 @@ polygon = PackedVector2Array(-704, 5183.99, -880, 4993.4, -1232, 4269.17, -1448,
 polygon = PackedVector2Array(-704, 5183.99, -880, 4993.4, -1232, 4269.17, -1448, 2477.64, -1408, -343.058, -1240, -2325.17, -944, -4154.81, -648, -5031.52, -224, -5908.22, 120, -5755.75, 480, -5641.4, 776, -5069.64, 976, -4231.05, 1128, -2782.58, 1168, -1181.64, 1168, -762.351, 1264, -762.351, 1264, -7204.22, -1696, -7166.1, -1728, 5145.87)
 
 [node name="StartingFloor3" type="StaticBody2D" parent="."]
-position = Vector2(128, -576)
+position = Vector2(1698, 1499)
 scale = Vector2(1, 0.209877)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StartingFloor3"]
@@ -130,7 +134,7 @@ color = Color(0.941356, 0.392152, 0, 1)
 polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 0, 0, 0)
 
 [node name="SlidingThing" type="Node2D" parent="."]
-position = Vector2(4280, -233)
+position = Vector2(5850, 1842)
 rotation = -0.495599
 
 [node name="GrooveJoint2D" type="GrooveJoint2D" parent="SlidingThing"]
@@ -166,7 +170,7 @@ position = Vector2(-170.239, -83.712)
 polygon = PackedVector2Array(0, 4, 10, 70, 29, 138, 284, 139, 321, 70, 342, 6, 302, -27, 271, 14, 262, 73, 115, 98, 61, 92, 38, 55, 27, -34, -20, -49)
 
 [node name="2ndPlatform" type="StaticBody2D" parent="."]
-position = Vector2(0, 512)
+position = Vector2(1570, 2587)
 scale = Vector2(1, 0.209877)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="2ndPlatform"]
@@ -179,7 +183,7 @@ color = Color(0.941356, 0.392152, 0, 1)
 polygon = PackedVector2Array(0, 648, 1152, 648, 1152, 324.626, 1152, 0, 0, 0)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2(0, 512)
+position = Vector2(1570, 2587)
 scale = Vector2(1, 0.209877)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
@@ -200,13 +204,9 @@ position = Vector2(2411, 1739.11)
 color = Color(0.941356, 0.392152, 0, 1)
 polygon = PackedVector2Array(529, 924.351, 633, 919.586, 652, 324.626, 622, -519.352, 533, -519.352)
 
-[node name="Player" parent="." instance=ExtResource("1_1snx7")]
-position = Vector2(2160, 328)
-mid_speed_threshold = 200.0
-high_speed_threshold = 400.0
-
 [node name="Water" type="Node2D" parent="."]
-position = Vector2(-192, 520)
+z_index = 2
+position = Vector2(1378, 2595)
 script = ExtResource("1_oyse2")
 water_color = Color(0.301961, 0.447059, 0.831373, 0.8)
 water_top_color = Color(0.755243, 0.882401, 1, 0.129412)
@@ -215,7 +215,7 @@ width = 192.0
 height = 32.0
 
 [node name="Path2D" type="Path2D" parent="Water"]
-curve = SubResource("Curve2D_hanx8")
+curve = SubResource("Curve2D_2r7n6")
 
 [node name="Polygon2D" type="Polygon2D" parent="Water"]
 color = Color(0.301961, 0.447059, 0.831373, 0.8)
@@ -240,121 +240,310 @@ width = 2.0
 default_color = Color(0.755243, 0.882401, 1, 0.129412)
 
 [node name="HazardBase" parent="." instance=ExtResource("2_bgp88")]
-position = Vector2(431, 451)
+position = Vector2(2001, 2526)
 
 [node name="StarchPoints" type="Node2D" parent="."]
+position = Vector2(1570, 2075)
 
 [node name="StarchPoint" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(306, 420)
+scale = Vector2(1.09699, 1.09699)
+unique_id = "31fd5f7199e9f4781fb3bdcfcf5dfc8d"
 
 [node name="StarchPoint2" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(448, 320)
+scale = Vector2(1.09268, 1.09268)
+unique_id = "7190aae93cedde8c9d7989a3633b079e"
 
 [node name="StarchPoint3" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(629, 446)
+scale = Vector2(1.08804, 1.08804)
+unique_id = "6364bd34b003cbc21e24818c0d381c41"
 
 [node name="StarchPoint4" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(779, 450)
+scale = Vector2(1.05537, 1.05537)
+unique_id = "45c66b3488bb937b04b8ead217276eb8"
 
 [node name="StarchPoint5" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(844, 451)
+scale = Vector2(1.09994, 1.09994)
+unique_id = "12d0ba5bcd25a8d37a094aa02fd4edd3"
 
 [node name="StarchPoint6" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(910, 434)
+scale = Vector2(0.99558, 0.99558)
+unique_id = "05eb25f9e305219a388bad1efc69381f"
 
 [node name="StarchPoint7" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(960, 449)
+scale = Vector2(1.02911, 1.02911)
+unique_id = "ad921c77870fa93da56e82c476018511"
 
 [node name="StarchPoint8" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1004, 433)
 rotation = -0.218669
+scale = Vector2(0.993643, 0.993643)
+unique_id = "d9190504a04b78a715e2b71515565d17"
 
 [node name="StarchPoint9" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1054, 456)
 rotation = -0.218669
+scale = Vector2(0.918871, 0.918871)
+unique_id = "82e934d7abcac9b6c77a0387bb918cd0"
 
 [node name="StarchPoint10" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1126, 466)
 rotation = -0.218669
+scale = Vector2(1.02129, 1.02129)
+unique_id = "d91734fa9002ee34abe3030e8face336"
 
 [node name="StarchPoint11" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1313, 322)
 rotation = -0.218669
+scale = Vector2(0.9, 0.9)
+unique_id = "0471d0ac89dd70f2caf28f60fc1f3772"
 
 [node name="StarchPoint12" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1516, 233)
 rotation = -0.218669
+scale = Vector2(1.09997, 1.09997)
+unique_id = "4e71102d20fa268d29d48974580c4728"
 
 [node name="StarchPoint13" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1821, 339)
 rotation = -0.218669
+scale = Vector2(0.927925, 0.927925)
+unique_id = "2ac305e2593a776fd04b89d2fc65441c"
 
 [node name="StarchPoint14" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1267, 531)
 rotation = -0.218669
+scale = Vector2(1.01572, 1.01572)
+unique_id = "255df62e19e8dcc3a3c934b6ad2e7b23"
 
 [node name="StarchPoint15" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1427, 588)
 rotation = -0.218669
+scale = Vector2(0.988663, 0.988663)
+unique_id = "1e2b12d0e52481f646f464af70271484"
 
 [node name="StarchPoint16" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1571, 599)
 rotation = -0.218669
+scale = Vector2(0.900028, 0.900028)
+unique_id = "c11851d3872480c90a21896f3c879f16"
 
 [node name="StarchPoint17" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1738, 589)
 rotation = -0.218669
+scale = Vector2(1.0308, 1.0308)
+unique_id = "a62df95e13a0987e4be6abe553845ba2"
 
 [node name="StarchPoint18" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(1936, 557)
 rotation = -0.532195
+scale = Vector2(1.02999, 1.02999)
+unique_id = "2355d7dbbee96940f01b6c2644de22db"
 
 [node name="StarchPoint19" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(2230, 541)
 rotation = -0.532195
+scale = Vector2(1.06049, 1.06049)
+unique_id = "eb4c2d048029da42447c8ce2c704c9c1"
 
 [node name="StarchPoint20" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(2543, 533)
 rotation = -0.532195
+scale = Vector2(1.04078, 1.04078)
+unique_id = "ee376ef68cd307de8f922f57338f6a44"
 
 [node name="StarchPoint21" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(2846, 533)
 rotation = -0.532195
+scale = Vector2(1.01603, 1.01603)
+unique_id = "b60c149752531c0aa59b67a219561f6c"
 
 [node name="StarchPoint22" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3171, 549)
 rotation = -0.532195
+scale = Vector2(1.09367, 1.09367)
+unique_id = "35c9e3daa0a74d1323d4dbd76050e966"
 
 [node name="StarchPoint23" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3277, 700)
 rotation = -0.532195
+scale = Vector2(1.00544, 1.00544)
+unique_id = "16a1ce9deb3744a806333a20d1ee48ab"
 
 [node name="StarchPoint24" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3360, 903)
 rotation = -0.532195
+scale = Vector2(0.958699, 0.958699)
+unique_id = "d37e92ee07fb31bdfd5b3e8a96ae84c9"
 
 [node name="StarchPoint25" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3120, 1019)
 rotation = -0.532195
+scale = Vector2(1.09792, 1.09792)
+unique_id = "b17deb0482e9e865274bb687394f4623"
 
 [node name="StarchPoint26" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3268, 1025)
 rotation = -0.532195
+scale = Vector2(1.0687, 1.0687)
+unique_id = "b39e4aef84dd68fa05706a735e840598"
 
 [node name="StarchPoint27" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3574, 1009)
 rotation = -0.532195
+scale = Vector2(0.955924, 0.955924)
+unique_id = "7fc9e97db7314a78ba1de60174b2c830"
 
 [node name="StarchPoint28" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3804, 1014)
 rotation = -0.532195
+scale = Vector2(1.04939, 1.04939)
+unique_id = "822821046f63df7910ecc07c35cb80c9"
 
 [node name="StarchPoint29" parent="StarchPoints" instance=ExtResource("3_opomh")]
 position = Vector2(3966, 1006)
 rotation = -0.532195
+scale = Vector2(1.07113, 1.07113)
+unique_id = "f6f66aaaa1803621a0cfeeb856b7038f"
+
+[node name="StarchPoint30" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-375, 144)
+scale = Vector2(1.07818, 1.07818)
+unique_id = "da2b265e63a1516eef02eca3b3719ab7"
+
+[node name="StarchPoint31" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-294, -64)
+scale = Vector2(0.970348, 0.970348)
+unique_id = "22d852b8ab86d99bab23b1bd3c9f58ab"
+
+[node name="StarchPoint32" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-161, -47)
+scale = Vector2(0.919294, 0.919294)
+unique_id = "54a2771c9e076fe3823fa87f225766fa"
+
+[node name="StarchPoint33" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-193, 337)
+scale = Vector2(1.09511, 1.09511)
+unique_id = "15c4fd93abeff40dcc61ba0c28e475ad"
+
+[node name="StarchPoint34" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-309, 341)
+scale = Vector2(1.04707, 1.04707)
+unique_id = "879f9e43a52d9ba316437afef0071643"
+
+[node name="StarchPoint35" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-555, -51)
+scale = Vector2(0.938175, 0.938175)
+unique_id = "3b2238bcf50f0cc1aed7e1430c78000d"
+
+[node name="StarchPoint36" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-377, -420)
+scale = Vector2(1.00987, 1.00987)
+unique_id = "73f7073a570b1d5cc6cfa11ef8387d01"
+
+[node name="StarchPoint37" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-523, -250)
+scale = Vector2(0.925855, 0.925855)
+unique_id = "1c87222e169b8b7d1f04bc04915d79ee"
+
+[node name="StarchPoint38" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-214, -326)
+scale = Vector2(0.932542, 0.932542)
+unique_id = "4a225d0bdf2b05b7f40b4c0cc929450e"
+
+[node name="StarchPoint39" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(242, -648)
+scale = Vector2(1.03275, 1.03275)
+unique_id = "06e927db01cf705b3e6985493c464ef9"
+
+[node name="StarchPoint40" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(422, -642)
+scale = Vector2(1.04648, 1.04648)
+unique_id = "a2d8c19390b647395dd78d21ba89860f"
+
+[node name="StarchPoint41" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(657, -648)
+scale = Vector2(1.0628, 1.0628)
+unique_id = "1e7d70e607de3a29c1581da68ac6fe0f"
+
+[node name="StarchPoint42" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(856, -640)
+scale = Vector2(0.922855, 0.922855)
+unique_id = "95ce0eb395992e46d399d51adc91a729"
+
+[node name="StarchPoint43" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(1100, -646)
+scale = Vector2(0.920605, 0.920605)
+unique_id = "20d03a9c406cc15b78b9e80c4e264f93"
+
+[node name="StarchPoint44" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(192, 459)
+scale = Vector2(0.92829, 0.92829)
+unique_id = "2171a3a6347b230bc4cf6a483f2806ac"
+
+[node name="StarchPoint45" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(96, 456)
+scale = Vector2(0.944037, 0.944037)
+unique_id = "93bc0e90160b6f947022dd6e96375068"
+
+[node name="StarchPoint46" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(-49, 246)
+scale = Vector2(0.90217, 0.90217)
+unique_id = "883a076750b8bc7459bb62bc0da0a7d9"
+
+[node name="StarchPoint47" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(408, 189)
+scale = Vector2(0.914116, 0.914116)
+unique_id = "e03260886d03c4f5324fbdd5001df8d9"
+
+[node name="StarchPoint48" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(278, 89)
+scale = Vector2(0.922816, 0.922816)
+unique_id = "3f0fc5b071b1ad3ea125ba371f88bcd8"
+
+[node name="StarchPoint49" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(585, 164)
+scale = Vector2(1.05896, 1.05896)
+unique_id = "cc4261a9e11cee2ba2162722a9d94947"
+
+[node name="StarchPoint50" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(615, 236)
+scale = Vector2(1.09582, 1.09582)
+unique_id = "30d520e67000caaf539535b9a1dcc3c3"
+
+[node name="StarchPoint51" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(638, 307)
+scale = Vector2(1.04661, 1.04661)
+unique_id = "0ad8f5b07fe8a854f76de65c7361805e"
+
+[node name="StarchPoint52" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(424, -34)
+scale = Vector2(1.05573, 1.05573)
+unique_id = "d922ca9836e7cb190e3ef67703558c9b"
+
+[node name="StarchPoint53" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(458, -100)
+scale = Vector2(1.04944, 1.04944)
+unique_id = "10f760341b23a9a097f243f6312c10f3"
+
+[node name="StarchPoint54" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(574, -71)
+scale = Vector2(1.08569, 1.08569)
+unique_id = "2900dc483b2aa507ac03a103dc89849f"
+
+[node name="StarchPoint55" parent="StarchPoints" instance=ExtResource("3_opomh")]
+position = Vector2(783, 305)
+scale = Vector2(0.96599, 0.96599)
+unique_id = "36192238626494d78fbc802449b39cfd"
 
 [node name="PlankJoint1" type="RigidBody2D" parent="."]
-position = Vector2(1171.84, 659.219)
+position = Vector2(2741.84, 2734.22)
 rotation = 0.523598
 
 [node name="Polygon2D" type="Polygon2D" parent="PlankJoint1"]
@@ -366,7 +555,7 @@ position = Vector2(0.526855, 0)
 shape = SubResource("RectangleShape2D_ha0r0")
 
 [node name="PlankJoint2" type="RigidBody2D" parent="."]
-position = Vector2(1872, 667)
+position = Vector2(3442, 2742)
 rotation = -0.358124
 
 [node name="Polygon2D" type="Polygon2D" parent="PlankJoint2"]
@@ -377,7 +566,7 @@ polygon = PackedVector2Array(-26.5258, -2.2583, 26.3114, -2.74158, 26.5795, 1.72
 shape = SubResource("RectangleShape2D_ha0r0")
 
 [node name="PlankJoint3" type="RigidBody2D" parent="."]
-position = Vector2(1523, 676)
+position = Vector2(3093, 2751)
 
 [node name="Polygon2D" type="Polygon2D" parent="PlankJoint3"]
 color = Color(0.776471, 0.176471, 0.329412, 1)
@@ -388,37 +577,37 @@ position = Vector2(-2, 0.75)
 shape = SubResource("RectangleShape2D_ha0r0")
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
-position = Vector2(1151, 645)
+position = Vector2(2721, 2720)
 node_a = NodePath("../StartingFloor")
 node_b = NodePath("../PlankJoint1")
 
 [node name="PinJoint2D2" type="PinJoint2D" parent="."]
-position = Vector2(1196, 674)
+position = Vector2(2766, 2749)
 node_a = NodePath("../PlankJoint1")
 node_b = NodePath("../Plank1")
 
 [node name="PinJoint2D3" type="PinJoint2D" parent="."]
-position = Vector2(1515, 678)
+position = Vector2(3085, 2753)
 node_a = NodePath("../Plank1")
 node_b = NodePath("../PlankJoint3")
 
 [node name="PinJoint2D4" type="PinJoint2D" parent="."]
-position = Vector2(1527, 678)
+position = Vector2(3097, 2753)
 node_a = NodePath("../Plank2")
 node_b = NodePath("../PlankJoint3")
 
 [node name="PinJoint2D5" type="PinJoint2D" parent="."]
-position = Vector2(1848, 678)
+position = Vector2(3418, 2753)
 node_a = NodePath("../PlankJoint2")
 node_b = NodePath("../Plank2")
 
 [node name="PinJoint2D6" type="PinJoint2D" parent="."]
-position = Vector2(1900, 657)
+position = Vector2(3470, 2732)
 node_a = NodePath("../2ndPlatform")
 node_b = NodePath("../PlankJoint2")
 
 [node name="Plank1" type="RigidBody2D" parent="."]
-position = Vector2(1195, 676)
+position = Vector2(2765, 2751)
 
 [node name="Polygon2D" type="Polygon2D" parent="Plank1"]
 color = Color(0.508366, 0.298462, 0.185717, 1)
@@ -429,7 +618,7 @@ position = Vector2(160, 12)
 shape = SubResource("RectangleShape2D_b2kwl")
 
 [node name="Plank2" type="RigidBody2D" parent="."]
-position = Vector2(1527, 677)
+position = Vector2(3097, 2752)
 
 [node name="Polygon2D" type="Polygon2D" parent="Plank2"]
 color = Color(0.508366, 0.298462, 0.185717, 1)
@@ -440,6 +629,7 @@ position = Vector2(160, 12)
 shape = SubResource("RectangleShape2D_b2kwl")
 
 [node name="levelfloor" type="StaticBody2D" parent="."]
+position = Vector2(1570, 2075)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="levelfloor"]
 
@@ -480,9 +670,11 @@ offset_bottom = 2217.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
 text = "FAN"
+metadata/_edit_use_anchors_ = true
 
 [node name="Water2" type="Node2D" parent="."]
-position = Vector2(6432, 2472)
+z_index = 2
+position = Vector2(8002, 4547)
 script = ExtResource("1_oyse2")
 water_color = Color(0.249541, 0.535878, 0.438301, 0.8)
 water_top_color = Color(0.890155, 1, 0.212346, 1)
@@ -497,7 +689,7 @@ water_linear_damp = 4.0
 water_angular_damp = 6.0
 
 [node name="Path2D" type="Path2D" parent="Water2"]
-curve = SubResource("Curve2D_60vmy")
+curve = SubResource("Curve2D_486yn")
 
 [node name="Polygon2D" type="Polygon2D" parent="Water2"]
 color = Color(0.249541, 0.535878, 0.438301, 0.8)
@@ -534,7 +726,7 @@ polygon = PackedVector2Array(6432, 2560, 6432, 3776, 8712, 3776, 8712, 2560)
 polygon = PackedVector2Array(6432, 2560, 6432, 3776, 8712, 3776, 8712, 2560)
 
 [node name="PushArea2d" type="Area2D" parent="."]
-position = Vector2(5176, 2144)
+position = Vector2(6746, 4219)
 script = ExtResource("4_das8e")
 push_force = 1250.0
 origin_handle = NodePath("OriginHandle")
@@ -550,18 +742,20 @@ shape = SubResource("RectangleShape2D_sb47h")
 position = Vector2(-1144, 40)
 
 [node name="WUDDER" type="Node2D" parent="."]
+position = Vector2(1570, 2075)
 
 [node name="Water3" parent="." instance=ExtResource("1_5ruyx")]
-position = Vector2(-448, 520)
+z_index = 2
+position = Vector2(1122, 2595)
 show_top_line = false
 water_top_color = Color(0.878431, 0.941176, 1, 0.866667)
 water_top_width = 1.0
 
 [node name="FracturePolygon2D" parent="." instance=ExtResource("8_7q2dc")]
-position = Vector2(520, 504)
+position = Vector2(2090, 2579)
 
 [node name="FracturePolygon2D2" type="RigidBody2D" parent="."]
-position = Vector2(2352, 544)
+position = Vector2(3922, 2619)
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("8_ocq57")
@@ -576,12 +770,15 @@ polygon = PackedVector2Array(-64, -31.2, -40, -79.2, 144, -87.2, 152, 88.8, -48,
 polygon = PackedVector2Array(-64, -31.2, -40, -79.2, 144, -87.2, 152, 88.8, -48, 72.8)
 
 [node name="Knife" parent="." instance=ExtResource("11_s71ax")]
-position = Vector2(32, 376)
+position = Vector2(1602, 2451)
 
 [node name="Launcher" parent="." instance=ExtResource("12_i86by")]
-position = Vector2(840, -8)
+position = Vector2(2410, 2067)
 projectile_scene = ExtResource("11_s71ax")
 launch_degree_angle = 129.094
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("12_xk2pu")]
+position = Vector2(1826, 2355)
 
 [connection signal="body_entered" from="Water/Area2D" to="Water" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Water/Area2D" to="Water" method="_on_area_2d_body_exited"]

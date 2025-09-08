@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://bun67yf8js03y"]
+[gd_scene load_steps=6 format=3 uid="uid://bun67yf8js03y"]
 
-[ext_resource type="Script" path="res://src/ui/menus/level_up_menu.gd" id="1_muate"]
+[ext_resource type="Script" uid="uid://cg4qqralx3uax" path="res://src/ui/menus/level_up_menu.gd" id="1_muate"]
+[ext_resource type="Script" uid="uid://bt58c45o283vw" path="res://src/upgrades/upgrade_data.gd" id="2_s5k03"]
+[ext_resource type="Resource" uid="uid://y6x6fm0k75vk" path="res://src/upgrades/upgrade_roll_speed.tres" id="3_tqkf4"]
+[ext_resource type="Resource" uid="uid://b6yxv5owe76nm" path="res://src/upgrades/upgrade_grip.tres" id="4_mwf75"]
+[ext_resource type="Resource" uid="uid://c7sdfy3ngd2cq" path="res://src/upgrades/upgrade_jump_force.tres" id="5_owugm"]
 
 [node name="LevelUpMenu" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_muate")
+upgrades = Array[ExtResource("2_s5k03")]([ExtResource("3_tqkf4"), ExtResource("4_mwf75"), ExtResource("5_owugm")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15

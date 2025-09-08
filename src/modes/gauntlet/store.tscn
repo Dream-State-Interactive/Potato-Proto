@@ -1,0 +1,85 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu4qjv18u2cmk"]
+
+[ext_resource type="Texture2D" uid="uid://by37wolcjeyg0" path="res://assets/graphics/sprites/_dev/bustin.png" id="1_g6tey"]
+[ext_resource type="Script" uid="uid://bpv1vn614w3y5" path="res://src/modes/gauntlet/store_interaction.gd" id="2_2bjau"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m7re1"]
+radius = 270.59
+
+[node name="Store" type="Node2D"]
+
+[node name="PromptLabel" type="Label" parent="."]
+offset_left = 137.0
+offset_top = -522.0
+offset_right = 809.0
+offset_bottom = -453.0
+theme_override_font_sizes/font_size = 50
+text = "Press 'F' for UPGRADE SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -4)
+script = ExtResource("2_2bjau")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(441, -143)
+shape = SubResource("CircleShape2D_m7re1")
+
+[node name="Support1" type="Polygon2D" parent="."]
+position = Vector2(303, -246)
+rotation = 1.57607
+scale = Vector2(0.25, 0.25)
+color = Color(0.359585, 0.178904, 0.0922364, 1)
+polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="Support2" type="Polygon2D" parent="."]
+position = Vector2(621, -244)
+rotation = 1.57607
+scale = Vector2(0.25, 0.25)
+color = Color(0.359585, 0.178904, 0.0922364, 1)
+polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="Sign" type="Polygon2D" parent="."]
+position = Vector2(642, -228)
+rotation = -3.14159
+scale = Vector2(0.4, 0.9)
+polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="Bustin" type="Sprite2D" parent="."]
+position = Vector2(431, -110)
+texture = ExtResource("1_g6tey")
+
+[node name="ShopFront1" type="Polygon2D" parent="."]
+position = Vector2(601, -3)
+rotation = -3.14159
+scale = Vector2(0.3, 0.9)
+color = Color(0.507195, 0.419871, 0.298859, 1)
+polygon = PackedVector2Array(0, -10, 0, 100, 1000, 100, 1000, -10, 501.315, -10.0004)
+
+[node name="ShopFront2" type="Polygon2D" parent="."]
+position = Vector2(601, -42)
+rotation = -3.14159
+scale = Vector2(0.3, 0.4)
+color = Color(0.686413, 0.58376, 0.442752, 1)
+polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Floor" type="Polygon2D" parent="StaticBody2D"]
+color = Color(0.571602, 0.302053, 0.173409, 1)
+polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(0, 2)
+polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 293.0
+offset_top = -345.0
+offset_right = 1306.0
+offset_bottom = -208.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "STORE"
+metadata/_edit_use_anchors_ = true

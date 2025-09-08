@@ -53,7 +53,7 @@ func _ready():
 
 # _process(delta) runs on every visual frame. It's ideal for continuous
 # updates, like animating a cooldown bar.
-func _process(delta):
+func _process(_delta: float):
 	# We constantly check the state of our cooldown timer.
 	if not cooldown_timer.is_stopped():
 		# If the timer is running, we calculate the remaining time.

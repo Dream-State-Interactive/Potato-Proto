@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=3 uid="uid://rhte4n1lb3va"]
+
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="1_0gned"]
+[ext_resource type="PackedScene" uid="uid://b0bdl6jfm8t3a" path="res://src/ui/components/Slider.tscn" id="2_t2od3"]
+[ext_resource type="PackedScene" uid="uid://bf3d226phwoyn" path="res://src/ui/components/dropdownSelection.tscn" id="3_iekqu"]
+
+[node name="SettingsMenu" type="CanvasLayer"]
+layer = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -195.0
+offset_top = -228.0
+offset_right = 190.74
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BackButton" parent="CenterContainer" instance=ExtResource("1_0gned")]
+layout_mode = 2
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 45
+text = "Back"
+metadata/PushMenu = "back"
+
+[node name="MasterVolumeSlider" parent="." instance=ExtResource("2_t2od3")]
+offset_left = 70.0
+offset_top = 314.0
+offset_right = 1414.0
+offset_bottom = 482.0
+value = 80.0
+button_text = "Volume"
+metadata/settingName = "audio.master_volume"
+
+[node name="DropdownSelection" parent="." instance=ExtResource("3_iekqu")]
+offset_left = 887.87
+offset_top = 704.0
+offset_right = 919.87
+offset_bottom = 724.0
+item_count = 0
+linkedSettingValues = {
+"Fullscreen": 3,
+"Windowed": 0
+}
+metadata/linkedSettingName = "display.display_mode"
+
+[node name="DropdownSelection2" parent="." instance=ExtResource("3_iekqu")]
+offset_left = 887.87
+offset_top = 751.0
+offset_right = 919.87
+offset_bottom = 771.0
+item_count = 0
+linkedSettingValues = {
+"1280x720": Vector2i(1280, 720),
+"1920x1080": Vector2i(1920, 1080)
+}
+metadata/linkedSettingName = "display.display_resolution"
+
+[node name="MusicVolumeSlider" parent="." instance=ExtResource("2_t2od3")]
+offset_left = 71.0
+offset_top = 461.0
+offset_right = 1415.0
+offset_bottom = 629.0
+value = 80.0
+button_text = "Music"
+metadata/settingName = "audio.music_volume"

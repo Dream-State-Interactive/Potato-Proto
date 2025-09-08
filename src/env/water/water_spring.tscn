@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dhm0ktisml61f"]
 
-[ext_resource type="Script" path="res://src/env/water/water_spring.gd" id="1_r7lg7"]
+[ext_resource type="Script" uid="uid://st4refi0asc0" path="res://src/env/water/water_spring.gd" id="1_r7lg7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bb1mv"]
 resource_local_to_scene = true

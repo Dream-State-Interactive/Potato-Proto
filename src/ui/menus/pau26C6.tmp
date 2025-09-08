@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw5rd3vkqwpk4"]
+
+[ext_resource type="Script" path="res://src/ui/menus/pause_menu.gd" id="1_fc8qa"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_swutv"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_fc8qa")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.0705882, 0.0705882, 0.603922)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.5
+offset_top = -358.0
+offset_right = 192.5
+offset_bottom = 358.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ResumeButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
+layout_mode = 2
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 45
+text = "Resume"
+
+[node name="RestartButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
+layout_mode = 2
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 45
+text = "Restart
+"
+
+[node name="SaveLoadButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
+layout_mode = 2
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 45
+text = "Save/Load
+"
+metadata/ReplacementMenu = "res://src/ui/menus/save_load_menu.tscn"
+
+[node name="SettingsButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
+layout_mode = 2
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 45
+text = "Settings
+"
+metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
+
+[node name="MainMenuButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_swutv")]
+layout_mode = 2
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 45
+text = "Main Menu
+"
+metadata/destination = "res://assets/GUI/MENU/MainMenu.tscn"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="hide_menu"]

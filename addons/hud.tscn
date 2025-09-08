@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://csuhjhv5e8pj3"]
 
-[ext_resource type="Script" path="res://src/ui/old-hud.gd" id="1_b1jsc"]
+[ext_resource type="Script" uid="uid://dy0t4qfntb8vi" path="res://src/ui/hud/old-hud.gd" id="1_b1jsc"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_b1jsc")
@@ -18,6 +18,7 @@ offset_bottom = 1009.0
 text = "Menu"
 item_count = 2
 popup/item_0/text = "Settings"
+popup/item_0/id = 0
 popup/item_1/text = "Controls"
 popup/item_1/id = 1
 

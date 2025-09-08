@@ -18,6 +18,17 @@
 class_name Player
 extends RigidBody2D
 
+signal landed
+signal left_ground
+
+var can_air_dash := false
+var dashes_used: int = 0
+var _was_on_floor := false
+
+const DASHES_AVAILABLE = 2
+
+const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this as floor
+
 # =============================================================================
 # --- EXPORTED VARIABLES (Configured in the Godot Inspector) ---
 # =============================================================================
@@ -36,26 +47,22 @@ var stats: StatBlock
 ## A gameplay toggle. If true, the player will not take damage when the
 ## high-speed circle collider is active.
 @export var invincible_at_high_speed: bool = true
+@export var INDESTRUCTIBLE_VELOCITY: float = 4000.0
 
+# player.gd
 
-@export_group("Aging", "aging_")
+# ... (add this with your other exported variables) ...
+
+@export_group("Visuals")
+## The radius of the peel effect in the shader (in UV space, 0.0 to 1.0).
+@export var peel_shader_radius: float = 0.2
+
+@export_group("Aging")
 ## How many seconds it takes for the player to go from 0% health to fully "aged"
 ## (i.e., the flesh sprite becomes fully darkened).
 @export var seconds_to_fully_age: float = 20.0
 
-
-@export_group("Collision Blending", "collision_")
-## The speed (in pixels/sec) at which the collision shape starts blending
-## from the detailed polygon to the smoother capsule shape.
-@export var low_speed_threshold: float = 100.0
-## The speed at which the blend to the capsule is complete, and the blend
-## from capsule to a perfect circle begins.
-@export var mid_speed_threshold: float = 500.0
-## The speed at which the player's collision is a perfect circle for smooth rolling.
-@export var high_speed_threshold: float = 1000.0
-
-
-@export_group("Target Collision Sizes", "collision_")
+@export_group("Target Collision Sizes")
 ## The target radius for the capsule shape at medium speed.
 @export var target_capsule_radius: float = 22.0
 ## The target height for the capsule shape at medium speed.
@@ -63,12 +70,23 @@ var stats: StatBlock
 ## The target radius for the final circle shape at high speed.
 @export var target_circle_radius: float = 45.0
 
+@export_group("Stat Properties")
 @export var roll_strength: float = 5000.0
 @export var roll_multiplier: float = 1000.0
 @export var jump_strength: float = 50.0
 @export var jump_multiplier: float = 5.0
+
 const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
+
+## The speed (in pixels/sec) at which the collision shape starts blending
+## from the detailed polygon to the smoother capsule shape.
+const low_speed_threshold: float = 5
+## The speed at which the blend to the capsule is complete, and the blend
+## from capsule to a perfect circle begins.
+const mid_speed_threshold: float = 10
+## The speed at which the player's collision is a perfect circle for smooth rolling.
+const high_speed_threshold: float = 12
 
 
 # =============================================================================
@@ -98,19 +116,21 @@ const COMBO_COOLDOWN: float = 0.25
 @onready var collision_circle: CollisionShape2D = $CollisionCircle2D
 @onready var InputCooldownTimer: Timer = $InputCooldown
 @onready var ComboCooldownTimer: Timer = $ComboCooldown
+@onready var GroundRay: RayCast2D = $GroundRay
 
 
 # =============================================================================
 # --- INTERNAL STATE VARIABLES ---
 # =============================================================================
 var roll_input: float = 0.0                # The current player input (-1 for left, 1 for right).
-var damage_points: Array[Vector2] = []     # Stores the UV coordinates for each peel decal.
+var damage_points: PackedVector2Array = []     # Stores the UV coordinates for each peel decal.
 var current_aging_level: float = 0.0       # The current "darkness" of the flesh (0.0 to 1.0).
 var aging_rate: float = 0.0                # How fast the aging level increases per second.
 var can_jump: bool = false                 # A flag for the Coyote Time system.
 var original_polygon_points: PackedVector2Array # A backup of the detailed collision shape.
 var _is_gripping: bool = false             # Tracks if the CGrip component is currently active.
 var ready_for_combo = false
+var _skin_material_made_unique: bool = false
 
 
 # =============================================================================
@@ -134,6 +154,13 @@ func _ready():
 	health_component.health_changed.connect(_on_health_changed)
 	health_component.died.connect(_on_died)
 	
+	# Make the materials unique to this player instance.
+	# This prevents them from being reset to default on scene reload.
+	#if skin_sprite.material:
+		#skin_sprite.material = skin_sprite.material.duplicate()
+	#if flesh_sprite.material:
+		#flesh_sprite.material = flesh_sprite.material.duplicate()
+	
 	# --- Visuals & Ability Setup ---
 	# Initialize the peeling shader to have zero holes at the start.
 	var skin_material = skin_sprite.material as ShaderMaterial
@@ -141,13 +168,13 @@ func _ready():
 		skin_material.set_shader_parameter("hit_count", 0)
 		skin_material.set_shader_parameter("hit_points", []) 
 	
-	# Announce our existence to the GameManager, which will give us our stats
-	# and wire us up to the rest of the game.
-	GameManager.register_player(self, health_component)
-	
 	# Equip the abilities assigned in the Inspector.
 	equip_ability(equipped_ability1, 1)
 	equip_ability(equipped_ability2, 2)
+	
+	# Announce our existence to the GameManager, which will give us our stats
+	# and wire us up to the rest of the game.
+	GameManager.register_player(self, health_component)
 	
 	# --- Dynamic Collision Setup ---
 	# Store the original shape of the polygon so we can scale it down later without losing data.
@@ -219,7 +246,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 	if invincible_at_high_speed:
 		# The condition for invincibility is that our high-speed circle collider
 		# is active (not disabled) AND has grown to at least 95% of its final size.
-		if not collision_circle.disabled and collision_circle.shape.radius >= target_circle_radius * 0.95:
+		if not collision_circle.disabled and collision_circle.shape.radius >= target_circle_radius * 0.95 and linear_velocity.length() > INDESTRUCTIBLE_VELOCITY:
 			is_invincible = true
 			
 	# --- 3. HAZARD COLLISION & DAMAGE LOGIC ---
@@ -269,19 +296,27 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 						print("INVINCIBLE: Damage ignored!")
 
 # _physics_process(delta) runs on every physics frame. Ideal for applying forces and input.
-func _physics_process(delta: float):
-	# Update collision shapes based on current speed.
-	update_collision_shapes(linear_velocity.length())
-	
-	# --- COYOTE TIME LOGIC ---
-	var is_physically_on_ground = get_colliding_bodies().size() > 0
-	if is_physically_on_ground:
-		can_jump = true
+func _physics_process(_delta: float):
+	var on_floor := _is_on_floor()
+
+	# --- DASH/JUMP LOGIC ---
+	if on_floor and not _was_on_floor:
+		emit_signal("landed")
 		coyote_timer.stop()
-	else:
-		if can_jump:
-			coyote_timer.start()
+		can_air_dash = false
+		dashes_used = 0
+		can_jump = true
+	elif not on_floor and _was_on_floor:
+		emit_signal("left_ground")
+		coyote_timer.start()
+		can_air_dash = true
 		can_jump = false
+
+	_was_on_floor = on_floor
+
+	# Update collision shapes based on current speed.
+	update_collision_shapes(angular_velocity)
+
 	
 	# --- MOVEMENT LOGIC ---
 	roll_input = Input.get_axis("roll_left", "roll_right")
@@ -293,37 +328,51 @@ func _physics_process(delta: float):
 		apply_torque(roll_input * stats.roll_speed * DEV_ROLL_MULTIPLIER)
 	
 	# The horizontal nudge helps counter friction and makes movement feel more responsive.
-	if is_physically_on_ground and roll_input != 0:
+	if on_floor and roll_input != 0:
 		apply_central_force(Vector2(roll_input * stats.horizontal_nudge, 0))
 	
 	# --- JUMP LOGIC ---
 	# We can jump if we are physically on the ground OR if the coyote timer is still running.
-	if Input.is_action_just_pressed("jump") and (is_physically_on_ground or not coyote_timer.is_stopped()):
+	if Input.is_action_just_pressed("jump") and (on_floor or not coyote_timer.is_stopped()):
 		coyote_timer.stop() # Prevent double-jumps
 		can_jump = false
 		
 		# Reset vertical velocity for a consistent jump height.
 		linear_velocity.y = 0
-		apply_central_impulse(Vector2.UP * stats.jump_force)
+		apply_central_impulse(Vector2.UP * stats.jump_force * 10)
 		
 		_is_gripping = false # Ensure grip is broken immediately on jump.
+		
+func _is_on_floor() -> bool:
+	GroundRay.global_rotation = 0
+	if not GroundRay or not GroundRay.is_enabled():
+		return false
+	if not GroundRay.is_colliding():
+		return false
+	var n := GroundRay.get_collision_normal()
+	return n.angle_to(Vector2.UP) <= FLOOR_ANGLE_MAX
+
+func _is_colliding_with_object() -> bool:
+	return get_colliding_bodies().size() > 0
 
 func dash(direction: String) -> void:
-	if(InputCooldownTimer.is_stopped()):
-		var combo_multiplier = 1
-		if(!ComboCooldownTimer.is_stopped()):
-			combo_multiplier = 10
-			print("KUH KUH KUH KOMBO")
-		match(direction):
-			"up":
-				apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
-			"down":
-				apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
-			"left":
-				apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
-			"right":
-				apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
-		InputCooldownTimer.start()
+	if(can_air_dash and dashes_used < DASHES_AVAILABLE):
+		if(InputCooldownTimer.is_stopped()):
+			var combo_multiplier = 1
+			if(!ComboCooldownTimer.is_stopped()):
+				combo_multiplier = 10
+			match(direction):
+				"up":
+					apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
+				"down":
+					apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
+				"left":
+					apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+				"right":
+					apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+			InputCooldownTimer.start()
+			
+		dashes_used += 1
 
 func _on_input_cooldown_timeout() -> void:
 	ready_for_combo = true
@@ -347,6 +396,10 @@ func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("ability_2"):
 		if ability2_slot.get_child_count() > 0:
 			(ability2_slot.get_child(0) as Ability).activate(self)
+			
+	#if event.is_action_pressed("toggle_upgrades"):
+		## We use GUI manager to open the level up menu.
+		#GUI.toggle_level_up_menu()
 
 # =============================================================================
 # --- CUSTOM FUNCTIONS ---
@@ -355,19 +408,28 @@ func _unhandled_input(event: InputEvent):
 # This function is called by the SaveManager after loading data.
 # It forces all visuals to update to the new loaded state.
 func force_visual_update():
+	
+	# For debugging, let's be 100% sure the data is correct right here.
+	print("Forcing visual update. Damage points count: ", damage_points.size())
+	if not damage_points.is_empty():
+		print("First damage point: ", damage_points[0])
+	
 	# Update the peel shader
 	var skin_material = skin_sprite.material as ShaderMaterial
 	if skin_material:
+		skin_material.set_shader_parameter("peel_radius", peel_shader_radius)
 		skin_material.set_shader_parameter("hit_points", damage_points)
 		skin_material.set_shader_parameter("hit_count", damage_points.size())
-		skin_sprite.material = skin_material
 		
+	print(skin_material.get_shader_parameter("hit_count"))
+	print(skin_material.get_shader_parameter("hit_points"))
 	# Update the aging shader and the HUD health bar.
 	_on_health_changed(health_component.current_health, stats.max_health)
 
 # This function is connected to the HealthComponent's 'damaged' signal.
 # It handles the visual effect of peeling the skin.
 func _on_damaged(amount: float, global_contact_point: Vector2, contact_normal: Vector2):
+	_ensure_skin_material_is_unique()
 	if damage_points.size() >= 64: return
 
 	# This block converts the global collision point into a 0-1 UV coordinate
@@ -387,6 +449,7 @@ func _on_damaged(amount: float, global_contact_point: Vector2, contact_normal: V
 	# Send the updated list of damage points to the shader.
 	var skin_material = skin_sprite.material as ShaderMaterial
 	if skin_material:
+		skin_material.set_shader_parameter("peel_radius", peel_shader_radius)
 		skin_material.set_shader_parameter("hit_points", damage_points)
 		skin_material.set_shader_parameter("hit_count", damage_points.size())
 
@@ -411,7 +474,7 @@ func heal(amount: float):
 	
 	# Visually "un-peel" by removing the most recent damage point.
 	if not damage_points.is_empty():
-		damage_points.pop_back()
+		damage_points.resize(damage_points.size() - 1)
 		# Force the shader to update with the smaller list of damage points.
 		var skin_material = skin_sprite.material as ShaderMaterial
 		if skin_material:
@@ -432,7 +495,7 @@ func add_starch(amount: int):
 # This is connected to the HealthComponent's 'died' signal.
 func _on_died():
 	print("Player has died!")
-	queue_free() # Destroy the player node.
+	SceneLoader.reload_current_scene()
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
 # It ensures the player's physics properties match the current StatBlock resource.
@@ -447,7 +510,9 @@ func apply_stats_from_resource():
 	
 	if grip_component:
 		grip_component.grip_strength = stats.grip
-	
+		
+	jump_strength = stats.jump_force
+
 	print("Player stats have been reapplied. New Grip value: ", stats.grip)
 
 # Loads a new ability scene into one of the designated slots.
@@ -466,7 +531,7 @@ func equip_ability(ability_scene: PackedScene, slot_number: int):
 # This function handles the smooth blending between our three collision shapes
 # based on the player's current speed. It is called every physics frame.
 func update_collision_shapes(current_speed: float):
-	
+
 	# --- STAGE 1: Blending from Detailed Polygon to Smooth Capsule ---
 	
 	# `smoothstep` is a mathematical function that creates a smooth S-curve interpolation.
@@ -515,3 +580,17 @@ func update_collision_shapes(current_speed: float):
 	collision_circle.shape.radius = lerp(0.01, target_circle_radius, t_capsule_to_circle)
 	# We enable the circle shape only when it starts to grow, to be efficient.
 	collision_circle.disabled = (t_capsule_to_circle < 0.01)
+
+func _ensure_skin_material_is_unique():
+	if _skin_material_made_unique:
+		return # Do nothing if we've already done this.
+	
+	if skin_sprite.material:
+		skin_sprite.material = skin_sprite.material.duplicate()
+		print("Player: Skin material has been made unique.")
+	
+	_skin_material_made_unique = true
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

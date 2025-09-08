@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b176bqb5uiawq"]
 
-[ext_resource type="Script" path="res://addons/angle_editor_plugin/angle_gizmo_2d.gd" id="1_p5q2p"]
+[ext_resource type="Script" uid="uid://b0qkwke0frjht" path="res://addons/angle_editor_plugin/angle_gizmo_2d.gd" id="1_p5q2p"]
 
 [node name="AngleGizmo2D" type="Node2D"]
 script = ExtResource("1_p5q2p")

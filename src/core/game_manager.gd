@@ -20,12 +20,23 @@
 extends Node
 
 # --- Global Signals ---
+## Emitted whenever a scene is going to be changed
+signal scene_changed
 ## Emitted whenever the player's health changes. The HUD listens to this.
 signal player_health_updated(current, max)
 ## Emitted whenever the starch point total changes. The HUD listens to this.
 signal starch_changed(new_amount)
+## Emitted whenever stats are being upgraded via Level Up Menu
+signal stat_upgraded(stat_name)
+## Emitted whenever the player is registered
+signal player_is_ready(player_node)
+signal ability1_cooldown_updated(progress)
+signal ability2_cooldown_updated(progress)
+
 
 # --- Game State Variables ---
+## Flag for indicating starting the Main Game (Menu & Stuff)
+var _initial_boot: bool = true
 ## The player's current currency.
 var current_starch_points: int = 0
 ## A flag set by the Main Menu to tell this manager how to handle the next scene load.
@@ -39,10 +50,11 @@ var slot_to_load: int = 1
 # nodes themselves when they become ready.
 var player_instance = null
 var player_stats: StatBlock = null # The "source of truth" StatBlock for the current game.
-var hud_instance = null
-var level_up_menu_instance = null
-var pause_menu_instance = null
-var save_load_menu_instance = null
+var level_path_to_load: String = ""
+var current_level_path: String = ""
+var collected_items: Dictionary = {}
+
+@export var game_paused: bool = false
 
 # --- Constants ---
 ## Preloading the default stats resource ensures we always have a clean template
@@ -58,6 +70,19 @@ func _ready():
 
 # --- Public API (Called from other scripts) ---
 
+func pause():
+	game_paused = true
+	get_tree().paused = true
+	GUI.show_pause_menu_backdrop()
+	
+func resume():
+	game_paused = false
+	get_tree().paused = false
+	GUI.hide_pause_menu_backdrop()
+	
+func quit():
+	get_tree().quit()
+
 ## This is called by the Main Menu before changing scenes to tell us what to do.
 func set_next_game_state(is_new: bool, slot: int):
 	next_scene_is_new_game = is_new
@@ -69,33 +94,67 @@ func prepare_for_scene_change():
 	# We clear all references to nodes from the old scene that is about to be destroyed.
 	print("GameManager: Clearing all node references before scene change.")
 	player_instance = null
-	hud_instance = null
-	level_up_menu_instance = null
-	pause_menu_instance = null
-	save_load_menu_instance = null
+	scene_changed.emit()
 
 ## This is called by the main game scene (Main.tscn) when it becomes ready.
 func on_game_scene_ready():
 	print("GameManager: Game scene is ready. Checking game state.")
+	if _initial_boot:
+		_initial_boot = false
+		# On the first boot, always show main menu.
+		SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn")
+		return 
+	# Subsequent calls focus on actualy gameplay, not the Main Menu
 	if next_scene_is_new_game:
 		reset_game_state()
+		SceneLoader.change_scene(level_path_to_load)
 	else:
 		load_game_after_player_ready()
+
+## NEW GAME
+func start_new_game_at_level(level_path: String):
+	# 1. Set the flags for what to do AFTER Main.tscn loads.
+	set_next_game_state(true, 1) # true = is a new game
+	level_path_to_load = level_path
+	
+	# 2. Prepare for the scene change and load Main.tscn.
+	prepare_for_scene_change()
+	SceneLoader.change_scene(SceneLoader.MAIN_GAME_SCENE)
+
+## LOAD GAME
+func start_loaded_game(slot: int):
+	set_next_game_state(false, slot) # false = is NOT a new game
+	prepare_for_scene_change()
+	SceneLoader.change_scene(SceneLoader.MAIN_GAME_SCENE)
 
 ## This function ensures we don't try to load data into a player that doesn't exist yet.
 func load_game_after_player_ready():
 	# We wait until both the Player and HUD have registered themselves.
-	while not is_instance_valid(player_instance) or not is_instance_valid(hud_instance):
+	while not is_instance_valid(player_instance):
 		await get_tree().process_frame # Wait one frame and check again.
 
 	# Now that we know they exist, it's safe to load.
 	SaveManager.load_game(slot_to_load)
+	var scene_root = get_tree().current_scene
+	var collectibles_in_scene = scene_root.find_children("*", "Collectible", true, false)
+	for item in collectibles_in_scene:
+		# Check if the item is a valid Collectible with an ID
+		if item is Collectible and not item.unique_id.is_empty():
+			# If its ID is in our newly loaded dictionary, remove it.
+			if is_item_collected(item.unique_id):
+				item.queue_free()
+	
+	var save_data = SaveManager.get_save_data(slot_to_load)
+	
 	player_instance.apply_stats_from_resource()
-	hud_instance.update_starch_label(current_starch_points) # Force a final UI refresh.
+	
+	# After loading all the data, tell the player to update its visuals.
+	player_instance.call_deferred("force_visual_update")
 
 ## This resets all persistent data for a "New Game".
 func reset_game_state():
 	print("Game state is being reset for a new game.")
+	collected_items.clear()
 	current_starch_points = 0
 	# We create a fresh, clean copy of the default stats. This prevents stats
 	# from a previous game from "leaking" into the new one.
@@ -106,32 +165,20 @@ func reset_game_state():
 	if is_instance_valid(player_instance):
 		player_instance.stats = player_stats
 		player_instance.apply_stats_from_resource()
-	
-	if hud_instance:
-		hud_instance.update_starch_label(current_starch_points)
+
+## This is called by the SceneLoader AFTER a new level has been instanced.
+## It decides whether to reset for a new game or trigger a load.
+func on_level_loaded():
+	print("GameManager: A level has finished loading. Checking state.")
+	if next_scene_is_new_game:
+		reset_game_state()
+	else:
+		print("GameManager: State is 'Load Game'. Initiating load sequence.")
+		load_game_after_player_ready()
+
 
 # --- Registration Callbacks (Called by nodes from their _ready() functions) ---
-func on_hud_ready(hud):
-	print("GameManager: Received 'hud_ready' confirmation. Wiring UI.")
-	hud_instance = hud
-	# Now that we have a safe reference, we connect our signals to its methods.
-	starch_changed.connect(hud_instance.update_starch_label)
-	player_health_updated.connect(hud_instance.update_health_bar)
-	# Immediately sync the UI with current data.
-	hud_instance.update_starch_label(current_starch_points)
-	if player_instance:
-		hud_instance.connect_ability_signals(player_instance)
-		hud_instance.update_health_bar(player_instance.health_component.current_health, player_instance.health_component.max_health)
 
-func on_level_up_menu_ready(menu):
-	level_up_menu_instance = menu
-
-func on_pause_menu_ready(menu):
-	pause_menu_instance = menu
-
-func on_saveload_menu_ready(menu):
-	save_load_menu_instance = menu
-	
 func register_player(player, health_comp: CHealth):
 	print("GameManager: Player has registered.")
 	player_instance = player
@@ -145,18 +192,31 @@ func register_player(player, health_comp: CHealth):
 	health_comp.max_health = player_stats.max_health
 	health_comp.current_health = player_stats.max_health
 	health_comp.health_changed.connect(on_player_health_updated)
+	
+	if player.ability1_slot.get_child_count() > 0:
+		var ability1 = player.ability1_slot.get_child(0) as Ability
+		ability1.cooldown_updated.connect(on_ability1_cooldown_updated)
+			
+	if player.ability2_slot.get_child_count() > 0:
+		var ability2 = player.ability2_slot.get_child(0) as Ability
+		ability2.cooldown_updated.connect(on_ability2_cooldown_updated)
+	
+	player_is_ready.emit(player)
 
-	# If the HUD is already ready, connect the player to it.
-	if hud_instance:
-		hud_instance.connect_ability_signals(player)
-		hud_instance.update_health_bar(health_comp.current_health, health_comp.max_health)
+
+func register_collected_item(id: String):
+	if not id.is_empty():
+		collected_items[id] = true
+
+func is_item_collected(id: String) -> bool:
+	if not id.is_empty():
+		return collected_items.has(id)
+	return false
+	
+func is_player_active() -> bool:
+	return player_instance != null
 
 # --- Game Logic Functions ---
-func open_pause_menu():
-	if pause_menu_instance: pause_menu_instance.open_menu()
-func open_saveload_menu():
-	if save_load_menu_instance: save_load_menu_instance.open_menu()
-	
 ## This is a "setter" function. It's the one safe way to change starch points.
 func set_starch_points(amount: int):
 	current_starch_points = amount
@@ -167,9 +227,15 @@ func add_starch_points(amount: int):
 	# We call our own setter to ensure the signal is always emitted.
 	set_starch_points(current_starch_points + amount)
 
-func on_player_health_updated(current: float, max: float):
+func on_player_health_updated(current: float, max_health: float):
 	# The GameManager acts as a middleman, re-broadcasting the signal to listeners.
-	player_health_updated.emit(current, max)
+	player_health_updated.emit(current, max_health)
+
+func on_ability1_cooldown_updated(progress: float):
+	ability1_cooldown_updated.emit(progress)
+
+func on_ability2_cooldown_updated(progress: float):
+	ability2_cooldown_updated.emit(progress)
 
 func spend_starch_points(amount: int):
 	current_starch_points -= amount
@@ -182,5 +248,6 @@ func upgrade_stat(stat_name: String, amount: float):
 		var new_value = player_stats.get(stat_name)
 		print("Upgraded '%s' from %s to %s" % [stat_name, current_value, new_value])
 		player_instance.apply_stats_from_resource()
+		stat_upgraded.emit(stat_name)
 	else:
 		print("Upgrade failed: Player or stats not found.")

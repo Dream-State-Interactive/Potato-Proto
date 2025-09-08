@@ -1,11 +1,6 @@
-extends Node2D
+# level_select_menu.gd
+extends BaseMenu
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _ready():
+	super()  # runs BaseMenu._ready(): registers, hides, wires Back
+	# …now do whatever else you need, e.g. populate your level buttons…

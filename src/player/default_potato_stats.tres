@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="StatBlock" load_steps=2 format=3 uid="uid://dax0j8i6642dt"]
 
-[ext_resource type="Script" path="res://src/player/stat_block.gd" id="1_beqc3"]
+[ext_resource type="Script" uid="uid://psekykiwhq3t" path="res://src/player/stat_block.gd" id="1_beqc3"]
 
 [resource]
 script = ExtResource("1_beqc3")
 max_health = 100.0
 mass = 1.0
 grip = 1.0
-bounce = 0.5
+bounce = 0.35
 roll_speed = 5000.0
-jump_force = 500.0
+jump_force = 50.0
 horizontal_nudge = 1000.0

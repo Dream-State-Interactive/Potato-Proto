@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf3d226phwoyn"]
+
+[ext_resource type="Script" uid="uid://dx6ueoejb02x4" path="res://src/ui/components/dropdown_selection.gd" id="1_gagr5"]
+
+[node name="DropdownSelection" type="OptionButton"]
+offset_right = 32.0
+offset_bottom = 20.0
+item_count = 1
+popup/item_0/id = 0
+script = ExtResource("1_gagr5")
+metadata/linkedSettingName = ""
+
+[connection signal="item_selected" from="." to="." method="_on_item_selected"]

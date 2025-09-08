@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DialogueResource" load_steps=5 format=3 uid="uid://cihgmc4rdcu4m"]
+
+[ext_resource type="Script" uid="uid://ly6cd7llx4r3" path="res://src/dialogue/DialogueResource.gd" id="1_s7t14"]
+[ext_resource type="Script" uid="uid://bjhexxha8vley" path="res://src/dialogue/DialogueLineResource.gd" id="1_uu8nx"]
+
+[sub_resource type="Resource" id="Resource_1esp0"]
+script = ExtResource("1_uu8nx")
+speaker_key = &"potato_sick"
+text_key = &"POTATO_SICK_LINE"
+
+[sub_resource type="Resource" id="Resource_7djt5"]
+script = ExtResource("1_uu8nx")
+speaker_key = &"bustin"
+text_key = &"BUSTIN_FEELS_GOOD"
+
+[resource]
+script = ExtResource("1_s7t14")
+lines = Array[ExtResource("1_uu8nx")]([SubResource("Resource_1esp0"), SubResource("Resource_7djt5")])

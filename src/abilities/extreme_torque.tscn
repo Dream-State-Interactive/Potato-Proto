@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dud168e6yjyca"]
 
-[ext_resource type="Script" path="res://src/abilities/extreme_torque.gd" id="1_2qsev"]
+[ext_resource type="Script" uid="uid://bddp7xscm0478" path="res://src/abilities/extreme_torque.gd" id="1_2qsev"]
 
 [node name="ExtremeTorque" type="Node2D"]
 script = ExtResource("1_2qsev")

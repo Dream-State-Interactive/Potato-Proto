@@ -15,7 +15,7 @@
 #   loading data, which is a critical step to apply loaded states correctly.
 #
 # =============================================================================
-extends CanvasLayer
+extends BaseMenu
 
 # --- Node References ---
 @onready var save_button_1: Button = $MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/SaveSlot1Button
@@ -25,31 +25,15 @@ extends CanvasLayer
 
 # --- Godot Functions ---
 func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	super() # calls BaseMenu._ready(self)
 	
 	# Connect buttons to their respective functions.
 	save_button_1.pressed.connect(on_save_pressed.bind(1))
 	load_button_1.pressed.connect(on_load_pressed.bind(1))
-	back_button.pressed.connect(hide_menu)
+	back_button.pressed.connect(MenuManager.back)
 	
-	# Announce readiness to the GameManager.
-	await get_tree().process_frame
-	GameManager.on_saveload_menu_ready(self)
-	
-	hide()
 
 # --- Public & Internal Functions ---
-## Shows the menu.
-func open_menu():
-	update_buttons() # Refresh button states before showing.
-	show()
-	# The game is already paused by the PauseMenu, so we don't need to pause it again.
-
-## Hides this menu and tells the GameManager to re-open the main pause menu.
-func hide_menu():
-	hide()
-	GameManager.open_pause_menu()
-
 ## Called when a "Save" button is pressed.
 func on_save_pressed(slot_number: int):
 	SaveManager.save_game(slot_number)
@@ -57,16 +41,28 @@ func on_save_pressed(slot_number: int):
 
 ## Called when a "Load" button is pressed.
 func on_load_pressed(slot_number: int):
-	# 1. Tell the GameManager that the NEXT scene load is NOT a new game.
-	#    This is crucial for the game to correctly load data instead of resetting.
+	# 1. "Peek" at the save data first to find out where we need to go.
+	var save_data = SaveManager.get_save_data(slot_number)
+	if save_data.is_empty():
+		print("ERROR: Could not read save file for slot %d" % slot_number)
+		return
+
+	# 2. Extract the level path from the save data.
+	# get() calls won't crash even if the keys don't exist.
+	var level_to_load = save_data.get("game_state", {}).get("current_level_path")
+	if not level_to_load or level_to_load.is_empty():
+		print("ERROR: Save file for slot %d has no valid level path." % slot_number)
+		return
+
+	# 3. Now that we have a valid destination, set the GameManager state.
 	GameManager.set_next_game_state(false, slot_number)
 	
-	# 2. ALWAYS unpause the game before changing or reloading a scene.
+	# 4. Unpause the game.
 	get_tree().paused = false
 	
-	# 3. Use our safe SceneLoader to reload the current scene. The GameManager
-	#    is now prepared for what to do after the reload finishes.
-	SceneLoader.reload_current_scene()
+	# 5. Tell the SceneLoader to go to the level from the save file.
+	print("Loading level '%s' from save slot %d" % [level_to_load, slot_number])
+	SceneLoader.change_scene(level_to_load)
 
 ## Updates button text and disabled states based on whether save files exist.
 func update_buttons():
