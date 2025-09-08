@@ -47,6 +47,7 @@ var stats: StatBlock
 ## A gameplay toggle. If true, the player will not take damage when the
 ## high-speed circle collider is active.
 @export var invincible_at_high_speed: bool = true
+@export var INDESTRUCTIBLE_VELOCITY: float = 4000.0
 
 # player.gd
 
@@ -245,7 +246,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 	if invincible_at_high_speed:
 		# The condition for invincibility is that our high-speed circle collider
 		# is active (not disabled) AND has grown to at least 95% of its final size.
-		if not collision_circle.disabled and collision_circle.shape.radius >= target_circle_radius * 0.95:
+		if not collision_circle.disabled and collision_circle.shape.radius >= target_circle_radius * 0.95 and linear_velocity.length() > INDESTRUCTIBLE_VELOCITY:
 			is_invincible = true
 			
 	# --- 3. HAZARD COLLISION & DAMAGE LOGIC ---
