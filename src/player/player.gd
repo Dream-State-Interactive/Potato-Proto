@@ -104,6 +104,7 @@ const high_speed_threshold: float = 12
 
 # --- Components ---
 @onready var health_component: CHealth = $HealthComponent
+@onready var armor_component: CArmor = $ArmorComponent
 @onready var grip_component: CGrip = $GripComponent
 
 # --- Visuals ---
@@ -537,6 +538,9 @@ func apply_stats_from_resource():
 	
 	if grip_component:
 		grip_component.grip_strength = stats.grip
+		
+	if armor_component && stats.armor:
+		armor_component.armor = stats.armor
 		
 	jump_strength = stats.jump_force
 

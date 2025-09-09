@@ -28,7 +28,7 @@ const SAVE_FILE_SUFFIX = ".json"
 ## If you add a new stat to StatBlock.gd that needs to be saved, just add its
 ## string name to this array.
 const STATS_TO_SAVE = [
-	"grip", "bounce", "roll_speed", 
+	"grip", "bounce", "roll_speed", "armor",
 	"jump_force", "horizontal_nudge", "max_health"
 ]
 
