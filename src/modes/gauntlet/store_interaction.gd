@@ -33,6 +33,6 @@ func _process(_delta):
 		print("STORE INTERACTION: Opening store UI...")
 		match store_type:
 			StoreType.LEVEL_UP:
-				GUI.toggle_level_up_menu()
+				GUI.toggle_stat_upgrade_menu()
 			StoreType.ABILITY:
 				GUI.toggle_ability_menu()

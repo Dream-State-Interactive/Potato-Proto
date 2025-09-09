@@ -7,7 +7,8 @@ class_name StatBlock extends Resource
 @export_group("Physics")
 @export var mass: float = 1.0
 @export var grip: float = 1.0
-@export var bounce: float = 0.5
+@export var bounce: float = 0.35
 @export var roll_speed: float = 5000.0
 @export var jump_force: float = 50.0
 @export var horizontal_nudge: float = 1000.0
+@export var armor: float = 0.0

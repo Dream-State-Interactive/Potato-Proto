@@ -38,7 +38,7 @@ func _ready():
 # Prevents being unable to use "toggle_upgrades" after interacting with a level_up_menu button
 func _input(event: InputEvent):
 	if event.is_action_pressed("toggle_upgrades"):
-		GUI.toggle_level_up_menu()
+		GUI.toggle_stat_upgrade_menu()
 		get_viewport().set_input_as_handled()
 
 func connect_upgrade_buttons():
@@ -61,7 +61,7 @@ func _on_upgrade_pressed(index: int):
 	clear_focus()
 
 func _on_close_pressed():
-	GUI.toggle_level_up_menu()
+	GUI.toggle_stat_upgrade_menu()
 
 func set_initial_focus():
 	var focused = get_viewport().gui_get_focus_owner()

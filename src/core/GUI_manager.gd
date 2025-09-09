@@ -60,7 +60,7 @@ func _unhandled_input(event: InputEvent):
 			return
 
 		if GameManager.is_player_active():
-			toggle_level_up_menu()
+			toggle_stat_upgrade_menu()
 			get_viewport().set_input_as_handled()
 		
 	# Handle the Ability Menu action.
@@ -88,7 +88,7 @@ func toggle_ability_menu():
 		ability_menu_instance.show()
 		GameManager.pause()
 
-func toggle_level_up_menu():
+func toggle_stat_upgrade_menu():
 	# Prevent level_up_menu from being opened in Main Menu.
 	if not is_instance_valid(GameManager.player_instance) or not GameManager.player_stats:
 		print("LevelUpMenu blocked: No valid player or stats.")

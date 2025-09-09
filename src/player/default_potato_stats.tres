@@ -11,3 +11,4 @@ bounce = 0.35
 roll_speed = 5000.0
 jump_force = 50.0
 horizontal_nudge = 1000.0
+armor = 0.0
