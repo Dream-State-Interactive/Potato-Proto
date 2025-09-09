@@ -8,6 +8,13 @@
 layer = 4
 script = ExtResource("1_ui71n")
 
+[node name="Control" parent="." instance=ExtResource("3_0mjjs")]
+z_index = -5
+offset_left = -1340.0
+offset_top = -278.0
+offset_right = -2287.0
+offset_bottom = -801.0
+
 [node name="ButtonContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -62,12 +69,6 @@ theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 49
 text = "Quit
 "
-
-[node name="Control" parent="." instance=ExtResource("3_0mjjs")]
-offset_left = -1340.0
-offset_top = -278.0
-offset_right = -2287.0
-offset_bottom = -801.0
 
 [connection signal="pressed" from="ButtonContainer/StandardButtonPlay" to="ButtonContainer/StandardButtonPlay" method="_on_new_game_pressed"]
 [connection signal="pressed" from="ButtonContainer/StandardButtonQuit" to="ButtonContainer/StandardButtonPlay" method="_on_standard_button_quit_pressed"]

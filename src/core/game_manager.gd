@@ -38,7 +38,29 @@ signal ability2_cooldown_updated(progress)
 ## Flag for indicating starting the Main Game (Menu & Stuff)
 var _initial_boot: bool = true
 ## The player's current currency.
-@export var current_starch_points: int = 0
+@export var current_starch_points: int = 0:
+	set(value):
+		print("Current starch points: " + str(value))
+		if value <= 0:
+			current_starch_points = 0
+		else:
+			var old_value = current_starch_points
+			if value > old_value:
+				total_starch_points += (value - old_value)
+			current_starch_points = value
+		starch_changed.emit(current_starch_points)
+	get:
+		return current_starch_points		
+## Total starch points for this run
+@export var total_starch_points: int = 0:
+	set(value):
+		print("Total starch points: " + str(value))
+		if value <= 0:
+			total_starch_points = 0
+		else:
+			total_starch_points = value
+	get:
+		return total_starch_points
 ## A flag set by the Main Menu to tell this manager how to handle the next scene load.
 var next_scene_is_new_game: bool = true
 ## The save slot to use when loading a game.
@@ -164,9 +186,10 @@ func load_game_after_player_ready():
 
 ## This resets all persistent data for a "New Game".
 func reset_game_state():
-	print("Game state is being reset for a new game.")
+	print("Game state reset")
 	collected_items.clear()
 	current_starch_points = 0
+	total_starch_points = 0
 	# We create a fresh, clean copy of the default stats. This prevents stats
 	# from a previous game from "leaking" into the new one.
 	player_stats = DEFAULT_STATS.duplicate(true)
@@ -233,15 +256,12 @@ func is_player_active() -> bool:
 	return player_instance != null
 
 # --- Game Logic Functions ---
-## This is a "setter" function. It's the one safe way to change starch points.
-func set_starch_points(amount: int):
-	current_starch_points = amount
-	# By emitting the signal here, we guarantee the UI always updates.
-	starch_changed.emit(current_starch_points)
 
 func add_starch_points(amount: int):
-	# We call our own setter to ensure the signal is always emitted.
-	set_starch_points(current_starch_points + amount)
+	current_starch_points += amount
+
+func spend_starch_points(amount: int):
+	current_starch_points -= amount
 
 func on_player_health_updated(current: float, max_health: float):
 	# The GameManager acts as a middleman, re-broadcasting the signal to listeners.
@@ -252,10 +272,6 @@ func on_ability1_cooldown_updated(progress: float):
 
 func on_ability2_cooldown_updated(progress: float):
 	ability2_cooldown_updated.emit(progress)
-
-func spend_starch_points(amount: int):
-	current_starch_points -= amount
-	starch_changed.emit(current_starch_points)
 
 func upgrade_stat(stat_name: String, amount: float):
 	if player_instance and player_stats:
