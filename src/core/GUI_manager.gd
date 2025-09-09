@@ -59,17 +59,18 @@ func _unhandled_input(event: InputEvent):
 			# print("Blocked opening Level Up Menu because game is paused.")
 			return
 
-		# If not paused, proceed with the normal toggle logic.
-		toggle_level_up_menu()
-		get_viewport().set_input_as_handled()
+		if GameManager.is_player_active():
+			toggle_level_up_menu()
+			get_viewport().set_input_as_handled()
 		
 	# Handle the Ability Menu action.
 	if event.is_action_pressed("ability_menu"):
 		if get_tree().paused and not ability_menu_instance.is_visible():
 			return
 		
-		toggle_ability_menu()
-		get_viewport().set_input_as_handled()
+		if GameManager.is_player_active():
+			toggle_ability_menu()
+			get_viewport().set_input_as_handled()
 
 func toggle_ability_menu():
 	# Prevent the menu from being opened if there's no player (e.g., in the Main Menu).
@@ -152,14 +153,16 @@ func _on_show_menu_requested(menu_path: String):
 func _on_hide_all_menus_requested():
 	for child in menu_container.get_children():
 		child.queue_free()
-	hud_instance.show()
+	if GameManager.is_player_active():
+		hud_instance.show()
+	else:
+		hud_instance.hide()
 
 func _on_player_is_ready(player_node: Player):
 	hud_instance.show()
 	hud_instance.connect_to_game_manager_signals()
 
 func _on_leaving_game_world():
-	print("GUI: Leaving game world. Hiding HUD.")
 	# When the SceneLoader tells us we are leaving the level, hide the in-game UI.
 	hud_instance.hide()
 	level_up_menu_instance.hide()

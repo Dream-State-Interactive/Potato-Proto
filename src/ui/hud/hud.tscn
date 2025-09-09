@@ -153,7 +153,7 @@ text = "E"
 
 [node name="Howtoplay" type="Sprite2D" parent="."]
 position = Vector2(137, 983)
-scale = Vector2(0.262839, 0.262839)
+scale = Vector2(0.254219, 0.254219)
 texture = ExtResource("4_ariom")
 
 [node name="Node" type="Node" parent="Howtoplay"]

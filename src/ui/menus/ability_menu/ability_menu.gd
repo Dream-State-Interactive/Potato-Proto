@@ -58,12 +58,6 @@ func _ready():
 	e_slot.hovered.connect(_on_any_icon_hovered)
 	e_slot.unhovered.connect(_on_any_icon_unhovered)
 
-
-func _input(event: InputEvent):
-	if event.is_action_pressed("ability_menu"):
-		GUI.toggle_ability_menu()
-		get_viewport().set_input_as_handled()
-
 ## Called when an ability is dropped on the 'Q' slot.
 func _on_q_ability_assigned(resource: AbilityInfo):
 	print("Assigning ", resource.ability_name, " to slot 1 (Q)")

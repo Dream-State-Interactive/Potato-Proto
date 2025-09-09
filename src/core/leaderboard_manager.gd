@@ -2,7 +2,7 @@ extends Node
 
 @export var currentLeaderboard: Array
 @export var minimum_highscore: int
-@export var NUM_LEADERS_TO_SHOW: int = 8
+@export var NUM_LEADERS_TO_SHOW: int = 10
 
 signal leaderboard_updated
 
@@ -11,12 +11,12 @@ var DEFAULT_LEADERS: Array = [
 	LeaderboardEntry.new("Lil fry", 5000),
 	LeaderboardEntry.new("Spuds Mackenzie", 10000),
 	LeaderboardEntry.new("Tony Starch", 25000),
-	LeaderboardEntry.new("Old MacDundle", 50000)
+	LeaderboardEntry.new("Goobie", 50000),
+	LeaderboardEntry.new("Old MacDundle", 100000)
 ]
 
 const NUM_LEADERS_SAVED = 100 # Overkill, but overhead is minimal
 var LEADERBOARD_FILE_PATH = OS.get_data_dir() + "/Potato Game/leaderboard.json"
-
 
 class LeaderboardEntry:
 	var name: String = ""
