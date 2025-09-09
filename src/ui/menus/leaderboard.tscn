@@ -25,10 +25,19 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 75
 
-[node name="StandardButton" parent="." instance=ExtResource("3_imia6")]
+[node name="BackButton" parent="." instance=ExtResource("3_imia6")]
 offset_left = 1553.0
 offset_top = 954.0
 offset_right = 5009.0
 offset_bottom = 2078.72
 text = "Back"
 metadata/PushMenu = "back"
+
+[node name="WipeLeaderboardButton" parent="." instance=ExtResource("3_imia6")]
+offset_left = 1674.0
+offset_top = 13.0
+offset_right = 5130.0
+offset_bottom = 1137.72
+scale = Vector2(0.07, 0.07)
+text = "Wipe board"
+metadata/PushMenu = "res://src/ui/menus/confirm_modal.tscn"

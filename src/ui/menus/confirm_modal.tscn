@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://da4kiklfn0i08"]
+
+[ext_resource type="Script" uid="uid://cb86vq6trxmbm" path="res://src/ui/menus/confirm_modal.gd" id="1_62xem"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="1_iyt6l"]
+
+[node name="ConfirmModal" type="Node2D"]
+script = ExtResource("1_62xem")
+
+[node name="ClearLeadersButton" parent="." instance=ExtResource("1_iyt6l")]
+offset_left = 688.0
+offset_top = 362.0
+offset_right = 4144.0
+offset_bottom = 1486.72
+text = "Clear leaders"
+metadata/PushMenu = "back"
+
+[node name="BackButton" parent="." instance=ExtResource("1_iyt6l")]
+offset_left = 688.0
+offset_top = 504.0
+offset_right = 4144.0
+offset_bottom = 1628.72
+text = "Back"
+metadata/PushMenu = "back"
+
+[connection signal="pressed" from="ClearLeadersButton" to="." method="_on_clear_leaders_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
