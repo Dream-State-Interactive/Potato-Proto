@@ -1,7 +1,7 @@
 extends Node2D
 
 var highscore_submitted = false
-@onready var nameInput = $LineEdit
+@onready var nameInput = $NameLineEntry
 @onready var submitHighScoreButton = $SubmitHighscoreButton
 var score = GameManager.last_player_score
 
