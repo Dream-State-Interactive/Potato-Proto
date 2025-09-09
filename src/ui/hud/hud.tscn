@@ -63,6 +63,14 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_cpm4x")
 theme_override_font_sizes/font_size = 40
 
+[node name="ScoreLabel" type="Label" parent="TopLeft_VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_cpm4x")
+theme_override_font_sizes/font_size = 40
+
 [node name="BottomRight_HBox" type="HBoxContainer" parent="."]
 anchors_preset = 3
 anchor_left = 1.0
@@ -111,14 +119,14 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Howtoplay" type="Sprite2D" parent="."]
-position = Vector2(161, 977)
-scale = Vector2(0.237723, 0.237723)
+position = Vector2(137, 983)
+scale = Vector2(0.213124, 0.213124)
 texture = ExtResource("4_ariom")
 
 [node name="Node" type="Node" parent="Howtoplay"]
 script = ExtResource("5_cio14")
 enable_hover_effect = false
 enable_pulse_effect = true
-pulse_min_scale = 0.2
-pulse_max_scale = 0.24
+pulse_min_scale = 0.25
+pulse_max_scale = 0.265
 pulse_duration = 6.0

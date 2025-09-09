@@ -27,6 +27,7 @@ var _was_on_floor := false
 
 const DASHES_AVAILABLE = 2
 const STARCH_HEAL_VALUE = 2
+const SCORE_DISTANCE_NORMALIZER = 1
 
 const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this as floor
 
@@ -132,6 +133,7 @@ var original_polygon_points: PackedVector2Array # A backup of the detailed colli
 var _is_gripping: bool = false             # Tracks if the CGrip component is currently active.
 var ready_for_combo = false
 var _skin_material_made_unique: bool = false
+var score = 0
 
 
 # =============================================================================
@@ -198,10 +200,20 @@ func _process(delta: float):
 		if flesh_material:
 			flesh_material.set_shader_parameter("aging_factor", current_aging_level)
 			
+	var new_score = generate_score()
+	if(new_score > score):
+		score = new_score
+			
 	#if Input.is_action_just_released("scroll_up"):
 		#adjust_zoom(1.2)
 	#elif Input.is_action_just_released("scroll_down"):
 		#adjust_zoom(1 / 1.2)
+
+func generate_score():
+	var player_position = global_transform.origin
+	var root_position = Vector2(0,0)
+	var distance = player_position.distance_to(root_position) * SCORE_DISTANCE_NORMALIZER
+	return distance
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("up"):
