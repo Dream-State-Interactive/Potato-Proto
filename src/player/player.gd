@@ -419,10 +419,6 @@ func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("ability_2"):
 		if ability2_slot.get_child_count() > 0:
 			(ability2_slot.get_child(0) as Ability).activate(self)
-			
-	#if event.is_action_pressed("toggle_upgrades"):
-		## We use GUI manager to open the level up menu.
-		#GUI.toggle_level_up_menu()
 
 # =============================================================================
 # --- CUSTOM FUNCTIONS ---
