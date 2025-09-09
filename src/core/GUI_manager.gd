@@ -15,7 +15,6 @@ var _overlay: ColorRect
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	print("GUI RUNNING")
 	hud_instance = HUD.instantiate()
 	add_child(hud_instance)
 	hud_instance.hide()
@@ -106,7 +105,6 @@ func hide_pause_menu_backdrop():
 		_overlay.queue_free()
 		_overlay = null
 
-
 # --- Signals ---
 
 # MenuManager will request this to show a menu.
@@ -127,8 +125,6 @@ func _on_hide_all_menus_requested():
 	hud_instance.show()
 
 func _on_player_is_ready(player_node: Player):
-	print("GUI: Player is ready. Connecting HUD.")
-	# Show the HUD and connect it.
 	hud_instance.show()
 	hud_instance.connect_to_game_manager_signals()
 
