@@ -22,6 +22,8 @@ emission_shape = 3
 emission_box_extents = Vector3(950, 0, 1)
 angle_min = -9.99999
 angle_max = 11.0
+angular_velocity_min = -75.0
+angular_velocity_max = 75.0
 gravity = Vector3(0, 69, 0)
 radial_accel_min = -2.23517e-06
 radial_accel_max = 6.0
@@ -39,7 +41,7 @@ script = ExtResource("1_30dhv")
 position = Vector2(980, 101)
 amount = 100
 texture = ExtResource("2_f3ram")
-lifetime = 7.0
+lifetime = 6.8
 visibility_rect = Rect2(-350, -100, 1920, 1080)
 process_material = SubResource("ParticleProcessMaterial_kust7")
 
