@@ -7,11 +7,11 @@ extends Node
 signal leaderboard_updated
 
 var DEFAULT_LEADERS: Array = [
-	LeaderboardEntry.new("Jimmy Jones", 25000),
-	LeaderboardEntry.new("Lil fry", 50000),
-	LeaderboardEntry.new("Spuds Mackenzie", 100000),
-	LeaderboardEntry.new("Tony Starch", 250000),
-	LeaderboardEntry.new("Old MacDundle", 500000)
+	LeaderboardEntry.new("Jimmy Jones", 2500),
+	LeaderboardEntry.new("Lil fry", 5000),
+	LeaderboardEntry.new("Spuds Mackenzie", 10000),
+	LeaderboardEntry.new("Tony Starch", 25000),
+	LeaderboardEntry.new("Old MacDundle", 50000)
 ]
 
 const NUM_LEADERS_SAVED = 100 # Overkill, but overhead is minimal
@@ -71,7 +71,8 @@ func update_leaderboard(entry: LeaderboardEntry) -> void:
 	currentLeaderboard.append(entry)
 	currentLeaderboard.sort_custom(leaderboard_entry_sort_descending)
 	currentLeaderboard = currentLeaderboard.slice(0, NUM_LEADERS_SAVED)
-	minimum_highscore = currentLeaderboard[NUM_LEADERS_TO_SHOW - 1].score
+	var endOfArray = currentLeaderboard.size() - 1 if NUM_LEADERS_TO_SHOW - 1 > currentLeaderboard.size() - 1 else NUM_LEADERS_TO_SHOW - 1
+	minimum_highscore = currentLeaderboard[endOfArray].score
 	leaderboard_updated.emit()
 	save_leaderboard()
 		

@@ -7,7 +7,7 @@ var configFile = ConfigFile.new()
 
 const SECTION_META := "meta"
 const KEY_SCHEMA := "schema_version"
-const CURRENT_SCHEMA := 0 # bump when you change layout/types
+const CURRENT_SCHEMA := 1 # bump when you change layout/types
 
 func _ready() -> void:
 	load_settings()

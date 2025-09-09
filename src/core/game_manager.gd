@@ -38,7 +38,7 @@ signal ability2_cooldown_updated(progress)
 ## Flag for indicating starting the Main Game (Menu & Stuff)
 var _initial_boot: bool = true
 ## The player's current currency.
-var current_starch_points: int = 0
+@export var current_starch_points: int = 0
 ## A flag set by the Main Menu to tell this manager how to handle the next scene load.
 var next_scene_is_new_game: bool = true
 ## The save slot to use when loading a game.

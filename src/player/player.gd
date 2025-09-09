@@ -28,7 +28,8 @@ var _was_on_floor := false
 
 const DASHES_AVAILABLE = 2
 const STARCH_HEAL_VALUE = 2
-const SCORE_DISTANCE_NORMALIZER = 1
+const SCORE_DISTANCE_NORMALIZER = 0.1
+const SCORE_POINTS_NORMALIZER = 10
 
 const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this as floor
 
@@ -80,6 +81,8 @@ var stats: StatBlock
 @export var jump_multiplier: float = 5.0
 
 @export var score = 0
+
+var prevDistance: float = 0
 
 const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
@@ -202,9 +205,7 @@ func _process(delta: float):
 		if flesh_material:
 			flesh_material.set_shader_parameter("aging_factor", current_aging_level)
 			
-	var new_score = generate_score()
-	if(new_score > score):
-		score = new_score
+	generate_score()
 			
 	#if Input.is_action_just_released("scroll_up"):
 		#adjust_zoom(1.2)
@@ -214,8 +215,15 @@ func _process(delta: float):
 func generate_score():
 	var player_position = global_transform.origin
 	var root_position = Vector2(0,0)
-	var distance = player_position.distance_to(root_position) * SCORE_DISTANCE_NORMALIZER
-	return distance
+	var distanceFromRoot = player_position.distance_to(root_position) - 414
+	var distanceFactor = distanceFromRoot * SCORE_DISTANCE_NORMALIZER
+	
+	var pointsFactor = GameManager.current_starch_points * SCORE_POINTS_NORMALIZER
+	
+	var new_score = distanceFactor + pointsFactor
+	
+	if(new_score > score):
+		score = new_score
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("up"):
@@ -511,6 +519,7 @@ func add_starch(amount: int):
 func _on_died():
 	print("Player has died!")
 	player_death.emit(score)
+	score = 0
 	SceneLoader.change_scene("res://src/ui/menus/leaderboardDeath.tscn")
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
