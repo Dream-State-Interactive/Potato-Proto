@@ -158,6 +158,17 @@ func generate_hill(params: Dictionary) -> Dictionary:
 	curve.bake_interval = vis_bake
 	var surface_points_visual: PackedVector2Array = curve.get_baked_points()
 
+	# Ensure the hill's surface never goes backward on the X-axis, which can create an invalid polygon (does NOT render!)
+	if surface_points_visual.size() > 1:
+		var filtered_visual_points := PackedVector2Array()
+		filtered_visual_points.append(surface_points_visual[0])
+		var last_x: float = surface_points_visual[0].x
+		for i in range(1, surface_points_visual.size()):
+			if surface_points_visual[i].x > last_x:
+				filtered_visual_points.append(surface_points_visual[i])
+				last_x = surface_points_visual[i].x
+		surface_points_visual = filtered_visual_points
+
 	curve.bake_interval = col_bake
 	var surface_points_collision: PackedVector2Array = curve.get_baked_points()
 

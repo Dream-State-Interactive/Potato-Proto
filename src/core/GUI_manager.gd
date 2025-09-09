@@ -5,12 +5,14 @@ class_name GameGUI
 # --- Preload the scenes this manager is responsible for ---
 const HUD = preload("res://src/ui/hud/hud.tscn")
 const LEVEL_UP_MENU = preload("res://src/ui/menus/level_up_menu.tscn")
+const ABILITY_MENU = preload("res://src/ui/menus/ability_menu/AbilityMenu.tscn")
 
 @onready var GUI_root = $"."
 @onready var menu_container: CanvasLayer = $MenuContainer
 @onready var menu_backdrop_container: CanvasLayer = $MenuBackdropContainer
 var hud_instance: CanvasLayer 
 var level_up_menu_instance: CanvasLayer
+var ability_menu_instance: CanvasLayer
 var _overlay: ColorRect
 
 func _ready():
@@ -23,6 +25,10 @@ func _ready():
 	add_child(level_up_menu_instance)
 	level_up_menu_instance.hide()
 	print(">>> LevelUpMenu instantiated in GUI: ", level_up_menu_instance)
+	ability_menu_instance = ABILITY_MENU.instantiate()
+	add_child(ability_menu_instance)
+	ability_menu_instance.hide()
+	
 	await self.ready
 	
 	MenuManager.show_menu_requested.connect(_on_show_menu_requested)
@@ -56,6 +62,30 @@ func _unhandled_input(event: InputEvent):
 		# If not paused, proceed with the normal toggle logic.
 		toggle_level_up_menu()
 		get_viewport().set_input_as_handled()
+		
+	# Handle the Ability Menu action.
+	if event.is_action_pressed("ability_menu"):
+		if get_tree().paused and not ability_menu_instance.is_visible():
+			return
+		
+		toggle_ability_menu()
+		get_viewport().set_input_as_handled()
+
+func toggle_ability_menu():
+	# Prevent the menu from being opened if there's no player (e.g., in the Main Menu).
+	if not is_instance_valid(GameManager.player_instance):
+		print("AbilityMenu blocked: No valid player instance.")
+		return
+		
+	if ability_menu_instance.is_visible():
+		ability_menu_instance.hide()
+		GameManager.resume()
+	else:
+		if get_tree().paused: 
+			return
+		
+		ability_menu_instance.show()
+		GameManager.pause()
 
 func toggle_level_up_menu():
 	# Prevent level_up_menu from being opened in Main Menu.

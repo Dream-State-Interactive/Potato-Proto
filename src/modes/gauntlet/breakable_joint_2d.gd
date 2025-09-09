@@ -40,6 +40,10 @@ func _physics_process(_delta):
 			queue_free()
 		return
 
+	# If both bodies are at rest, there is no relative velocity, so they can't break.
+	if body_a.sleeping and body_b.sleeping:
+		return
+
 	# 2D physics calculation for velocity at a specific point on a rotating body.
 	var world_pos: Vector2 = global_position
 

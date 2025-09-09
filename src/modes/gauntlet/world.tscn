@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c42sfrnl684n0"]
+[gd_scene load_steps=26 format=3 uid="uid://c42sfrnl684n0"]
 
 [ext_resource type="Script" uid="uid://b5uvm210kdlen" path="res://src/modes/gauntlet/special_segment_config.gd" id="2_3yl0h"]
 [ext_resource type="Script" uid="uid://csv3csdlqc0kk" path="res://src/modes/gauntlet/level_generator.gd" id="2_epjwl"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dathi73lenpye" path="res://src/levels/level_1/level_1.tscn" id="3_vl8ep"]
 [ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="4_4wyg8"]
 [ext_resource type="Script" uid="uid://xlwp7yn7gi56" path="res://src/modes/gauntlet/obstacle_generator.gd" id="4_e8qkv"]
+[ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="5_qulm8"]
 [ext_resource type="Script" uid="uid://ddi25xnwpkjik" path="res://src/hazards/spawner/hazard_system.gd" id="6_23j4r"]
 [ext_resource type="Script" uid="uid://db7g7ccxxxg0w" path="res://src/hazards/spawner/basic_hazard_spawner.gd" id="7_2aw0q"]
 [ext_resource type="Script" uid="uid://e4mw5qombqia" path="res://src/hazards/spawner/worm_hazard_spawner.gd" id="8_qulm8"]
@@ -48,6 +49,9 @@ script = ExtResource("2_epjwl")
 max_active_segments = 5
 player_path = NodePath("../PlayerSpawn")
 special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
+regular_store_interval = 4
+special_store_scene = ExtResource("5_qulm8")
+special_store_interval = 8
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("2_ow8bn")

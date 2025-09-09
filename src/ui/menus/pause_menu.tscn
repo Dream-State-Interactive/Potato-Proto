@@ -5,6 +5,7 @@
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
+layer = 5
 script = ExtResource("1_fc8qa")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

@@ -71,8 +71,8 @@ func get_worm_params() -> Dictionary:
 		"max_per_hill": worm_max_per_hill
 	}
 func get_obstacle_complexity() -> int:
-	# Cap complexity at 50 for the MVP to keep towers reasonable.
-	return min(50, max(1, current_level))
+	# Cap complexity at 20 for the MVP to keep towers reasonable.
+	return min(20, max(1, current_level))
 
 func get_hazard_density() -> float:
 	# The generator script will boost this value near the end of the hill.
