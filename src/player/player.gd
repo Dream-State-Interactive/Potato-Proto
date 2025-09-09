@@ -208,7 +208,7 @@ func _process(delta: float):
 		#adjust_zoom(1.2)
 	#elif Input.is_action_just_released("scroll_down"):
 		#adjust_zoom(1 / 1.2)
-
+		
 func generate_score():
 	var player_position = global_transform.origin
 	var root_position = Vector2(0,0)
@@ -508,7 +508,8 @@ func add_starch(amount: int):
 # This is connected to the HealthComponent's 'died' signal.
 func _on_died():
 	print("Player has died!")
-	SceneLoader.reload_current_scene()
+	Leaderboard.update_leaderboard(Leaderboard.LeaderboardEntry.new("It you mofucka!", score))
+	SceneLoader.change_scene("res://src/ui/menus/leaderboardDeath.tscn")
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
 # It ensures the player's physics properties match the current StatBlock resource.
