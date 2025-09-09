@@ -71,8 +71,13 @@ func take_damage(amount: float, contact_point: Vector2, contact_normal: Vector2)
 	if _current_health <= 0: 
 		return
 
-	# Assign to the current_health, not the internal variable _current_health.
-	self.current_health -= amount
+	var parent_node := get_parent()  # the Player root that owns this component
+	if parent_node:
+		var armor_component = parent_node.get_node_or_null("ArmorComponent") # or any name you use
+		if armor_component.armor > 0:
+			self.current_health -= amount * ((100 - armor_component.armor) / 100)
+		else:
+			self.current_health -= amount
 	
 	print("HealthComponent: Taking damage! Health is now ", current_health)
 	

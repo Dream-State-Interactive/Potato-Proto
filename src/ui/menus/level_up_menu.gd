@@ -10,7 +10,7 @@ extends CanvasLayer
 @onready var starch_points_label = vbox_container.get_node("StarchPointsLabel")
 @onready var grid_container = vbox_container.get_node("GridContainer")
 @onready var upgrade_roll_speed_button: Button = grid_container.get_node("UpgradeRollSpeedButton")
-@onready var upgrade_grip_button: Button = grid_container.get_node("UpgradeGripButton")
+@onready var upgrade_armor_button: Button = grid_container.get_node("UpgradeArmorButton")
 @onready var upgrade_jump_force_button: Button = grid_container.get_node("UpgradeJumpButton")
 
 # --- GODOT FUNCTIONS ---
@@ -20,14 +20,14 @@ func _ready():
 	print(">>> _ready() CALLED | upgrades.size():", upgrades.size())
 
 	upgrade_roll_speed_button.focus_mode = Control.FOCUS_NONE
-	upgrade_grip_button.focus_mode = Control.FOCUS_NONE
+	upgrade_armor_button.focus_mode = Control.FOCUS_NONE
 	upgrade_jump_force_button.focus_mode = Control.FOCUS_NONE
 
 	for upgrade in upgrades:
 		print(">>> UpgradeData: ", upgrade.stat_identifier, upgrade.upgrade_value)
 
 	# TEST the button references
-	print(">>> Buttons valid?", upgrade_roll_speed_button, upgrade_grip_button, upgrade_jump_force_button)
+	print(">>> Buttons valid?", upgrade_roll_speed_button, upgrade_armor_button, upgrade_jump_force_button)
 
 	if is_instance_valid(close_menu_button):
 		close_menu_button.pressed.connect(_on_close_pressed)
@@ -38,7 +38,7 @@ func _ready():
 # Prevents being unable to use "toggle_upgrades" after interacting with a level_up_menu button
 func _input(event: InputEvent):
 	if event.is_action_pressed("toggle_upgrades"):
-		GUI.toggle_level_up_menu()
+		GUI.toggle_stat_upgrade_menu()
 		get_viewport().set_input_as_handled()
 
 func connect_upgrade_buttons():
@@ -48,8 +48,8 @@ func connect_upgrade_buttons():
 		print("Connecting ROLL SPEED")
 		upgrade_roll_speed_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(0))
 	if upgrades.size() > 1:
-		print("Connecting GRIP")
-		upgrade_grip_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(1))
+		print("Connecting ARMOR")
+		upgrade_armor_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(1))
 	if upgrades.size() > 2:
 		print("Connecting JUMP")
 		upgrade_jump_force_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(2))
@@ -61,7 +61,7 @@ func _on_upgrade_pressed(index: int):
 	clear_focus()
 
 func _on_close_pressed():
-	GUI.toggle_level_up_menu()
+	GUI.toggle_stat_upgrade_menu()
 
 func set_initial_focus():
 	var focused = get_viewport().gui_get_focus_owner()

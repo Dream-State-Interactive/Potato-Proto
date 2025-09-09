@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://bqfgr51kvqkps"]
+
+[ext_resource type="Script" uid="uid://bt58c45o283vw" path="res://src/upgrades/upgrade_data.gd" id="1_qwsoo"]
+
+[resource]
+script = ExtResource("1_qwsoo")
+stat_identifier = "armor"
+upgrade_value = 5.0
+base_cost = 100
+cost_increase_per_level = 75
+metadata/_custom_type_script = "uid://bt58c45o283vw"

@@ -1,6 +1,8 @@
 # src/abilities/extreme_torque.gd
 extends Ability
 
+const SPEED_MULTIPLIER: float = 3.0
+
 func _ready():
 	cooldown_duration = 8.0
 	super()
@@ -15,5 +17,5 @@ func perform_ability(player_body: RigidBody2D):
 		roll_input = 1.0 
 		
 	# This torque value should be very large.
-	var torque_impulse = 50000.0
+	var torque_impulse = SPEED_MULTIPLIER * GameManager.player_instance.stats.roll_speed
 	player_body.apply_torque_impulse(roll_input * torque_impulse)

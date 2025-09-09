@@ -39,7 +39,7 @@ const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this a
 
 ## The single source of truth for all player stats. This is assigned by the
 ## GameManager at runtime to ensure consistency across new games and loaded games.
-var stats: StatBlock
+@export var stats: StatBlock
 
 @export var DEV_ROLL_MULTIPLIER: float = 1.0
 
@@ -104,6 +104,7 @@ const high_speed_threshold: float = 12
 
 # --- Components ---
 @onready var health_component: CHealth = $HealthComponent
+@onready var armor_component: CArmor = $ArmorComponent
 @onready var grip_component: CGrip = $GripComponent
 
 # --- Visuals ---
@@ -419,10 +420,6 @@ func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("ability_2"):
 		if ability2_slot.get_child_count() > 0:
 			(ability2_slot.get_child(0) as Ability).activate(self)
-			
-	#if event.is_action_pressed("toggle_upgrades"):
-		## We use GUI manager to open the level up menu.
-		#GUI.toggle_level_up_menu()
 
 # =============================================================================
 # --- CUSTOM FUNCTIONS ---
@@ -541,6 +538,9 @@ func apply_stats_from_resource():
 	
 	if grip_component:
 		grip_component.grip_strength = stats.grip
+		
+	if armor_component && stats.armor:
+		armor_component.armor = stats.armor
 		
 	jump_strength = stats.jump_force
 

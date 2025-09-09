@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dkw86e8mfcgdq"]
+[gd_scene load_steps=16 format=3 uid="uid://dkw86e8mfcgdq"]
 
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="1_h0bpx"]
 [ext_resource type="Script" uid="uid://67jayabmj46" path="res://src/player/player.gd" id="1_x7tc1"]
+[ext_resource type="Script" uid="uid://b63gcs743qk65" path="res://src/components/c_armor.gd" id="1_x42xx"]
 [ext_resource type="Texture2D" uid="uid://86main4wf7jk" path="res://assets/graphics/sprites/player/potato_skin.png" id="2_1icgn"]
 [ext_resource type="Resource" uid="uid://cv6662e3d63hm" path="res://src/abilities/stop_on_a_fry_info.tres" id="2_8ydov"]
 [ext_resource type="Shader" uid="uid://dilg0ml58mu0p" path="res://assets/Shaders/aging_shader.gdshader" id="2_hgswh"]
@@ -68,6 +69,10 @@ script = ExtResource("6_7bv2p")
 
 [node name="GripComponent" type="Node" parent="."]
 script = ExtResource("10_8vpk7")
+
+[node name="ArmorComponent" type="Node" parent="."]
+script = ExtResource("1_x42xx")
+metadata/_custom_type_script = "uid://b63gcs743qk65"
 
 [node name="DamageCooldownTimer" type="Timer" parent="."]
 one_shot = true
