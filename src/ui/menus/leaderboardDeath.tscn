@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://cni2kwlwt0nuf"]
+
+[ext_resource type="PackedScene" uid="uid://bb6ys66g5jiym" path="res://src/ui/menus/leaderboard.tscn" id="1_6ctuu"]
+[ext_resource type="Script" uid="uid://bt0xtxn3smn5y" path="res://src/ui/menus/leaderboard_death.gd" id="1_8rs73"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_8rs73"]
+[ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="4_jifrv"]
+
+[node name="LeaderboardDeath" type="Node2D"]
+script = ExtResource("1_8rs73")
+
+[node name="Leaderboard" parent="." instance=ExtResource("1_6ctuu")]
+
+[node name="RestartButton" parent="." instance=ExtResource("2_8rs73")]
+offset_left = 1186.0
+offset_top = 951.0
+offset_right = 4642.0
+offset_bottom = 2075.72
+text = "Restart"
+metadata/destination = "res://src/modes/gauntlet/world.tscn"
+
+[node name="MainMenuButton" parent="." instance=ExtResource("2_8rs73")]
+offset_left = 1554.0
+offset_top = 951.0
+offset_right = 5010.0
+offset_bottom = 2075.72
+text = "Main Menu"
+metadata/destination = "res://src/ui/menus/MainMenu.tscn"
+
+[node name="SubmitHighscoreButton" parent="." instance=ExtResource("2_8rs73")]
+offset_left = 892.0
+offset_top = 955.0
+offset_right = 4348.0
+offset_bottom = 2079.72
+scale = Vector2(0.07, 0.07)
+text = "Submit"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 26.0
+offset_top = 933.0
+offset_right = 234.0
+offset_bottom = 965.0
+scale = Vector2(4, 3.875)
+theme = ExtResource("4_jifrv")
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Potato"
+max_length = 12
+expand_to_text_length = true
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="SubmitHighscoreButton" to="." method="_on_submit_highscore_button_pressed"]

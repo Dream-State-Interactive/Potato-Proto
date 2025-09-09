@@ -9,6 +9,7 @@ extends CanvasLayer
 
 var speed
 var FPS
+var score
 const SPEED_NORMALIZER = 100
 
 # --- Godot Functions ---
@@ -32,6 +33,8 @@ func _process(delta: float) -> void:
 	if GameManager.is_player_active():
 		speed = int(GameManager.player_instance.linear_velocity.length() / SPEED_NORMALIZER)
 		$TopLeft_VBox/SpeedLabel.text = (str(int(speed)) + " MPH")
+		score = int(GameManager.player_instance.score)
+		$TopLeft_VBox/ScoreLabel.text = "SCORE: " + str(score)
 
 func connect_to_game_manager_signals():
 	print("HUD: Connecting to GameManager & Player signals.")

@@ -2,13 +2,12 @@
 
 extends Node
 
-const DEFAULT_CONFIG_FILE_NAME = "res://src/core/defaults.cfg"
 var PLAYER_CONFIG_FILE_NAME = OS.get_data_dir() + "/Potato Game/settings.cfg"
 var configFile = ConfigFile.new()
 
 const SECTION_META := "meta"
 const KEY_SCHEMA := "schema_version"
-const CURRENT_SCHEMA := 0 # bump when you change layout/types
+const CURRENT_SCHEMA := 1 # bump when you change layout/types
 
 func _ready() -> void:
 	load_settings()
@@ -43,6 +42,10 @@ func _migrate(from_schema: int) -> void:
 				_ensure_section_defaults("display", {
 					"display_mode": 0,
 					"display_resolution": Vector2i(1280, 720)
+				})
+			1:
+				_ensure_section_defaults("player", {
+					"name": "Potato"
 				})
 			_:
 				push_warning("Unknown migration step from %d" % v)

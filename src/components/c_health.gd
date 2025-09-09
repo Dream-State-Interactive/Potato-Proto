@@ -58,10 +58,6 @@ var current_health: float:
 		# 4. ALWAYS emit the signal when the value changes.
 		health_changed.emit(_current_health, max_health)
 		print("CHealth setter: Health is now %f / %f" % [_current_health, max_health])
-		
-		# 5. Check for death.
-		if _current_health == 0:
-			died.emit()
 
 # --- Godot Functions ---
 func _ready():

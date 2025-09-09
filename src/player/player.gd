@@ -20,6 +20,7 @@ extends RigidBody2D
 
 signal landed
 signal left_ground
+signal player_death(score: int)
 
 var can_air_dash := false
 var dashes_used: int = 0
@@ -27,6 +28,8 @@ var _was_on_floor := false
 
 const DASHES_AVAILABLE = 2
 const STARCH_HEAL_VALUE = 2
+const SCORE_DISTANCE_NORMALIZER = 0.1
+const SCORE_POINTS_NORMALIZER = 10
 
 const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this as floor
 
@@ -76,6 +79,10 @@ var stats: StatBlock
 @export var roll_multiplier: float = 1000.0
 @export var jump_strength: float = 50.0
 @export var jump_multiplier: float = 5.0
+
+@export var score = 0
+
+var prevDistance: float = 0
 
 const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
@@ -198,10 +205,25 @@ func _process(delta: float):
 		if flesh_material:
 			flesh_material.set_shader_parameter("aging_factor", current_aging_level)
 			
+	generate_score()
+			
 	#if Input.is_action_just_released("scroll_up"):
 		#adjust_zoom(1.2)
 	#elif Input.is_action_just_released("scroll_down"):
 		#adjust_zoom(1 / 1.2)
+		
+func generate_score():
+	var player_position = global_transform.origin
+	var root_position = Vector2(0,0)
+	var distanceFromRoot = player_position.distance_to(root_position) - 414
+	var distanceFactor = distanceFromRoot * SCORE_DISTANCE_NORMALIZER
+	
+	var pointsFactor = GameManager.current_starch_points * SCORE_POINTS_NORMALIZER
+	
+	var new_score = distanceFactor + pointsFactor
+	
+	if(new_score > score):
+		score = new_score
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("up"):
@@ -496,7 +518,9 @@ func add_starch(amount: int):
 # This is connected to the HealthComponent's 'died' signal.
 func _on_died():
 	print("Player has died!")
-	SceneLoader.reload_current_scene()
+	player_death.emit(score)
+	score = 0
+	SceneLoader.change_scene("res://src/ui/menus/leaderboardDeath.tscn")
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
 # It ensures the player's physics properties match the current StatBlock resource.

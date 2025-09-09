@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bd6spyrfc537y"]
+[gd_scene load_steps=17 format=3 uid="uid://bd6spyrfc537y"]
 
 [ext_resource type="Script" uid="uid://wl8resu02dlg" path="res://src/ui/menus/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="2_f3ram"]
@@ -10,13 +10,10 @@
 [ext_resource type="AudioStream" uid="uid://b1wmtlyehendw" path="res://assets/Music/proto_pototo_v2.mp3" id="13_v7jc8"]
 [ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/graphics/textures/env/proto_clouds_01_A.png" id="14_fmc4k"]
 [ext_resource type="Script" uid="uid://t3qcsqml1366" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_0i57e"]
-[ext_resource type="Texture2D" uid="uid://ck3gg52jmti3m" path="res://assets/graphics/proto/howtoplay.png" id="16_2wy8n"]
 [ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/graphics/textures/env/proto_clouds_01_B.png" id="16_gvvfn"]
-[ext_resource type="Script" uid="uid://raghio163m0c" path="res://src/components/c_gui_scale.gd" id="17_g6q5t"]
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/graphics/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
 [ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://src/ui/components/StandardMenu.tscn" id="18_0l2vk"]
 [ext_resource type="Script" uid="uid://cq3ot5jn4y65b" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
-[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://src/ui/components/MainTitle.tscn" id="18_ne370"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kust7"]
 particle_flag_disable_z = true
@@ -25,6 +22,8 @@ emission_shape = 3
 emission_box_extents = Vector3(950, 0, 1)
 angle_min = -9.99999
 angle_max = 11.0
+angular_velocity_min = -75.0
+angular_velocity_max = 75.0
 gravity = Vector3(0, 69, 0)
 radial_accel_min = -2.23517e-06
 radial_accel_max = 6.0
@@ -42,7 +41,7 @@ script = ExtResource("1_30dhv")
 position = Vector2(980, 101)
 amount = 100
 texture = ExtResource("2_f3ram")
-lifetime = 7.0
+lifetime = 6.8
 visibility_rect = Rect2(-350, -100, 1920, 1080)
 process_material = SubResource("ParticleProcessMaterial_kust7")
 
@@ -153,22 +152,3 @@ script = ExtResource("18_kydx3")
 [node name="StandardMenu" parent="." instance=ExtResource("18_0l2vk")]
 position = Vector2(200, 335)
 scale = Vector2(0.1, 0.1)
-
-[node name="Control" parent="." instance=ExtResource("18_ne370")]
-offset_left = -1340.0
-offset_top = -278.0
-offset_right = -2287.0
-offset_bottom = -801.0
-
-[node name="Howtoplay" type="Sprite2D" parent="."]
-position = Vector2(365, 604)
-scale = Vector2(0.638855, 0.638855)
-texture = ExtResource("16_2wy8n")
-
-[node name="Node" type="Node" parent="Howtoplay"]
-script = ExtResource("17_g6q5t")
-enable_hover_effect = false
-enable_pulse_effect = true
-pulse_min_scale = 0.61
-pulse_max_scale = 0.655
-pulse_duration = 6.0

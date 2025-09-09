@@ -38,7 +38,7 @@ signal ability2_cooldown_updated(progress)
 ## Flag for indicating starting the Main Game (Menu & Stuff)
 var _initial_boot: bool = true
 ## The player's current currency.
-var current_starch_points: int = 0
+@export var current_starch_points: int = 0
 ## A flag set by the Main Menu to tell this manager how to handle the next scene load.
 var next_scene_is_new_game: bool = true
 ## The save slot to use when loading a game.
@@ -53,6 +53,7 @@ var player_stats: StatBlock = null # The "source of truth" StatBlock for the cur
 var level_path_to_load: String = ""
 var current_level_path: String = ""
 var collected_items: Dictionary = {}
+var last_player_score: int = 0
 
 @export var game_paused: bool = false
 
@@ -202,6 +203,11 @@ func register_player(player, health_comp: CHealth):
 		ability2.cooldown_updated.connect(on_ability2_cooldown_updated)
 	
 	player_is_ready.emit(player)
+	last_player_score = 0
+	player.player_death.connect(_on_player_death)
+
+func _on_player_death(score: int):
+	last_player_score = score
 
 
 func register_collected_item(id: String):
