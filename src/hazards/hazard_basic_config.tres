@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="HazardConfig" load_steps=3 format=3 uid="uid://yucjmtb3kwjt"]
 
-[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_457co"]
+[ext_resource type="Script" path="res://src/hazards/hazard_config.gd" id="1_457co"]
 [ext_resource type="PackedScene" uid="uid://dwja6ji5hvuya" path="res://src/hazards/hazard_base.tscn" id="1_unim1"]
 
 [resource]

@@ -32,7 +32,6 @@ offset_left = 70.0
 offset_top = 140.0
 offset_right = 1414.0
 offset_bottom = 308.0
-value = 15.0
 button_text = "Volume"
 metadata/settingName = "audio.master_volume"
 
@@ -65,7 +64,6 @@ offset_left = 71.0
 offset_top = 287.0
 offset_right = 1415.0
 offset_bottom = 455.0
-value = 24.0
 button_text = "Music"
 metadata/settingName = "audio.music_volume"
 
@@ -74,6 +72,5 @@ offset_left = 71.0
 offset_top = 439.0
 offset_right = 1415.0
 offset_bottom = 607.0
-value = 24.0
 button_text = "Effects"
 metadata/settingName = "audio.sfx_volume"
