@@ -218,7 +218,7 @@ func generate_score():
 	var distanceFromRoot = player_position.distance_to(root_position) - 414
 	var distanceFactor = distanceFromRoot * SCORE_DISTANCE_NORMALIZER
 	
-	var pointsFactor = GameManager.current_starch_points * SCORE_POINTS_NORMALIZER
+	var pointsFactor = GameManager.total_starch_points * SCORE_POINTS_NORMALIZER
 	
 	var new_score = distanceFactor + pointsFactor
 	
