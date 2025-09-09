@@ -177,6 +177,9 @@ func reset_game_state():
 	# from a previous game from "leaking" into the new one.
 	player_stats = DEFAULT_STATS.duplicate(true)
 	
+	# Refresh Procedural Generator
+	ProgressionManager.reset()
+	
 	# If the player already exists (e.g., from reloading the scene),
 	# we must force it to adopt this new, clean stat block.
 	if is_instance_valid(player_instance):
