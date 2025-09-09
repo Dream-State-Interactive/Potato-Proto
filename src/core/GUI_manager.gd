@@ -42,28 +42,18 @@ func _ready():
 	GameManager.stat_upgraded.connect(_on_stat_upgraded)
 
 func _unhandled_input(event: InputEvent):
-	# Handle the Pause action.
-	# We just pass the request to the MenuManager, which already has all the logic.
 	if event.is_action_pressed("pause"):
 		MenuManager.pause()
-		# We use accept_event() to stop the input from propagating further,
-		# preventing any other node (like the player) from also reacting to it.
 		get_viewport().set_input_as_handled()
 
-	# Handle the Level Up Menu action.
 	if event.is_action_pressed("toggle_upgrades"):
-		# We add the critical check here: DO NOT open the level-up menu
-		# if the game is already paused by something else (like the main pause menu).
 		if get_tree().paused:
-			# Optional: print a message to know why it's not opening
-			# print("Blocked opening Level Up Menu because game is paused.")
 			return
 
 		if GameManager.is_player_active():
 			toggle_stat_upgrade_menu()
 			get_viewport().set_input_as_handled()
 		
-	# Handle the Ability Menu action.
 	if event.is_action_pressed("ability_menu"):
 		if get_tree().paused and not ability_menu_instance.is_visible():
 			return
