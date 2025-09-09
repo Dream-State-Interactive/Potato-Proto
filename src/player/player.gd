@@ -39,7 +39,7 @@ const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this a
 
 ## The single source of truth for all player stats. This is assigned by the
 ## GameManager at runtime to ensure consistency across new games and loaded games.
-var stats: StatBlock
+@export var stats: StatBlock
 
 @export var DEV_ROLL_MULTIPLIER: float = 1.0
 

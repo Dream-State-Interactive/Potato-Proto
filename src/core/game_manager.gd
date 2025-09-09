@@ -46,7 +46,6 @@ var _initial_boot: bool = true
 ## The player's current currency.
 @export var current_starch_points: int = 0:
 	set(value):
-		print("Current starch points: " + str(value))
 		if value <= 0:
 			current_starch_points = 0
 		else:
@@ -60,7 +59,6 @@ var _initial_boot: bool = true
 ## Total starch points for this run
 @export var total_starch_points: int = 0:
 	set(value):
-		print("Total starch points: " + str(value))
 		if value <= 0:
 			total_starch_points = 0
 		else:
