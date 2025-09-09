@@ -7,11 +7,11 @@ extends Node
 signal leaderboard_updated
 
 var DEFAULT_LEADERS: Array = [
-	LeaderboardEntry.new("Spuds", 50),
-	LeaderboardEntry.new("Lil fry", 4075),
-	LeaderboardEntry.new("Tony Starch", 420),
-	LeaderboardEntry.new("Jinko Jones", 123),
-	LeaderboardEntry.new("Tony Baloney", 444444)
+	LeaderboardEntry.new("Jimmy Jones", 25000),
+	LeaderboardEntry.new("Lil fry", 50000),
+	LeaderboardEntry.new("Spuds Mackenzie", 100000),
+	LeaderboardEntry.new("Tony Starch", 250000),
+	LeaderboardEntry.new("Old MacDundle", 500000)
 ]
 
 const NUM_LEADERS_SAVED = 100 # Overkill, but overhead is minimal
@@ -58,6 +58,7 @@ func load_leaderboard() -> void:
 			wipe_leaderboard()
 			return
 		
+		currentLeaderboard = []
 		for entry in JSONObject:
 			currentLeaderboard.append(LeaderboardEntry.new(entry["name"], entry["score"]))
 	else:
