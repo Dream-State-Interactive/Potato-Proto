@@ -7,23 +7,25 @@ enum StoreType {
 	LEVEL_UP,
 	ABILITY
 }
+@onready var prompt_control: Control = $"../PromptControl"
 
-@onready var prompt_label: Label = $"../PromptLabel"
+#@onready var prompt_label: Label = $"../PromptLabel"
 
 var player_in_area: bool = false
 
 
 func _ready():
-	prompt_label.visible = false
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	prompt_control.visible = false
 	body_entered.connect(func(body):
 		if body.is_in_group("player"):
 			player_in_area = true
-			prompt_label.visible = true
+			prompt_control.visible = true
 	)
 	body_exited.connect(func(body):
 		if body.is_in_group("player"):
 			player_in_area = false
-			prompt_label.visible = false
+			prompt_control.visible = false
 	)
 
 func _process(_delta):

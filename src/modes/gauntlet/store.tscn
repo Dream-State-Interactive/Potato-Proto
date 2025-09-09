@@ -8,7 +8,21 @@ radius = 270.59
 
 [node name="Store" type="Node2D"]
 
-[node name="PromptLabel" type="Label" parent="."]
+[node name="PromptControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="PromptControl"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = -525.0
+offset_right = 822.0
+offset_bottom = -442.0
+color = Color(0.407843, 0.407843, 0.407843, 0.67451)
+
+[node name="PromptLabel" type="Label" parent="PromptControl"]
 offset_left = 137.0
 offset_top = -522.0
 offset_right = 809.0

@@ -15,6 +15,11 @@ var worm_max_per_hill: int = 3              # safety cap per hill
 
 signal difficulty_changed(new_level)
 
+func reset():
+	hills_completed = 0
+	current_level = 1
+	print("ProgressionManager has been reset.")
+
 func complete_segment():
 	hills_completed += 1
 	var new_level = (hills_completed / 2) + 1

@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="1_h0bpx"]
 [ext_resource type="Script" uid="uid://67jayabmj46" path="res://src/player/player.gd" id="1_x7tc1"]
 [ext_resource type="Texture2D" uid="uid://86main4wf7jk" path="res://assets/graphics/sprites/player/potato_skin.png" id="2_1icgn"]
+[ext_resource type="Resource" uid="uid://cv6662e3d63hm" path="res://src/abilities/stop_on_a_fry_info.tres" id="2_8ydov"]
 [ext_resource type="Shader" uid="uid://dilg0ml58mu0p" path="res://assets/Shaders/aging_shader.gdshader" id="2_hgswh"]
-[ext_resource type="PackedScene" uid="uid://vr57o4egxbu" path="res://src/abilities/stop_on_a_fry.tscn" id="3_6ycsf"]
+[ext_resource type="Resource" uid="uid://dopeh7iejsvnm" path="res://src/abilities/extreme_torque_info.tres" id="3_ylhto"]
 [ext_resource type="Shader" uid="uid://c3geqt2v3kreb" path="res://assets/Shaders/peel_shader.gdshader" id="4_es8q4"]
-[ext_resource type="PackedScene" uid="uid://dud168e6yjyca" path="res://src/abilities/extreme_torque.tscn" id="4_u11me"]
 [ext_resource type="Script" uid="uid://nng3pnetj0a7" path="res://src/components/c_health.gd" id="6_7bv2p"]
 [ext_resource type="Script" uid="uid://deujvpuq0vmjm" path="res://src/components/c_zoom.gd" id="8_cd3gd"]
 [ext_resource type="Script" uid="uid://df432kertbp3q" path="res://src/components/c_grip.gd" id="10_8vpk7"]
@@ -35,8 +35,8 @@ radius = 45.0
 collision_mask = 5
 continuous_cd = 2
 script = ExtResource("1_x7tc1")
-equipped_ability1 = ExtResource("3_6ycsf")
-equipped_ability2 = ExtResource("4_u11me")
+equipped_ability1_info = ExtResource("2_8ydov")
+equipped_ability2_info = ExtResource("3_ylhto")
 
 [node name="FleshSprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_vodgh")

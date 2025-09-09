@@ -93,6 +93,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 texture = ExtResource("2_pv7ps")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Ability1_CooldownBar" type="ProgressBar" parent="BottomRight_HBox/Ability1_Icon"]
 layout_mode = 1
@@ -120,6 +122,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 texture = ExtResource("2_pv7ps")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Ability2_CooldownBar" type="ProgressBar" parent="BottomRight_HBox/Ability2_Icon"]
 layout_mode = 1
@@ -141,7 +145,7 @@ text = "E"
 
 [node name="Howtoplay" type="Sprite2D" parent="."]
 position = Vector2(137, 983)
-scale = Vector2(0.239791, 0.239791)
+scale = Vector2(0.261011, 0.261011)
 texture = ExtResource("4_ariom")
 
 [node name="Node" type="Node" parent="Howtoplay"]
