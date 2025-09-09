@@ -43,6 +43,10 @@ func _migrate(from_schema: int) -> void:
 					"display_mode": 0,
 					"display_resolution": Vector2i(1280, 720)
 				})
+			1:
+				_ensure_section_defaults("player", {
+					"name": "Potato"
+				})
 			_:
 				push_warning("Unknown migration step from %d" % v)
 				break

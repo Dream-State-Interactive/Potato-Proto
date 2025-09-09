@@ -53,6 +53,7 @@ var player_stats: StatBlock = null # The "source of truth" StatBlock for the cur
 var level_path_to_load: String = ""
 var current_level_path: String = ""
 var collected_items: Dictionary = {}
+var last_player_score: int = 0
 
 @export var game_paused: bool = false
 
@@ -202,6 +203,11 @@ func register_player(player, health_comp: CHealth):
 		ability2.cooldown_updated.connect(on_ability2_cooldown_updated)
 	
 	player_is_ready.emit(player)
+	last_player_score = 0
+	player.player_death.connect(_on_player_death)
+
+func _on_player_death(score: int):
+	last_player_score = score
 
 
 func register_collected_item(id: String):

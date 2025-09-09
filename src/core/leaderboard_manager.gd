@@ -1,6 +1,10 @@
 extends Node
 
 @export var currentLeaderboard: Array
+@export var minimum_highscore: int
+@export var NUM_LEADERS_TO_SHOW: int = 8
+
+signal leaderboard_updated
 
 var DEFAULT_LEADERS: Array = [
 	LeaderboardEntry.new("Spuds", 50),
@@ -10,7 +14,7 @@ var DEFAULT_LEADERS: Array = [
 	LeaderboardEntry.new("Tony Baloney", 444444)
 ]
 
-const NUM_LEADERS_SAVED = 100 # Overkill, but this is super minimal data
+const NUM_LEADERS_SAVED = 100 # Overkill, but overhead is minimal
 var LEADERBOARD_FILE_PATH = OS.get_data_dir() + "/Potato Game/leaderboard.json"
 
 
@@ -60,16 +64,20 @@ func load_leaderboard() -> void:
 		wipe_leaderboard()
 		
 	leaderboardFile.close()
+	leaderboard_updated.emit()
 
 func update_leaderboard(entry: LeaderboardEntry) -> void:
 	currentLeaderboard.append(entry)
 	currentLeaderboard.sort_custom(leaderboard_entry_sort_descending)
 	currentLeaderboard = currentLeaderboard.slice(0, NUM_LEADERS_SAVED)
+	minimum_highscore = currentLeaderboard[NUM_LEADERS_TO_SHOW - 1].score
+	leaderboard_updated.emit()
 	save_leaderboard()
 		
 func wipe_leaderboard() -> void:
 	currentLeaderboard = DEFAULT_LEADERS
 	currentLeaderboard.sort_custom(leaderboard_entry_sort_descending)
+	leaderboard_updated.emit()
 	save_leaderboard()
 
 func save_leaderboard() -> void:

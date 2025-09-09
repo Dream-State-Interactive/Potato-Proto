@@ -20,6 +20,7 @@ extends RigidBody2D
 
 signal landed
 signal left_ground
+signal player_death(score: int)
 
 var can_air_dash := false
 var dashes_used: int = 0
@@ -78,6 +79,8 @@ var stats: StatBlock
 @export var jump_strength: float = 50.0
 @export var jump_multiplier: float = 5.0
 
+@export var score = 0
+
 const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
 
@@ -133,7 +136,6 @@ var original_polygon_points: PackedVector2Array # A backup of the detailed colli
 var _is_gripping: bool = false             # Tracks if the CGrip component is currently active.
 var ready_for_combo = false
 var _skin_material_made_unique: bool = false
-var score = 0
 
 
 # =============================================================================
@@ -508,7 +510,7 @@ func add_starch(amount: int):
 # This is connected to the HealthComponent's 'died' signal.
 func _on_died():
 	print("Player has died!")
-	Leaderboard.update_leaderboard(Leaderboard.LeaderboardEntry.new("It you mofucka!", score))
+	player_death.emit(score)
 	SceneLoader.change_scene("res://src/ui/menus/leaderboardDeath.tscn")
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
