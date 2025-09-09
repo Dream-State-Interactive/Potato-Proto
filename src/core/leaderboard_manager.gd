@@ -1,7 +1,10 @@
 extends Node
 
 @export var currentLeaderboard: Array
-@export var minimum_highscore: int
+@export var minimum_highscore: int:
+	get:
+		var endOfLeaderboard = (currentLeaderboard.size() if NUM_LEADERS_TO_SHOW > currentLeaderboard.size() else NUM_LEADERS_TO_SHOW) - 1
+		return currentLeaderboard[endOfLeaderboard].score
 @export var NUM_LEADERS_TO_SHOW: int = 10
 
 signal leaderboard_updated
@@ -71,8 +74,6 @@ func update_leaderboard(entry: LeaderboardEntry) -> void:
 	currentLeaderboard.append(entry)
 	currentLeaderboard.sort_custom(leaderboard_entry_sort_descending)
 	currentLeaderboard = currentLeaderboard.slice(0, NUM_LEADERS_SAVED)
-	var endOfArray = currentLeaderboard.size() - 1 if NUM_LEADERS_TO_SHOW - 1 > currentLeaderboard.size() - 1 else NUM_LEADERS_TO_SHOW - 1
-	minimum_highscore = currentLeaderboard[endOfArray].score
 	leaderboard_updated.emit()
 	save_leaderboard()
 		
