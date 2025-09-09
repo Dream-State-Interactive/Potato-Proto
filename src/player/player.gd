@@ -53,10 +53,6 @@ const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this a
 @export var invincible_at_high_speed: bool = true
 @export var INDESTRUCTIBLE_VELOCITY: float = 4000.0
 
-# player.gd
-
-# ... (add this with your other exported variables) ...
-
 @export_group("Visuals")
 ## The radius of the peel effect in the shader (in UV space, 0.0 to 1.0).
 @export var peel_shader_radius: float = 0.2

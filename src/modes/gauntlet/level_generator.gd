@@ -1,3 +1,4 @@
+# src/modes/gauntlet/level_generator.gd
 @tool
 extends Node2D
 
@@ -169,6 +170,8 @@ func _generate_standard_segment(allow_cull: bool):
 	hill_params["noise_x_start"] = _noise_x
 	var hill_result = hill_generator.generate_hill(hill_params)
 	var hill_node: Node2D = hill_result["node"]
+	hill_node.z_as_relative = false
+	hill_node.z_index = 5
 	var hill_end_pos_local: Vector2 = hill_result["end_position"]
 	segment.call_deferred("add_child", hill_node)
 	# after you have hill_result / hill_end_pos_local

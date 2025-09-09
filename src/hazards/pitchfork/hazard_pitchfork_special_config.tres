@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="HazardConfig" load_steps=3 format=3 uid="uid://3ne4nonc3hbo"]
+
+[ext_resource type="PackedScene" uid="uid://evkhdobj5bfr" path="res://src/hazards/pitchfork/hazard_pitchfork_special.tscn" id="1_xylcg"]
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="2_ls7q6"]
+
+[resource]
+script = ExtResource("2_ls7q6")
+hazard_scene = ExtResource("1_xylcg")
+min_hills_completed = 3
+max_hills_completed = 15
+base_density = 0.05
+density_increase_per_hill = 0.001
+max_density = 0.25
+end_boost_start_percent = 0.8
+end_boost_multiplier = 1.0
+min_scale = Vector2(1, 1)
+max_scale = Vector2(1, 1)
+metadata/_custom_type_script = "uid://cwsplenuixblt"

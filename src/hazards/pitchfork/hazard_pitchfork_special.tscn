@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://evkhdobj5bfr"]
+
+[ext_resource type="Texture2D" uid="uid://cyvjvhj762xqd" path="res://assets/graphics/sprites/hazards/pitchfork.png" id="1_wwfst"]
+[ext_resource type="Script" uid="uid://47i2sq5oe4q6" path="res://src/components/c_hazard.gd" id="2_4bd70"]
+[ext_resource type="Texture2D" uid="uid://dowbbf4xkeeqp" path="res://assets/graphics/sprites/hazards/pitchfork_special.png" id="3_4bd70"]
+
+[node name="Pitchfork" type="StaticBody2D"]
+z_index = -11
+scale = Vector2(2, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -213.4)
+texture = ExtResource("1_wwfst")
+
+[node name="CHazard" type="Node" parent="."]
+script = ExtResource("2_4bd70")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -213.4)
+polygon = PackedVector2Array(11, -255.8, 9.4, -256, -9, -256, -9, -255, -13, 84, -13, 142.1, -43.5, 145.9, -39, 156.9, -21, 158, -5, 158, 5, 158, 21, 159, 40.5, 156.9, 42, 147.4, 12, 142, 11, 84)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
+z_as_relative = false
+position = Vector2(0, -213.4)
+texture = ExtResource("3_4bd70")
