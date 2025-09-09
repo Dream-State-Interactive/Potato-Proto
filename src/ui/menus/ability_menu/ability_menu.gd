@@ -61,9 +61,7 @@ func _ready():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("ability_menu"):
-		# We call the function on the global GUI manager to handle the logic.
 		GUI.toggle_ability_menu()
-		# Stop the input from propagating further.
 		get_viewport().set_input_as_handled()
 
 ## Called when an ability is dropped on the 'Q' slot.
@@ -71,13 +69,13 @@ func _on_q_ability_assigned(resource: AbilityInfo):
 	print("Assigning ", resource.ability_name, " to slot 1 (Q)")
 	# Use the GameManager to safely access the player instance.
 	if GameManager.is_player_active():
-		GameManager.player_instance.equip_ability(resource.ability_scene, 1)
+		GameManager.player_instance.equip_ability(resource, 1)
 
 ## Called when an ability is dropped on the 'E' slot.
 func _on_e_ability_assigned(resource: AbilityInfo):
 	print("Assigning ", resource.ability_name, " to slot 2 (E)")
 	if GameManager.is_player_active():
-		GameManager.player_instance.equip_ability(resource.ability_scene, 2)
+		GameManager.player_instance.equip_ability(resource, 2)
 
 ## Called when the mouse enters ANY ability icon or slot.
 func _on_any_icon_hovered(resource: AbilityInfo):

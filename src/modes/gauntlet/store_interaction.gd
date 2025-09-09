@@ -14,6 +14,7 @@ var player_in_area: bool = false
 
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	prompt_label.visible = false
 	body_entered.connect(func(body):
 		if body.is_in_group("player"):

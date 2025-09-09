@@ -30,8 +30,14 @@ signal starch_changed(new_amount)
 signal stat_upgraded(stat_name)
 ## Emitted whenever the player is registered
 signal player_is_ready(player_node)
-signal ability1_cooldown_updated(progress)
-signal ability2_cooldown_updated(progress)
+## Emitted when an ability is equipped in slot 1, passing the AbilityInfo resource.
+signal ability1_equipped(ability_info: AbilityInfo)
+## Emitted when an ability is equipped in slot 2, passing the AbilityInfo resource.
+signal ability2_equipped(ability_info: AbilityInfo)
+## Emitted to update the cooldown progress for the ability in slot 1.
+signal ability1_cooldown_updated(progress: float)
+## Emitted to update the cooldown progress for the ability in slot 2.
+signal ability2_cooldown_updated(progress: float)
 
 
 # --- Game State Variables ---

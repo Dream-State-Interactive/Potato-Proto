@@ -43,10 +43,10 @@ var stats: StatBlock
 
 @export var DEV_ROLL_MULTIPLIER: float = 1.0
 
-## A PackedScene (.tscn file) for the ability in the first slot (Q key).
-@export var equipped_ability1: PackedScene
-## A PackedScene (.tscn file) for the ability in the second slot (E key).
-@export var equipped_ability2: PackedScene
+## A reference to the AbilityInfo resource for the first slot (Q key).
+@export var equipped_ability1_info: AbilityInfo
+## A reference to the AbilityInfo resource for the second slot (E key).
+@export var equipped_ability2_info: AbilityInfo
 
 ## A gameplay toggle. If true, the player will not take damage when the
 ## high-speed circle collider is active.
@@ -177,8 +177,8 @@ func _ready():
 		skin_material.set_shader_parameter("hit_points", []) 
 	
 	# Equip the abilities assigned in the Inspector.
-	equip_ability(equipped_ability1, 1)
-	equip_ability(equipped_ability2, 2)
+	equip_ability(equipped_ability1_info, 1)
+	equip_ability(equipped_ability2_info, 2)
 	
 	# Announce our existence to the GameManager, which will give us our stats
 	# and wire us up to the rest of the game.
@@ -485,6 +485,12 @@ func _on_health_changed(current_health: float, max_health: float):
 	var health_percentage = current_health / max_health
 	aging_rate = (1.0 - health_percentage) * max_aging_rate
 
+func _on_ability1_cooldown_updated(progress: float):
+	GameManager.ability1_cooldown_updated.emit(progress)
+
+func _on_ability2_cooldown_updated(progress: float):
+	GameManager.ability2_cooldown_updated.emit(progress)
+
 # The public healing function. Called by 'add_starch'.
 func heal(amount: float):
 	var max_health = stats.max_health
@@ -541,17 +547,46 @@ func apply_stats_from_resource():
 	print("Player stats have been reapplied. New Grip value: ", stats.grip)
 
 # Loads a new ability scene into one of the designated slots.
-func equip_ability(ability_scene: PackedScene, slot_number: int):
+func equip_ability(ability_info: AbilityInfo, slot_number: int):
 	var target_slot = ability1_slot if slot_number == 1 else ability2_slot
 	if not target_slot: return
 
-	for child in target_slot.get_children():
-		child.queue_free()
+	# 1. Check for and disconnect any OLD ability in the slot.
+	if target_slot.get_child_count() > 0:
+		var old_ability = target_slot.get_child(0)
+		if old_ability.cooldown_updated.is_connected(_on_ability1_cooldown_updated):
+			old_ability.cooldown_updated.disconnect(_on_ability1_cooldown_updated)
+		if old_ability.cooldown_updated.is_connected(_on_ability2_cooldown_updated):
+			old_ability.cooldown_updated.disconnect(_on_ability2_cooldown_updated)
+		old_ability.queue_free()
 
-	if ability_scene:
-		var new_ability = ability_scene.instantiate()
+	# 2. Handle equipping a NEW ability.
+	if ability_info and ability_info.ability_scene:
+		var new_ability = ability_info.ability_scene.instantiate()
 		target_slot.add_child(new_ability)
 		print("Equipped ", new_ability.name, " in slot ", slot_number)
+
+		# 3. Connect signals for the new ability based on the slot.
+		if slot_number == 1:
+			# Connect the ability's signal to our NEW handler function.
+			new_ability.cooldown_updated.connect(_on_ability1_cooldown_updated)
+			GameManager.ability1_equipped.emit(ability_info)
+			# Immediately update the HUD to show it's ready.
+			GameManager.ability1_cooldown_updated.emit(0.0)
+		else: # slot_number == 2
+			new_ability.cooldown_updated.connect(_on_ability2_cooldown_updated)
+			GameManager.ability2_equipped.emit(ability_info)
+			GameManager.ability2_cooldown_updated.emit(0.0)
+	
+	# 4. Handle UNEQUIPPING (if ability_info is null).
+	else:
+		print("Unequipped ability in slot ", slot_number)
+		if slot_number == 1:
+			GameManager.ability1_equipped.emit(null)
+			GameManager.ability1_cooldown_updated.emit(0.0)
+		else: # slot_number == 2
+			GameManager.ability2_equipped.emit(null)
+			GameManager.ability2_cooldown_updated.emit(0.0)
 
 # This function handles the smooth blending between our three collision shapes
 # based on the player's current speed. It is called every physics frame.
