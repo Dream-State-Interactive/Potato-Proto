@@ -170,7 +170,7 @@ func _generate_standard_segment(allow_cull: bool):
 	var hill_result = hill_generator.generate_hill(hill_params)
 	var hill_node: Node2D = hill_result["node"]
 	var hill_end_pos_local: Vector2 = hill_result["end_position"]
-	segment.add_child(hill_node)
+	segment.call_deferred("add_child", hill_node)
 	# after you have hill_result / hill_end_pos_local
 	_noise_x += float(hill_params.get("length", 1200.0))
 
@@ -219,7 +219,7 @@ func _generate_standard_segment(allow_cull: bool):
 		content_end_pos_local = hill_end_pos_local + Vector2(content_width, 0)
 
 	content_node.position = hill_end_pos_local
-	segment.add_child(content_node)
+	segment.call_deferred("add_child", content_node)
 
 	# Part 3: finalize
 	_finalize_segment_generation(segment, content_end_pos_local, allow_cull)
