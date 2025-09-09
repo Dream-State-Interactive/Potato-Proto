@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HazardConfig" load_steps=3 format=3 uid="uid://22uocr44h2uq"]
+
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_1lveh"]
+[ext_resource type="PackedScene" uid="uid://dxpjvkn1ixbls" path="res://src/hazards/worm/hazard_worm.tscn" id="1_se78h"]
+
+[resource]
+script = ExtResource("1_1lveh")
+hazard_scene = ExtResource("1_se78h")
+min_hills_completed = 10
+max_hills_completed = 20
+base_density = 0.05
+density_increase_per_hill = 0.001
+max_density = 0.25
+end_boost_start_percent = 0.8
+end_boost_multiplier = 1.0
+metadata/_custom_type_script = "uid://cwsplenuixblt"

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn3a7k0x1igwr"]
+
+[ext_resource type="Texture2D" uid="uid://cyvjvhj762xqd" path="res://assets/graphics/sprites/hazards/pitchfork.png" id="1_4u5c8"]
+[ext_resource type="Script" uid="uid://47i2sq5oe4q6" path="res://src/components/c_hazard.gd" id="2_kh2a1"]
+
+[node name="Pitchfork" type="StaticBody2D"]
+scale = Vector2(0.7, 0.7)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -213.4)
+texture = ExtResource("1_4u5c8")
+
+[node name="CHazard" type="Node" parent="."]
+script = ExtResource("2_kh2a1")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -213.4)
+polygon = PackedVector2Array(11, -255.8, 9.4, -256, -9, -256, -9, -255, -13, 84, -13, 142.1, -42, 143.9, -42, 249.8, -40.2, 256, -35, 256, -30, 238.3, -30, 158.8, -21, 158, -21, 233.2, -17.1, 256, -8.1, 256, -6.2, 237, -5, 237, -5, 158, 5, 158, 5, 234.2, 9, 251, 9, 256, 17.8, 256, 19.8, 235, 21, 235, 21, 159, 29, 159, 30, 224, 30, 236.3, 33, 247, 33, 255, 42, 255, 42, 142, 12, 142, 11, 84)

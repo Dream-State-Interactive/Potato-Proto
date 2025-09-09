@@ -4,7 +4,9 @@ class_name HazardWorm
 extends Node2D
 
 # --- Tuning ---
-@export var initial_stack: int = 1                        # fewer by default
+# This is now just a default/editor preview value.
+# The actual value will be set dynamically from ProgressionManager at runtime.
+@export var initial_stack: int = 3
 @export var box_size: Vector2 = Vector2(22, 42)           # longer segments
 @export var pin_break_speed: float = 7000.0
 @export var hazardous: bool = true
@@ -21,6 +23,12 @@ extends Node2D
 @export var wake_distance_px: float = 1500.0
 @export var despawn_distance_px: float = 15000.0
 
+@export_group("Progression Scaling")
+@export var unlock_at_hills: int = 3
+@export var base_stack_size: int = 6
+@export var hills_per_stack_increase: int = 5
+@export var max_stack_size: int = 8 
+
 const BOX_MASS := 1.0
 
 var bodies: Array[RigidBody2D] = []
@@ -28,10 +36,36 @@ var player: Node2D = null
 var is_sleeping: bool = false
 
 func _ready() -> void:
-	if not Engine.is_editor_hint():
+	if Engine.is_editor_hint():
+		for child in get_children():
+			if child is RigidBody2D or child is Joint2D:
+				child.queue_free()
 		build_worm()
-		collect_bodies()
-		resolve_player()
+		return
+
+	var current_hills: int = ProgressionManager.hills_completed
+
+	if current_hills < unlock_at_hills:
+		queue_free()
+		return
+
+	# Calculate the number of progression "steps" that have passed.
+	var steps: int = int((current_hills - unlock_at_hills) / hills_per_stack_increase)
+	
+	# Calculate the final stack size based on its own scaling rules.
+	var calculated_stack_size = base_stack_size + steps
+	
+	# Apply the cap and set the final value for building.
+	self.initial_stack = min(calculated_stack_size, max_stack_size)
+
+	# 2. Now that properties are correctly set, build the physical worm.
+	build_worm()
+	collect_bodies()
+	resolve_player()
+
+
+# The rest of your script (physics_process, build_worm, etc.) remains exactly the same.
+# It will now use the dynamically set 'initial_stack' value.
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():

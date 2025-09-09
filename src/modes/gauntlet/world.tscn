@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c42sfrnl684n0"]
+[gd_scene load_steps=28 format=3 uid="uid://c42sfrnl684n0"]
 
 [ext_resource type="Script" uid="uid://b5uvm210kdlen" path="res://src/modes/gauntlet/special_segment_config.gd" id="2_3yl0h"]
 [ext_resource type="Script" uid="uid://csv3csdlqc0kk" path="res://src/modes/gauntlet/level_generator.gd" id="2_epjwl"]
@@ -7,11 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="4_4wyg8"]
 [ext_resource type="Script" uid="uid://xlwp7yn7gi56" path="res://src/modes/gauntlet/obstacle_generator.gd" id="4_e8qkv"]
 [ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="5_qulm8"]
-[ext_resource type="Script" uid="uid://ddi25xnwpkjik" path="res://src/hazards/spawner/hazard_system.gd" id="6_23j4r"]
-[ext_resource type="Script" uid="uid://db7g7ccxxxg0w" path="res://src/hazards/spawner/basic_hazard_spawner.gd" id="7_2aw0q"]
-[ext_resource type="Script" uid="uid://e4mw5qombqia" path="res://src/hazards/spawner/worm_hazard_spawner.gd" id="8_qulm8"]
+[ext_resource type="Script" uid="uid://dm620ib0cmc7w" path="res://src/modes/gauntlet/hazard_generator.gd" id="7_qulm8"]
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="8_qulm8"]
 [ext_resource type="Script" uid="uid://l0naveqbhy5g" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="9_0gcb4"]
+[ext_resource type="Resource" uid="uid://3ne4nonc3hbo" path="res://src/hazards/pitchfork/hazard_pitchfork_special_config.tres" id="9_miul3"]
+[ext_resource type="Resource" uid="uid://22uocr44h2uq" path="res://src/hazards/worm/hazard_worm_config.tres" id="9_xp13y"]
 [ext_resource type="Script" uid="uid://ctg3aejp4yvm3" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="10_c68oe"]
+[ext_resource type="Resource" uid="uid://yucjmtb3kwjt" path="res://src/hazards/hazard_basic_config.tres" id="10_xp13y"]
 [ext_resource type="Script" uid="uid://s1exbf3ei47v" path="res://tools/ParallaxBackground/skyscale.gd" id="11_naj30"]
 [ext_resource type="Script" uid="uid://drkx1gwnedkcp" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="12_jspbg"]
 [ext_resource type="Shader" uid="uid://7dno3uy2j2eo" path="res://assets/Shaders/ScrollShader.gdshader" id="13_bx7rl"]
@@ -57,14 +59,8 @@ special_store_interval = 8
 script = ExtResource("2_ow8bn")
 
 [node name="HazardGenerator" type="Node2D" parent="LevelGenerator"]
-script = ExtResource("6_23j4r")
-spawners = Array[NodePath]([NodePath("BasicHazards"), NodePath("WormHazards")])
-
-[node name="BasicHazards" type="Node" parent="LevelGenerator/HazardGenerator"]
-script = ExtResource("7_2aw0q")
-
-[node name="WormHazards" type="Node" parent="LevelGenerator/HazardGenerator"]
-script = ExtResource("8_qulm8")
+script = ExtResource("7_qulm8")
+hazard_configs = Array[ExtResource("8_qulm8")]([ExtResource("9_miul3"), ExtResource("9_xp13y"), ExtResource("10_xp13y")])
 
 [node name="ObstacleGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("4_e8qkv")

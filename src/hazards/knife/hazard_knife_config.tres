@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HazardConfig" load_steps=3 format=3 uid="uid://cl8xi5bf3ynns"]
+
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_aahk2"]
+[ext_resource type="PackedScene" uid="uid://mpxbenmev5la" path="res://src/hazards/knife/knife.tscn" id="1_etqwb"]
+
+[resource]
+script = ExtResource("1_aahk2")
+hazard_scene = ExtResource("1_etqwb")
+min_hills_completed = 4
+max_hills_completed = 40
+base_density = 0.5
+density_increase_per_hill = 0.001
+max_density = 0.6
+end_boost_start_percent = 0.6
+end_boost_multiplier = 1.0
+metadata/_custom_type_script = "uid://cwsplenuixblt"

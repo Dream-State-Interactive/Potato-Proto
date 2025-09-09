@@ -4,14 +4,6 @@ extends Node
 var hills_completed: int = 0
 var current_level: int = 1
 
-# --- Worm progression ---
-var worms_unlock_at: int = 3
-var worm_stack_base: int = 6                # starting length at unlock
-var worm_stack_step_hills: int = 5          # hills per step
-var worm_chance_base: float = 0.03          # base per-spot probability when unlocked
-var worm_chance_step: float = 0.01          # per step increase
-var worm_chance_cap: float = 0.20           # don't spam too hard
-var worm_max_per_hill: int = 3              # safety cap per hill
 
 signal difficulty_changed(new_level)
 
@@ -57,24 +49,6 @@ func get_hill_parameters() -> Dictionary:
 	}
 
 
-func get_worm_params() -> Dictionary:
-	if hills_completed < worms_unlock_at:
-		return {"enabled": false}
-
-	var steps: int = int((hills_completed - worms_unlock_at) / worm_stack_step_hills)
-	var stack_size: int = worm_stack_base + steps
-	var chance: float = clampf(
-		worm_chance_base + (steps * worm_chance_step),
-		worm_chance_base,
-		worm_chance_cap
-	)
-
-	return {
-		"enabled": true,
-		"stack_size": stack_size,
-		"chance": chance,
-		"max_per_hill": worm_max_per_hill
-	}
 func get_obstacle_complexity() -> int:
 	# Cap complexity at 20 for the MVP to keep towers reasonable.
 	return min(20, max(1, current_level))
