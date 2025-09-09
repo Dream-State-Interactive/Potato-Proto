@@ -27,3 +27,9 @@ extends Resource
 
 ## How much to multiply the density by in the final section of the hill.
 @export var end_boost_multiplier: float = 1.0
+
+## The minimum scale for the spawned hazard. (1, 1) is default size.
+@export var min_scale: Vector2 = Vector2.ONE
+
+## The maximum scale for the spawned hazard. (1, 1) is default size.
+@export var max_scale: Vector2 = Vector2.ONE

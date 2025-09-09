@@ -67,5 +67,10 @@ func _spawn_hazard(config: HazardConfig, p1: Vector2, p2: Vector2, container: No
 
 	hazard_instance.position = mid_point
 	hazard_instance.rotation = normal.angle() + deg_to_rad(90)
+	
+	if config.min_scale != config.max_scale:
+		var random_scale_x = randf_range(config.min_scale.x, config.max_scale.x)
+		var random_scale_y = randf_range(config.min_scale.y, config.max_scale.y)
+		hazard_instance.scale = Vector2(random_scale_x, random_scale_y)
 
 	container.add_child(hazard_instance)
