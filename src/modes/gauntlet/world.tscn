@@ -49,7 +49,9 @@ script = ExtResource("2_epjwl")
 max_active_segments = 5
 player_path = NodePath("../PlayerSpawn")
 special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
+regular_store_interval = 4
 special_store_scene = ExtResource("5_qulm8")
+special_store_interval = 8
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("2_ow8bn")
