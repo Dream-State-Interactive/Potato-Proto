@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bd6spyrfc537y"]
+[gd_scene load_steps=17 format=3 uid="uid://bd6spyrfc537y"]
 
 [ext_resource type="Script" uid="uid://wl8resu02dlg" path="res://src/ui/menus/MainMenu.gd" id="1_30dhv"]
 [ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="2_f3ram"]
@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://mcmdcc8e35nl" path="res://assets/graphics/textures/env/proto_bg_hills_01.png" id="17_o6jqd"]
 [ext_resource type="PackedScene" uid="uid://chyj66c8hjsc8" path="res://src/ui/components/StandardMenu.tscn" id="18_0l2vk"]
 [ext_resource type="Script" uid="uid://cq3ot5jn4y65b" path="res://tools/ParallaxBackground/groundscale.gd" id="18_kydx3"]
-[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://src/ui/components/MainTitle.tscn" id="18_ne370"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kust7"]
 particle_flag_disable_z = true
@@ -151,9 +150,3 @@ script = ExtResource("18_kydx3")
 [node name="StandardMenu" parent="." instance=ExtResource("18_0l2vk")]
 position = Vector2(200, 335)
 scale = Vector2(0.1, 0.1)
-
-[node name="Control" parent="." instance=ExtResource("18_ne370")]
-offset_left = -1340.0
-offset_top = -278.0
-offset_right = -2287.0
-offset_bottom = -801.0

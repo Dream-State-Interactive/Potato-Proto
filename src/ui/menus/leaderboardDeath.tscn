@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cni2kwlwt0nuf"]
+
+[ext_resource type="PackedScene" uid="uid://bb6ys66g5jiym" path="res://src/ui/menus/leaderboard.tscn" id="1_6ctuu"]
+[ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_8rs73"]
+
+[node name="LeaderboardDeath" type="Node2D"]
+
+[node name="Leaderboard" parent="." instance=ExtResource("1_6ctuu")]
+
+[node name="StandardButton" parent="." instance=ExtResource("2_8rs73")]
+offset_left = 1186.0
+offset_top = 951.0
+offset_right = 4642.0
+offset_bottom = 2075.72
+text = "Restart"
+metadata/destination = "res://src/modes/gauntlet/world.tscn"
+
+[node name="StandardButton2" parent="." instance=ExtResource("2_8rs73")]
+offset_left = 1554.0
+offset_top = 951.0
+offset_right = 5010.0
+offset_bottom = 2075.72
+text = "Main Menu"
+metadata/destination = "res://src/ui/menus/MainMenu.tscn"

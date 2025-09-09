@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c31vir1on6ec1"]
+[gd_scene load_steps=4 format=3 uid="uid://c31vir1on6ec1"]
 
 [ext_resource type="Script" uid="uid://ir6uv1adbdqx" path="res://src/ui/menus/home_menu.gd" id="1_ui71n"]
 [ext_resource type="PackedScene" uid="uid://p2m0x21yemk2" path="res://src/ui/components/StandardButton.tscn" id="2_8wmdh"]
+[ext_resource type="PackedScene" uid="uid://cgke5qoq85k6h" path="res://src/ui/components/MainTitle.tscn" id="3_0mjjs"]
 
 [node name="HomeMenu" type="CanvasLayer"]
 layer = 4
@@ -69,6 +70,12 @@ theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 49
 text = "Quit
 "
+
+[node name="Control" parent="." instance=ExtResource("3_0mjjs")]
+offset_left = -1340.0
+offset_top = -278.0
+offset_right = -2287.0
+offset_bottom = -801.0
 
 [connection signal="pressed" from="ButtonContainer/StandardButtonPlay" to="ButtonContainer/StandardButtonPlay" method="_on_new_game_pressed"]
 [connection signal="pressed" from="ButtonContainer/StandardButtonQuit" to="ButtonContainer/StandardButtonPlay" method="_on_standard_button_quit_pressed"]
