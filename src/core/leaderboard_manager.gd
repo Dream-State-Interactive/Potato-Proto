@@ -37,7 +37,7 @@ func _ready() -> void:
 	load_leaderboard()
 
 func initialize_leaderboard_file() -> void:
-	if(FileAccess.file_exists(LEADERBOARD_FILE_PATH)):
+	if(!FileAccess.file_exists(LEADERBOARD_FILE_PATH)):
 		var newLeaderboardFile = FileAccess.open(LEADERBOARD_FILE_PATH, FileAccess.WRITE_READ)
 		newLeaderboardFile.close()
 		wipe_leaderboard()
