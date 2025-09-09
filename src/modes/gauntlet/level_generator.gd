@@ -1,4 +1,3 @@
-# src/modes/gauntlet/level_generator.gd
 @tool
 extends Node2D
 
@@ -25,8 +24,18 @@ extends Node2D
 ## The scene that will always be generated first. Must contain a Marker2D named "EndMarker".
 @export var start_segment_scene: PackedScene = preload("res://src/modes/gauntlet/start_segment.tscn")
 
+@export_group("Store Generation")
+## The scene for the regular store.
+@export var regular_store_scene: PackedScene = preload("res://src/modes/gauntlet/store.tscn")
+## How many hills are completed before a regular store appears.
+@export var regular_store_interval: int = 5
+
+## The scene for the special, less frequent store.
+@export var special_store_scene: PackedScene
+## How many hills are completed before a special store appears.
+@export var special_store_interval: int = 15
+
 const SEGMENT_END_TRIGGER = preload("res://src/modes/gauntlet/segment_end_trigger.tscn")
-const STORE_SCENE = preload("res://src/modes/gauntlet/store.tscn")
 const FALLBACK_SPECIAL_SCENE = preload("res://src/levels/level_proto/level_proto.tscn") # unused
 
 @onready var hill_generator: Node2D = $HillGenerator
@@ -180,13 +189,29 @@ func _generate_standard_segment(allow_cull: bool):
 	var content_node: Node2D
 	var content_width: float
 	var content_end_pos_local: Vector2
-
-	if ProgressionManager.hills_completed > 0 and (ProgressionManager.hills_completed % 5 == 4):
-		content_node = STORE_SCENE.instantiate()
-		# Ensure store is behind player (player z_index = 0.
-		content_node.z_index = -1
+	
+	var hills: int = ProgressionManager.hills_completed
+	
+	# Check for the Special Store first to give it priority.
+	# The logic `hills % interval == interval - 1` makes it appear on the Nth segment.
+	if special_store_scene and special_store_interval > 0 and hills > 0 and (hills % special_store_interval == special_store_interval - 1):
+		content_node = special_store_scene.instantiate()
+		content_node.name = "SpecialStore"
+		# Ensure store is behind player (player z_index = 0).
+		content_node.z_index = -10
+		content_width = 1000.0 # Adjust if your special store is a different size
+		content_end_pos_local = hill_end_pos_local + Vector2(content_width, 0)
+		
+	# Next, check for the regular store.
+	elif regular_store_scene and regular_store_interval > 0 and hills > 0 and (hills % regular_store_interval == regular_store_interval - 1):
+		content_node = regular_store_scene.instantiate()
+		content_node.name = "RegularStore"
+		# Ensure store is behind player (player z_index = 0).
+		content_node.z_index = -10
 		content_width = 1000.0
 		content_end_pos_local = hill_end_pos_local + Vector2(content_width, 0)
+		
+	# Otherwise, generate a standard obstacle.
 	else:
 		var obstacle_result = obstacle_generator.generate_obstacle(ProgressionManager.get_obstacle_complexity())
 		content_node = obstacle_result["node"]
