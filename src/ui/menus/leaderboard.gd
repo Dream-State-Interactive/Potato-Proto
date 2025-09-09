@@ -3,8 +3,7 @@
 extends Node2D
 
 @onready var LeaderboardTextbox = $LeaderboardText
-
-var NUM_LEADERS_TO_SHOW = Leaderboard.NUM_LEADERS_TO_SHOW
+@onready var NUM_LEADERS_TO_SHOW = Leaderboard.NUM_LEADERS_TO_SHOW
 
 func _ready() -> void:
 	refresh_leaderboard_text()
