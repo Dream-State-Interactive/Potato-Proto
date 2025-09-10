@@ -33,3 +33,6 @@ extends Resource
 
 ## The maximum scale for the spawned hazard. (1, 1) is default size.
 @export var max_scale: Vector2 = Vector2.ONE
+
+## How many placement "slots" this hazard occupies on the hill surface.
+@export_range(1, 10) var slot_cost: int = 1

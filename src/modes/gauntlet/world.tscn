@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://xlwp7yn7gi56" path="res://src/modes/gauntlet/obstacle_generator.gd" id="4_e8qkv"]
 [ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="5_qulm8"]
 [ext_resource type="Script" uid="uid://dm620ib0cmc7w" path="res://src/modes/gauntlet/hazard_generator.gd" id="7_qulm8"]
-[ext_resource type="Script" path="res://src/hazards/hazard_config.gd" id="8_qulm8"]
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="8_qulm8"]
 [ext_resource type="Script" uid="uid://l0naveqbhy5g" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="9_0gcb4"]
 [ext_resource type="Resource" uid="uid://3ne4nonc3hbo" path="res://src/hazards/pitchfork/hazard_pitchfork_special_config.tres" id="9_miul3"]
 [ext_resource type="Resource" uid="uid://22uocr44h2uq" path="res://src/hazards/worm/hazard_worm_config.tres" id="9_xp13y"]

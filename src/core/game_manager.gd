@@ -34,10 +34,10 @@ signal player_is_ready(player_node)
 signal ability1_equipped(ability_info: AbilityInfo)
 ## Emitted when an ability is equipped in slot 2, passing the AbilityInfo resource.
 signal ability2_equipped(ability_info: AbilityInfo)
-## Emitted to update the cooldown progress for the ability in slot 1.
-signal ability1_cooldown_updated(progress: float)
-## Emitted to update the cooldown progress for the ability in slot 2.
-signal ability2_cooldown_updated(progress: float)
+## Emitted to update the state (Ready, Active, Cooldown) and progress for the ability in slot 1.
+signal ability1_state_updated(state: int, progress: float)
+## Emitted to update the state (Ready, Active, Cooldown) and progress for the ability in slot 2.
+signal ability2_state_updated(state: int, progress: float)
 
 
 # --- Game State Variables ---
@@ -234,13 +234,16 @@ func register_player(player, health_comp: CHealth):
 	health_comp.current_health = player_stats.max_health
 	health_comp.health_changed.connect(on_player_health_updated)
 	
-	if player.ability1_slot.get_child_count() > 0:
-		var ability1 = player.ability1_slot.get_child(0) as Ability
-		ability1.cooldown_updated.connect(on_ability1_cooldown_updated)
-			
-	if player.ability2_slot.get_child_count() > 0:
-		var ability2 = player.ability2_slot.get_child(0) as Ability
-		ability2.cooldown_updated.connect(on_ability2_cooldown_updated)
+	# ############################################################################################################## #
+	# The Player's `equip_ability` function now handles connecting to the ability's `state_updated` signal directly  #
+	# ############################################################################################################## #
+	#if player.ability1_slot.get_child_count() > 0:
+		#var ability1 = player.ability1_slot.get_child(0) as Ability
+		#ability1.cooldown_updated.connect(on_ability1_cooldown_updated)
+			#
+	#if player.ability2_slot.get_child_count() > 0:
+		#var ability2 = player.ability2_slot.get_child(0) as Ability
+		#ability2.cooldown_updated.connect(on_ability2_cooldown_updated)
 	
 	player_is_ready.emit(player)
 	last_player_score = 0
@@ -274,11 +277,11 @@ func on_player_health_updated(current: float, max_health: float):
 	# The GameManager acts as a middleman, re-broadcasting the signal to listeners.
 	player_health_updated.emit(current, max_health)
 
-func on_ability1_cooldown_updated(progress: float):
-	ability1_cooldown_updated.emit(progress)
+func on_ability1_state_updated(state: int, progress: float):
+	ability1_state_updated.emit(state, progress)
 
-func on_ability2_cooldown_updated(progress: float):
-	ability2_cooldown_updated.emit(progress)
+func on_ability2_state_updated(state: int, progress: float):
+	ability2_state_updated.emit(state, progress)
 
 func upgrade_stat(stat_name: String, amount: float):
 	if player_instance and player_stats:

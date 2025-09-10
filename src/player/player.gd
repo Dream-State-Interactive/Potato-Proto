@@ -134,6 +134,7 @@ var aging_rate: float = 0.0                # How fast the aging level increases 
 var can_jump: bool = false                 # A flag for the Coyote Time system.
 var original_polygon_points: PackedVector2Array # A backup of the detailed collision shape.
 var _is_gripping: bool = false             # Tracks if the CGrip component is currently active.
+var _is_sticky_ability_active: bool = false # Tracks if the Sticky ability is toggled on.
 var ready_for_combo = false
 var _skin_material_made_unique: bool = false
 
@@ -245,11 +246,11 @@ func _input(event: InputEvent) -> void:
 func _integrate_forces(state: PhysicsDirectBodyState2D):
 	
 	# --- 1. GRIP LOGIC: DELEGATION PATTERN ---
-	# Before doing anything else, we check if our advanced grip mechanic should take over.
+	# Before doing anything else, we check if our toggleable ability is active.
 	# The 'process_grip_physics' function in our component is a "black box"; it contains
 	# all the complex math for wall-climbing. We just give it the data it needs.
 	# The check for `stats.grip > 1` is your temporary toggle for testing the feature.
-	if stats.grip > 1 and grip_component.process_grip_physics(state, roll_input):
+	if _is_sticky_ability_active and stats.grip > 0 and grip_component.process_grip_physics(state, roll_input):
 		# If the component returns 'true', it means it has successfully taken control
 		# of the player's velocity for this frame to simulate climbing.
 		_is_gripping = true
@@ -351,6 +352,24 @@ func _physics_process(_delta: float):
 	if on_floor and roll_input != 0:
 		apply_central_force(Vector2(roll_input * stats.horizontal_nudge, 0))
 	
+	# Apply a smaller force in the air to allow the player to influence their trajectory.
+	elif not on_floor and roll_input != 0:
+		# 1. Get the player's current horizontal speed.
+		var current_speed = abs(linear_velocity.x)
+		
+		# 2. Calculate the bonus strength based on that speed.
+		var dynamic_bonus = current_speed * stats.air_control_velocity_scalar
+		
+		# 3. Add the base value and clamp it to the defined min/max range.
+		var effective_air_control = clamp(
+			stats.base_air_control + dynamic_bonus,
+			stats.base_air_control,
+			stats.max_air_control
+		)
+		
+		# 4. Apply the final calculated force.
+		apply_central_force(Vector2(roll_input * effective_air_control, 0))
+	
 	# --- JUMP LOGIC ---
 	# We can jump if we are physically on the ground OR if the coyote timer is still running.
 	if Input.is_action_just_pressed("jump") and (on_floor or not coyote_timer.is_stopped()):
@@ -421,6 +440,17 @@ func _unhandled_input(event: InputEvent):
 # --- CUSTOM FUNCTIONS ---
 # =============================================================================
 
+# Called by the Sticky ability to turn the grip mechanic ON.
+func activate_sticky_ability():
+	_is_sticky_ability_active = true
+	print("Sticky effect ACTIVATED.")
+
+# Called by the Sticky ability's duration timer when it ends.
+func deactivate_sticky_ability():
+	_is_sticky_ability_active = false
+	_is_gripping = false # Immediately release grip when the effect wears off.
+	print("Sticky effect DEACTIVATED.")
+
 # This function is called by the SaveManager after loading data.
 # It forces all visuals to update to the new loaded state.
 func force_visual_update():
@@ -478,11 +508,11 @@ func _on_health_changed(current_health: float, max_health: float):
 	var health_percentage = current_health / max_health
 	aging_rate = (1.0 - health_percentage) * max_aging_rate
 
-func _on_ability1_cooldown_updated(progress: float):
-	GameManager.ability1_cooldown_updated.emit(progress)
+func _on_ability1_state_updated(state: int, progress: float):
+	GameManager.ability1_state_updated.emit(state, progress)
 
-func _on_ability2_cooldown_updated(progress: float):
-	GameManager.ability2_cooldown_updated.emit(progress)
+func _on_ability2_state_updated(state: int, progress: float):
+	GameManager.ability2_state_updated.emit(state, progress)
 
 # The public healing function. Called by 'add_starch'.
 func heal(amount: float):
@@ -550,10 +580,10 @@ func equip_ability(ability_info: AbilityInfo, slot_number: int):
 	# 1. Check for and disconnect any OLD ability in the slot.
 	if target_slot.get_child_count() > 0:
 		var old_ability = target_slot.get_child(0)
-		if old_ability.cooldown_updated.is_connected(_on_ability1_cooldown_updated):
-			old_ability.cooldown_updated.disconnect(_on_ability1_cooldown_updated)
-		if old_ability.cooldown_updated.is_connected(_on_ability2_cooldown_updated):
-			old_ability.cooldown_updated.disconnect(_on_ability2_cooldown_updated)
+		if old_ability.state_updated.is_connected(_on_ability1_state_updated):
+			old_ability.state_updated.disconnect(_on_ability1_state_updated)
+		if old_ability.state_updated.is_connected(_on_ability2_state_updated):
+			old_ability.state_updated.disconnect(_on_ability2_state_updated)
 		old_ability.queue_free()
 
 	# 2. Handle equipping a NEW ability.
@@ -565,24 +595,24 @@ func equip_ability(ability_info: AbilityInfo, slot_number: int):
 		# 3. Connect signals for the new ability based on the slot.
 		if slot_number == 1:
 			# Connect the ability's signal to our NEW handler function.
-			new_ability.cooldown_updated.connect(_on_ability1_cooldown_updated)
+			new_ability.state_updated.connect(_on_ability1_state_updated)
 			GameManager.ability1_equipped.emit(ability_info)
 			# Immediately update the HUD to show it's ready.
-			GameManager.ability1_cooldown_updated.emit(0.0)
+			GameManager.ability1_state_updated.emit(Ability.State.READY, 0.0)
 		else: # slot_number == 2
-			new_ability.cooldown_updated.connect(_on_ability2_cooldown_updated)
+			new_ability.state_updated.connect(_on_ability2_state_updated)
 			GameManager.ability2_equipped.emit(ability_info)
-			GameManager.ability2_cooldown_updated.emit(0.0)
+			GameManager.ability2_state_updated.emit(Ability.State.READY, 0.0)
 	
 	# 4. Handle UNEQUIPPING (if ability_info is null).
 	else:
 		print("Unequipped ability in slot ", slot_number)
 		if slot_number == 1:
 			GameManager.ability1_equipped.emit(null)
-			GameManager.ability1_cooldown_updated.emit(0.0)
+			GameManager.ability1_state_updated.emit(Ability.State.READY, 0.0)
 		else: # slot_number == 2
 			GameManager.ability2_equipped.emit(null)
-			GameManager.ability2_cooldown_updated.emit(0.0)
+			GameManager.ability2_state_updated.emit(Ability.State.READY, 0.0)
 
 # This function handles the smooth blending between our three collision shapes
 # based on the player's current speed. It is called every physics frame.

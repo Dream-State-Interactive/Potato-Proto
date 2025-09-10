@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://df5ve54gc64bs"]
+
+[ext_resource type="Script" uid="uid://beaotmrsjsja0" path="res://src/abilities/sticky.gd" id="1_sp75a"]
+
+[node name="Sticky" type="Node2D"]
+script = ExtResource("1_sp75a")

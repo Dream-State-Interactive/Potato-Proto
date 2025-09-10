@@ -13,6 +13,9 @@ var speed
 var FPS
 var score
 const SPEED_NORMALIZER = 100
+const ACTIVE_COLOR = Color("#22b700CC")   # Green
+const COOLDOWN_COLOR = Color("#c60e1dCC") # Red
+var default_fill_color: Color
 
 func _ready():
 	# Configure progress bars for the 0.0-1.0 signal from the ability
@@ -20,6 +23,22 @@ func _ready():
 	ability2_cooldown_bar.max_value = 1.0
 	ability1_cooldown_bar.value = 0.0
 	ability2_cooldown_bar.value = 0.0
+	
+	# Get the current stylebox (which might be a shared default)
+	var base_stylebox: StyleBoxFlat = ability1_cooldown_bar.get_theme_stylebox("fill")
+	
+	# Store its color so we can revert to it when the ability is READY.
+	default_fill_color = base_stylebox.bg_color
+	default_fill_color.a = 0.6 
+
+	# Create a unique copy for the first ability bar and assign it as an override
+	var unique_stylebox1 = base_stylebox.duplicate()
+	ability1_cooldown_bar.add_theme_stylebox_override("fill", unique_stylebox1)
+
+	# Do the same for the second ability bar.
+	var unique_stylebox2 = base_stylebox.duplicate()
+	ability2_cooldown_bar.add_theme_stylebox_override("fill", unique_stylebox2)
+	
 	# Wait one frame to guarantee all @onready vars are loaded.
 	await get_tree().process_frame
 
@@ -39,8 +58,8 @@ func connect_to_game_manager_signals():
 	# Connect ALL UI update functions ONLY to the GameManager's global signals.
 	GameManager.starch_changed.connect(update_starch_label)
 	GameManager.player_health_updated.connect(update_health_bar)
-	GameManager.ability1_cooldown_updated.connect(update_ability1_cooldown)
-	GameManager.ability2_cooldown_updated.connect(update_ability2_cooldown)
+	GameManager.ability1_state_updated.connect(update_ability1_cooldown)
+	GameManager.ability2_state_updated.connect(update_ability2_cooldown)
 	GameManager.ability1_equipped.connect(update_ability1_icon)
 	GameManager.ability2_equipped.connect(update_ability2_icon)
 	
@@ -62,11 +81,39 @@ func update_health_bar(current: float, max_health: float):
 func update_starch_label(new_amount: int):
 	starch_label.text = "Starch: %s" % new_amount
 
-func update_ability1_cooldown(progress: float):
-	ability1_cooldown_bar.value = progress
+func update_ability1_cooldown(state: int, progress: float):
+	var stylebox: StyleBoxFlat = ability1_cooldown_bar.get_theme_stylebox("fill")
+	# We need to access the Ability class's enum.
+	# Using integers for simplicity: READY=0, ACTIVE=1, COOLDOWN=2
+	match state:
+		Ability.State.ACTIVE:
+			ability1_cooldown_bar.value = progress
+			stylebox.bg_color = ACTIVE_COLOR
+			
+		Ability.State.COOLDOWN:
+			ability1_cooldown_bar.value = progress
+			stylebox.bg_color = COOLDOWN_COLOR
+			
+		Ability.State.READY:
+			ability1_cooldown_bar.value = 0
+			# Revert to the original color we saved in _ready()
+			stylebox.bg_color = default_fill_color
 
-func update_ability2_cooldown(progress: float):
-	ability2_cooldown_bar.value = progress
+func update_ability2_cooldown(state: int, progress: float):
+	var stylebox: StyleBoxFlat = ability2_cooldown_bar.get_theme_stylebox("fill")
+
+	match state:
+		Ability.State.ACTIVE:
+			ability2_cooldown_bar.value = progress
+			stylebox.bg_color = ACTIVE_COLOR
+			
+		Ability.State.COOLDOWN:
+			ability2_cooldown_bar.value = progress
+			stylebox.bg_color = COOLDOWN_COLOR
+			
+		Ability.State.READY:
+			ability2_cooldown_bar.value = 0
+			stylebox.bg_color = default_fill_color
 	
 func update_ability1_icon(ability_info: AbilityInfo):
 	if ability_info and ability_info.icon:

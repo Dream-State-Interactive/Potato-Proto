@@ -15,4 +15,5 @@ end_boost_start_percent = 0.8
 end_boost_multiplier = 1.0
 min_scale = Vector2(1, 1)
 max_scale = Vector2(1, 1)
+slot_cost = 3
 metadata/_custom_type_script = "uid://cwsplenuixblt"

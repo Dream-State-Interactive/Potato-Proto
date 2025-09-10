@@ -19,10 +19,17 @@
 class_name Ability
 extends Node
 
+enum State {
+	READY,
+	ACTIVE,
+	COOLDOWN
+}
+
 # --- Signals ---
 ## Emitted every frame to update UI elements like cooldown bars.
+## 'state' is one of the enum values (READY, ACTIVE, COOLDOWN).
 ## 'progress' is a value from 0.0 (ready) to 1.0 (on cooldown, just used).
-signal cooldown_updated(progress)
+signal state_updated(state, progress)
 
 # --- Configuration ---
 ## The duration of the cooldown in seconds after the ability is used.
@@ -34,9 +41,6 @@ signal cooldown_updated(progress)
 var cooldown_timer: Timer
 
 # --- Godot Functions ---
-
-# _ready() runs once when the node is added to the scene tree and ready.
-# It's used for one-time setup.
 func _ready():
 	# We create the Timer node in code rather than requiring it to be added
 	# in the editor. This makes the ability component easier to set up.
@@ -49,7 +53,7 @@ func _ready():
 	
 	# Emit the initial state (0.0 for 0% cooldown) to ensure the UI
 	# correctly displays the ability as "ready" at the start.
-	cooldown_updated.emit(0.0)
+	state_updated.emit(State.READY, 0.0)
 
 # _process(delta) runs on every visual frame. It's ideal for continuous
 # updates, like animating a cooldown bar.
@@ -60,15 +64,15 @@ func _process(_delta: float):
 		var remaining = cooldown_timer.time_left
 		# We emit the progress as a percentage (a value from 0.0 to 1.0),
 		# which is easy for UI elements like ProgressBars to use.
-		cooldown_updated.emit(remaining / cooldown_duration)
+		state_updated.emit(State.COOLDOWN, remaining / cooldown_duration)
 	else:
 		# If the timer is stopped, the ability is ready. We emit 0.0 to ensure
 		# the UI cooldown bar is empty. This 'else' block handles the case
 		# where the UI might be slightly out of sync.
-		cooldown_updated.emit(0.0)
+		# If the timer is stopped, the ability is READY.
+		state_updated.emit(State.READY, 0.0)
 
 # --- Public API ---
-
 ## This is the main function the Player script will call to try and use the ability.
 ## It returns 'true' on a successful activation and 'false' on failure.
 func activate(player_body: RigidBody2D):

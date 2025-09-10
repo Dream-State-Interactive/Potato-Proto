@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AbilityInfo" load_steps=4 format=3 uid="uid://cvhx0ktslqs56"]
+
+[ext_resource type="PackedScene" uid="uid://df5ve54gc64bs" path="res://src/abilities/sticky.tscn" id="1_pmu16"]
+[ext_resource type="Script" uid="uid://cufp68wokqij0" path="res://src/abilities/ability_info.gd" id="1_yeqks"]
+[ext_resource type="Texture2D" uid="uid://cxxodq4fcyxgj" path="res://assets/graphics/ui/icons/ability/icon_ability_Sticky.png" id="2_f0xlf"]
+
+[resource]
+script = ExtResource("1_yeqks")
+ability_name = "Sticky"
+ability_description = "Gives the potato some grip along surfaces such as floors and walls"
+icon = ExtResource("2_f0xlf")
+ability_scene = ExtResource("1_pmu16")
+metadata/_custom_type_script = "uid://cufp68wokqij0"

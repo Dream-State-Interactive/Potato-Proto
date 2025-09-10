@@ -16,8 +16,8 @@ bg_color = Color(1.68458e-06, 0.609875, 0.239376, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qn7c4"]
 bg_color = Color(0.168627, 0.168627, 0.168627, 0.482353)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3bum"]
-bg_color = Color(0.911162, 0.444643, 0.294971, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpdxj"]
+bg_color = Color(0.931646, 0.430387, 0.21892, 1)
 
 [node name="Hud" type="CanvasLayer"]
 layer = 0
@@ -112,7 +112,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_qn7c4")
-theme_override_styles/fill = SubResource("StyleBoxFlat_y3bum")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bpdxj")
 
 [node name="Ability 1 Label" type="RichTextLabel" parent="BottomRight_HBox/Ability1_Icon"]
 layout_mode = 0
@@ -153,7 +153,7 @@ text = "E"
 
 [node name="Howtoplay" type="Sprite2D" parent="."]
 position = Vector2(137, 983)
-scale = Vector2(0.254219, 0.254219)
+scale = Vector2(0.253851, 0.253851)
 texture = ExtResource("4_ariom")
 
 [node name="Node" type="Node" parent="Howtoplay"]

@@ -1,5 +1,3 @@
-# src/modes/gauntlet/hazard_generator.gd
-
 @tool
 class_name HazardGenerator
 extends Node2D
@@ -7,6 +5,8 @@ extends Node2D
 ## Create 'HazardConfig' resources and add them here.
 ## The generator will pick from this list based on progression.
 @export var hazard_configs: Array[HazardConfig]
+
+# Note: The min_spacing variable is no longer needed with this approach.
 
 func generate(surface_points: PackedVector2Array) -> Node2D:
 	var container := Node2D.new()
@@ -23,15 +23,22 @@ func generate(surface_points: PackedVector2Array) -> Node2D:
 			potential_hazards.append(config)
 	
 	if potential_hazards.is_empty():
-		return container # No hazards to spawn at this level.
+		return container
 
-	# 2. Iterate through the hill surface and try to spawn hazards.
+	# 2. Iterate through the hill surface using a slot-based approach.
 	var total_points = surface_points.size()
-	for i in range(total_points - 1):
+	var i = 0
+	while i < total_points - 1:
 		# Check each potential hazard for this point
+		var spawned_something = false
 		for config in potential_hazards:
 			if not config.hazard_scene:
 				continue
+			
+			# Check if there's enough space left to spawn this hazard
+			if i + config.slot_cost >= total_points:
+				continue
+
 			# Calculate how many "progression steps" have passed since this hazard unlocked.
 			var hills_since_unlock = max(0, current_hills - config.min_hills_completed)
 			
@@ -48,10 +55,24 @@ func generate(surface_points: PackedVector2Array) -> Node2D:
 
 			# Random check to see if we should spawn this hazard
 			if randf() < density:
-				_spawn_hazard(config, surface_points[i], surface_points[i+1], container)
-				# To prevent clutter, we can break here so only one hazard spawns per segment.
-				# You can remove this 'break' if you want multiple hazards to potentially spawn at the same spot.
-				break 
+				# For a 3-slot pitchfork, we spawn it in the middle slot.
+				# The spawn point index is the current index plus half the slot cost.
+				var spawn_index = i + (config.slot_cost / 2)
+				
+				# Ensure we don't go out of bounds for the second point (p2)
+				if spawn_index + 1 >= total_points:
+					continue
+
+				_spawn_hazard(config, surface_points[spawn_index], surface_points[spawn_index + 1], container)
+				
+				# Advance the index by the cost of the spawned hazard.
+				i += config.slot_cost
+				spawned_something = true
+				break # Only spawn one hazard at this location.
+		
+		# If nothing was spawned, just advance to the next slot.
+		if not spawned_something:
+			i += 1
 				
 	return container
 
