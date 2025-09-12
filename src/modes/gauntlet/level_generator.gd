@@ -316,8 +316,7 @@ func _maybe_cull_segments() -> void:
 		# If the player is within this segment, detach them but KEEP world transform,
 		# then re-check this same 'oldest' on the next iteration.
 		if oldest.is_ancestor_of(player):
-			_detach_player_preserve_global(player)
-			continue
+			break
 
 		# Typed fetch of end_global
 		var end_global: Vector2
@@ -333,16 +332,6 @@ func _maybe_cull_segments() -> void:
 		else:
 			break
 
-# Temporarily move the player to a parent that won't get culled & reapply transform when reparenting player
-func _detach_player_preserve_global(player: Node2D) -> void:
-	var safe_parent: Node = get_tree().current_scene
-	if player.get_parent() == safe_parent:
-		return
-	# Preserve world transform so there’s no unwanted repositioning
-	var player_global := player.global_transform
-	player.get_parent().remove_child(player)
-	safe_parent.add_child(player)
-	player.global_transform = player_global
 
 func _on_player_finished_segment():
 	# Only complete a "hill" if we were not in a special chain.
@@ -350,3 +339,32 @@ func _on_player_finished_segment():
 		ProgressionManager.complete_segment()
 
 	_generate_next_segment()  # allow culling inside generation
+	
+	# Reparent player to the newly created segment
+	_reparent_player_to_newest_segment()
+
+
+# Moves the player to become a child of the most recently generated segment.
+func _reparent_player_to_newest_segment() -> void:
+	var player: Node2D = GameManager.player_instance
+	if not is_instance_valid(player):
+		return
+
+	if _active_segments.is_empty():
+		printerr("Cannot reparent player, no active segments exist.")
+		return
+
+	var new_parent_segment: Node2D = _active_segments.back()
+
+	# Avoid reparenting if it's already in the right place
+	if player.get_parent() == new_parent_segment:
+		return
+
+	# Preserve the player's world position and physics state during reparenting
+	var player_global_transform: Transform2D = player.global_transform
+	
+	if player.get_parent() != null:
+		player.get_parent().remove_child(player)
+	
+	new_parent_segment.add_child(player)
+	player.global_transform = player_global_transform

@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbl57rf68p1mr"]
-
-[ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="1_qcl6d"]
+[gd_scene format=3 uid="uid://cbl57rf68p1mr"]
 
 [node name="StartSegment" type="Node2D"]
 
@@ -91,9 +89,6 @@ polygon = PackedVector2Array(0, 0, 746, -209, 746, 150, 0, 150)
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(583, 0)
 polygon = PackedVector2Array(0, 0, 746, -209, 746, 150, 0, 150)
-
-[node name="PlayerSpawn" parent="." instance=ExtResource("1_qcl6d")]
-position = Vector2(312, -273)
 
 [node name="EndMarker" type="Marker2D" parent="."]
 position = Vector2(1329, -209)

@@ -15,3 +15,4 @@ func _on_body_entered(body):
 		emit_signal("player_finished_segment")
 		# Disable the shape to prevent it from firing again.
 		$CollisionShape2D.set_deferred("disabled", true)
+		queue_free()
