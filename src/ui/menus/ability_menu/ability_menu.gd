@@ -57,6 +57,24 @@ func _ready():
 	q_slot.unhovered.connect(_on_any_icon_unhovered)
 	e_slot.hovered.connect(_on_any_icon_hovered)
 	e_slot.unhovered.connect(_on_any_icon_unhovered)
+	
+	# Emit this signal whenever the menu is shown or hidden.
+	visibility_changed.connect(update_equipped_slots)
+	
+	# Perform an initial update in case the menu starts visible.
+	update_equipped_slots()
+
+## Check player's current abilites & update Q and E slots to match.
+func update_equipped_slots():
+	if not is_visible():
+		return
+	if GameManager.is_player_active():
+		var player = GameManager.player_instance
+		q_slot.update_slot_visual(player.equipped_ability1_info)
+		e_slot.update_slot_visual(player.equipped_ability2_info)
+	else:
+		q_slot.update_slot_visual(null)
+		e_slot.update_slot_visual(null)
 
 ## Called when an ability is dropped on the 'Q' slot.
 func _on_q_ability_assigned(resource: AbilityInfo):
@@ -70,6 +88,7 @@ func _on_e_ability_assigned(resource: AbilityInfo):
 	print("Assigning ", resource.ability_name, " to slot 2 (E)")
 	if GameManager.is_player_active():
 		GameManager.player_instance.equip_ability(resource, 2)
+
 
 ## Called when the mouse enters ANY ability icon or slot.
 func _on_any_icon_hovered(resource: AbilityInfo):

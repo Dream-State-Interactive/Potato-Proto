@@ -12,3 +12,6 @@ roll_speed = 5000.0
 jump_force = 50.0
 horizontal_nudge = 1000.0
 armor = 0.0
+base_air_control = 100.0
+max_air_control = 800.0
+air_control_velocity_scalar = 0.2

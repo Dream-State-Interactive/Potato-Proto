@@ -1,3 +1,4 @@
+# src/modes/gauntlet/hazard_generator.gd
 @tool
 class_name HazardGenerator
 extends Node2D

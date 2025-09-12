@@ -24,12 +24,19 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant):
 	var resource = data as AbilityInfo
 	if resource:
-		current_ability = resource
-		icon_display.texture = resource.icon
+		update_slot_visual(resource)
 		ability_assigned.emit(resource)
 		# Also emit hover so the description updates instantly on drop.
 		hovered.emit(resource)
 
+# Updates the slot's icon via AbilityInfo resource without Drag/Drop'ing
+func update_slot_visual(resource: AbilityInfo):
+	current_ability = resource
+	if resource and resource.icon:
+		icon_display.texture = resource.icon
+	else:
+		# Clear the icon if no ability is equipped or the resource is null.
+		icon_display.texture = null
 
 func _on_mouse_entered():
 	if current_ability:

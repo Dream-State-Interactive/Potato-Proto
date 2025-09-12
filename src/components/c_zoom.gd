@@ -14,7 +14,7 @@ extends Camera2D
 # The minimum zoom level (e.g., 0.5 is zoomed in 2x).
 @export var min_zoom: float = 0.5
 # The maximum zoom level (e.g., 2.0 is zoomed out 2x).
-@export var max_zoom: float = 2.0
+@export var max_zoom: float = 8.0
 
 @export_group("Controls")
 # If true, scroll down zooms in and scroll up zooms out.
@@ -52,8 +52,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 	# Clamp the target zoom to stay within the min/max bounds
-	_target_zoom.x = clamp(_target_zoom.x, min_zoom, max_zoom)
-	_target_zoom.y = clamp(_target_zoom.y, min_zoom, max_zoom)
+	#_target_zoom.x = clamp(_target_zoom.x, min_zoom, max_zoom)
+	#_target_zoom.y = clamp(_target_zoom.y, min_zoom, max_zoom)
 
 
 func _process(delta: float) -> void:

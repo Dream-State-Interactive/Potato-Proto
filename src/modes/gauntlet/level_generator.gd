@@ -15,7 +15,6 @@ extends Node2D
 @export_range(1, 10) var runtime_bootstrap_segments: int = 2
 
 # For safe culling
-@export var player_path: NodePath
 @export var cull_margin_px: float = 512.0
 
 ## Array to control the special scene generation sequence.
@@ -296,40 +295,54 @@ func _finalize_segment_generation(segment: Node2D, end_pos_local: Vector2, allow
 	if allow_cull:
 		_maybe_cull_segments()
 
-func _maybe_cull_segments():
+func _maybe_cull_segments() -> void:
 	# Keep memory bounded AND never despawn the segment the player is still in.
 	if _active_segments.size() <= max_active_segments:
 		return
 
-	var player: Node = null
-	if player_path != NodePath("") and has_node(player_path):
-		player = get_node(player_path)
-
-	if player == null or not (player is Node2D):
-		# Without a player reference, be conservative: remove only if we are 2 over the cap
-		if _active_segments.size() > max_active_segments + 1:
-			var oldest = _active_segments.pop_front()
-			if is_instance_valid(oldest):
-				oldest.queue_free()
+	var player: Node2D = GameManager.player_instance
+	if player == null or not is_instance_valid(player):
 		return
 
-	var p := player as Node2D
-	var px := p.global_position.x
-
-	# Try to cull from the front only if its end is comfortably behind the player
+	var px: float = player.global_position.x
+	
+	# Try to cull from the front (index = 0; oldest segment) only if its end is comfortably behind the player
 	while _active_segments.size() > max_active_segments:
 		var oldest: Node2D = _active_segments[0]
 		if not is_instance_valid(oldest):
 			_active_segments.pop_front()
 			continue
 
-		var end_global: Vector2 = oldest.get_meta("end_global", oldest.global_position)
-		if end_global.x < px - cull_margin_px:
-			_active_segments.pop_front()
-			oldest.queue_free()
+		# If the player is within this segment, detach them but KEEP world transform,
+		# then re-check this same 'oldest' on the next iteration.
+		if oldest.is_ancestor_of(player):
+			_detach_player_preserve_global(player)
+			continue
+
+		# Typed fetch of end_global
+		var end_global: Vector2
+		if oldest.has_meta("end_global"):
+			end_global = oldest.get_meta("end_global") as Vector2
 		else:
-			# Oldest is still near/ahead of the player -> don't cull yet
+			end_global = oldest.global_position
+
+		# Cull only when comfortably behind the player
+		if end_global.x + cull_margin_px < px:
+			_active_segments.pop_front()
+			oldest.call_deferred("queue_free")
+		else:
 			break
+
+# Temporarily move the player to a parent that won't get culled & reapply transform when reparenting player
+func _detach_player_preserve_global(player: Node2D) -> void:
+	var safe_parent: Node = get_tree().current_scene
+	if player.get_parent() == safe_parent:
+		return
+	# Preserve world transform so there’s no unwanted repositioning
+	var player_global := player.global_transform
+	player.get_parent().remove_child(player)
+	safe_parent.add_child(player)
+	player.global_transform = player_global
 
 func _on_player_finished_segment():
 	# Only complete a "hill" if we were not in a special chain.

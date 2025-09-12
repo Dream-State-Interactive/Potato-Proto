@@ -1,3 +1,4 @@
+# src/player/player_spawn.gd
 extends Node2D
 
 var player = preload("res://src/player/player.tscn")
