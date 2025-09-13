@@ -19,8 +19,8 @@ extends Node2D
 
 # --- Sleep/Wake control (distance-based) ---
 @export var player_path: NodePath
-@export var sleep_distance_px: float = 1800.0
-@export var wake_distance_px: float = 1500.0
+@export var sleep_distance_px: float = 5000.0
+@export var wake_distance_px: float = 10000.0
 @export var despawn_distance_px: float = 15000.0
 
 @export_group("Progression Scaling")

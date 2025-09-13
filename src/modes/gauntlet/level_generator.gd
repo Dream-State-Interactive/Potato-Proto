@@ -349,7 +349,7 @@ func _on_player_finished_segment():
 	#var player: Node2D = GameManager.player_instance
 	#if not is_instance_valid(player):
 		#return
-#
+#e
 	#if _active_segments.is_empty():
 		#printerr("Cannot reparent player, no active segments exist.")
 		#return
