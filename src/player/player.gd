@@ -594,12 +594,14 @@ func equip_ability(ability_info: AbilityInfo, slot_number: int):
 
 		# 3. Connect signals for the new ability based on the slot.
 		if slot_number == 1:
+			equipped_ability1_info = ability_info
 			# Connect the ability's signal to our NEW handler function.
 			new_ability.state_updated.connect(_on_ability1_state_updated)
 			GameManager.ability1_equipped.emit(ability_info)
 			# Immediately update the HUD to show it's ready.
 			GameManager.ability1_state_updated.emit(Ability.State.READY, 0.0)
 		else: # slot_number == 2
+			equipped_ability2_info = ability_info
 			new_ability.state_updated.connect(_on_ability2_state_updated)
 			GameManager.ability2_equipped.emit(ability_info)
 			GameManager.ability2_state_updated.emit(Ability.State.READY, 0.0)
@@ -608,9 +610,11 @@ func equip_ability(ability_info: AbilityInfo, slot_number: int):
 	else:
 		print("Unequipped ability in slot ", slot_number)
 		if slot_number == 1:
+			equipped_ability1_info = null
 			GameManager.ability1_equipped.emit(null)
 			GameManager.ability1_state_updated.emit(Ability.State.READY, 0.0)
 		else: # slot_number == 2
+			equipped_ability2_info = null
 			GameManager.ability2_equipped.emit(null)
 			GameManager.ability2_state_updated.emit(Ability.State.READY, 0.0)
 
