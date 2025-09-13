@@ -341,30 +341,30 @@ func _on_player_finished_segment():
 	_generate_next_segment()  # allow culling inside generation
 	
 	# Reparent player to the newly created segment
-	_reparent_player_to_newest_segment()
-
-
-# Moves the player to become a child of the most recently generated segment.
-func _reparent_player_to_newest_segment() -> void:
-	var player: Node2D = GameManager.player_instance
-	if not is_instance_valid(player):
-		return
-
-	if _active_segments.is_empty():
-		printerr("Cannot reparent player, no active segments exist.")
-		return
-
-	var new_parent_segment: Node2D = _active_segments.back()
-
-	# Avoid reparenting if it's already in the right place
-	if player.get_parent() == new_parent_segment:
-		return
-
-	# Preserve the player's world position and physics state during reparenting
-	var player_global_transform: Transform2D = player.global_transform
-	
-	if player.get_parent() != null:
-		player.get_parent().remove_child(player)
-	
-	new_parent_segment.add_child(player)
-	player.global_transform = player_global_transform
+	#_reparent_player_to_newest_segment()
+#
+#
+## Moves the player to become a child of the most recently generated segment.
+#func _reparent_player_to_newest_segment() -> void:
+	#var player: Node2D = GameManager.player_instance
+	#if not is_instance_valid(player):
+		#return
+#
+	#if _active_segments.is_empty():
+		#printerr("Cannot reparent player, no active segments exist.")
+		#return
+#
+	#var new_parent_segment: Node2D = _active_segments.back()
+#
+	## Avoid reparenting if it's already in the right place
+	#if player.get_parent() == new_parent_segment:
+		#return
+#
+	## Preserve the player's world position and physics state during reparenting
+	#var player_global_transform: Transform2D = player.global_transform
+	#
+	#if player.get_parent() != null:
+		#player.get_parent().remove_child(player)
+	#
+	#new_parent_segment.add_child(player)
+	#player.global_transform = player_global_transform
