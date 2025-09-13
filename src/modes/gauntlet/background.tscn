@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6gwluehsd2gu"]
+
+[ext_resource type="Script" uid="uid://bfql7cpe4uqem" path="res://src/modes/gauntlet/background.gd" id="1_r55yr"]
+[ext_resource type="Script" uid="uid://l0naveqbhy5g" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="2_5stb2"]
+[ext_resource type="Script" uid="uid://drkx1gwnedkcp" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="3_c8teg"]
+[ext_resource type="Shader" uid="uid://7dno3uy2j2eo" path="res://assets/Shaders/ScrollShader.gdshader" id="4_qi6x4"]
+[ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/graphics/textures/env/proto_clouds_01_A.png" id="5_brnq0"]
+[ext_resource type="Script" uid="uid://t3qcsqml1366" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="6_ikmmt"]
+[ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/graphics/textures/env/proto_clouds_01_B.png" id="7_yor6h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kf0aw"]
+shader = ExtResource("4_qi6x4")
+shader_parameter/uv_offset_x = 0.0
+
+[node name="Background" type="CanvasLayer"]
+script = ExtResource("1_r55yr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -99
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.345098, 0.643137, 0.988235, 1)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
+layer = -10
+scroll_ignore_camera_zoom = true
+script = ExtResource("2_5stb2")
+
+[node name="ParallaxLayer_Clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 20
+motion_scale = Vector2(0.005, 0.002)
+motion_offset = Vector2(-1024, 0)
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxBackground/ParallaxLayer_Clouds"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_c8teg")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer_Clouds/FullscreenControl_Clouds"]
+material = SubResource("ShaderMaterial_kf0aw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_brnq0")
+stretch_mode = 1
+script = ExtResource("6_ikmmt")
+auto_scroll_speed = 0.04
+metadata/_edit_use_anchors_ = true
+
+[node name="ParallaxLayer_Clouds2" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 30
+motion_scale = Vector2(0.003, 0.002)
+motion_offset = Vector2(-1024, 0)
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxBackground/ParallaxLayer_Clouds2"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_c8teg")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer_Clouds2/FullscreenControl_Clouds"]
+material = SubResource("ShaderMaterial_kf0aw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_yor6h")
+stretch_mode = 1
+script = ExtResource("6_ikmmt")
+auto_scroll_speed = 0.02
+metadata/_edit_use_anchors_ = true

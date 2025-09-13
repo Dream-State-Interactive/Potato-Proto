@@ -36,11 +36,16 @@ extends Node2D
 @export var special_store_interval: int = 15
 
 const SEGMENT_END_TRIGGER = preload("res://src/modes/gauntlet/segment_end_trigger.tscn")
-const FALLBACK_SPECIAL_SCENE = preload("res://src/levels/level_proto/level_proto.tscn") # unused
+const FALLBACK_SPECIAL_SCENE = preload("res://src/levels/level_proto/level_proto.tscn") # unused1
+const theme_hill_minimum = 5
 
 @onready var hill_generator: Node2D = $HillGenerator
 @onready var hazard_generator: Node2D = $HazardGenerator
 @onready var obstacle_generator: Node2D = $ObstacleGenerator
+@onready var background: CanvasLayer = $"../Background"
+
+# A variable to prevent theme changes on every single segment generation
+var last_theme_change_hill_count: int = -1
 
 var _current_spawn_position: Vector2 = Vector2.ZERO
 var _active_segments: Array[Node2D] = []
@@ -157,6 +162,14 @@ func _generate_next_segment(allow_cull: bool = true):
 		_generate_standard_segment(allow_cull)
 
 func _generate_standard_segment(allow_cull: bool):
+	var hills_completed = ProgressionManager.hills_completed
+	# Change theme every 20 hills, and only do it once per milestone
+	if hills_completed > 0 and (hills_completed % theme_hill_minimum == 0) and (hills_completed != last_theme_change_hill_count):
+		last_theme_change_hill_count = hills_completed
+		ThemeManager.advance_theme()
+		if is_instance_valid(background):
+			background.change_color(ThemeManager.get_current_theme().sky_color)
+	
 	var segment = Node2D.new()
 	segment.name = "Segment" + str(ProgressionManager.hills_completed)
 	segment.add_to_group("level_segment")
