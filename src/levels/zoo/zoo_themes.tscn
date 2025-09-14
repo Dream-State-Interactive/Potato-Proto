@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://eewys6kys7nx"]
+
+[ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="1_c5t7q"]
+[ext_resource type="PackedScene" uid="uid://bhhfjdk83iomh" path="res://src/npc/npc_goobie/npc_goobie.tscn" id="1_dtn8e"]
+
+[node name="ZooThemes" type="Node2D"]
+
+[node name="Goobie" parent="." instance=ExtResource("1_dtn8e")]
+position = Vector2(110, 608)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor"]
+polygon = PackedVector2Array(244, 572, 2100, 572, 2100, 592, 244, 592)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(244, 572, 2100, 572, 2100, 592, 244, 592)
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("1_c5t7q")]
+position = Vector2(350, 515)

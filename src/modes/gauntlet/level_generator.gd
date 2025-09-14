@@ -37,7 +37,7 @@ extends Node2D
 
 const SEGMENT_END_TRIGGER = preload("res://src/modes/gauntlet/segment_end_trigger.tscn")
 const FALLBACK_SPECIAL_SCENE = preload("res://src/levels/level_proto/level_proto.tscn") # unused1
-const theme_hill_minimum = 5
+const theme_hill_minimum = 3
 
 @onready var hill_generator: Node2D = $HillGenerator
 @onready var hazard_generator: Node2D = $HazardGenerator
