@@ -69,7 +69,7 @@ metadata/_custom_type_script = "uid://dvcrdslrjlfo8"
 position = Vector2(-493, -68)
 
 [node name="WaitNode2" type="Node2D" parent="Goobie_Path_Sequence"]
-position = Vector2(-913, 31)
+position = Vector2(-914, 31)
 script = ExtResource("10_0dwbn")
 wait_time = 5.0
 metadata/_custom_type_script = "uid://bhtaxqrxfynai"
@@ -115,8 +115,7 @@ position = Vector2(-368, 16)
 
 [node name="PhysicsButton" parent="." instance=ExtResource("18_5pbs8")]
 position = Vector2(-817, 0)
-trigger_margin_px = 3.0
-min_press_depth_px = 6.0
+trigger_margin_px = 4.0
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(-2100, -572)

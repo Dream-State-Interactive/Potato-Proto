@@ -166,9 +166,9 @@ func _generate_standard_segment(allow_cull: bool):
 	# Change theme every 20 hills, and only do it once per milestone
 	if hills_completed > 0 and (hills_completed % theme_hill_minimum == 0) and (hills_completed != last_theme_change_hill_count):
 		last_theme_change_hill_count = hills_completed
-		ThemeManager.advance_theme()
+		ThemeManagerOlde.advance_theme()
 		if is_instance_valid(background):
-			background.change_color(ThemeManager.get_current_theme().sky_color)
+			background.change_color(ThemeManagerOlde.get_current_theme().sky_color)
 	
 	var segment = Node2D.new()
 	segment.name = "Segment" + str(ProgressionManager.hills_completed)

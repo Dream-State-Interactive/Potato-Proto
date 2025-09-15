@@ -5,4 +5,4 @@ extends Node2D
 
 
 func _ready():
-	anim_player.play("goob_idle-loop")
+	anim_player.play("idle-loop")

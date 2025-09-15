@@ -1,0 +1,141 @@
+[gd_scene load_steps=16 format=3 uid="uid://vgcck41qjy2w"]
+
+[ext_resource type="PackedScene" uid="uid://s7iommtvhr20" path="res://src/env/physics_button.tscn" id="1_sxk7i"]
+[ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="1_vryga"]
+[ext_resource type="PackedScene" uid="uid://bhhfjdk83iomh" path="res://src/npc/npc_goobie/npc_goobie.tscn" id="2_qxop3"]
+[ext_resource type="Script" uid="uid://dxqygb52npank" path="res://src/components/sequencer/c_sequence_runner.gd" id="4_j1htc"]
+[ext_resource type="Script" uid="uid://b464xm2tegma5" path="res://src/components/sequencer/nodes/movement/node_walk_to.gd" id="5_5wgh8"]
+[ext_resource type="Script" uid="uid://cnvgqrksn15uu" path="res://src/components/sequencer/c_sequence_manager.gd" id="5_r1gs5"]
+[ext_resource type="Script" uid="uid://bis33o4217ox0" path="res://src/components/sequencer/nodes/flow/node_conditional_branch.gd" id="6_lpy6o"]
+[ext_resource type="Script" uid="uid://c4mpuqs2u6ww" path="res://src/components/sequencer/nodes/flow/node_goto.gd" id="7_657ln"]
+[ext_resource type="Resource" uid="uid://cgx181sdm5r5b" path="res://src/components/sequencer/conditions/ConditionButtonDemo.tres" id="7_qis4s"]
+[ext_resource type="Script" uid="uid://dbkcsdcxba7py" path="res://src/components/sequencer/nodes/flow/node_switch_sequence.gd" id="8_cw1bt"]
+[ext_resource type="Script" uid="uid://dvcrdslrjlfo8" path="res://src/components/sequencer/nodes/movement/node_jump.gd" id="9_ld5bu"]
+[ext_resource type="Script" uid="uid://bhtaxqrxfynai" path="res://src/components/sequencer/nodes/timing/node_wait.gd" id="10_k0pop"]
+[ext_resource type="Resource" uid="uid://d0irbmhwbgsfa" path="res://src/components/sequencer/conditions/ConditionAreaDemo.tres" id="11_0j4ep"]
+[ext_resource type="Script" uid="uid://bmq0jiqy7ev2n" path="res://src/components/sequencer/nodes/action/node_interact.gd" id="12_qis4s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5wgh8"]
+size = Vector2(512, 512)
+
+[node name="SequenceDemo" type="Node2D"]
+
+[node name="PhysicsButton" parent="." instance=ExtResource("1_sxk7i")]
+position = Vector2(1741, 717)
+trigger_margin_px = 3.0
+min_press_depth_px = 6.0
+
+[node name="Goobie" parent="." instance=ExtResource("2_qxop3")]
+position = Vector2(571, 723)
+
+[node name="SequenceManager" type="Node" parent="Goobie"]
+script = ExtResource("5_r1gs5")
+initial_sequence = &"PathSequence"
+metadata/_custom_type_script = "uid://cnvgqrksn15uu"
+
+[node name="PathSequence" type="Node" parent="Goobie"]
+script = ExtResource("4_j1htc")
+sequence_path = NodePath("../../Goobie_Path_Sequence")
+is_default_runner = true
+
+[node name="DemoSequence" type="Node" parent="Goobie"]
+script = ExtResource("4_j1htc")
+sequence_path = NodePath("../../Goobie_DemoSequence")
+metadata/_custom_type_script = "uid://dxqygb52npank"
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(-1208, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(174, 714, 4200, 714, 4200, 786, 174, 786)
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor"]
+color = Color(0.347817, 0.347817, 0.347817, 1)
+polygon = PackedVector2Array(174, 714, 4200, 714, 4200, 786, 174, 786)
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("1_vryga")]
+position = Vector2(476, 279)
+
+[node name="Goobie_Path_Sequence" type="Node2D" parent="."]
+
+[node name="WalkToNodeA" type="Node2D" parent="Goobie_Path_Sequence"]
+position = Vector2(115, 721)
+script = ExtResource("5_5wgh8")
+metadata/_custom_type_script = "uid://b464xm2tegma5"
+
+[node name="ConditionalBranchNode" type="Node2D" parent="Goobie_Path_Sequence"]
+position = Vector2(313, 725)
+script = ExtResource("6_lpy6o")
+condition = ExtResource("7_qis4s")
+path_if_true = NodePath("../SwitchToDemo")
+path_if_false = NodePath("../WalkToNodeA")
+metadata/_custom_type_script = "uid://bis33o4217ox0"
+
+[node name="WalkToNodeB" type="Node2D" parent="Goobie_Path_Sequence"]
+position = Vector2(964, 721)
+script = ExtResource("5_5wgh8")
+metadata/_custom_type_script = "uid://b464xm2tegma5"
+
+[node name="GoToNode" type="Node2D" parent="Goobie_Path_Sequence"]
+script = ExtResource("7_657ln")
+target_node_in_sequence = NodePath(".")
+move_mode = 0
+metadata/_custom_type_script = "uid://c4mpuqs2u6ww"
+
+[node name="SwitchToDemo" type="Node2D" parent="Goobie_Path_Sequence"]
+position = Vector2(1030, 715)
+script = ExtResource("8_cw1bt")
+new_sequence_name = &"Goobie_DemoSequence"
+move_mode = 0
+metadata/_custom_type_script = "uid://dbkcsdcxba7py"
+
+[node name="Goobie_DemoSequence" type="Node2D" parent="."]
+
+[node name="JumpNearTrigger" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(1236, 723)
+script = ExtResource("9_ld5bu")
+landing_point_path = NodePath("LandPoint")
+jump_height = 840.0
+duration = 1.8
+metadata/_custom_type_script = "uid://dvcrdslrjlfo8"
+
+[node name="LandPoint" type="Marker2D" parent="Goobie_DemoSequence/JumpNearTrigger"]
+position = Vector2(1591, 0)
+
+[node name="WaitNode" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(2930, 723)
+script = ExtResource("10_k0pop")
+wait_time = 0.34
+metadata/_custom_type_script = "uid://bhtaxqrxfynai"
+
+[node name="WaitNode2" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(2910, 722)
+script = ExtResource("10_k0pop")
+wait_time = 3.0
+metadata/_custom_type_script = "uid://bhtaxqrxfynai"
+
+[node name="WaitForPlayerInZone" type="Node2D" parent="Goobie_DemoSequence"]
+script = ExtResource("6_lpy6o")
+condition = ExtResource("11_0j4ep")
+path_if_true = NodePath("../Celebrate")
+path_if_false = NodePath(".")
+move_mode = 0
+metadata/_custom_type_script = "uid://bis33o4217ox0"
+
+[node name="Celebrate" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(2904, 718)
+script = ExtResource("12_qis4s")
+animation_name = &"roll"
+move_mode = 0
+metadata/_custom_type_script = "uid://bmq0jiqy7ev2n"
+
+[node name="ResetSequence" type="Node2D" parent="Goobie_DemoSequence"]
+script = ExtResource("8_cw1bt")
+new_sequence_name = &"Goobie_Path_Sequence"
+metadata/_custom_type_script = "uid://dbkcsdcxba7py"
+
+[node name="TriggerZone" type="Area2D" parent="."]
+position = Vector2(2526, 461)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerZone"]
+shape = SubResource("RectangleShape2D_5wgh8")

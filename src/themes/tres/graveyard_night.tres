@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="ThemeData" load_steps=3 format=3 uid="uid://b6ql7v7ymkkad"]
+
+[ext_resource type="Script" uid="uid://boh47jks7ym2t" path="res://src/themes/theme_data.gd" id="1_i8det"]
+[ext_resource type="Texture2D" uid="uid://tbxj4oeokm2f" path="res://assets/graphics/textures/env/clouds_bg_A.png" id="1_r2xeo"]
+
+[resource]
+script = ExtResource("1_i8det")
+theme_id = &"graveyard"
+display_name = "Creepy Graveyard"
+sky_top = Color(0.141176, 0.105882, 0.231373, 1)
+sky_bottom = Color(0.054902, 0.0627451, 0.133333, 1)
+day_tint = Color(1, 1, 1, 1)
+night_tint = Color(0.7, 0.8, 1, 1)
+terrain_fill = Color(0.168627, 0.239216, 0.184314, 1)
+terrain_trim = Color(0.121569, 0.168627, 0.133333, 1)
+accent_1 = Color(1, 0.85, 0.4, 1)
+accent_2 = Color(0.2, 0.6, 1, 1)
+parallax_textures = Array[Texture2D]([ExtResource("1_r2xeo")])
+parallax_motions = Array[Vector2]([Vector2(0.3, 0)])
+sun_color = Color(0.911058, 0.605872, 0.893374, 1)
+moon_color = Color(1, 1, 1, 1)
+ambient_day = Color(0.75, 0.8, 0.9, 0)
+ambient_night = Color(0.2, 0.25, 0.35, 0)
+night_star_intensity = 0.8
+grade_strength = 0.4
+fog_color = Color(1, 1, 1, 0)
+fog_band_height = 160.0
+sun_size = 90.0
+sun_core_softness = 0.1
+sun_glow_radius_mul = 1.4
+sun_halo_radius_mul = 2.2
+sun_glow_strength = 0.35
+sun_halo_strength = 0.18
+moon_size = 70.0
+moon_core_softness = 0.06
+moon_glow_radius_mul = 1.6
+moon_glow_strength = 0.3
+horizon_curve = 0.35
+metadata/_custom_type_script = "uid://boh47jks7ym2t"

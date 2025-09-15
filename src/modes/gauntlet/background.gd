@@ -5,7 +5,7 @@ extends CanvasLayer
 var active_tween: Tween
 
 func _ready():
-	color_rect.color = ThemeManager.get_current_theme().sky_color
+	color_rect.color = ThemeManagerOlde.get_current_theme().sky_color
 
 func change_color(new_color: Color, duration: float = 2.0):
 	# If a transition is already running, kill the old tween to start a new one.

@@ -45,7 +45,7 @@ func get_hill_parameters() -> Dictionary:
 		"frequency": frequency,
 		"slope": slope,
 		"gravity": steepness_increase, # Pass the new gravity parameter
-		"color": ThemeManager.get_current_theme().hill_color
+		"color": ThemeManagerOlde.get_current_theme().hill_color
 	}
 
 

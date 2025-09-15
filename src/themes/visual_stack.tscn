@@ -1,0 +1,149 @@
+[gd_scene load_steps=15 format=3 uid="uid://bt4mlhnjlgpyi"]
+
+[ext_resource type="Shader" uid="uid://dsnwxoklqum0d" path="res://src/themes/sky_background.gdshader" id="1_mygdp"]
+[ext_resource type="Shader" uid="uid://gu2k04dqwmc5" path="res://src/themes/palette_grade.gdshader" id="2_y8x24"]
+[ext_resource type="Shader" uid="uid://df31uh3g2tkqj" path="res://src/themes/celestials.gdshader" id="3_mygdp"]
+[ext_resource type="Texture2D" uid="uid://bkc2bdj16c5og" path="res://assets/graphics/sprites/env/moth.png" id="3_w52lw"]
+[ext_resource type="Shader" uid="uid://51k1ydskpuw4" path="res://src/themes/celestials_glow.gdshader" id="4_7fpps"]
+[ext_resource type="Shader" uid="uid://bg0i8uycbwmk6" path="res://src/themes/fog_overlay.gdshader" id="4_yryhw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y8x24"]
+shader = ExtResource("1_mygdp")
+shader_parameter/sky_top = Color(0.25, 0.45, 0.95, 1)
+shader_parameter/sky_bottom = Color(0.85, 0.92, 1, 1)
+shader_parameter/horizon_curve = 0.35
+
+[sub_resource type="Gradient" id="Gradient_w52lw"]
+colors = PackedColorArray(1, 1, 1, 1, 0.60269, 0.73829, 0.898607, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yryhw"]
+gradient = SubResource("Gradient_w52lw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mygdp"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(2000, 1200, 1)
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 0.6
+color_ramp = SubResource("GradientTexture1D_yryhw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7fpps"]
+shader = ExtResource("3_mygdp")
+shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
+shader_parameter/moon_color = Color(0.8, 0.9, 1, 1)
+shader_parameter/time_of_day = 0.25
+shader_parameter/sun_size = 90.0
+shader_parameter/moon_size = 70.0
+shader_parameter/sun_core_softness = 0.08
+shader_parameter/moon_core_softness = 0.05
+shader_parameter/viewport_size = Vector2(1920, 1080)
+shader_parameter/cam_zoom = Vector2(1, 1)
+shader_parameter/orbit_center = Vector2(0.5, 1.2)
+shader_parameter/orbit_radius = 0.85
+shader_parameter/ambient_tint = Vector3(1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwy70"]
+shader = ExtResource("4_7fpps")
+shader_parameter/sun_color = Color(1, 0.95, 0.85, 1)
+shader_parameter/moon_color = Color(0.75, 0.85, 1, 1)
+shader_parameter/time_of_day = 0.25
+shader_parameter/sun_size = 90.0
+shader_parameter/moon_size = 70.0
+shader_parameter/sun_glow_radius_mul = 1.4
+shader_parameter/sun_halo_radius_mul = 2.2
+shader_parameter/sun_glow_strength = 0.35
+shader_parameter/sun_halo_strength = 0.18
+shader_parameter/moon_glow_radius_mul = 1.6
+shader_parameter/moon_glow_strength = 0.3
+shader_parameter/viewport_size = Vector2(1920, 1080)
+shader_parameter/cam_zoom = Vector2(1, 1)
+shader_parameter/orbit_center = Vector2(0.5, 1.1)
+shader_parameter/orbit_radius = 0.8
+shader_parameter/ambient_tint = Vector3(1, 1, 1)
+shader_parameter/glow_alpha = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mygdp"]
+shader = ExtResource("4_yryhw")
+shader_parameter/fog_color = Color(1, 1, 1, 0)
+shader_parameter/band_height = 160.0
+shader_parameter/time_of_day = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w52lw"]
+shader = ExtResource("2_y8x24")
+shader_parameter/amount = 0.4
+shader_parameter/time_of_day = 0.0
+
+[node name="VisualStack" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sky" type="ColorRect" parent="CanvasLayer/Control"]
+material = SubResource("ShaderMaterial_y8x24")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Starfield" type="GPUParticles2D" parent="CanvasLayer/Control"]
+amount = 300
+texture = ExtResource("3_w52lw")
+lifetime = 8.0
+process_material = SubResource("ParticleProcessMaterial_mygdp")
+
+[node name="Celestials" type="ColorRect" parent="CanvasLayer/Control"]
+z_index = 12
+material = SubResource("ShaderMaterial_7fpps")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CelestialsGlow" type="ColorRect" parent="CanvasLayer/Control"]
+z_index = 13
+material = SubResource("ShaderMaterial_qwy70")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer/Control"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/Control/ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/ParallaxBackground/ParallaxLayer"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/Control"]
+
+[node name="FogOverlay" type="ColorRect" parent="CanvasLayer/Control"]
+material = SubResource("ShaderMaterial_mygdp")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PostGrade" type="ColorRect" parent="CanvasLayer/Control"]
+material = SubResource("ShaderMaterial_w52lw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -52,8 +52,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 	# Clamp the target zoom to stay within the min/max bounds
-	_target_zoom.x = clamp(_target_zoom.x, min_zoom, max_zoom)
-	_target_zoom.y = clamp(_target_zoom.y, min_zoom, max_zoom)
+	#_target_zoom.x = clamp(_target_zoom.x, min_zoom, max_zoom)
+	#_target_zoom.y = clamp(_target_zoom.y, min_zoom, max_zoom)
 
 
 func _process(delta: float) -> void:
