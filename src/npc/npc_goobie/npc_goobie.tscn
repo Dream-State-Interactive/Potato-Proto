@@ -85,6 +85,62 @@ tracks/5/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_xw0dy"]
+resource_name = "goob_idle"
+length = 4.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("root/Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4.2),
+"transitions": PackedFloat32Array(1, 1.10957, 1),
+"update": 0,
+"values": [Vector2(447, -112), Vector2(447, -117.11), Vector2(447, -112)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("root/HandR:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.03333, 4.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(447, -112), Vector2(447, -116.145), Vector2(447, -112)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("root/HandL:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0666667, 2, 4.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(447, -112), Vector2(447, -115.41), Vector2(447, -112)]
+}
+
+[sub_resource type="Animation" id="Animation_uoscv"]
+resource_name = "roll"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("root/Body:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.5, 1),
+"transitions": PackedFloat32Array(1, 5, 1),
+"update": 0,
+"values": [0.0, 18.422, 0.0]
+}
+
 [sub_resource type="Animation" id="Animation_r3u8e"]
 resource_name = "walk"
 length = 0.6
@@ -148,62 +204,6 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(447, -112), Vector2(446, -122.745), Vector2(452, -107.43), Vector2(447, -112)]
-}
-
-[sub_resource type="Animation" id="Animation_uoscv"]
-resource_name = "roll"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("root/Body:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 0.5, 1),
-"transitions": PackedFloat32Array(1, 5, 1),
-"update": 0,
-"values": [0.0, 18.422, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_xw0dy"]
-resource_name = "goob_idle"
-length = 4.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("root/Body:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2, 4.2),
-"transitions": PackedFloat32Array(1, 1.10957, 1),
-"update": 0,
-"values": [Vector2(447, -112), Vector2(447, -117.11), Vector2(447, -112)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("root/HandR:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2.03333, 4.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(447, -112), Vector2(447, -116.145), Vector2(447, -112)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("root/HandL:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.0666667, 2, 4.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(447, -112), Vector2(447, -115.41), Vector2(447, -112)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tv2q7"]

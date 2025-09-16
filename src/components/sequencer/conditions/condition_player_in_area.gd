@@ -2,33 +2,83 @@
 extends Condition
 class_name ConditionPlayerInArea
 
-## The path to the Area2D node in the scene that we want to check.
 @export var area_path: NodePath
+@export var required_group: StringName = &"player"  # leave empty to accept any body
+@export var debug: bool = false
 
-# This is the function the ConditionalBranchNode will call every frame.
+var _area: Area2D
+var _is_inside: bool = false
+var _bound: bool = false
+var _actor: Node2D = null
+
+func bind(actor: Node2D) -> void:
+	_actor = actor
+	_area = _resolve_area_from(actor)
+	if _area == null:
+		_bound = false
+		if debug:
+			push_warning("PlayerInArea: could not resolve Area2D from '%s'." % str(area_path))
+		return
+
+	_area.monitoring = true
+	_is_inside = _compute_current_overlap(_area)
+
+	if not _area.body_entered.is_connected(_on_body_entered):
+		_area.body_entered.connect(_on_body_entered)
+	if not _area.body_exited.is_connected(_on_body_exited):
+		_area.body_exited.connect(_on_body_exited)
+
+	_bound = true
+	if debug:
+		var cs: Node = _actor.get_tree().current_scene
+		var scene_name: StringName = (cs.name if cs != null else &"?")
+		print("PlayerInArea: bound to %s (scene=%s) initial_inside=%s"
+			% [_area.get_path(), scene_name, str(_is_inside)])
+
 func check(actor: Node2D) -> bool:
-	# First, try to get the Area2D node from the path.
-	var area = actor.get_node_or_null(area_path)
-	if not area is Area2D:
-		# If the path is wrong or the node isn't an Area2D, the condition is false.
-		push_warning("ConditionPlayerInArea: Path does not point to a valid Area2D.")
-		return false
+	if not _bound or not is_instance_valid(_area):
+		bind(actor)
+	if _area and not _is_inside:
+		_is_inside = _compute_current_overlap(_area)
+	return _is_inside
 
-	# Next, get a list of all nodes currently in the "player" group.
-	var players_in_scene = actor.get_tree().get_nodes_in_group("player")
-	if players_in_scene.is_empty():
-		# If there's no player in the scene, the condition is false.
-		return false
-	
-	# We assume the first node in the group is our player.
-	var player_body = players_in_scene[0]
+func _on_body_entered(body: Node) -> void:
+	if required_group.is_empty() or body.is_in_group(required_group):
+		_is_inside = true
 
-	# Area2D has a built-in list of all physics bodies it's currently overlapping.
-	# We check if our player's body is in that list.
-	for body in area.get_overlapping_bodies():
-		if body == player_body:
-			# Found the player inside the area! The condition is true.
+func _on_body_exited(body: Node) -> void:
+	if required_group.is_empty() or body.is_in_group(required_group):
+		_is_inside = _compute_current_overlap(_area)
+
+func _compute_current_overlap(a: Area2D) -> bool:
+	if a == null:
+		return false
+	if required_group.is_empty():
+		return not a.get_overlapping_bodies().is_empty()
+	for b in a.get_overlapping_bodies():
+		if b.is_in_group(required_group):
 			return true
-	
-	# If the loop finishes without finding the player, the condition is false.
 	return false
+
+func _resolve_area_from(actor: Node) -> Area2D:
+	if area_path.is_empty():
+		return null
+
+	# Absolute (e.g., "/root/SequenceDemo/TriggerZone")
+	if area_path.is_absolute():
+		var root_node: Node = actor.get_tree().root
+		return root_node.get_node_or_null(area_path) as Area2D
+
+	# Walk up from actor until a parent has this relative path
+	var base: Node = actor
+	while base:
+		if base.has_node(area_path):
+			return base.get_node(area_path) as Area2D
+		base = base.get_parent()
+
+	# Fallback: current scene (common when Area2D is a sibling)
+	var cs: Node = actor.get_tree().current_scene
+	if cs and cs.has_node(area_path):
+		return cs.get_node(area_path) as Area2D
+
+	return null

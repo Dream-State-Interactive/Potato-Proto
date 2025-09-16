@@ -26,26 +26,24 @@ func _ready() -> void:
 			start(true)
 
 func initialize_if_needed() -> void:
-	if _initialized:
-		return
-	print("RUNNER '%s': Initializing for the first time." % name)
+	if _initialized: return
 	actor = get_parent()
-
 	if not sequence_path.is_empty():
-		var path_node: Node = get_node_or_null(sequence_path)
+		var path_node := get_node_or_null(sequence_path)
 		if path_node:
 			_sequence_container = path_node
 			for child in path_node.get_children():
 				if child is SequenceNode:
 					sequence_nodes.append(child)
-			print("RUNNER '%s': Found %d sequence nodes at path '%s'." % [name, sequence_nodes.size(), str(sequence_path)])
-		else:
-			push_warning("Runner '%s': Sequence path node not found: %s" % [name, str(sequence_path)])
-	
-	if sequence_nodes.is_empty():
-		push_warning("Runner '%s' found no SequenceNode children." % name)
-
 	_initialized = true
+
+func get_sequence_container_node() -> Node:
+	initialize_if_needed()
+	if _sequence_container:
+		return _sequence_container
+	if not sequence_path.is_empty():
+		return get_node_or_null(sequence_path)
+	return null
 
 func start(reset: bool = true) -> void:
 	print("RUNNER '%s': Received START command." % name)
@@ -74,34 +72,25 @@ func stop() -> void:
 	print("RUNNER '%s': Is now inactive." % name)
 
 func _execute_next_sequence_node() -> void:
-	print("RUNNER '%s': Executing next node." % name)
 	if not _active:
-		print("RUNNER '%s': Aborting execution, not active." % name)
 		return
 	if sequence_nodes.is_empty():
-		print("RUNNER '%s': Aborting execution, no nodes." % name)
 		stop()
 		return
-
 	if current_sequence_node_index < sequence_nodes.size():
 		var node: Node = sequence_nodes[current_sequence_node_index]
 		if node is SequenceNode:
-			_current_node = node as SequenceNode
-			print("RUNNER '%s': Executing node #%d ('%s')." % [name, current_sequence_node_index, _current_node.name])
+			_current_node = node
 			_current_node.completed.connect(_on_sequence_node_completed, CONNECT_ONE_SHOT)
 			_current_node.execute(actor)
 		else:
-			push_warning("Node at index %d is not a valid SequenceNode. Skipping." % current_sequence_node_index)
 			_on_sequence_node_completed()
 	elif loop:
 		current_sequence_node_index = 0
 		_execute_next_sequence_node()
 	else:
-		print("RUNNER '%s': End of sequence reached. Stopping." % name)
 		stop()
 
-# --- The rest of the c_sequence_runner.gd script remains the same ---
-# (_on_sequence_node_completed, _advance_to_next_node, etc.)
 func _has_sibling_manager() -> bool:
 	var p: Node = get_parent()
 	if p == null: return false

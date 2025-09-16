@@ -24,27 +24,18 @@ func _ready() -> void:
 				return
 		push_warning("SequenceManager: No initial sequence set and no default runner found.")
 
+func has_runner(name: StringName) -> bool:
+	return runners.has(name)
+
 func start_sequence(sequence_name: StringName) -> void:
 	if not runners.has(sequence_name):
-		push_error("MANAGER: FAILED to start. Runner '%s' not found." % sequence_name)
+		push_error("MANAGER: runner '%s' not found." % sequence_name)
 		return
-
-	print("MANAGER: Attempting to start runner '%s'." % sequence_name)
-	var runner_to_start: SequenceRunnerComponent = runners[sequence_name]
-	active_runner = runner_to_start
+	var r: SequenceRunnerComponent = runners[sequence_name]
+	active_runner = r
 	active_runner.start(true)
-	print("MANAGER: Start command issued to runner '%s'." % sequence_name)
 
 func switch_sequence(new_sequence_name: StringName) -> void:
-	print("MANAGER: ----- SEQUENCE SWITCH INITIATED -----")
-	print("MANAGER: Switching to '%s'." % new_sequence_name)
-	
 	if is_instance_valid(active_runner):
-		print("MANAGER: Stopping current runner '%s'." % active_runner.name)
 		active_runner.stop()
-		print("MANAGER: Stop command issued to runner '%s'." % active_runner.name)
-	else:
-		print("MANAGER: No active runner to stop.")
-
 	start_sequence(new_sequence_name)
-	print("MANAGER: ----- SEQUENCE SWITCH COMPLETE -----")

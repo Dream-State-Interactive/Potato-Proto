@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://vgcck41qjy2w"]
+[gd_scene load_steps=24 format=3 uid="uid://vgcck41qjy2w"]
 
 [ext_resource type="PackedScene" uid="uid://s7iommtvhr20" path="res://src/env/physics_button.tscn" id="1_sxk7i"]
 [ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="1_vryga"]
@@ -14,9 +14,26 @@
 [ext_resource type="Script" uid="uid://bhtaxqrxfynai" path="res://src/components/sequencer/nodes/timing/node_wait.gd" id="10_k0pop"]
 [ext_resource type="Resource" uid="uid://d0irbmhwbgsfa" path="res://src/components/sequencer/conditions/ConditionAreaDemo.tres" id="11_0j4ep"]
 [ext_resource type="Script" uid="uid://bmq0jiqy7ev2n" path="res://src/components/sequencer/nodes/action/node_interact.gd" id="12_qis4s"]
+[ext_resource type="Script" uid="uid://bpe25t6udpbu0" path="res://src/components/sequencer/nodes/action/node_set_property.gd" id="15_cud0w"]
+[ext_resource type="Script" uid="uid://bwn86ax8oeqho" path="res://src/components/sequencer/nodes/action/node_function_call.gd" id="16_6jrcb"]
+[ext_resource type="Script" uid="uid://d2y1b4hdqvghj" path="res://src/dialogue/dialogue_player.gd" id="16_qam6m"]
+[ext_resource type="Script" uid="uid://bjhexxha8vley" path="res://src/dialogue/DialogueLineResource.gd" id="17_go0wt"]
+[ext_resource type="Script" uid="uid://ly6cd7llx4r3" path="res://src/dialogue/DialogueResource.gd" id="18_6jrcb"]
+[ext_resource type="PackedScene" uid="uid://cfkh6v6yhhyj0" path="res://src/ui/SpeechBubble/SpeechBubble.tscn" id="19_go0wt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5wgh8"]
 size = Vector2(512, 512)
+
+[sub_resource type="Resource" id="Resource_y1aee"]
+script = ExtResource("17_go0wt")
+speaker_key = &"goobie"
+text_key = &"[tornado radius=10.0 freq=1.0 connected=1]{GOOBIE!}[/tornado]"
+metadata/_custom_type_script = "uid://bjhexxha8vley"
+
+[sub_resource type="Resource" id="Resource_5ktw7"]
+script = ExtResource("18_6jrcb")
+lines = Array[ExtResource("17_go0wt")]([SubResource("Resource_y1aee")])
+metadata/_custom_type_script = "uid://ly6cd7llx4r3"
 
 [node name="SequenceDemo" type="Node2D"]
 
@@ -77,6 +94,7 @@ script = ExtResource("5_5wgh8")
 metadata/_custom_type_script = "uid://b464xm2tegma5"
 
 [node name="GoToNode" type="Node2D" parent="Goobie_Path_Sequence"]
+position = Vector2(947, 487)
 script = ExtResource("7_657ln")
 target_node_in_sequence = NodePath(".")
 move_mode = 0
@@ -115,6 +133,7 @@ wait_time = 3.0
 metadata/_custom_type_script = "uid://bhtaxqrxfynai"
 
 [node name="WaitForPlayerInZone" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(2925, 341)
 script = ExtResource("6_lpy6o")
 condition = ExtResource("11_0j4ep")
 path_if_true = NodePath("../Celebrate")
@@ -129,7 +148,24 @@ animation_name = &"roll"
 move_mode = 0
 metadata/_custom_type_script = "uid://bmq0jiqy7ev2n"
 
+[node name="SetPropertyNode" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(2160, 723)
+script = ExtResource("15_cud0w")
+target_node_path = NodePath("../../Goobie")
+property_path = "scale"
+value_array = [Vector2(6.9, 6.9)]
+transition_duration = 4.0
+metadata/_custom_type_script = "uid://bpe25t6udpbu0"
+
+[node name="FunctionCallNode" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(2000, 722)
+script = ExtResource("16_6jrcb")
+target_node_path = NodePath("../../DialoguePlayer")
+function_name = &"play"
+metadata/_custom_type_script = "uid://bwn86ax8oeqho"
+
 [node name="ResetSequence" type="Node2D" parent="Goobie_DemoSequence"]
+position = Vector2(-35, 715)
 script = ExtResource("8_cw1bt")
 new_sequence_name = &"Goobie_Path_Sequence"
 metadata/_custom_type_script = "uid://dbkcsdcxba7py"
@@ -139,3 +175,15 @@ position = Vector2(2526, 461)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerZone"]
 shape = SubResource("RectangleShape2D_5wgh8")
+
+[node name="DialoguePlayer" type="Node" parent="."]
+script = ExtResource("16_qam6m")
+dialogue = SubResource("Resource_5ktw7")
+bubble_scene = ExtResource("19_go0wt")
+ui_layer_path = NodePath("../UI_Layer")
+actors = {
+"goobie": NodePath("../Goobie")
+}
+metadata/_custom_type_script = "uid://d2y1b4hdqvghj"
+
+[node name="UI_Layer" type="CanvasLayer" parent="."]

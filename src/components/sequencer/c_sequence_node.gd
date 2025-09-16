@@ -16,28 +16,23 @@ signal completed(next_node_override)
 var last_known_position: Vector2 # For editor updates
 
 func _ready() -> void:
-	# Initialize the last known position when the node is ready.
 	if Engine.is_editor_hint():
 		last_known_position = global_position
 
 func _process(_delta: float) -> void:
-	# This function runs every frame in the editor.
 	if not Engine.is_editor_hint():
 		return
 
-	# Check if the node's global position has changed.
 	if global_position != last_known_position:
-		# If it has, update the stored position.
 		last_known_position = global_position
 		
-		# And trigger the redraws for this node and its previous sibling.
+		# trigger the redraws for this node and its previous sibling.
 		queue_redraw()
 		if get_parent() and get_index() > 0:
 			var previous_sibling = get_parent().get_child(get_index() - 1)
 			if previous_sibling is Node2D:
 				previous_sibling.queue_redraw()
 
-# The _draw function remains the same.
 func _draw() -> void:
 	if not Engine.is_editor_hint(): 
 		return
@@ -70,7 +65,7 @@ func _walk_to_position(target: Node2D) -> void:
 	var anim_player: AnimationPlayer = target.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	var visuals: Node2D = target.get_node_or_null("Visuals") as Node2D
 	var flip_node: Node2D = visuals if visuals != null else target
-
+	#eps = epsilon, in this case it's a value that acts as a stop value, in pixels, for the actor when near target point
 	var eps := 5.0
 	var step := move_speed / float(Engine.get_physics_ticks_per_second())
 

@@ -8,7 +8,6 @@ class_name InteractNode
 @export var animation_name: StringName
 @export var completion_delay: float = 0.0
 
-
 func _on_action(target: Node2D) -> void:
 	var anim_player = target.get_node_or_null("AnimationPlayer")
 	if not anim_player or not anim_player.has_animation(animation_name):
