@@ -27,7 +27,7 @@ size = Vector2(512, 512)
 [sub_resource type="Resource" id="Resource_y1aee"]
 script = ExtResource("17_go0wt")
 speaker_key = &"goobie"
-text_key = &"[tornado radius=10.0 freq=1.0 connected=1]{GOOBIE!}[/tornado]"
+text_key = &"[tornado radius=10.0 freq=1.0 connected=1]GOOBIE![/tornado]"
 metadata/_custom_type_script = "uid://bjhexxha8vley"
 
 [sub_resource type="Resource" id="Resource_5ktw7"]

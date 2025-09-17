@@ -65,6 +65,7 @@ color = Color(0.120081, 0.424843, 0.423505, 1)
 polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
 
 [node name="Goobie" parent="." instance=ExtResource("2_f6ri4")]
+position = Vector2(445, -11)
 
 [node name="ShopFront1" type="Polygon2D" parent="."]
 position = Vector2(601, -3)
