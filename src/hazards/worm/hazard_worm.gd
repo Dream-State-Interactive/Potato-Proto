@@ -43,7 +43,7 @@ func _ready() -> void:
 		build_worm()
 		return
 
-	var current_hills: int = ProgressionManager.hills_completed
+	var current_hills: int = ProgressionManager.max_forward_index
 
 	if current_hills < unlock_at_hills:
 		queue_free()
