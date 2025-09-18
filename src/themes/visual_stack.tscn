@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://dsnwxoklqum0d" path="res://src/themes/shaders/sky_background.gdshader" id="1_mygdp"]
 [ext_resource type="Shader" uid="uid://gu2k04dqwmc5" path="res://src/themes/shaders/palette_grade.gdshader" id="2_y8x24"]
 [ext_resource type="Shader" uid="uid://df31uh3g2tkqj" path="res://src/themes/shaders/celestials.gdshader" id="3_mygdp"]
-[ext_resource type="Texture2D" uid="uid://bkc2bdj16c5og" path="res://assets/graphics/sprites/env/moth.png" id="3_w52lw"]
+[ext_resource type="Texture2D" path="res://assets/graphics/sprites/env/moth.png" id="3_w52lw"]
 [ext_resource type="Shader" uid="uid://51k1ydskpuw4" path="res://src/themes/shaders/celestials_glow.gdshader" id="4_7fpps"]
 [ext_resource type="Shader" uid="uid://bg0i8uycbwmk6" path="res://src/themes/shaders/fog_overlay.gdshader" id="4_yryhw"]
 
