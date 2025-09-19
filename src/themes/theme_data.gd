@@ -27,6 +27,13 @@ class_name ThemeData
 @export var ambient_night: Color = Color(0.25, 0.32, 0.45, 0.0)
 @export_range(0.0, 1.0, 0.01) var night_star_intensity: float = 0.8
 
+@export_category("World Environment")
+@export_range(0.0, 4.0, 0.01) var exposure_day: float = 1.0
+@export_range(0.0, 4.0, 0.01) var exposure_night: float = 0.25
+@export var glow_enabled: bool = true
+@export_range(0.0, 4.0, 0.01) var glow_strength_day: float = 0.69
+@export_range(0.0, 4.0, 0.01) var glow_strength_night: float = 1.69
+
 @export_category("FX / Post")
 @export var grade_strength: float = 0.4
 @export var grade_palette: Texture2D

@@ -26,13 +26,18 @@ func _ready() -> void:
 		push_error("ZooThemeGenerator: segment_scene is null.")
 		return
 
+	ThemeManager.set_time_of_day(start_time_of_day)
+	var first_theme: ThemeData = theme_order[_theme_index]
+	if ThemeManager.has_method("apply_theme_now"):
+		ThemeManager.apply_theme_now(first_theme)  # <- instant write of uniforms
+	else:
+		ThemeManager.fade_sky_to_theme(first_theme, 0.0)  # 0s = instant
+
 	var anchor: Node2D = get_node_or_null(start_anchor_path) as Node2D
 	_base_global = anchor.global_position if anchor else global_position
 
 	# first segment + first theme
 	_spawn_segment_with_theme(theme_order[_theme_index])
-	_apply_theme_global(theme_order[_theme_index])
-	ThemeManager.set_time_of_day(start_time_of_day)
 
 func _spawn_segment_with_theme(theme: ThemeData) -> void:
 	var seg := segment_scene.instantiate() as ThemeSegment
@@ -61,7 +66,8 @@ func _apply_theme_global(t: ThemeData) -> void:
 	if crossfade and ThemeManager.has_method("transition_to_theme"):
 		ThemeManager.transition_to_theme(t, crossfade_seconds)
 	else:
-		ThemeManager.fade_sky_to_theme(t, 1.2)
+		ThemeManager.fade_sky_to_theme(t, 0.0)
+
 
 func _cull_if_needed() -> void:
 	while _active.size() > max_active_segments:

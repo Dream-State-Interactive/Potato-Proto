@@ -20,8 +20,9 @@
 
 [sub_resource type="Environment" id="Environment_bvkjj"]
 background_mode = 3
+tonemap_exposure = 0.25
 glow_enabled = true
-glow_strength = 0.76
+glow_strength = 1.25
 glow_blend_mode = 1
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0qd0n"]
@@ -134,7 +135,7 @@ position = Vector2(-1097, -141)
 
 [node name="DayNightController" type="Node" parent="."]
 script = ExtResource("15_5qfds")
-hours_per_minute = 96.0
+hours_per_minute = 98.0
 metadata/_custom_type_script = "uid://b5lxwxm3721vl"
 
 [node name="Sun2D" type="DirectionalLight2D" parent="."]

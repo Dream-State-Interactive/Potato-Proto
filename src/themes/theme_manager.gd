@@ -40,6 +40,7 @@ var _stack: Node = null # instance of visual_stack.tscn
 
 var _sun2d: DirectionalLight2D = null
 var _moon2d: DirectionalLight2D = null
+var _env: Environment
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Transitions / Fades
@@ -51,7 +52,7 @@ var _theme_just_applied := false         # only tween light colors once
 
 # Celestial size tween
 var _sun_size_px: float  = 90.0
-var _moon_size_px: float = 70.0
+var _moon_size_px: float = 70.0	
 var _sizes_animating := false
 var _size_tw: Tween = null
 @export_range(0.0, 3.0, 0.05) var size_tween_seconds := 1.2
@@ -89,6 +90,9 @@ func _ready() -> void:
 		_sun2d  = root.get_node_or_null("Sun2D")  as DirectionalLight2D
 		_moon2d = root.get_node_or_null("Moon2D") as DirectionalLight2D
 
+	# lazy env bind (safe if scene not fully ready yet)
+	call_deferred("_ensure_env")
+
 	# Prevent startup flash: configure, then reveal Control
 	var ctrl := _n(NP_CTRL) as CanvasItem
 	if ctrl: ctrl.visible = false
@@ -109,6 +113,15 @@ func apply_theme(theme: ThemeData) -> void:
 	_tween_celestial_sizes(theme.sun_size, theme.moon_size, size_tween_seconds)
 	_apply_frame()
 	emit_signal("theme_applied", theme)
+
+func _find_world_environment(n: Node) -> WorldEnvironment:
+	if n is WorldEnvironment:
+		return n as WorldEnvironment
+	for c in n.get_children():
+		var hit := _find_world_environment(c)
+		if hit:
+			return hit
+	return null
 
 func set_time_of_day(t: float) -> void:
 	time_of_day = clampf(t, 0.0, 1.0)
@@ -242,8 +255,46 @@ func _apply_frame() -> void:
 	_update_parallax()
 	_update_overlays()
 	_update_stars()
+	_update_world_environment() 
 
 	_theme_just_applied = false
+
+func _update_world_environment() -> void:
+	_ensure_env()
+	if _env == null:
+		return
+
+	# Make sure we're matching the inspector ("Linear" in your screenshot)
+	if _env.tonemap_mode != Environment.TONE_MAPPER_LINEAR:
+		_env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+
+	# 0 = day, 1 = night (your curve)
+	var night := _night_mix(time_of_day)
+	var t := pow(night, 1.30)
+
+	# Exposure (Tonemap → Exposure)
+	var exp_day: float = 1.0
+	var exp_night: float = 0.25
+	if current_theme != null:
+		exp_day = current_theme.exposure_day
+		exp_night = current_theme.exposure_night
+	var exposure := lerpf(exp_day, exp_night, t)
+	_env.tonemap_exposure = exposure
+
+	# Glow (Glow → Strength)
+	var g_enabled := true
+	var g_day: float = 0.69
+	var g_night: float = 1.69
+	if current_theme != null:
+		g_enabled = current_theme.glow_enabled
+		g_day = current_theme.glow_strength_day
+		g_night = current_theme.glow_strength_night
+
+	var g_strength := lerpf(g_day, g_night, t)
+	_env.glow_enabled = g_enabled
+	_env.glow_strength = g_strength
+
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Subsystems
@@ -328,7 +379,7 @@ func _update_lights() -> void:
 	if is_instance_valid(_sun2d):
 		_sun2d.blend_mode = Light2D.BLEND_MODE_MIX
 		_sun2d.shadow_enabled = true
-		_sun2d.rotation = sun_dir.angle()
+		_sun2d.rotation = (-sun_dir).angle()
 		_sun2d.energy = sun_energy
 		if _theme_just_applied and tween_lights_on_theme_change:
 			create_tween().tween_property(_sun2d, "color", sun_col, light_tween_seconds)
@@ -340,7 +391,7 @@ func _update_lights() -> void:
 	if is_instance_valid(_moon2d):
 		_moon2d.blend_mode = Light2D.BLEND_MODE_MIX
 		_moon2d.shadow_enabled = true
-		_moon2d.rotation = (-sun_dir).angle()
+		_moon2d.rotation = sun_dir.angle()
 		_moon2d.energy = moon_energy
 		if _theme_just_applied and tween_lights_on_theme_change:
 			create_tween().tween_property(_moon2d, "color", moon_col, light_tween_seconds)
@@ -566,7 +617,9 @@ func _viewport_ctx() -> Dictionary:
 		"zoom": (cam.zoom if cam else Vector2.ONE),
 	}
 
+# ─────────────────────────────────────────────────────────────────────────────
 # Node helpers
+# ─────────────────────────────────────────────────────────────────────────────
 func _n(path: NodePath) -> Node:
 	return _stack.get_node_or_null(path) if _stack else null
 
@@ -576,3 +629,16 @@ func _nf(root: Node, path: NodePath) -> Node:
 func _on_viewport_resized() -> void:
 	_configure_canvas_layer(_stack)
 	_apply_frame()
+
+func _ensure_env() -> void:
+	if _env != null:
+		return
+	var root := get_tree().current_scene
+	if root == null:
+		return
+	var we := root.find_child(&"WorldEnvironment", true, false) as WorldEnvironment
+	if we == null:
+		return
+	_env = we.environment
+	if _env != null:
+		we.tree_exited.connect(func(): _env = null)  # reset on level unload
