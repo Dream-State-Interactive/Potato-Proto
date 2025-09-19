@@ -264,7 +264,6 @@ func _update_world_environment() -> void:
 	if _env == null:
 		return
 
-	# Make sure we're matching the inspector ("Linear" in your screenshot)
 	if _env.tonemap_mode != Environment.TONE_MAPPER_LINEAR:
 		_env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 
