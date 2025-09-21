@@ -28,10 +28,7 @@ func _ready() -> void:
 
 	ThemeManager.set_time_of_day(start_time_of_day)
 	var first_theme: ThemeData = theme_order[_theme_index]
-	if ThemeManager.has_method("apply_theme_now"):
-		ThemeManager.apply_theme_now(first_theme)  # <- instant write of uniforms
-	else:
-		ThemeManager.fade_sky_to_theme(first_theme, 0.0)  # 0s = instant
+	ThemeManager.apply_theme(first_theme)
 
 	var anchor: Node2D = get_node_or_null(start_anchor_path) as Node2D
 	_base_global = anchor.global_position if anchor else global_position
@@ -63,10 +60,10 @@ func _on_segment_end(seg: ThemeSegment) -> void:
 	_apply_theme_global(next_theme)
 
 func _apply_theme_global(t: ThemeData) -> void:
-	if crossfade and ThemeManager.has_method("transition_to_theme"):
+	if crossfade:
 		ThemeManager.transition_to_theme(t, crossfade_seconds)
 	else:
-		ThemeManager.fade_sky_to_theme(t, 0.0)
+		ThemeManager.apply_theme(t)
 
 
 func _cull_if_needed() -> void:

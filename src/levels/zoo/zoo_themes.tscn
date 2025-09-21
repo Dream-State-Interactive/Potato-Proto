@@ -36,6 +36,7 @@ script = ExtResource("1_t771s")
 theme_order = Array[ExtResource("2_novs6")]([ExtResource("3_q6mnd"), ExtResource("4_ecojg"), ExtResource("5_wa04n"), ExtResource("6_ecojg"), ExtResource("6_x0lmf")])
 segment_scene = ExtResource("3_au4le")
 start_anchor_path = NodePath("ThemeStart")
+crossfade = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_bvkjj")
@@ -135,7 +136,7 @@ position = Vector2(-1097, -141)
 
 [node name="DayNightController" type="Node" parent="."]
 script = ExtResource("15_5qfds")
-hours_per_minute = 98.0
+hours_per_minute = 4.0
 metadata/_custom_type_script = "uid://b5lxwxm3721vl"
 
 [node name="Sun2D" type="DirectionalLight2D" parent="."]

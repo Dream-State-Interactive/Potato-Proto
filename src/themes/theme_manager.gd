@@ -45,17 +45,14 @@ var _env: Environment
 # ─────────────────────────────────────────────────────────────────────────────
 # Transitions / Fades
 # ─────────────────────────────────────────────────────────────────────────────
-var _sky_overlay: ColorRect = null       # temp sky when fading only the sky
-var _stack_old_sky: CanvasItem = null    # old sky kept alive during stack xfade
-var _stack_fading := false               # true while full-stack crossfade is running
-var _theme_just_applied := false         # only tween light colors once
-
+var _theme_just_applied := false
 # Celestial size tween
 var _sun_size_px: float  = 90.0
 var _moon_size_px: float = 70.0	
 var _sizes_animating := false
 var _size_tw: Tween = null
 @export_range(0.0, 3.0, 0.05) var size_tween_seconds := 1.2
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Tuning
@@ -100,17 +97,31 @@ func _ready() -> void:
 	if ctrl: ctrl.visible = true
 
 func _process(_dt: float) -> void:
-	if _sizes_animating or _stack_fading or (_sky_overlay and is_instance_valid(_sky_overlay)):
+	if _sizes_animating:
 		_apply_frame()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Public API
 # ─────────────────────────────────────────────────────────────────────────────
 func apply_theme(theme: ThemeData) -> void:
-	if theme == null: return
+	if theme == null or theme == current_theme: return
+	
+	var sky := _n(NP_SKY) as CanvasItem
+	if sky and sky.material is ShaderMaterial:
+		var mat := sky.material as ShaderMaterial
+		# Instantly apply the new theme
+		mat.set_shader_parameter("sky_top", theme.sky_top)
+		mat.set_shader_parameter("sky_bottom", theme.sky_bottom)
+		mat.set_shader_parameter("horizon_curve", theme.horizon_curve)
+		# Set "old" values to the same to ensure blend starts correctly
+		mat.set_shader_parameter("sky_top_old", theme.sky_top)
+		mat.set_shader_parameter("sky_bottom_old", theme.sky_bottom)
+		mat.set_shader_parameter("horizon_curve_old", theme.horizon_curve)
+		mat.set_shader_parameter("transition_blend", 1.0) # 1.0 means fully showing the "new" theme
+
 	current_theme = theme
 	_theme_just_applied = true
-	_tween_celestial_sizes(theme.sun_size, theme.moon_size, size_tween_seconds)
+	_tween_celestial_sizes(theme.sun_size, theme.moon_size, 0.0) # Instant
 	_apply_frame()
 	emit_signal("theme_applied", theme)
 
@@ -128,106 +139,46 @@ func set_time_of_day(t: float) -> void:
 	_apply_frame()
 	emit_signal("time_of_day_changed", time_of_day)
 
-func transition_to_theme(new_theme: ThemeData, seconds: float = 0.6) -> void:
-	if new_theme == null: return
-	_ensure_stack()
-
-	# Stack not ready? just apply instantly
-	if not _stack.is_inside_tree():
-		current_theme = new_theme
-		_theme_just_applied = true
-		_apply_frame()
-		emit_signal("theme_applied", new_theme)
-		return
-
-	# Keep old sky alive during crossfade
-	var old := _stack
-	var parent := old.get_parent()
-	if parent == null:
-		current_theme = new_theme
-		_theme_just_applied = true
-		_apply_frame()
-		emit_signal("theme_applied", new_theme)
-		return
-
-	_stack_old_sky = _nf(old, NP_SKY) as CanvasItem
-	_stack_fading = true
-
-	# Build fresh stack
-	var new_stack := visual_stack_scene.instantiate()
-	parent.add_child(new_stack)
-	_configure_canvas_layer(new_stack)
-
-	# Switch and configure
-	_stack = new_stack
+func transition_to_theme(new_theme: ThemeData, seconds: float = 1.2) -> void:
+	if new_theme == null or new_theme == current_theme: return
+	
+	var old_theme := current_theme
 	current_theme = new_theme
 	_theme_just_applied = true
 
-	# Tween celestial sizes between themes
+	var sky := _n(NP_SKY) as CanvasItem
+	if not (sky and sky.material is ShaderMaterial):
+		apply_theme(new_theme) # Fallback to instant apply
+		return
+
+	var mat := sky.material as ShaderMaterial
+	
+	# 1. Set the "old" parameters to the theme we are coming FROM.
+	mat.set_shader_parameter("sky_top_old", old_theme.sky_top)
+	mat.set_shader_parameter("sky_bottom_old", old_theme.sky_bottom)
+	mat.set_shader_parameter("horizon_curve_old", old_theme.horizon_curve)
+
+	# 2. Set the "new" parameters to the theme we are going TO.
+	mat.set_shader_parameter("sky_top", new_theme.sky_top)
+	mat.set_shader_parameter("sky_bottom", new_theme.sky_bottom)
+	mat.set_shader_parameter("horizon_curve", new_theme.horizon_curve)
+	
+	# 3. Reset the blend and create a tween to animate it.
+	mat.set_shader_parameter("transition_blend", 0.0)
+	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(mat, "shader_parameter/transition_blend", 1.0, seconds)
+	
+	# 4. Animate other properties in parallel.
 	_tween_celestial_sizes(new_theme.sun_size, new_theme.moon_size, seconds)
-
-	# Hide old celestials so only the new animated ones are visible
-	var old_core := _nf(old, NP_CORE) as CanvasItem
-	var old_glow := _nf(old, NP_GLOW) as CanvasItem
-	if old_core: old_core.visible = false
-	if old_glow: old_glow.visible = false
-
+	
+	# 5. Emit the signal when the new theme is fully applied.
+	tw.finished.connect(func():
+		emit_signal("theme_applied", new_theme)
+	)
+	
+	# 6. Call apply_frame once to update everything else instantly.
 	_apply_frame()
 
-	# Crossfade the control subtree
-	var old_ctrl := _nf(old, NP_CTRL) as CanvasItem
-	var new_ctrl := _n(NP_CTRL) as CanvasItem
-	if new_ctrl: new_ctrl.modulate.a = 0.0
-
-	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	if new_ctrl: tw.tween_property(new_ctrl, "modulate:a", 1.0, seconds)
-	if old_ctrl: tw.parallel().tween_property(old_ctrl, "modulate:a", 0.0, seconds)
-	tw.finished.connect(func():
-		if is_instance_valid(old): old.queue_free()
-		_stack_old_sky = null
-		_stack_fading = false
-		emit_signal("theme_applied", new_theme))
-
-func fade_sky_to_theme(new_theme: ThemeData, seconds: float = 0.6) -> void:
-	if new_theme == null: return
-	_ensure_stack()
-	var ctrl := _n(NP_CTRL) as Control
-	var old_sky := _n(NP_SKY) as CanvasItem
-	if ctrl == null or old_sky == null:
-		apply_theme(new_theme); return
-
-	# Temporary overlay using same shader as current sky
-	var overlay := ColorRect.new()
-	overlay.name = "SkyFadeOverlay"
-	overlay.color = Color.BLACK
-	overlay.material = (old_sky.material as ShaderMaterial).duplicate()
-	ctrl.add_child(overlay)
-	_fullscreen_overlay(overlay)
-	overlay.modulate.a = 0.0
-	overlay.z_index = old_sky.z_index + 1
-
-	# Configure overlay for the NEW theme
-	_configure_sky_material(overlay.material as ShaderMaterial, new_theme)
-
-	# Tween ambient & fog alongside
-	var canvas_mod := _n(NP_CANVAS_MOD) as CanvasModulate
-	var fog := _n(NP_FOG) as ColorRect
-	var night := _night_mix(time_of_day)
-	var amb_end := _lerp_color(new_theme.ambient_day, new_theme.ambient_night, pow(night, 1.25))
-
-	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(overlay, "modulate:a", 1.0, seconds)
-	if canvas_mod:
-		tw.parallel().tween_property(canvas_mod, "color", Color(amb_end.r, amb_end.g, amb_end.b, 1.0), seconds)
-	if fog and fog.material is ShaderMaterial:
-		tw.parallel().tween_property(fog.material, "shader_parameter/fog_color", new_theme.fog_color, seconds)
-		tw.parallel().tween_property(fog.material, "shader_parameter/band_height", new_theme.fog_band_height, seconds)
-
-	tw.finished.connect(func():
-		apply_theme(new_theme)
-		if is_instance_valid(overlay): overlay.queue_free())
-	_sky_overlay = overlay
-	overlay.tree_exited.connect(func(): _sky_overlay = null)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Frame update (single orchestration point)
@@ -243,8 +194,6 @@ func _apply_frame() -> void:
 	if sky and sky.material is ShaderMaterial:
 		_configure_sky_material(sky.material as ShaderMaterial, current_theme, ctx)
 
-	# Keep overlay/old-sky uniforms current during fades
-	_tick_fading_sky(ctx)
 
 	# 2) Celestials (core + glow)
 	_configure_celestials_for(NP_CORE, false, ctx)
@@ -307,7 +256,8 @@ func _configure_sky_material(m: ShaderMaterial, theme: ThemeData, ctx: Dictionar
 	m.set_shader_parameter("viewport_size", vp)
 	m.set_shader_parameter("cam_zoom", zoom)
 	m.set_shader_parameter("sky_parallax", sky_parallax)
-
+	
+	# Use the theme parameter directly
 	m.set_shader_parameter("sky_top",    theme.sky_top)
 	m.set_shader_parameter("sky_bottom", theme.sky_bottom)
 	m.set_shader_parameter("horizon_curve", theme.horizon_curve)
@@ -589,23 +539,6 @@ func _tween_celestial_sizes(target_sun: float, target_moon: float, seconds: floa
 	_size_tw.parallel().tween_property(self, "_moon_size_px", target_moon, seconds)
 	_size_tw.finished.connect(func(): _sizes_animating = false)
 
-func _tick_fading_sky(ctx: Dictionary = {}) -> void:
-	if ctx.is_empty():
-		ctx = _viewport_ctx()
-	var vp:   Vector2 = ctx.get("vp",   Vector2(get_viewport().size.x, get_viewport().size.y))
-	var zoom: Vector2 = ctx.get("zoom", Vector2.ONE)
-
-	if _sky_overlay and _sky_overlay.material is ShaderMaterial:
-		_configure_sky_material(_sky_overlay.material as ShaderMaterial, current_theme, ctx)
-
-	if _stack_fading and _stack_old_sky and _stack_old_sky.material is ShaderMaterial:
-		var m := _stack_old_sky.material as ShaderMaterial
-		m.set_shader_parameter("viewport_size", vp)
-		m.set_shader_parameter("cam_zoom", zoom)
-		m.set_shader_parameter("time_of_day", time_of_day)
-		m.set_shader_parameter("orbit_center", Vector2(0.5, 1.20))
-		m.set_shader_parameter("orbit_radius", 0.85)
-		m.set_shader_parameter("sky_parallax", sky_parallax)
 
 # View context (gather once)
 func _viewport_ctx() -> Dictionary:

@@ -12,6 +12,10 @@ shader = ExtResource("1_mygdp")
 shader_parameter/sky_top = Color(0.25, 0.45, 0.95, 1)
 shader_parameter/sky_bottom = Color(0.85, 0.92, 1, 1)
 shader_parameter/horizon_curve = 0.35
+shader_parameter/sky_top_old = Color(0.25, 0.45, 0.95, 1)
+shader_parameter/sky_bottom_old = Color(0.85, 0.92, 1, 1)
+shader_parameter/horizon_curve_old = 0.35
+shader_parameter/transition_blend = 0.0
 
 [sub_resource type="Gradient" id="Gradient_w52lw"]
 colors = PackedColorArray(1, 1, 1, 1, 0.60269, 0.73829, 0.898607, 1)
