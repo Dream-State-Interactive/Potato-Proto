@@ -58,6 +58,7 @@ size_flags_horizontal = 4
 theme_override_constants/outline_size = 22
 theme_override_font_sizes/font_size = 55
 text = "Level 3"
+metadata/destination = "res://src/levels/zoo/zoo_themes.tscn"
 
 [node name="Level 4" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_aal82")]
 layout_mode = 2
