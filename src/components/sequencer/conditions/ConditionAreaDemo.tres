@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ConditionPlayerInArea" load_steps=2 format=3 uid="uid://d0irbmhwbgsfa"]
+
+[ext_resource type="Script" uid="uid://cyqc7dmphpqf2" path="res://src/components/sequencer/conditions/condition_player_in_area.gd" id="1_povyx"]
+
+[resource]
+script = ExtResource("1_povyx")
+area_path = NodePath("TriggerZone")
+metadata/_custom_type_script = "uid://cyqc7dmphpqf2"

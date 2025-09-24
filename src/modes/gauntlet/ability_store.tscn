@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://consaani8nb7p"]
 
 [ext_resource type="Script" uid="uid://bpv1vn614w3y5" path="res://src/modes/gauntlet/store_interaction.gd" id="1_3fbk5"]
-[ext_resource type="Texture2D" uid="uid://dte7yslfxegcd" path="res://assets/Images/goobie.png" id="2_3fbk5"]
+[ext_resource type="PackedScene" uid="uid://bhhfjdk83iomh" path="res://src/npc/npc_goobie/npc_goobie.tscn" id="2_f6ri4"]
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="3_f6ri4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7re1"]
@@ -64,10 +64,8 @@ scale = Vector2(0.4, 0.9)
 color = Color(0.120081, 0.424843, 0.423505, 1)
 polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
 
-[node name="Goobie" type="Sprite2D" parent="."]
-position = Vector2(447, -112)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_3fbk5")
+[node name="Goobie" parent="." instance=ExtResource("2_f6ri4")]
+position = Vector2(445, -11)
 
 [node name="ShopFront1" type="Polygon2D" parent="."]
 position = Vector2(601, -3)

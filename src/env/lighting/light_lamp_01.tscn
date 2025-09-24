@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfn43rut1y2rm"]
+
+[ext_resource type="Texture2D" uid="uid://bkc2bdj16c5og" path="res://assets/graphics/sprites/env/moth.png" id="1_x3tw6"]
+
+[sub_resource type="Gradient" id="Gradient_0t3i1"]
+offsets = PackedFloat32Array(0, 0.681395)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdjp0"]
+gradient = SubResource("Gradient_0t3i1")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_pdjp0"]
+offsets = PackedFloat32Array(0, 0.562814, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cqxli"]
+gradient = SubResource("Gradient_pdjp0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4oiiv"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 20.0
+spread = 69.0
+orbit_velocity_min = 0.0100001
+orbit_velocity_max = 0.0600001
+radial_velocity_min = -0.200022
+radial_velocity_max = 0.149978
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_cqxli")
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
+
+[node name="Lamp" type="Node2D"]
+scale = Vector2(5, 5)
+
+[node name="LampPost" type="Polygon2D" parent="."]
+position = Vector2(-0.80001, -21.6)
+scale = Vector2(0.2, 0.2)
+color = Color(0.450648, 0.450648, 0.450648, 1)
+offset = Vector2(-504, 233)
+polygon = PackedVector2Array(505, -125, 505, -417, 512, -417, 512, -125)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2(0.10001, 225.4)
+scale = Vector2(1.0625, 1)
+color = Color(0.556953, 0.556953, 0.556953, 1)
+polygon = PackedVector2Array(-8, -304, 8, -304, 8, -282, -8, -282)
+
+[node name="glow" type="Polygon2D" parent="."]
+self_modulate = Color(1.5, 1.2, 1, 1)
+position = Vector2(-0.39999, 225.4)
+color = Color(1, 0.662745, 0.239216, 1)
+polygon = PackedVector2Array(-6, -303, 7, -303, 7, -283, -6, -283)
+
+[node name="Polygon2D4" type="Polygon2D" parent="."]
+position = Vector2(-0.39999, 225.4)
+color = Color(0.556863, 0.556863, 0.556863, 1)
+polygon = PackedVector2Array(-3, -303, -3, -283, -2, -283, -2, -303)
+
+[node name="Polygon2D5" type="Polygon2D" parent="."]
+position = Vector2(5.60001, 225.4)
+color = Color(0.556863, 0.556863, 0.556863, 1)
+polygon = PackedVector2Array(-3, -303, -3, -283, -2, -283, -2, -303)
+
+[node name="Polygon2D6" type="Polygon2D" parent="."]
+position = Vector2(-0.39999, 225.4)
+color = Color(0.556863, 0.556863, 0.556863, 1)
+polygon = PackedVector2Array(-6, -298, 7, -298, 7, -297, -6, -297)
+
+[node name="Polygon2D7" type="Polygon2D" parent="."]
+position = Vector2(-0.39999, 234.4)
+color = Color(0.556863, 0.556863, 0.556863, 1)
+polygon = PackedVector2Array(-6, -298, 7, -298, 7, -297, -6, -297)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-3.8, -71.4)
+color = Color(1, 0.662745, 0.239216, 1)
+texture = SubResource("GradientTexture2D_pdjp0")
+texture_scale = 3.0
+
+[node name="Moths" type="GPUParticles2D" parent="."]
+position = Vector2(0.4, -67.8)
+amount = 16
+texture = ExtResource("1_x3tw6")
+lifetime = 2.5
+speed_scale = 1.5
+process_material = SubResource("ParticleProcessMaterial_4oiiv")

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcfqllgiks1gc"]
+
+[ext_resource type="Script" uid="uid://cfem16r0sxgn2" path="res://src/modes/gauntlet/segment_start_trigger.gd" id="1_27xqs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2eoue"]
+size = Vector2(500, 500000)
+
+[node name="SegmentStartTrigger" type="Area2D"]
+script = ExtResource("1_27xqs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2eoue")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c42sfrnl684n0"]
+[gd_scene load_steps=30 format=3 uid="uid://c42sfrnl684n0"]
 
 [ext_resource type="Script" uid="uid://b5uvm210kdlen" path="res://src/modes/gauntlet/special_segment_config.gd" id="2_3yl0h"]
 [ext_resource type="Script" uid="uid://csv3csdlqc0kk" path="res://src/modes/gauntlet/level_generator.gd" id="2_epjwl"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://carb1irq2dmma" path="res://assets/graphics/textures/env/proto_bg_hills_02.png" id="18_2aw0q"]
 [ext_resource type="Script" uid="uid://cq3ot5jn4y65b" path="res://tools/ParallaxBackground/groundscale.gd" id="18_552qs"]
 [ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="18_aclwq"]
+[ext_resource type="PackedScene" uid="uid://c6gwluehsd2gu" path="res://src/modes/gauntlet/background.tscn" id="25_hnycb"]
 
 [sub_resource type="Resource" id="Resource_o0cro"]
 script = ExtResource("2_3yl0h")
@@ -49,7 +50,6 @@ shader_parameter/uv_offset_x = 0.0
 
 [node name="LevelGenerator" type="Node2D" parent="."]
 script = ExtResource("2_epjwl")
-max_active_segments = 5
 special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
 regular_store_interval = 4
 special_store_scene = ExtResource("5_qulm8")
@@ -69,6 +69,9 @@ script = ExtResource("4_e8qkv")
 script = SubResource("GDScript_4ied8")
 
 [node name="SpecialGenerator" type="Node2D" parent="LevelGenerator"]
+
+[node name="Background" parent="." instance=ExtResource("25_hnycb")]
+layer = -99
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
 scroll_ignore_camera_zoom = true
@@ -91,6 +94,8 @@ metadata/_edit_use_anchors_ = true
 script = ExtResource("11_naj30")
 
 [node name="ParallaxLayer_Clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -98
+z_as_relative = false
 motion_scale = Vector2(0.005, 0.002)
 motion_offset = Vector2(-1024, 0)
 motion_mirroring = Vector2(1024, 1024)
@@ -119,6 +124,8 @@ script = ExtResource("15_cvmua")
 auto_scroll_speed = 0.04
 
 [node name="ParallaxLayer_Clouds2" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -98
+z_as_relative = false
 motion_scale = Vector2(0.003, 0.002)
 motion_offset = Vector2(-1024, 0)
 motion_mirroring = Vector2(1024, 1024)

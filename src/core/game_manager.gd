@@ -198,8 +198,21 @@ func reset_game_state():
 	# from a previous game from "leaking" into the new one.
 	player_stats = DEFAULT_STATS.duplicate(true)
 	
-	# Refresh Procedural Generator
-	ProgressionManager.reset()
+	# Get the root node of the currently active scene.
+	var scene_root = get_tree().current_scene
+	if not is_instance_valid(scene_root):
+		return
+	
+	# Find the LevelGenerator node. We search recursively and don't require ownership.
+	var level_generator = scene_root.find_child("LevelGenerator", true, false)
+	
+	# If the generator exists in this scene, call its public reset function.
+	if is_instance_valid(level_generator):
+		level_generator.reset_and_generate_initial_segments()
+	else:
+		# If there's no generator, we can still reset the ProgressionManager for non-gauntlet modes (not that we really would).
+		# We pass 0 or a default seed, as it won't be used anyway.
+		ProgressionManager.reset(0)
 	
 	# If the player already exists (e.g., from reloading the scene),
 	# we must force it to adopt this new, clean stat block.

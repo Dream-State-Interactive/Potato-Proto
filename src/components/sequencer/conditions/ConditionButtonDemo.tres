@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ConditionButtonPressed" load_steps=2 format=3 uid="uid://cgx181sdm5r5b"]
+
+[ext_resource type="Script" uid="uid://cemefn18rmy2" path="res://src/components/sequencer/conditions/condition_button_pressed.gd" id="1_5xgvf"]
+
+[resource]
+script = ExtResource("1_5xgvf")
+button_path = NodePath("PhysicsButton")
+metadata/_custom_type_script = "uid://cemefn18rmy2"
