@@ -1,17 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkirw7lu8syn8"]
+[gd_scene load_steps=9 format=3 uid="uid://bkirw7lu8syn8"]
 
 [ext_resource type="Script" uid="uid://c0fvh4imnh5p8" path="res://src/ui/menus/ability_menu/ability_menu.gd" id="1_5pnxb"]
 [ext_resource type="Script" uid="uid://cufp68wokqij0" path="res://src/abilities/ability_info.gd" id="2_06unh"]
 [ext_resource type="Resource" uid="uid://cv6662e3d63hm" path="res://src/abilities/stop_on_a_fry_info.tres" id="3_u1lw2"]
 [ext_resource type="Resource" uid="uid://dopeh7iejsvnm" path="res://src/abilities/extreme_torque_info.tres" id="4_3ubp4"]
 [ext_resource type="Resource" uid="uid://cvhx0ktslqs56" path="res://src/abilities/sticky_info.tres" id="5_5pnxb"]
+[ext_resource type="Resource" uid="uid://djidvvnwlgvos" path="res://src/abilities/mashed_potato.tres" id="6_84gso"]
 [ext_resource type="PackedScene" uid="uid://d0lgicfm7qime" path="res://src/abilities/ability_slot.tscn" id="10_u1lw2"]
 
 [sub_resource type="Theme" id="Theme_84gso"]
 
 [node name="AbilityMenu" type="CanvasLayer"]
 script = ExtResource("1_5pnxb")
-available_abilities = Array[ExtResource("2_06unh")]([ExtResource("3_u1lw2"), ExtResource("4_3ubp4"), ExtResource("5_5pnxb")])
+available_abilities = Array[ExtResource("2_06unh")]([ExtResource("3_u1lw2"), ExtResource("4_3ubp4"), ExtResource("5_5pnxb"), ExtResource("6_84gso")])
 
 [node name="Container" type="Control" parent="."]
 layout_mode = 3

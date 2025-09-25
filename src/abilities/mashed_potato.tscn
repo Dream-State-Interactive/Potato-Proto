@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpq1cjafi1idg"]
+
+[ext_resource type="Script" uid="uid://ckx8rxsd2tgbe" path="res://src/abilities/mashed_potato.gd" id="1_df8ml"]
+
+[node name="MashedPotato" type="Node2D"]
+script = ExtResource("1_df8ml")

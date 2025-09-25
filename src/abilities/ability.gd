@@ -55,8 +55,6 @@ func _ready():
 	# correctly displays the ability as "ready" at the start.
 	state_updated.emit(State.READY, 0.0)
 
-# _process(delta) runs on every visual frame. It's ideal for continuous
-# updates, like animating a cooldown bar.
 func _process(_delta: float):
 	if not cooldown_timer.is_stopped():
 		var remaining = cooldown_timer.time_left
