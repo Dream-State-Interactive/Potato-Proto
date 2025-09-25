@@ -346,11 +346,11 @@ func _physics_process(_delta: float):
 	if not _is_gripping and roll_input != 0:
 		# Note: We do not multiply by delta here. `apply_torque` is an acceleration,
 		# and the physics engine handles the time step integration for us.
-		apply_torque(roll_input * stats.roll_speed * DEV_ROLL_MULTIPLIER)
+		apply_torque(roll_input * stats.roll_speed * DEV_ROLL_MULTIPLIER * GameManager.player_instance.mass)
 	
 	# The horizontal nudge helps counter friction and makes movement feel more responsive.
 	if on_floor and roll_input != 0:
-		apply_central_force(Vector2(roll_input * stats.horizontal_nudge, 0))
+		apply_central_force(Vector2(roll_input * stats.horizontal_nudge * GameManager.player_instance.mass, 0))
 	
 	# Apply a smaller force in the air to allow the player to influence their trajectory.
 	elif not on_floor and roll_input != 0:
@@ -368,7 +368,7 @@ func _physics_process(_delta: float):
 		)
 		
 		# 4. Apply the final calculated force.
-		apply_central_force(Vector2(roll_input * effective_air_control, 0))
+		apply_central_force(Vector2(roll_input * effective_air_control * GameManager.player_instance.mass, 0))
 	
 	# --- JUMP LOGIC ---
 	# We can jump if we are physically on the ground OR if the coyote timer is still running.
@@ -378,7 +378,7 @@ func _physics_process(_delta: float):
 		
 		# Reset vertical velocity for a consistent jump height.
 		linear_velocity.y = 0
-		apply_central_impulse(Vector2.UP * stats.jump_force * 10)
+		apply_central_impulse(Vector2.UP * stats.jump_force * 10 * GameManager.player_instance.mass)
 		
 		_is_gripping = false # Ensure grip is broken immediately on jump.
 		
@@ -402,13 +402,13 @@ func dash(direction: String) -> void:
 				combo_multiplier = 10
 			match(direction):
 				"up":
-					apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
+					apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass))
 				"down":
-					apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
+					apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass))
 				"left":
-					apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+					apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass, 0))
 				"right":
-					apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+					apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass, 0))
 			InputCooldownTimer.start()
 			
 		dashes_used += 1

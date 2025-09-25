@@ -5,11 +5,11 @@
 [resource]
 script = ExtResource("1_beqc3")
 max_health = 100.0
-mass = 1.0
+mass = 1.2
 grip = 1.0
-bounce = 0.35
-roll_speed = 5000.0
-jump_force = 50.0
+bounce = 0.3
+roll_speed = 2500.0
+jump_force = 40.0
 horizontal_nudge = 1000.0
 armor = 0.0
 base_air_control = 100.0
