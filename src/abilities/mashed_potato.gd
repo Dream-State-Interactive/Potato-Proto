@@ -8,6 +8,7 @@ const HANG_TIME: float = 0.15
 const COOLDOWN: float = 8.0
 var phase = PHASES.IDLE
 var directionVector: Vector2
+var roll_input: float
 
 enum PHASES {
 	IDLE,
@@ -33,7 +34,7 @@ func _process(_delta: float):
 	super(_delta)
 
 func perform_ability(player_body: RigidBody2D):
-	var roll_input = Input.get_axis("roll_left", "roll_right")
+	roll_input = Input.get_axis("roll_left", "roll_right")
 	directionVector = Vector2.RIGHT
 	if roll_input < 0:
 		directionVector = Vector2.LEFT
@@ -47,10 +48,9 @@ func jump():
 
 func hang():
 	phase = PHASES.HANG_TIME
-	GameManager.player_instance.linear_velocity = Vector2.ZERO
-	GameManager.player_instance.angular_velocity = 0.0
+	GameManager.player_instance.linear_velocity.y = 0
+	GameManager.player_instance.angular_velocity = 0.1 * roll_input
 	#turn off player gravity
-	#rotate slowly
 
 	hang_timer.start(HANG_TIME)
 
