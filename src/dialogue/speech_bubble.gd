@@ -1,4 +1,4 @@
-# src/ui/SpeechBubble/speech_bubble.gd
+# src/dialogue/speech_bubble.gd
 @tool
 class_name SpeechBubble
 extends Control

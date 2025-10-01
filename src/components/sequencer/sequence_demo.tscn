@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://d2y1b4hdqvghj" path="res://src/dialogue/dialogue_player.gd" id="16_qam6m"]
 [ext_resource type="Script" uid="uid://bjhexxha8vley" path="res://src/dialogue/DialogueLineResource.gd" id="17_go0wt"]
 [ext_resource type="Script" uid="uid://ly6cd7llx4r3" path="res://src/dialogue/DialogueResource.gd" id="18_6jrcb"]
-[ext_resource type="PackedScene" uid="uid://cfkh6v6yhhyj0" path="res://src/ui/SpeechBubble/SpeechBubble.tscn" id="19_go0wt"]
+[ext_resource type="PackedScene" uid="uid://cfkh6v6yhhyj0" path="res://src/dialogue/SpeechBubble.tscn" id="19_go0wt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5wgh8"]
 size = Vector2(512, 512)
