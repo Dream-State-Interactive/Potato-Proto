@@ -22,6 +22,7 @@ buses/default_bus_layout="uid://db6siqdgx37ec"
 
 [autoload]
 
+Algorithms="*res://src/core/algorithms.gd"
 SettingsService="*res://src/core/settings/settingsService.gd"
 DisplayManager="*res://src/core/display_manager.gd"
 AudioService="*res://src/core/audioService.gd"
