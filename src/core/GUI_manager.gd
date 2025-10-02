@@ -5,7 +5,7 @@ class_name GameGUI
 # --- Preload the scenes this manager is responsible for ---
 const HUD = preload("res://src/ui/hud/hud.tscn")
 const LEVEL_UP_MENU = preload("res://src/ui/menus/level_up_menu.tscn")
-const ABILITY_MENU = preload("res://src/ui/menus/ability_menu/AbilityMenu.tscn")
+const ABILITY_MENU = preload("res://src/ui/menus/AbilityMenu.tscn")
 
 @onready var GUI_root = $"."
 @onready var menu_container: CanvasLayer = $MenuContainer
