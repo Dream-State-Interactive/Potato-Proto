@@ -7,7 +7,7 @@
 script = ExtResource("1_vfek6")
 hazard_scene = ExtResource("1_q7kal")
 min_hills_completed = 0
-max_hills_completed = 50
+max_hills_completed = 1000
 base_density = 0.05
 density_increase_per_hill = 0.001
 max_density = 0.2

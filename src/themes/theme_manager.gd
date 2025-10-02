@@ -14,7 +14,7 @@ const NP_POST         : NodePath = ^"CanvasLayer/Control/PostGrade"
 const NP_FOG          : NodePath = ^"CanvasLayer/Control/FogOverlay"
 const NP_STARS_A      : NodePath = ^"CanvasLayer/Control/Starfield"
 const NP_STARS_B      : NodePath = ^"CanvasLayer/Control/starfield" # allow lowercase
-const NP_PB           : NodePath = ^"CanvasLayer/Control/ParallaxBackground"
+const NP_PB           : NodePath = ^"CanvasLayer/Parallax2D"
 const NP_CANVAS_MOD   : NodePath = ^"CanvasLayer/Control/CanvasModulate"
 const NP_CORE         : NodePath = ^"CanvasLayer/Control/Celestials"
 const NP_GLOW         : NodePath = ^"CanvasLayer/Control/CelestialsGlow"
@@ -78,16 +78,14 @@ var _size_tw: Tween = null
 # Lifecycle
 # ─────────────────────────────────────────────────────────────────────────────
 func _ready() -> void:
+	if GameManager:
+		GameManager.scene_changed.connect(_on_scene_changed)
+
 	get_viewport().size_changed.connect(_on_viewport_resized)
 	_ensure_stack()
 
-	# Cache optional scene lights
-	var root := get_tree().current_scene
-	if root:
-		_sun2d  = root.get_node_or_null("Sun2D")  as DirectionalLight2D
-		_moon2d = root.get_node_or_null("Moon2D") as DirectionalLight2D
-
-	# lazy env bind (safe if scene not fully ready yet)
+	# Initial scan for nodes. This will be re-run on every scene change
+	_scan_for_scene_nodes()
 	call_deferred("_ensure_env")
 
 	# Prevent startup flash: configure, then reveal Control
@@ -99,6 +97,29 @@ func _ready() -> void:
 func _process(_dt: float) -> void:
 	if _sizes_animating:
 		_apply_frame()
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Scene Change Handling (NEW)
+# ─────────────────────────────────────────────────────────────────────────────
+func _on_scene_changed() -> void:
+	# A new scene is about to be loaded. Clear old, invalid references.
+	_sun2d = null
+	_moon2d = null
+	_env = null
+	
+	# Wait one frame for the new scene to be fully loaded into the tree, then scan it for the nodes we need.
+	await get_tree().process_frame
+	_scan_for_scene_nodes()
+	_ensure_env()
+
+func _scan_for_scene_nodes() -> void:
+	var root := get_tree().current_scene
+	if root:
+		_sun2d  = root.get_node_or_null("Sun2D")  as DirectionalLight2D
+		_moon2d = root.get_node_or_null("Moon2D") as DirectionalLight2D
+	else:
+		_sun2d = null
+		_moon2d = null
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Public API
@@ -154,9 +175,15 @@ func transition_to_theme(new_theme: ThemeData, seconds: float = 1.2) -> void:
 	var mat := sky.material as ShaderMaterial
 	
 	# 1. Set the "old" parameters to the theme we are coming FROM.
-	mat.set_shader_parameter("sky_top_old", old_theme.sky_top)
-	mat.set_shader_parameter("sky_bottom_old", old_theme.sky_bottom)
-	mat.set_shader_parameter("horizon_curve_old", old_theme.horizon_curve)
+	if old_theme:
+		mat.set_shader_parameter("sky_top_old", old_theme.sky_top)
+		mat.set_shader_parameter("sky_bottom_old", old_theme.sky_bottom)
+		mat.set_shader_parameter("horizon_curve_old", old_theme.horizon_curve)
+	else: # Handle case where there was no previous theme
+		mat.set_shader_parameter("sky_top_old", new_theme.sky_top)
+		mat.set_shader_parameter("sky_bottom_old", new_theme.sky_bottom)
+		mat.set_shader_parameter("horizon_curve_old", new_theme.horizon_curve)
+
 
 	# 2. Set the "new" parameters to the theme we are going TO.
 	mat.set_shader_parameter("sky_top", new_theme.sky_top)
@@ -184,8 +211,9 @@ func transition_to_theme(new_theme: ThemeData, seconds: float = 1.2) -> void:
 # Frame update (single orchestration point)
 # ─────────────────────────────────────────────────────────────────────────────
 func _apply_frame() -> void:
-	if current_theme == null or _stack == null: return
-	_ensure_stack()
+	if current_theme == null: return
+	_ensure_stack() # This is safe to call every frame
+	if not is_instance_valid(_stack): return
 
 	var ctx := _viewport_ctx()
 
@@ -193,7 +221,6 @@ func _apply_frame() -> void:
 	var sky := _n(NP_SKY) as CanvasItem
 	if sky and sky.material is ShaderMaterial:
 		_configure_sky_material(sky.material as ShaderMaterial, current_theme, ctx)
-
 
 	# 2) Celestials (core + glow)
 	_configure_celestials_for(NP_CORE, false, ctx)
@@ -348,46 +375,75 @@ func _update_lights() -> void:
 			_moon2d.color = moon_col
 
 func _update_parallax() -> void:
-	var pb := _n(NP_PB) as ParallaxBackground
-	if pb == null: return
+	var cl := _n(NP_CL) as CanvasLayer
+	if cl == null or current_theme == null:
+		return
 
-	while pb.get_child_count() < current_theme.parallax_textures.size():
-		var layer := ParallaxLayer.new()
-		var s := Sprite2D.new()
-		s.centered = false
-		layer.add_child(s)
-		pb.add_child(layer)
+	var want := current_theme.parallax_textures.size()
+	
+	# Ensure the base "Parallax2D" exists for layer 0
+	var base := cl.get_node_or_null(^"Parallax2D") as Parallax2D
+	if base == null:
+		base = Parallax2D.new()
+		base.name = "Parallax2D"
+		cl.add_child(base)
+		var s0 := Sprite2D.new()
+		s0.name = "Sprite2D"
+		s0.centered = false
+		base.add_child(s0)
 
-	var cam: Camera2D = get_viewport().get_camera_2d()
-	var vp_i: Vector2i = get_viewport().get_visible_rect().size
-	var vp: Vector2 = Vector2(vp_i.x, vp_i.y)
-	var base: Vector2 = (cam.global_position - vp * 0.5) if cam else Vector2.ZERO
+	for i in range(want):
+		var node_name: String = "Parallax2D" if i == 0 else "Parallax2D_L%d" % i
+		var node_path: NodePath = NodePath(node_name)
+		var p := cl.get_node_or_null(node_path) as Parallax2D
+		if p == null:
+			p = Parallax2D.new()
+			p.name = node_name
+			cl.add_child(p)
+			var s_new := Sprite2D.new()
+			s_new.name = "Sprite2D"
+			s_new.centered = false
+			p.add_child(s_new)
 
-	for i in pb.get_child_count():
-		var layer := pb.get_child(i) as ParallaxLayer
-		if i < current_theme.parallax_textures.size():
-			layer.visible = true
-			var s := layer.get_child(0) as Sprite2D
-			s.texture = current_theme.parallax_textures[i]
-			s.modulate = Color.WHITE
+		var s := p.get_node_or_null(^"Sprite2D") as Sprite2D
+		if s == null:
+			s = Sprite2D.new()
+			s.name = "Sprite2D"
 			s.centered = false
+			p.add_child(s)
 
-			var start_offset := Vector2(-1024.0, 0.0)
-			var mirror := Vector2(1024.0, 0.0)
+		var tex := current_theme.parallax_textures[i]
+		if tex:
+			s.visible = true
+			s.texture = tex
+			s.modulate = Color.WHITE
+			s.position = Vector2.ZERO
+			s.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+			s.region_enabled = true
 
-			s.position = base + start_offset
-			layer.motion_scale = current_theme.get_parallax_motion(i)
-			layer.motion_mirroring = mirror
-			layer.z_index = -100
+			var tex_w := float(tex.get_width())
+			var tex_h := float(tex.get_height())
 
-			if s.texture:
-				s.region_enabled = true
-				s.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-				var vpw: float = maxf(vp.x * 2.0, mirror.x)
-				var vph: float = maxf(vp.y,       mirror.y)
-				s.region_rect = Rect2(Vector2.ZERO, Vector2(vpw, vph))
+			# Draw ABOVE the Sky (Z_SKY = 0) and BELOW Stars (Z_STARS = 10)
+			s.z_index = Z_SKY + 1 + i
+			p.scroll_scale = current_theme.get_parallax_motion(i)
+			p.repeat_size  = Vector2(tex_w, tex_h)
+			p.repeat_times = 2
+			p.autoscroll   = Vector2(20.0, 0.0) # Keep your original value or adjust as needed
+			p.visible = true
 		else:
-			layer.visible = false
+			p.visible = false
+
+	for child in cl.get_children():
+		if child is Parallax2D:
+			var n := String((child as Node).name)
+			if n.begins_with("Parallax2D_L"):
+				var idx_str := n.substr(12) # len("Parallax2D_L") = 12
+				if idx_str.is_valid_int() and int(idx_str) >= want:
+					child.queue_free()
+
+
+
 
 func _update_overlays() -> void:
 	var canvas_mod := _n(NP_CANVAS_MOD) as CanvasModulate
@@ -436,13 +492,18 @@ func _update_stars() -> void:
 # Helpers / Utilities
 # ─────────────────────────────────────────────────────────────────────────────
 func _ensure_stack() -> void:
-	if _stack or not visual_stack_scene: return
+	if is_instance_valid(_stack): return
+	if not visual_stack_scene:
+		printerr("ThemeManager: visual_stack_scene is not set!")
+		return
+	
 	_stack = visual_stack_scene.instantiate()
-	var parent := get_tree().current_scene if get_tree().current_scene else get_tree().root
-	parent.add_child(_stack)
+	add_child(_stack)
+	
 	_configure_canvas_layer(_stack)
 
 func _configure_canvas_layer(stack_node: Node) -> void:
+	if not is_instance_valid(stack_node): return
 	var cl := _nf(stack_node, NP_CL) as CanvasLayer
 	if cl:
 		cl.layer = -100 # draw behind gameplay
@@ -553,17 +614,17 @@ func _viewport_ctx() -> Dictionary:
 # Node helpers
 # ─────────────────────────────────────────────────────────────────────────────
 func _n(path: NodePath) -> Node:
-	return _stack.get_node_or_null(path) if _stack else null
+	return _stack.get_node_or_null(path) if is_instance_valid(_stack) else null
 
 func _nf(root: Node, path: NodePath) -> Node:
-	return root.get_node_or_null(path) if root else null
+	return root.get_node_or_null(path) if is_instance_valid(root) else null
 
 func _on_viewport_resized() -> void:
 	_configure_canvas_layer(_stack)
 	_apply_frame()
 
 func _ensure_env() -> void:
-	if _env != null:
+	if is_instance_valid(_env):
 		return
 	var root := get_tree().current_scene
 	if root == null:
@@ -573,4 +634,5 @@ func _ensure_env() -> void:
 		return
 	_env = we.environment
 	if _env != null:
+		# Connect to the node's exit signal, not the environment resource itself
 		we.tree_exited.connect(func(): _env = null)  # reset on level unload

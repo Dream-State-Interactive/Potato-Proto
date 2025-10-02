@@ -10,7 +10,11 @@ extends Node2D
 
 @export_range(1, 20) var editor_preview_length: int = 5
 
-# --- Generation Config ---
+@export_group("World Theming")
+## Will be applied in order based on their 'number_of_hills_to_trigger'.
+@export var world_themes: Array[WorldTheme]
+
+@export_group("Generation Config")
 @export_range(2, 20) var max_active_segments: int = 5
 @export_range(1, 10) var pregenerate_forward: int = 3
 @export_range(1, 10) var pregenerate_backward: int = 2
@@ -50,11 +54,15 @@ var _special_sequence_repeats: int = 0
 var _is_in_special_chain: bool = false
 var _last_special_trigger_hills: int = -1
 var last_theme_change_hill_count: int = -1
+var _current_world_theme: WorldTheme = null
+var _next_world_theme_index: int = 0
 
 
 func _ready():
 	if Engine.is_editor_hint():
 		return
+	if not world_themes.is_empty():
+		world_themes.sort_custom(func(a, b): return a.number_of_hills_to_trigger < b.number_of_hills_to_trigger)
 	reset_and_generate_initial_segments()
 
 
@@ -65,6 +73,7 @@ func _ready():
 func reset_and_generate_initial_segments():
 	print("--- RESETTING LEVEL GENERATOR ---")
 	_reset_and_initialize()
+	_apply_initial_theme()
 	_generate_initial_bootstrap_segments()
 
 func _reset_and_initialize():
@@ -106,8 +115,57 @@ func _generate_level_preview():
 	ProgressionManager.reset(_master_seed)
 	_player_current_index = 0
 	_segment_end_positions[-1] = Vector2.ZERO
+	if not world_themes.is_empty():
+		world_themes.sort_custom(func(a, b): return a.number_of_hills_to_trigger < b.number_of_hills_to_trigger)
+		_apply_initial_theme()
 	for i in range(editor_preview_length):
 		_generate_segment_at_index(i)
+
+
+# ==================================
+# --- Theme Integration Logic ---
+# ==================================
+func _apply_initial_theme():
+	if not world_themes.is_empty():
+		_current_world_theme = world_themes[0]
+		_next_world_theme_index = 1
+		_apply_world_theme(_current_world_theme, true) # 'true' for instant application
+		print("Applied initial world theme.")
+	else:
+		printerr("LevelGenerator: No WorldThemes have been configured in the Inspector.")
+
+func _check_and_apply_theme_change():
+	# Don't check if there are no more themes in the sequence.
+	if _next_world_theme_index >= world_themes.size():
+		return
+
+	var next_theme: WorldTheme = world_themes[_next_world_theme_index]
+	var hills_completed = ProgressionManager.max_forward_index
+
+	# Check if the player has reached the hill count required for the next theme.
+	if hills_completed >= next_theme.number_of_hills_to_trigger:
+		print("Triggering theme change at ", hills_completed, " hills.")
+		_current_world_theme = next_theme
+		_apply_world_theme(_current_world_theme, false) # 'false' for a smooth transition
+		_next_world_theme_index += 1
+
+func _apply_world_theme(theme: WorldTheme, instant: bool):
+	if not is_instance_valid(theme):
+		printerr("Attempted to apply an invalid WorldTheme resource.")
+		return
+
+	# 1. Apply the visual theme using the new ThemeManager.
+	if is_instance_valid(theme.theme_data):
+		if instant or Engine.is_editor_hint():
+			ThemeManager.apply_theme(theme.theme_data)
+		else:
+			# Use a default transition time, e.g., 2.5 seconds.
+			ThemeManager.transition_to_theme(theme.theme_data, 2.5)
+
+	# 2. Overwrite the HazardGenerator's configurations.
+	if is_instance_valid(hazard_generator) and not theme.hazard_configs.is_empty():
+		hazard_generator.hazard_configs = theme.hazard_configs
+		print("Applied new hazard configuration from WorldTheme.")
 
 
 # =============================
@@ -197,12 +255,8 @@ func _generate_start_segment(_seed: int) -> Dictionary:
 func _generate_standard_segment(index: int, seed: int) -> Dictionary:
 	_rng.seed = seed
 	
-	var hills_completed = ProgressionManager.max_forward_index
-	if hills_completed > 0 and (hills_completed % 3 == 0) and (hills_completed != last_theme_change_hill_count):
-		last_theme_change_hill_count = hills_completed
-		ThemeManagerOlde.advance_theme()
-		if is_instance_valid(background):
-			background.change_color(ThemeManagerOlde.get_current_theme().sky_color)
+	# Check if a theme transition is needed before generating the segment.
+	_check_and_apply_theme_change()
 			
 	var segment = Node2D.new()
 	segment.name = "Segment" + str(index)
@@ -210,6 +264,27 @@ func _generate_standard_segment(index: int, seed: int) -> Dictionary:
 
 	# Generate Hill and Hazards
 	var hill_params = ProgressionManager.get_hill_parameters(index)
+	
+	# Apply overrides from the current WorldTheme
+	if is_instance_valid(_current_world_theme):
+		# A. Override hill generation parameters if specified.
+		if _current_world_theme.override_hill_parameters and is_instance_valid(_current_world_theme.hill_parameters):
+			var overrides = _current_world_theme.hill_parameters
+			hill_params["length"] = overrides.length
+			hill_params["amplitude"] = overrides.amplitude
+			hill_params["slope"] = overrides.slope
+			hill_params["steepness_increase"] = overrides.steepness_increase
+			hill_params["frequency"] = overrides.frequency
+			hill_params["control_step"] = overrides.control_step
+			hill_params["visual_bake_interval"] = overrides.visual_bake_interval
+			hill_params["collision_bake_interval"] = overrides.collision_bake_interval
+			hill_params["simplify_epsilon_px"] = overrides.simplify_epsilon_px
+			hill_params["max_collision_vertices"] = overrides.max_collision_vertices
+		
+		# B. Set the hill's color from the theme's visual data.
+		if is_instance_valid(_current_world_theme.theme_data):
+			hill_params["color"] = _current_world_theme.theme_data.terrain_fill
+	
 	var should_spawn_starch = (index > ProgressionManager.max_forward_index)
 	var hill_result = hill_generator.generate_hill(hill_params, seed, not should_spawn_starch)
 	var hill_node: Node2D = hill_result["node"]
@@ -229,6 +304,7 @@ func _generate_standard_segment(index: int, seed: int) -> Dictionary:
 	var content_end_pos_local: Vector2
 	var content_spawned = false
 	
+	var hills_completed = ProgressionManager.max_forward_index
 	# Check for the Special Store first to give it priority.
 	if special_store_scene and special_store_interval > 0 and (hills_completed % special_store_interval == special_store_interval - 1):
 		content_node = special_store_scene.instantiate()

@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1_1lveh")
 hazard_scene = ExtResource("1_se78h")
-min_hills_completed = 10
-max_hills_completed = 20
-base_density = 0.05
+min_hills_completed = 0
+max_hills_completed = 1000
+base_density = 0.144
 density_increase_per_hill = 0.001
 max_density = 0.25
 end_boost_start_percent = 0.8
