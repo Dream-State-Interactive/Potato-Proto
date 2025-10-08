@@ -35,7 +35,6 @@ LanguageTester="*res://src/dialogue/language_tester.gd"
 ProgressionManager="*res://src/modes/gauntlet/progression_manager.gd"
 Leaderboard="*res://src/core/leaderboard_manager.gd"
 ThemeManager="*res://src/themes/theme_manager.gd"
-ThemeManagerOlde="*res://src/core/theme_manager_olde.gd"
 
 [display]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bt4mlhnjlgpyi"]
+[gd_scene load_steps=17 format=3 uid="uid://bt4mlhnjlgpyi"]
 
 [ext_resource type="Shader" uid="uid://dsnwxoklqum0d" path="res://src/themes/shaders/sky_background.gdshader" id="1_mygdp"]
 [ext_resource type="Shader" uid="uid://gu2k04dqwmc5" path="res://src/themes/shaders/palette_grade.gdshader" id="2_y8x24"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bkc2bdj16c5og" path="res://assets/graphics/sprites/env/moth.png" id="3_w52lw"]
 [ext_resource type="Shader" uid="uid://51k1ydskpuw4" path="res://src/themes/shaders/celestials_glow.gdshader" id="4_7fpps"]
 [ext_resource type="Shader" uid="uid://bg0i8uycbwmk6" path="res://src/themes/shaders/fog_overlay.gdshader" id="4_yryhw"]
+[ext_resource type="Shader" uid="uid://sbc1edwb8l3c" path="res://src/themes/shaders/cloud_lighting.gdshader" id="7_qwy70"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y8x24"]
 shader = ExtResource("1_mygdp")
@@ -79,6 +80,18 @@ shader = ExtResource("2_y8x24")
 shader_parameter/amount = 0.4
 shader_parameter/time_of_day = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5keg"]
+shader = ExtResource("7_qwy70")
+shader_parameter/sun_pos_uv = Vector2(0, 0)
+shader_parameter/moon_pos_uv = Vector2(0, 0)
+shader_parameter/sun_color = Color(0, 0, 0, 1)
+shader_parameter/moon_color = Color(0, 0, 0, 1)
+shader_parameter/sun_vis = 0.0
+shader_parameter/moon_vis = 0.0
+shader_parameter/rim_width = 0.1
+shader_parameter/rim_blur = 0.1
+shader_parameter/rim_intensity = 1.5
+
 [node name="VisualStack" type="Node2D"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -146,6 +159,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ParallaxLayer" type="CanvasLayer" parent="."]
+[node name="ParallaxLayer0" type="Parallax2D" parent="CanvasLayer"]
+repeat_times = 3
+follow_viewport = false
 
-[node name="Parallax2D" type="Parallax2D" parent="ParallaxLayer"]
+[node name="SpriteA" type="Sprite2D" parent="CanvasLayer/ParallaxLayer0"]
+material = SubResource("ShaderMaterial_n5keg")
+
+[node name="SpriteB" type="Sprite2D" parent="CanvasLayer/ParallaxLayer0"]
+material = SubResource("ShaderMaterial_n5keg")
+
+[node name="ParallaxLayer1" type="Parallax2D" parent="CanvasLayer"]
+repeat_times = 3
+follow_viewport = false
+
+[node name="SpriteA" type="Sprite2D" parent="CanvasLayer/ParallaxLayer1"]
+
+[node name="SpriteB" type="Sprite2D" parent="CanvasLayer/ParallaxLayer1"]
+
+[node name="ParallaxLayer2" type="Parallax2D" parent="CanvasLayer"]
+repeat_times = 3
+follow_viewport = false
+
+[node name="SpriteA" type="Sprite2D" parent="CanvasLayer/ParallaxLayer2"]
+
+[node name="SpriteB" type="Sprite2D" parent="CanvasLayer/ParallaxLayer2"]
+
+[node name="ParallaxLayer3" type="Parallax2D" parent="CanvasLayer"]
+repeat_times = 3
+follow_viewport = false
+
+[node name="SpriteA" type="Sprite2D" parent="CanvasLayer/ParallaxLayer3"]
+
+[node name="SpriteB" type="Sprite2D" parent="CanvasLayer/ParallaxLayer3"]
+
+[node name="ParallaxLayer4" type="Parallax2D" parent="CanvasLayer"]
+repeat_times = 3
+follow_viewport = false
+
+[node name="SpriteA" type="Sprite2D" parent="CanvasLayer/ParallaxLayer4"]
+
+[node name="SpriteB" type="Sprite2D" parent="CanvasLayer/ParallaxLayer4"]

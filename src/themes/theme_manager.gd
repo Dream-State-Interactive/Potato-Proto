@@ -14,17 +14,24 @@ const NP_POST         : NodePath = ^"CanvasLayer/Control/PostGrade"
 const NP_FOG          : NodePath = ^"CanvasLayer/Control/FogOverlay"
 const NP_STARS_A      : NodePath = ^"CanvasLayer/Control/Starfield"
 const NP_STARS_B      : NodePath = ^"CanvasLayer/Control/starfield" # allow lowercase
-const NP_PB           : NodePath = ^"CanvasLayer/Parallax2D"
+const PL_0            : NodePath = ^"CanvasLayer/ParallaxLayer0"
+const PL_1            : NodePath = ^"CanvasLayer/ParallaxLayer1"
+const PL_2            : NodePath = ^"CanvasLayer/ParallaxLayer2"
+const PL_3            : NodePath = ^"CanvasLayer/ParallaxLayer3"
+const PL_4            : NodePath = ^"CanvasLayer/ParallaxLayer4"
 const NP_CANVAS_MOD   : NodePath = ^"CanvasLayer/Control/CanvasModulate"
 const NP_CORE         : NodePath = ^"CanvasLayer/Control/Celestials"
 const NP_GLOW         : NodePath = ^"CanvasLayer/Control/CelestialsGlow"
 
-const Z_SKY    := 0
-const Z_STARS  := 10
-const Z_CORE   := 12
-const Z_GLOW   := 13
-const Z_FOG    := 20
-const Z_POST   := 30
+const MAX_PARALLAX_LAYERS := 5
+
+const Z_SKY           := 0
+const Z_STARS         := 10
+const Z_CORE          := 12
+const Z_GLOW          := 13
+const Z_PARALLAX_BASE := 14 # Base z-index for the furthest parallax layer (Layer 4)
+const Z_FOG           := 20
+const Z_POST          := 30
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Public state
@@ -45,13 +52,17 @@ var _env: Environment
 # ─────────────────────────────────────────────────────────────────────────────
 # Transitions / Fades
 # ─────────────────────────────────────────────────────────────────────────────
-var _theme_just_applied := false
 # Celestial size tween
 var _sun_size_px: float  = 90.0
 var _moon_size_px: float = 70.0	
 var _sizes_animating := false
 var _size_tw: Tween = null
 @export_range(0.0, 3.0, 0.05) var size_tween_seconds := 1.2
+
+# State for which parallax sprite (A or B) is currently the active one.
+var _parallax_sprite_is_a := true
+# Add a state flag to prevent _update_parallax from running during a fade.
+var _is_transitioning := false
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -99,7 +110,7 @@ func _process(_dt: float) -> void:
 		_apply_frame()
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Scene Change Handling (NEW)
+# Scene Change Handling
 # ─────────────────────────────────────────────────────────────────────────────
 func _on_scene_changed() -> void:
 	# A new scene is about to be loaded. Clear old, invalid references.
@@ -141,7 +152,6 @@ func apply_theme(theme: ThemeData) -> void:
 		mat.set_shader_parameter("transition_blend", 1.0) # 1.0 means fully showing the "new" theme
 
 	current_theme = theme
-	_theme_just_applied = true
 	_tween_celestial_sizes(theme.sun_size, theme.moon_size, 0.0) # Instant
 	_apply_frame()
 	emit_signal("theme_applied", theme)
@@ -161,50 +171,61 @@ func set_time_of_day(t: float) -> void:
 	emit_signal("time_of_day_changed", time_of_day)
 
 func transition_to_theme(new_theme: ThemeData, seconds: float = 1.2) -> void:
-	if new_theme == null or new_theme == current_theme: return
+	# Prevent starting a new transition if one is already running.
+	if new_theme == null or new_theme == current_theme or _is_transitioning:
+		return
 	
+	_is_transitioning = true # 1. Set the flag immediately to block updates.
 	var old_theme := current_theme
 	current_theme = new_theme
-	_theme_just_applied = true
 
 	var sky := _n(NP_SKY) as CanvasItem
 	if not (sky and sky.material is ShaderMaterial):
 		apply_theme(new_theme) # Fallback to instant apply
+		_is_transitioning = false # Clear flag on fallback
 		return
 
 	var mat := sky.material as ShaderMaterial
 	
-	# 1. Set the "old" parameters to the theme we are coming FROM.
+	# 1. Set "old" parameters
 	if old_theme:
 		mat.set_shader_parameter("sky_top_old", old_theme.sky_top)
 		mat.set_shader_parameter("sky_bottom_old", old_theme.sky_bottom)
 		mat.set_shader_parameter("horizon_curve_old", old_theme.horizon_curve)
-	else: # Handle case where there was no previous theme
+	else:
 		mat.set_shader_parameter("sky_top_old", new_theme.sky_top)
 		mat.set_shader_parameter("sky_bottom_old", new_theme.sky_bottom)
 		mat.set_shader_parameter("horizon_curve_old", new_theme.horizon_curve)
 
-
-	# 2. Set the "new" parameters to the theme we are going TO.
+	# 2. Set "new" parameters
 	mat.set_shader_parameter("sky_top", new_theme.sky_top)
 	mat.set_shader_parameter("sky_bottom", new_theme.sky_bottom)
 	mat.set_shader_parameter("horizon_curve", new_theme.horizon_curve)
 	
-	# 3. Reset the blend and create a tween to animate it.
+	# 3. Create the main tween
 	mat.set_shader_parameter("transition_blend", 0.0)
 	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(mat, "shader_parameter/transition_blend", 1.0, seconds)
 	
-	# 4. Animate other properties in parallel.
+	# 4. Animate other properties in parallel
 	_tween_celestial_sizes(new_theme.sun_size, new_theme.moon_size, seconds)
+	_transition_parallax_fade(tw, old_theme, new_theme, seconds)
 	
-	# 5. Emit the signal when the new theme is fully applied.
+	if tween_lights_on_theme_change:
+		var sun_col: Color  = sun_light_tint  if use_light_overrides else new_theme.sun_color
+		var moon_col: Color = moon_light_tint if use_light_overrides else new_theme.moon_color
+		if is_instance_valid(_sun2d):
+			tw.parallel().tween_property(_sun2d, "color", sun_col, seconds)
+		if is_instance_valid(_moon2d):
+			tw.parallel().tween_property(_moon2d, "color", moon_col, seconds)
+
+	# 5. On completion, flip the state, clear the flag, and do a final cleanup apply.
 	tw.finished.connect(func():
+		_parallax_sprite_is_a = not _parallax_sprite_is_a
+		_is_transitioning = false # 2. Clear the flag.
 		emit_signal("theme_applied", new_theme)
+		_apply_frame() # 3. Call apply_frame ONCE at the very end for a clean state.
 	)
-	
-	# 6. Call apply_frame once to update everything else instantly.
-	_apply_frame()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -228,12 +249,15 @@ func _apply_frame() -> void:
 
 	# 3) Lights / Parallax / Overlays / Stars
 	_update_lights()
-	_update_parallax()
+	# Only update parallax if we are not in the middle of a transition.
+	if not _is_transitioning:
+		_update_parallax()
 	_update_overlays()
 	_update_stars()
 	_update_world_environment() 
-
-	_theme_just_applied = false
+	
+	# NEW: Update cloud lighting every frame.
+	_update_cloud_lighting()
 
 func _update_world_environment() -> void:
 	_ensure_env()
@@ -357,10 +381,8 @@ func _update_lights() -> void:
 		_sun2d.shadow_enabled = true
 		_sun2d.rotation = (-sun_dir).angle()
 		_sun2d.energy = sun_energy
-		if _theme_just_applied and tween_lights_on_theme_change:
-			create_tween().tween_property(_sun2d, "color", sun_col, light_tween_seconds)
-		else:
-			_sun2d.color = sun_col
+		# The conditional logic is gone. Just set the color directly.
+		_sun2d.color = sun_col
 		_sun2d.shadow_filter = DirectionalLight2D.SHADOW_FILTER_PCF13
 		_sun2d.shadow_color = Color(0,0,0,0.35)
 
@@ -369,81 +391,91 @@ func _update_lights() -> void:
 		_moon2d.shadow_enabled = true
 		_moon2d.rotation = sun_dir.angle()
 		_moon2d.energy = moon_energy
-		if _theme_just_applied and tween_lights_on_theme_change:
-			create_tween().tween_property(_moon2d, "color", moon_col, light_tween_seconds)
-		else:
-			_moon2d.color = moon_col
+		# The conditional logic is gone. Just set the color directly.
+		_moon2d.color = moon_col
 
+
+#This function now handles the A/B sprite system for instant updates.
 func _update_parallax() -> void:
 	var cl := _n(NP_CL) as CanvasLayer
-	if cl == null or current_theme == null:
+	if not is_instance_valid(cl) or current_theme == null:
 		return
 
-	var want := current_theme.parallax_textures.size()
-	
-	# Ensure the base "Parallax2D" exists for layer 0
-	var base := cl.get_node_or_null(^"Parallax2D") as Parallax2D
-	if base == null:
-		base = Parallax2D.new()
-		base.name = "Parallax2D"
-		cl.add_child(base)
-		var s0 := Sprite2D.new()
-		s0.name = "Sprite2D"
-		s0.centered = false
-		base.add_child(s0)
+	var textures_to_apply: Array[Texture2D] = current_theme.parallax_textures
+	var sprite_name_active   = "SpriteA" if _parallax_sprite_is_a else "SpriteB"
+	var sprite_name_inactive = "SpriteB" if _parallax_sprite_is_a else "SpriteA"
 
-	for i in range(want):
-		var node_name: String = "Parallax2D" if i == 0 else "Parallax2D_L%d" % i
-		var node_path: NodePath = NodePath(node_name)
-		var p := cl.get_node_or_null(node_path) as Parallax2D
-		if p == null:
-			p = Parallax2D.new()
-			p.name = node_name
-			cl.add_child(p)
-			var s_new := Sprite2D.new()
-			s_new.name = "Sprite2D"
-			s_new.centered = false
-			p.add_child(s_new)
+	for i in range(MAX_PARALLAX_LAYERS):
+		var p_layer := cl.get_node_or_null("ParallaxLayer%d" % i) as Parallax2D
+		
+		if not is_instance_valid(p_layer):
+			printerr("ThemeManager: ParallaxLayer%d not found in the visual stack scene!" % i)
+			continue
 
-		var s := p.get_node_or_null(^"Sprite2D") as Sprite2D
-		if s == null:
-			s = Sprite2D.new()
-			s.name = "Sprite2D"
-			s.centered = false
-			p.add_child(s)
+		var s_active := p_layer.get_node_or_null(sprite_name_active) as Sprite2D
+		var s_inactive := p_layer.get_node_or_null(sprite_name_inactive) as Sprite2D
 
-		var tex := current_theme.parallax_textures[i]
-		if tex:
-			s.visible = true
-			s.texture = tex
-			s.modulate = Color.WHITE
-			s.position = Vector2.ZERO
-			s.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-			s.region_enabled = true
+		if not is_instance_valid(s_active) or not is_instance_valid(s_inactive):
+			printerr("ThemeManager: SpriteA/SpriteB not found in ParallaxLayer%d!" % i)
+			continue
+		
+		# Always hide the inactive sprite
+		s_inactive.visible = false
 
-			var tex_w := float(tex.get_width())
-			var tex_h := float(tex.get_height())
-
-			# Draw ABOVE the Sky (Z_SKY = 0) and BELOW Stars (Z_STARS = 10)
-			s.z_index = Z_SKY + 1 + i
-			p.scroll_scale = current_theme.get_parallax_motion(i)
-			p.repeat_size  = Vector2(tex_w, tex_h)
-			p.repeat_times = 2
-			p.autoscroll   = Vector2(20.0, 0.0) # Keep your original value or adjust as needed
-			p.visible = true
+		if i < textures_to_apply.size() and textures_to_apply[i] != null:
+			p_layer.visible = true
+			s_active.visible = true
+			s_active.modulate.a = 1.0 # Ensure it's fully visible
+			
+			_configure_parallax_sprite(
+				p_layer,
+				s_active,
+				textures_to_apply[i],
+				current_theme.get_parallax_motion(i),
+				i
+			)
 		else:
-			p.visible = false
+			# No texture for this layer, hide the layer and the active sprite.
+			p_layer.visible = false
+			s_active.visible = false
 
-	for child in cl.get_children():
-		if child is Parallax2D:
-			var n := String((child as Node).name)
-			if n.begins_with("Parallax2D_L"):
-				var idx_str := n.substr(12) # len("Parallax2D_L") = 12
-				if idx_str.is_valid_int() and int(idx_str) >= want:
-					child.queue_free()
+func _transition_parallax_fade(tw: Tween, old_theme: ThemeData, new_theme: ThemeData, seconds: float) -> void:
+	var cl := _n(NP_CL) as CanvasLayer
+	if not is_instance_valid(cl): return
 
+	var old_textures = old_theme.parallax_textures if old_theme else []
+	var new_textures = new_theme.parallax_textures
 
+	var sprite_name_out = "SpriteA" if _parallax_sprite_is_a else "SpriteB"
+	var sprite_name_in  = "SpriteB" if _parallax_sprite_is_a else "SpriteA"
 
+	for i in range(MAX_PARALLAX_LAYERS):
+		var p_layer := cl.get_node_or_null("ParallaxLayer%d" % i) as Parallax2D
+		if not is_instance_valid(p_layer): continue
+
+		var s_out := p_layer.get_node_or_null(sprite_name_out) as Sprite2D
+		var s_in  := p_layer.get_node_or_null(sprite_name_in) as Sprite2D
+
+		if not is_instance_valid(s_out) or not is_instance_valid(s_in):
+			printerr("ThemeManager: ParallaxLayer%d requires two Sprite2D children named 'SpriteA' and 'SpriteB' for fading." % i)
+			continue
+
+		# --- FADE IN ---
+		if i < new_textures.size() and new_textures[i] != null:
+			p_layer.visible = true
+			_configure_parallax_sprite(p_layer, s_in, new_textures[i], new_theme.get_parallax_motion(i), i)
+			s_in.modulate.a = 0.0
+			s_in.visible = true
+			tw.parallel().tween_property(s_in, "modulate:a", 1.0, seconds)
+		else:
+			s_in.visible = false
+
+		# --- FADE OUT ---
+		if i < old_textures.size() and old_textures[i] != null:
+			s_out.visible = true
+			tw.parallel().tween_property(s_out, "modulate:a", 0.0, seconds)
+		else:
+			s_out.visible = false
 
 func _update_overlays() -> void:
 	var canvas_mod := _n(NP_CANVAS_MOD) as CanvasModulate
@@ -488,9 +520,54 @@ func _update_stars() -> void:
 	if starfield is CanvasItem:
 		(starfield as CanvasItem).visible = alpha > 0.001
 
+func _update_cloud_lighting() -> void:
+	if not is_instance_valid(_stack): return
+
+	# Calculate celestial positions and visibility once
+	var A = (time_of_day * TAU) - (PI / 2.0)
+	var orbit_center = Vector2(0.50, 1.10)
+	var orbit_radius = 0.80
+	var sun_pos_uv = orbit_center + Vector2(cos(A), -sin(A)) * orbit_radius
+	var moon_pos_uv = orbit_center + Vector2(cos(A + PI), -sin(A + PI)) * orbit_radius
+	
+	var altitude = sin(A)
+	var sun_vis = smoothstep(-0.04, 0.10, altitude)
+	var moon_vis = smoothstep(-0.04, 0.10, -altitude) * (1.0 - sun_vis * 0.95)
+
+	# Loop through all parallax layers and their sprites
+	for i in range(MAX_PARALLAX_LAYERS):
+		var p_layer := _n(NodePath("CanvasLayer/ParallaxLayer%d" % i)) as Parallax2D
+		if not is_instance_valid(p_layer): continue
+
+		for sprite_name in ["SpriteA", "SpriteB"]:
+			var sprite := p_layer.get_node_or_null(sprite_name) as Sprite2D
+			if is_instance_valid(sprite) and sprite.material is ShaderMaterial:
+				var mat := sprite.material as ShaderMaterial
+				mat.set_shader_parameter("sun_pos_uv", sun_pos_uv)
+				mat.set_shader_parameter("moon_pos_uv", moon_pos_uv)
+				mat.set_shader_parameter("sun_color", current_theme.sun_color)
+				mat.set_shader_parameter("moon_color", current_theme.moon_color)
+				mat.set_shader_parameter("sun_vis", sun_vis)
+				mat.set_shader_parameter("moon_vis", moon_vis)
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers / Utilities
 # ─────────────────────────────────────────────────────────────────────────────
+func _configure_parallax_sprite(p_layer: Parallax2D, sprite: Sprite2D, texture: Texture2D, motion_scale: Vector2, layer_index: int) -> void:
+	var tex_w := float(texture.get_width())
+	var tex_h := float(texture.get_height())
+
+	sprite.texture = texture
+	sprite.centered = false
+	
+	# Layer 0 should be on top (highest z-index), Layer 4 should be at the back (lowest z-index).
+	sprite.z_index = Z_PARALLAX_BASE + (MAX_PARALLAX_LAYERS - 1 - layer_index)
+		
+	sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+
+	p_layer.scroll_scale = motion_scale
+	p_layer.repeat_size = Vector2(tex_w, tex_h)
+
 func _ensure_stack() -> void:
 	if is_instance_valid(_stack): return
 	if not visual_stack_scene:
@@ -538,8 +615,6 @@ func _fullscreen_overlay(n: Node) -> void:
 		c.anchor_right = 1.0; c.anchor_bottom = 1.0
 		c.offset_left = 0.0; c.offset_top = 0.0
 		c.offset_right = 0.0; c.offset_bottom = 0.0
-		var vs: Vector2i = get_viewport().get_visible_rect().size
-		c.size = Vector2(vs.x, vs.y)
 
 func _ensure_starfield(sf: Node) -> void:
 	if not (sf is GPUParticles2D): return
@@ -635,4 +710,4 @@ func _ensure_env() -> void:
 	_env = we.environment
 	if _env != null:
 		# Connect to the node's exit signal, not the environment resource itself
-		we.tree_exited.connect(func(): _env = null)  # reset on level unload
+		we.tree_exited.connect(func(): _env = null)  # reset on level unload```
