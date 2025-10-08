@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ThemeData" load_steps=3 format=3 uid="uid://b6ql7v7ymkkad"]
 
 [ext_resource type="Script" uid="uid://boh47jks7ym2t" path="res://src/themes/theme_data.gd" id="1_i8det"]
-[ext_resource type="Texture2D" uid="uid://tbxj4oeokm2f" path="res://assets/graphics/textures/env/clouds_bg_A.png" id="1_r2xeo"]
+[ext_resource type="Texture2D" uid="uid://cimctelmbmsrg" path="res://assets/graphics/textures/env/proto_clouds_01.png" id="1_r2xeo"]
 
 [resource]
 script = ExtResource("1_i8det")

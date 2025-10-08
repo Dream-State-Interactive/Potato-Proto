@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="HillGenerationParams" load_steps=2 format=3 uid="uid://djtn2bni7atph"]
+
+[ext_resource type="Script" uid="uid://iu2sjly11dob" path="res://src/themes/hill_generation_params.gd" id="1_wrvcb"]
+
+[resource]
+script = ExtResource("1_wrvcb")
+length = 3500.0
+amplitude = 10.0
+slope = 0.2
+steepness_increase = 0.0
+frequency = 0.0005
+control_step = 140.0
+visual_bake_interval = 8.0
+collision_bake_interval = 18.0
+simplify_epsilon_px = 4.0
+max_collision_vertices = 512
+metadata/_custom_type_script = "uid://iu2sjly11dob"

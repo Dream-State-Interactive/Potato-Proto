@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WorldTheme" load_steps=6 format=3 uid="uid://d8dsdkxuo4bx"]
+
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_g3743"]
+[ext_resource type="Script" uid="uid://drkkfybqqiwy3" path="res://src/themes/world_theme.gd" id="2_f37ir"]
+[ext_resource type="Resource" uid="uid://yucjmtb3kwjt" path="res://src/hazards/hazard_basic_config.tres" id="2_jrkvb"]
+[ext_resource type="Resource" uid="uid://xgyroxjh33lj" path="res://src/themes/tres/industrial_warehouse.tres" id="3_f37ir"]
+[ext_resource type="Resource" uid="uid://djtn2bni7atph" path="res://src/themes/overrides/override_hill_warehouse.tres" id="3_s73a2"]
+
+[resource]
+script = ExtResource("2_f37ir")
+theme_data = ExtResource("3_f37ir")
+number_of_hills_to_trigger = 16
+hazard_configs = Array[ExtResource("1_g3743")]([ExtResource("2_jrkvb")])
+override_hill_parameters = false
+hill_parameters = ExtResource("3_s73a2")
+metadata/_custom_type_script = "uid://drkkfybqqiwy3"

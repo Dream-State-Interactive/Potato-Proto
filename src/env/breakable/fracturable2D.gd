@@ -4,24 +4,53 @@ extends RigidBody2D
 
 # --- EXPORTED VARIABLES ---
 
+# --- GENERAL PHYSICS ---
+@export_group("General Physics")
+## If enabled, the body will be held stationary until it is broken.
+@export var start_stationary: bool = false
 ## The minimum force of impact required to shatter this object.
 @export var min_break_impulse: float = 150.0
 
+# --- SHARD EFFECT ---
+@export_group("Shard Effect")
+## If enabled, the object will break into smaller physical pieces.
+@export var enable_shard_effect: bool = true
+## The lifetime of a shard in seconds. If set to 0, shards will not disappear.
+@export var shard_lifetime: float = 5.0
+## The duration of the fade-out effect in seconds.
+@export var shard_fade_duration: float = 1.0
+## If enabled, shards will be able to collide with other physics objects.
+@export var shards_have_collision: bool = true
 # To create a shatter pattern, we add random points inside the polygon.
 ## This controls how many extra points are added. More points = smaller, more complex shards.
 @export var shard_point_count: int = 6
-
-## The maximum number of shards you want to spawn. 
+## The maximum number of shards you want to spawn.
 # We might generate more triangles than this, so this caps the final count.
 @export var desired_shards: int = 10
-
 ## When the object shatters, the pieces fly apart. These control the force of that "explosion."
 @export var min_impulse: float = 200.0
 ## When the object shatters, the pieces fly apart. These control the force of that "explosion."
 @export var max_impulse: float = 400.0
-
 ## Set this to a non-zero number. If it's 0, it will be random each time.
 @export var random_seed: int = 0
+
+# --- PARTICLE EFFECT ---
+@export_group("Particle Effect")
+## If enabled, a particle effect will be spawned at the impact point.
+@export var enable_particle_effect: bool = true
+## The scale multiplier for the spawned particle effect.
+@export var particle_scale: float = 1.0
+## The particle scene to instance when the object fractures. This should be a GPUParticles2D or CPUParticles2D node.
+# The particle node should be configured to play on its own and ideally destroy itself when finished.
+@export var particle_effect: PackedScene
+
+# --- SOUND EFFECT ---
+@export_group("Sound Effect")
+## If enabled, a sound will play when the object fractures.
+@export var enable_sound_effect: bool = true
+## The sound to play on fracture. For multiple random sounds, you can use an AudioStreamRandomizer resource.
+@export var sound_effect: AudioStream
+
 
 # --- SIGNALS ---
 # Signals are calls that other nodes can listen for.
@@ -30,7 +59,7 @@ extends RigidBody2D
 signal fractured
 
 # --- NODE REFERENCES ---
-# The `@onready` keyword is a safe way to get these references to child nodes. 
+# The `@onready` keyword is a safe way to get these references to child nodes.
 # It waits until the node is fully loaded into the game world (the "scene tree") before assigning the variable.
 
 # This is the visible, textured polygon that the player sees.
@@ -63,12 +92,20 @@ func _ready() -> void:
 
 
 # `_integrate_forces` is a special physics function that runs every physics frame.
-# Called during physics processing, allowing you to read and safely modify the simulation state for the object. 
+# Called during physics processing, allowing you to read and safely modify the simulation state for the object.
 # It allows you to directly access the physics state, including collision forces (impulses).
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# If we've already fractured, do nothing.
 	if fractured_once:
 		return
+	
+	# If start_stationary is true, we manually hold the body in place every frame.
+	# This keeps it active in the physics simulation (so it can detect impulses)
+	# but prevents it from moving, effectively making it a static object until it breaks.
+	# Using `freeze` is incorrect as it removes the body from impulse calculations.
+	if start_stationary:
+		state.linear_velocity = Vector2.ZERO
+		state.angular_velocity = 0.0
 	
 	# Loop through all the points where this body is touching another one in this frame.
 	for i in range(state.get_contact_count()):
@@ -79,6 +116,11 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		if imp_vec.length() >= min_break_impulse:
 			# It's strong enough! UwU | Set the flag so we don't break again.
 			fractured_once = true
+			
+			# If we were holding the body stationary, we now stop.
+			# The `start_stationary` variable will now evaluate to false in the next frame's check.
+			start_stationary = false
+				
 			# Get the position of the impact, in our own local coordinates.
 			var impact_pos = state.get_contact_local_position(i)
 			# Call the main function to handle the shattering logic.
@@ -87,9 +129,49 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 			return
 
 
-# This is the main function where chicka-migunga's. 
+# This is the main function where chicka-migunga's.
 # It calculates the shard shapes and tells the game to spawn them.
 func _fracture(impact_point: Vector2) -> void:
+	
+	# =============================================================================
+	# STEP -1: PLAY ON-BREAK EFFECTS
+	# =============================================================================
+	# WHY: Sound and particle effects should trigger the moment the object breaks,
+	# regardless of whether physical shards are spawned. We handle these first.
+	#
+	# HOW: We check the exported booleans and spawn the relevant nodes if they are set.
+	
+	# Play the particle effect if it's enabled and a valid scene is assigned.
+	if enable_particle_effect and particle_effect:
+		var particles = particle_effect.instantiate()
+		# We need to make sure it's a Node2D to be able to set its properties.
+		if particles is Node2D:
+			get_tree().current_scene.add_child(particles)
+			# Set the particle's position to this object's center (its global_position)
+			# instead of the impact point. This ensures the effect is always centered on the object.
+			particles.global_position = self.global_position
+			# Apply the custom scale to the particle effect.
+			particles.scale = Vector2(particle_scale, particle_scale)
+			# For particle emitters (like GPUParticles2D), we need to start them.
+			# This is a safe way to call 'set_emitting' without causing an error if the node doesn't have it.
+			if particles.has_method("set_emitting"):
+				particles.set_emitting(true)
+
+	# Play the sound effect if it's enabled and a valid stream is assigned.
+	if enable_sound_effect and sound_effect:
+		# We create a temporary player node to play our sound.
+		var audio_player = AudioStreamPlayer.new()
+		audio_player.stream = sound_effect
+		# Add it to the scene, play it, and make it clean itself up when finished.
+		add_child(audio_player)
+		audio_player.play()
+		audio_player.finished.connect(audio_player.queue_free)
+
+	# If the shard effect is disabled, we can stop here after playing other effects.
+	if not enable_shard_effect:
+		queue_free()
+		emit_signal("fractured")
+		return # Exit the function early.
 	
 	# =============================================================================
 	# STEP 0: ESTABLISH GROUND TRUTH - GETTING THE *REAL* VERTEX POSITIONS
@@ -230,11 +312,18 @@ func _spawn_shard(verts: PackedVector2Array, impact_point: Vector2) -> void:
 	# collide, and react to gravity. The `RigidBody2D` node is Godot's built-in
 	# solution for this.
 	#
-	# HOW: We create a new `RigidBody2D` instance in code, set its position in the
-	# world to the centroid we just calculated, and add it to the scene so it becomes active.
+	# HOW: We create a new `RigidBody2D` instance in code, set its position,
+	# configure its collision properties, and add it to the scene so it becomes active.
 	var shard = RigidBody2D.new()
 	shard.position = world_cen
-	get_parent().add_child(shard)
+	
+	# If shard collision is disabled, we remove the body from all physics layers
+	# by setting its layer and mask to 0. This is the most reliable method.
+	if not shards_have_collision:
+		shard.collision_layer = 0
+		shard.collision_mask = 0
+		
+	get_tree().current_scene.add_child(shard)
 
 
 	# =============================================================================
@@ -312,8 +401,7 @@ func _spawn_shard(verts: PackedVector2Array, impact_point: Vector2) -> void:
 	# to define its physical boundaries for the physics engine. Without this, it's a ghost.
 	#
 	# HOW: We create a `CollisionPolygon2D`, give it the same `local_pts` as the
-	# visual `Polygon2D` so the physics shape perfectly matches the visual shape,
-	# and add it as a child to the shard.
+	# visual `Polygon2D`. The actual collision is handled by the parent body's layer and mask.
 	var colpoly = CollisionPolygon2D.new()
 	colpoly.polygon = local_pts
 	shard.add_child(colpoly)
@@ -331,3 +419,30 @@ func _spawn_shard(verts: PackedVector2Array, impact_point: Vector2) -> void:
 	var dir = (cen - impact_point).normalized()
 	var mag = rng.randf_range(min_impulse, max_impulse)
 	shard.apply_central_impulse(dir * mag)
+
+	# =============================================================================
+	# STEP 8: SETTING A LIFETIME AND FADE-OUT
+	# =============================================================================
+	# WHY: To prevent the scene from getting cluttered, we make shards disappear.
+	# A fade-out is visually smoother than instant removal.
+	#
+	# HOW: We use a Tween, which animates node properties over time. We tell it to:
+	#   1. Wait for `shard_lifetime` seconds.
+	#   2. Animate the Polygon2D's `color` property, fading its alpha to 0.
+	#   3. After the fade, call `queue_free` to safely delete the shard.
+	if shard_lifetime > 0.0:
+		# Create a tween to handle the fading and delayed deletion.
+		# We bind it to the shard so if the shard is destroyed early, the tween stops.
+		var tween = get_tree().create_tween().bind_node(shard)
+		
+		# 1. First, wait for the shard's lifetime to pass before starting the fade.
+		tween.tween_interval(shard_lifetime)
+		
+		# 2. Then, tween the 'color' property of the Polygon2D.
+		# Fading its alpha channel (the 'a' component) to 0 makes it transparent.
+		var transparent_color = poly2d.color
+		transparent_color.a = 0.0
+		tween.tween_property(poly2d, "color", transparent_color, shard_fade_duration)
+		
+		# 3. Finally, after the fade is complete, queue the shard for deletion.
+		tween.tween_callback(shard.queue_free)

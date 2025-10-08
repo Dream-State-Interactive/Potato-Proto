@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WorldTheme" load_steps=5 format=3 uid="uid://bsyaek6f7ourc"]
+
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_rdj8n"]
+[ext_resource type="Resource" uid="uid://trd8tx1e2b28" path="res://src/hazards/rocks/hazard_rock_config.tres" id="2_a22wk"]
+[ext_resource type="Script" uid="uid://drkkfybqqiwy3" path="res://src/themes/world_theme.gd" id="2_b5pu6"]
+[ext_resource type="Resource" uid="uid://bcer88akwyf1x" path="res://src/themes/tres/default.tres" id="3_b5pu6"]
+
+[resource]
+script = ExtResource("2_b5pu6")
+theme_data = ExtResource("3_b5pu6")
+number_of_hills_to_trigger = 0
+hazard_configs = Array[ExtResource("1_rdj8n")]([ExtResource("2_a22wk")])
+override_hill_parameters = false
+metadata/_custom_type_script = "uid://drkkfybqqiwy3"

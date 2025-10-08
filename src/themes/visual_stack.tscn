@@ -126,12 +126,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer/Control"]
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/Control/ParallaxBackground"]
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/ParallaxBackground/ParallaxLayer"]
-
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/Control"]
 
 [node name="FogOverlay" type="ColorRect" parent="CanvasLayer/Control"]
@@ -151,3 +145,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ParallaxLayer" type="CanvasLayer" parent="."]
+
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxLayer"]

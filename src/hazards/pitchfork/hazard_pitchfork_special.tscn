@@ -1,26 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://evkhdobj5bfr"]
+[gd_scene load_steps=5 format=3 uid="uid://evkhdobj5bfr"]
 
-[ext_resource type="Texture2D" uid="uid://cyvjvhj762xqd" path="res://assets/graphics/sprites/hazards/pitchfork.png" id="1_wwfst"]
+[ext_resource type="Texture2D" uid="uid://b5drj38cer7xy" path="res://assets/graphics/sprites/hazards/pitchfork_head.png" id="1_4bd70"]
+[ext_resource type="Script" uid="uid://h37ukhahwn5k" path="res://src/env/breakable/fracturable2D.gd" id="1_vhj6p"]
 [ext_resource type="Script" uid="uid://47i2sq5oe4q6" path="res://src/components/c_hazard.gd" id="2_4bd70"]
 [ext_resource type="Texture2D" uid="uid://dowbbf4xkeeqp" path="res://assets/graphics/sprites/hazards/pitchfork_special.png" id="3_4bd70"]
 
-[node name="Pitchfork" type="StaticBody2D"]
+[node name="Pitchfork" type="Node2D"]
 z_index = -11
+
+[node name="Handle" type="RigidBody2D" parent="."]
+script = ExtResource("1_vhj6p")
+start_stationary = true
+enable_particle_effect = false
+enable_sound_effect = false
+
+[node name="Polygon2D" type="Polygon2D" parent="Handle"]
+position = Vector2(-1, 0)
 scale = Vector2(2, 2)
+color = Color(0.662745, 0.482353, 0.313726, 1)
+polygon = PackedVector2Array(-5.5, -129, -5.5, -469.5, 8, -469.5, 8, -129)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Handle"]
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(-5.5, -129, -5.5, -469.5, 8, -469.5, 8, -129)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(-5.5, -129.5)
+node_a = NodePath("../Handle")
+node_b = NodePath("../Head")
+angular_limit_enabled = true
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="."]
+position = Vector2(7, -129.5)
+node_a = NodePath("../Handle")
+node_b = NodePath("../Head")
+angular_limit_enabled = true
+
+[node name="Head" type="StaticBody2D" parent="."]
+position = Vector2(1, -215)
+
+[node name="Sprite2D" type="Sprite2D" parent="Head"]
 position = Vector2(0, -213.4)
-texture = ExtResource("1_wwfst")
+scale = Vector2(2, 2)
+texture = ExtResource("1_4bd70")
 
-[node name="CHazard" type="Node" parent="."]
-script = ExtResource("2_4bd70")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Head"]
 position = Vector2(0, -213.4)
-polygon = PackedVector2Array(11, -255.8, 9.4, -256, -9, -256, -9, -255, -13, 84, -13, 142.1, -43.5, 145.9, -39, 156.9, -21, 158, -5, 158, 5, 158, 21, 159, 40.5, 156.9, 42, 147.4, 12, 142, 11, 84)
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(8, 83.9, -7.5, 83.9, -13, 142.1, -43.5, 145.9, -39, 156.9, -21, 158, -5, 158, 5, 158, 21, 159, 40.5, 156.9, 42, 147.4, 12, 142)
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Sprite2D2" type="Sprite2D" parent="Head"]
 z_index = 1
 z_as_relative = false
 position = Vector2(0, -213.4)
+scale = Vector2(2, 2)
 texture = ExtResource("3_4bd70")
+
+[node name="CHazard" type="Node" parent="."]
+script = ExtResource("2_4bd70")

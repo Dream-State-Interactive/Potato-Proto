@@ -1,30 +1,26 @@
-[gd_scene load_steps=30 format=3 uid="uid://c42sfrnl684n0"]
+[gd_scene load_steps=26 format=3 uid="uid://c42sfrnl684n0"]
 
 [ext_resource type="Script" uid="uid://b5uvm210kdlen" path="res://src/modes/gauntlet/special_segment_config.gd" id="2_3yl0h"]
+[ext_resource type="Script" uid="uid://drkkfybqqiwy3" path="res://src/themes/world_theme.gd" id="2_5wuuv"]
 [ext_resource type="Script" uid="uid://csv3csdlqc0kk" path="res://src/modes/gauntlet/level_generator.gd" id="2_epjwl"]
 [ext_resource type="Script" uid="uid://i6uw1f8ndrxn" path="res://src/modes/gauntlet/hill_generator.gd" id="2_ow8bn"]
+[ext_resource type="Resource" uid="uid://bsyaek6f7ourc" path="res://src/themes/world_themes/world_theme_default.tres" id="3_jlf6b"]
 [ext_resource type="PackedScene" uid="uid://dathi73lenpye" path="res://src/levels/level_1/level_1.tscn" id="3_vl8ep"]
 [ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="4_4wyg8"]
 [ext_resource type="Script" uid="uid://xlwp7yn7gi56" path="res://src/modes/gauntlet/obstacle_generator.gd" id="4_e8qkv"]
+[ext_resource type="Resource" uid="uid://b4cotj6rt4u62" path="res://src/themes/world_themes/world_theme_grassland.tres" id="4_xf88g"]
+[ext_resource type="Resource" uid="uid://camxgvdj21o06" path="res://src/themes/world_themes/world_theme_graveyard.tres" id="5_4ofxx"]
 [ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="5_qulm8"]
+[ext_resource type="Resource" uid="uid://in5i7a0wt5iw" path="res://src/themes/world_themes/world_theme_desert.tres" id="6_a4u2y"]
 [ext_resource type="Script" uid="uid://dm620ib0cmc7w" path="res://src/modes/gauntlet/hazard_generator.gd" id="7_qulm8"]
+[ext_resource type="Resource" uid="uid://d8dsdkxuo4bx" path="res://src/themes/world_themes/world_theme_warehouse.tres" id="7_r3jc4"]
 [ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="8_qulm8"]
-[ext_resource type="Script" uid="uid://l0naveqbhy5g" path="res://tools/ParallaxBackground/ParallaxBackground.gd" id="9_0gcb4"]
 [ext_resource type="Resource" uid="uid://3ne4nonc3hbo" path="res://src/hazards/pitchfork/hazard_pitchfork_special_config.tres" id="9_miul3"]
 [ext_resource type="Resource" uid="uid://22uocr44h2uq" path="res://src/hazards/worm/hazard_worm_config.tres" id="9_xp13y"]
-[ext_resource type="Script" uid="uid://ctg3aejp4yvm3" path="res://tools/ParallaxBackground/fullscreen_control.gd" id="10_c68oe"]
 [ext_resource type="Resource" uid="uid://yucjmtb3kwjt" path="res://src/hazards/hazard_basic_config.tres" id="10_xp13y"]
-[ext_resource type="Script" uid="uid://s1exbf3ei47v" path="res://tools/ParallaxBackground/skyscale.gd" id="11_naj30"]
 [ext_resource type="Resource" uid="uid://trd8tx1e2b28" path="res://src/hazards/rocks/hazard_rock_config.tres" id="12_fkahy"]
-[ext_resource type="Script" uid="uid://drkx1gwnedkcp" path="res://tools/ParallaxBackground/fullscreen_control_clouds.gd" id="12_jspbg"]
-[ext_resource type="Shader" uid="uid://7dno3uy2j2eo" path="res://assets/Shaders/ScrollShader.gdshader" id="13_bx7rl"]
-[ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/graphics/textures/env/proto_clouds_01_A.png" id="14_3a0wn"]
-[ext_resource type="Script" uid="uid://t3qcsqml1366" path="res://tools/ParallaxBackground/ParallaxScroll.gd" id="15_cvmua"]
-[ext_resource type="Texture2D" uid="uid://dj0as7rpsdv6x" path="res://assets/graphics/textures/env/proto_clouds_01_B.png" id="16_8sedu"]
-[ext_resource type="Texture2D" uid="uid://carb1irq2dmma" path="res://assets/graphics/textures/env/proto_bg_hills_02.png" id="18_2aw0q"]
-[ext_resource type="Script" uid="uid://cq3ot5jn4y65b" path="res://tools/ParallaxBackground/groundscale.gd" id="18_552qs"]
 [ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="18_aclwq"]
-[ext_resource type="PackedScene" uid="uid://c6gwluehsd2gu" path="res://src/modes/gauntlet/background.tscn" id="25_hnycb"]
+[ext_resource type="Script" uid="uid://b5lxwxm3721vl" path="res://src/themes/day_night_controller.gd" id="32_jlf6b"]
 
 [sub_resource type="Resource" id="Resource_o0cro"]
 script = ExtResource("2_3yl0h")
@@ -42,14 +38,18 @@ number_of_times_to_repeat = 1
 script/source = "extends Node2D
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vl5r8"]
-shader = ExtResource("13_bx7rl")
-shader_parameter/uv_offset_x = 0.0
+[sub_resource type="Environment" id="Environment_5wuuv"]
+background_mode = 3
+tonemap_exposure = 0.25
+glow_enabled = true
+glow_strength = 1.25
+glow_blend_mode = 1
 
 [node name="World" type="Node2D"]
 
 [node name="LevelGenerator" type="Node2D" parent="."]
 script = ExtResource("2_epjwl")
+world_themes = Array[ExtResource("2_5wuuv")]([ExtResource("3_jlf6b"), ExtResource("4_xf88g"), ExtResource("5_4ofxx"), ExtResource("6_a4u2y"), ExtResource("7_r3jc4")])
 special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
 regular_store_interval = 4
 special_store_scene = ExtResource("5_qulm8")
@@ -70,110 +70,13 @@ script = SubResource("GDScript_4ied8")
 
 [node name="SpecialGenerator" type="Node2D" parent="LevelGenerator"]
 
-[node name="Background" parent="." instance=ExtResource("25_hnycb")]
-layer = -99
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="." groups=["parallax_bg"]]
-scroll_ignore_camera_zoom = true
-script = ExtResource("9_0gcb4")
-
-[node name="ParallaxLayer_Sky" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0, 0)
-
-[node name="FullscreenControl_Sky" type="Control" parent="ParallaxBackground/ParallaxLayer_Sky"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("10_c68oe")
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer_Sky/FullscreenControl_Sky"]
-script = ExtResource("11_naj30")
-
-[node name="ParallaxLayer_Clouds" type="ParallaxLayer" parent="ParallaxBackground"]
-z_index = -98
-z_as_relative = false
-motion_scale = Vector2(0.005, 0.002)
-motion_offset = Vector2(-1024, 0)
-motion_mirroring = Vector2(1024, 1024)
-
-[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxBackground/ParallaxLayer_Clouds"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("12_jspbg")
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer_Clouds/FullscreenControl_Clouds"]
-material = SubResource("ShaderMaterial_vl5r8")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("14_3a0wn")
-stretch_mode = 1
-script = ExtResource("15_cvmua")
-auto_scroll_speed = 0.04
-
-[node name="ParallaxLayer_Clouds2" type="ParallaxLayer" parent="ParallaxBackground"]
-z_index = -98
-z_as_relative = false
-motion_scale = Vector2(0.003, 0.002)
-motion_offset = Vector2(-1024, 0)
-motion_mirroring = Vector2(1024, 1024)
-
-[node name="FullscreenControl_Clouds" type="Control" parent="ParallaxBackground/ParallaxLayer_Clouds2"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("12_jspbg")
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer_Clouds2/FullscreenControl_Clouds"]
-material = SubResource("ShaderMaterial_vl5r8")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("16_8sedu")
-stretch_mode = 1
-script = ExtResource("15_cvmua")
-auto_scroll_speed = 0.02
-
-[node name="ParallaxLayer_Ground" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(0, 2547)
-motion_scale = Vector2(0.03, 0.01)
-motion_offset = Vector2(0, 150)
-motion_mirroring = Vector2(1920, 0)
-
-[node name="FullscreenControl_Ground" type="Control" parent="ParallaxBackground/ParallaxLayer_Ground"]
-layout_mode = 3
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer_Ground/FullscreenControl_Ground"]
-position = Vector2(0, -32)
-texture = ExtResource("18_2aw0q")
-offset = Vector2(512, 0)
-script = ExtResource("18_552qs")
-
 [node name="PlayerSpawn" parent="." instance=ExtResource("18_aclwq")]
 position = Vector2(197, -154)
+
+[node name="DayNightController" type="Node" parent="."]
+script = ExtResource("32_jlf6b")
+hours_per_minute = 2.0
+metadata/_custom_type_script = "uid://b5lxwxm3721vl"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5wuuv")

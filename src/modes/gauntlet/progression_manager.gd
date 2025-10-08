@@ -67,7 +67,6 @@ func get_hill_parameters(index: int) -> Dictionary:
 		"frequency": frequency,
 		"slope": slope,
 		"steepness_increase": steepness_increase,
-		"color": ThemeManagerOlde.get_current_theme().hill_color
 	}
 
 func get_obstacle_complexity(index: int) -> int:
