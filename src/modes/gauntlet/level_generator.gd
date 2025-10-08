@@ -41,7 +41,6 @@ const SEGMENT_BOUNDARY_SCENE = preload("res://src/modes/gauntlet/segment_boundar
 @onready var hill_generator: Node2D = $HillGenerator
 @onready var hazard_generator: Node2D = $HazardGenerator
 @onready var obstacle_generator: Node2D = $ObstacleGenerator
-@onready var background: CanvasLayer = $"../Background"
 
 # --- State Management ---
 var _master_seed: int
@@ -359,7 +358,7 @@ func _on_player_crossed_boundary(from_index: int, direction: int):
 	if direction > 0:
 		ProgressionManager.update_progress(_player_current_index)
 	
-	_ensure_surrounding_segments_exist()
+	call_deferred("_ensure_surrounding_segments_exist")
 
 func _maybe_cull_segments():
 	var cull_indices = []

@@ -75,7 +75,7 @@ position = Vector2(197, -154)
 
 [node name="DayNightController" type="Node" parent="."]
 script = ExtResource("32_jlf6b")
-hours_per_minute = 2.0
+hours_per_minute = 62.75
 metadata/_custom_type_script = "uid://b5lxwxm3721vl"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
