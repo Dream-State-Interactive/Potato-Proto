@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bkirw7lu8syn8"]
 
-[ext_resource type="Script" uid="uid://c0fvh4imnh5p8" path="res://src/ui/menus/ability_menu.gd" id="1_5pnxb"]
+[ext_resource type="Script" path="res://src/ui/menus/ability_menu.gd" id="1_5pnxb"]
 [ext_resource type="Script" uid="uid://cufp68wokqij0" path="res://src/abilities/ability_info.gd" id="2_06unh"]
 [ext_resource type="Resource" uid="uid://cv6662e3d63hm" path="res://src/abilities/stop_on_a_fry_info.tres" id="3_u1lw2"]
 [ext_resource type="Resource" uid="uid://dopeh7iejsvnm" path="res://src/abilities/extreme_torque_info.tres" id="4_3ubp4"]

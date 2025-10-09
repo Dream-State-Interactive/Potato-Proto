@@ -76,6 +76,6 @@ func activate(player_body: RigidBody2D):
 		# Optional: Play a "cooldown" or "failure" sound effect here.
 		return false
 
-func perform_ability(player_body: RigidBody2D):
+func perform_ability(_player_body: RigidBody2D):
 	# Base ability does nothing on its own.
 	pass

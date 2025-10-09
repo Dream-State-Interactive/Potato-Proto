@@ -1,7 +1,7 @@
 extends Node
 
 ## Distance from a point P to a line segment AB
-static func _dist_point_to_segment(p: Vector2, a: Vector2, b: Vector2) -> float:
+func _dist_point_to_segment(p: Vector2, a: Vector2, b: Vector2) -> float:
 	var ab: Vector2 = b - a
 	var ab_len2: float = ab.length_squared()
 	if ab_len2 <= 0.0:
@@ -12,7 +12,7 @@ static func _dist_point_to_segment(p: Vector2, a: Vector2, b: Vector2) -> float:
 
 ## Ramer-Douglas_Peucker Algorithm: decimates a curve composed of line segments to a similar curve with fewer points. 
 ## (In other words, turns a curve "low-poly")
-static func _rdp(points: PackedVector2Array, epsilon: float) -> PackedVector2Array:
+func _rdp(points: PackedVector2Array, epsilon: float) -> PackedVector2Array:
 	var n: int = points.size()
 	if n < 3:
 		return points
