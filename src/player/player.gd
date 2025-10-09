@@ -569,6 +569,8 @@ func apply_stats_from_resource():
 		armor_component.armor = stats.armor
 		
 	jump_strength = stats.jump_force
+	if health_component && stats.health:
+		health_component.max_health = stats.health
 
 	print("Player stats have been reapplied. New Grip value: ", stats.grip)
 

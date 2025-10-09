@@ -11,6 +11,7 @@ bounce = 0.3
 roll_speed = 2500.0
 jump_force = 40.0
 horizontal_nudge = 1000.0
+health = 100
 armor = 0.0
 base_air_control = 100.0
 max_air_control = 800.0
