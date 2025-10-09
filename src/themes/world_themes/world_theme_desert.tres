@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("2_xw1g7")
 theme_data = ExtResource("3_xw1g7")
-number_of_hills_to_trigger = 12
+trigger_at_segment_count = 7
 hazard_configs = Array[ExtResource("1_hakju")]([ExtResource("2_pwasg")])
 override_hill_parameters = false
 hill_parameters = ExtResource("3_2fspl")

@@ -6,9 +6,9 @@ extends Resource
 @export_category("Core Settings")
 ## The visual theme (sky, lighting, etc.) to apply.
 @export var theme_data: ThemeData
-## The number of hills the player must complete before this theme becomes active.
-## A value of 0 means it's the starting theme.
-@export_range(0, 100) var number_of_hills_to_trigger: int = 0
+## The number of segments the player must complete before this theme becomes active.
+## Behavior is controlled by 'Progress Theme On Hills Only' in the LevelGenerator.
+@export_range(0, 100) var trigger_at_segment_count: int = 0
 
 @export_category("Hazard Spawning")
 ## The set of hazards that can spawn while this theme is active.
