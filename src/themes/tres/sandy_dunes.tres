@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="ThemeData" load_steps=2 format=3 uid="uid://d22w5f1taq2ae"]
+[gd_resource type="Resource" script_class="ThemeData" load_steps=4 format=3 uid="uid://d22w5f1taq2ae"]
 
 [ext_resource type="Script" uid="uid://boh47jks7ym2t" path="res://src/themes/theme_data.gd" id="1_5qbdd"]
+[ext_resource type="Texture2D" uid="uid://cimctelmbmsrg" path="res://assets/graphics/textures/env/proto_clouds_01.png" id="1_20xmb"]
+[ext_resource type="Texture2D" uid="uid://68u3tjberj7j" path="res://assets/graphics/textures/env/proto_clouds_01_A.png" id="2_b78i1"]
 
 [resource]
 script = ExtResource("1_5qbdd")
@@ -14,17 +16,30 @@ terrain_fill = Color(0.905882, 0.760784, 0.478431, 1)
 terrain_trim = Color(0.784314, 0.615686, 0.337255, 1)
 accent_1 = Color(1, 0.85, 0.4, 1)
 accent_2 = Color(0.2, 0.6, 1, 1)
-parallax_textures = Array[Texture2D]([])
+parallax_textures = Array[Texture2D]([ExtResource("1_20xmb"), ExtResource("2_b78i1")])
 parallax_motions = Array[Vector2]([])
 sun_color = Color(0.929385, 0.901285, 0.410263, 1)
 moon_color = Color(0.836025, 0.822787, 0.976063, 1)
 ambient_day = Color(1, 1, 1, 0)
 ambient_night = Color(0.45, 0.4, 0.35, 0)
 night_star_intensity = 0.8
+exposure_day = 1.0
+exposure_night = 0.25
+glow_enabled = true
+glow_strength_day = 0.69
+glow_strength_night = 1.69
 grade_strength = 0.4
 fog_color = Color(1, 1, 1, 0)
 fog_band_height = 160.0
 sun_size = 90.0
+sun_core_softness = 0.1
+sun_glow_radius_mul = 1.4
+sun_halo_radius_mul = 2.2
+sun_glow_strength = 0.35
+sun_halo_strength = 0.18
 moon_size = 70.0
+moon_core_softness = 0.06
+moon_glow_radius_mul = 1.6
+moon_glow_strength = 0.3
 horizon_curve = 0.35
 metadata/_custom_type_script = "uid://boh47jks7ym2t"

@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("2_b5pu6")
 theme_data = ExtResource("3_b5pu6")
-number_of_hills_to_trigger = 0
+trigger_at_segment_count = 0
 hazard_configs = Array[ExtResource("1_rdj8n")]([ExtResource("2_a22wk")])
 override_hill_parameters = false
 metadata/_custom_type_script = "uid://drkkfybqqiwy3"

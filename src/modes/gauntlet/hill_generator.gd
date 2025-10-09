@@ -15,178 +15,227 @@ const EPS: float = 0.001
 
 
 
-func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool) -> Dictionary:
-	# --- Root node for this hill segment ---
+func _generate_flat_line(params: Dictionary) -> Dictionary:
 	var hill: Node2D = Node2D.new()
-	hill.name = "HillContainer"
-	
-	# Physics & visuals
+	hill.name = "FlatLineContainer"
+
 	var ground_body: StaticBody2D = StaticBody2D.new()
 	var collision_polygon: CollisionPolygon2D = CollisionPolygon2D.new()
 	var visual_polygon: Polygon2D = Polygon2D.new()
 	collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
-	
-	# --- Noise-based height function ---
-	var noise: FastNoiseLite = FastNoiseLite.new()
-	# Use the deterministic seed provided by the LevelGenerator
-	noise.seed = seed
-	noise.frequency = float(params.get("frequency", 0.0015))
-	noise.fractal_octaves = 1
-	
-	# --- Shape params for a downward-sloping hill ---
-	var length: float    = float(params.get("length", 1200.0))
-	var amplitude: float = float(params.get("amplitude", 60.0))
-	var slope: float     = float(params.get("slope", 0.2))
-	var steepness_increase: float = float(params.get("steepness_increase", 0.00005))
-	
-	var base_y: float = 0.0 # Each segment starts at its own local origin
-	
-	# Control vs visual density
-	var control_step: float = float(params.get("control_step", 140.0))
-	# Resolve overrides from params (or use exported defaults)
-	var vis_bake: float = float(params.get("visual_bake_interval", visual_bake_interval))
-	var col_bake: float = float(params.get("collision_bake_interval", collision_bake_interval))
-	var simplify_eps: float = float(params.get("simplify_epsilon_px", simplify_epsilon_px))
-	var max_col_vertices: int = int(params.get("max_collision_vertices", max_collision_vertices))
-	
-	# --- Curve construction ---
-	var curve: Curve2D = Curve2D.new()
-	var spawn_points: PackedVector2Array = PackedVector2Array()
-	var dx: float = control_step * 0.5
 
-	# --- Height functions for a "bobsled" style hill ---
-	var y_raw: Callable = func(x: float) -> float:
-		# 1. The base shape is a downward curve (linear + quadratic term).
-		var base_downward_curve: float = x * slope + x * x * steepness_increase
-		# 2. Add noise for bumps and texture.
-		var noise_component: float = noise.get_noise_1d(x) * amplitude
-		# 3. Combine with base_y for continuity across function calls.
-		return base_downward_curve + noise_component + base_y
-		
-	# Normalize so the seam starts exactly at y=0 (relative to this segment's origin).
-	var y0: float = float(y_raw.call(0.0))
-	var y_at: Callable = func(x: float) -> float:
-		return float(y_raw.call(x)) - y0
-		
-	# Bezier handle length: shorter on sharp curves
-	var handle_len_fn: Callable = func(x: float, y_prev: float, y: float, y_next: float) -> float:
-		var local_step: float = control_step
-		var base_len: float   = 0.45 * local_step
-		var dy1: float = (y - y_prev)
-		var dy2: float = (y_next - y)
-		var curvature: float = abs(dy2 - dy1) / float(max(1.0, local_step))
-		var k: float = 1.0 / (1.0 + curvature * 1.2)
-		return clamp(base_len * k, 0.1 * control_step, 0.5 * control_step)
-		
-	# --- Sample control points ---
-	var x: float = 0.0
-	while x <= length:
-		var y: float      = float(y_at.call(x))
-		var y_prev: float = float(y_at.call(max(0.0, x - dx)))
-		var y_next: float = float(y_at.call(min(length, x + dx)))
-		var tangent: Vector2 = Vector2(dx * 2.0, (y_next - y_prev)).normalized()
-		var hlen: float = float(handle_len_fn.call(x, y_prev, y, y_next))
-		curve.add_point(Vector2(x, y), -tangent * hlen, tangent * hlen)
-		spawn_points.append(Vector2(x, y))
-		x += control_step
-		
-	# Force last point at hill end
-	if curve.get_point_count() == 0 or curve.get_point_position(curve.get_point_count() - 1).x < length:
-		var y_end: float      = float(y_at.call(length))
-		var y_prev_end: float = float(y_at.call(max(0.0, length - dx)))
-		var tan_end: Vector2  = Vector2(dx, (y_end - y_prev_end)).normalized()
-		var hlen_end: float = float(handle_len_fn.call(length, y_prev_end, y_end, y_end))
-		curve.add_point(Vector2(length, y_end), -tan_end * hlen_end, tan_end * hlen_end)
-		spawn_points.append(Vector2(length, y_end))
+	var length: float = float(params.get("length", 1200.0))
+	# A flat line has no amplitude, but we need a thickness for the polygon
+	var thickness: float = 200.0
 
-	# --- Bake two resolutions: one for visuals, one for collisions ---
-	curve.bake_interval = vis_bake
-	var surface_points_visual: PackedVector2Array = curve.get_baked_points()
-	
-	# Ensure the hill's surface never goes backward on the X-axis, which can create an invalid polygon (does NOT render!)
-	if surface_points_visual.size() > 1:
-		var filtered_visual_points := PackedVector2Array()
-		filtered_visual_points.append(surface_points_visual[0])
-		var last_x: float = surface_points_visual[0].x
-		for i in range(1, surface_points_visual.size()):
-			if surface_points_visual[i].x > last_x:
-				filtered_visual_points.append(surface_points_visual[i])
-				last_x = surface_points_visual[i].x
-		surface_points_visual = filtered_visual_points
-	curve.bake_interval = col_bake
-	var surface_points_collision: PackedVector2Array = curve.get_baked_points()
-	
-	# --- Simplify/cap collision points ---
-	if simplify_eps > 0.0:
-		surface_points_collision = Algorithms._rdp(surface_points_collision, simplify_eps)
-	if surface_points_collision.size() > max_col_vertices and max_col_vertices > 2:
-		# Downsample evenly to max vertices
-		var reduced := PackedVector2Array()
-		var step: float = float(surface_points_collision.size() - 1) / float(max_col_vertices - 1)
-		var t: float = 0.0
-		while int(floor(t)) < surface_points_collision.size():
-			reduced.append(surface_points_collision[int(floor(t))])
-			t += step
-		if reduced[reduced.size() - 1] != surface_points_collision[surface_points_collision.size() - 1]:
-			reduced.append(surface_points_collision[surface_points_collision.size() - 1])
-		surface_points_collision = reduced
-		
-	# --- Seam stitch (forces first point at y=0) ---
-	var poly_surface_visual: PackedVector2Array = surface_points_visual.duplicate()
-	if poly_surface_visual.size() >= 1 and abs(poly_surface_visual[0].y) > 0.001:
-		poly_surface_visual.insert(0, Vector2(0.0, 0.0))
-	var poly_surface_collision: PackedVector2Array = surface_points_collision.duplicate()
-	if poly_surface_collision.size() >= 1 and abs(poly_surface_collision[0].y) > 0.001:
-		poly_surface_collision.insert(0, Vector2(0.0, 0.0))
-		
-	# --- Build visual polygon (high res, pretty) ---
+	# The surface is just two points
+	var surface_points: PackedVector2Array = [Vector2.ZERO, Vector2(length, 0.0)]
+
+	# Build visual polygon
 	var fill_visual: PackedVector2Array = PackedVector2Array()
-	fill_visual.append_array(poly_surface_visual)
-	if fill_visual.size() >= 2:
-		var max_y_v: float = -INF
-		for p in poly_surface_visual: max_y_v = max(max_y_v, p.y)
-		var bottom_y_v: float = max(amplitude * 2.2, max_y_v + amplitude * 0.6)
-		fill_visual.append(Vector2(poly_surface_visual[fill_visual.size() - 1].x, bottom_y_v))
-		fill_visual.append(Vector2(poly_surface_visual[0].x, bottom_y_v))
+	fill_visual.append(Vector2(0.0, 0.0))
+	fill_visual.append(Vector2(length, 0.0))
+	fill_visual.append(Vector2(length, thickness))
+	fill_visual.append(Vector2(0.0, thickness))
 	visual_polygon.polygon = fill_visual
 	visual_polygon.color = params.get("color", Color.DARK_GREEN)
-	
-	# --- Build collision polygon (simplified) ---
-	var fill_collision: PackedVector2Array = PackedVector2Array()
-	fill_collision.append_array(poly_surface_collision)
-	if fill_collision.size() >= 2:
-		var max_y_c: float = -INF
-		for p in poly_surface_collision: max_y_c = max(max_y_c, p.y)
-		var bottom_y_c: float = max(amplitude * 2.2, max_y_c + amplitude * 0.6)
-		fill_collision.append(Vector2(poly_surface_collision[fill_collision.size() - 1].x, bottom_y_c))
-		fill_collision.append(Vector2(poly_surface_collision[0].x, bottom_y_c))
-	collision_polygon.polygon = fill_collision
 
-	# --- Starch collectibles ---
-	# Only spawn starch points when generating in the forward direction.
-	if not is_generating_backwards:
-		var i: int = 0
-		for p in spawn_points:
-			if i % SPAWN_STARCH_POINTS_EVERY_N_POINTS == 0:
-				var starch: Node2D = STARCH_POINT.instantiate()
-				hill.add_child(starch)
-				starch.position = p + Vector2(0.0, -100.0)
-			i += 1
+	# Build collision polygon (can be the same as visual for a simple rectangle)
+	collision_polygon.polygon = fill_visual
 
-	# --- Assemble final hill node ---
+	# Assemble final hill node
 	ground_body.add_child(collision_polygon)
 	hill.add_child(visual_polygon)
 	hill.add_child(ground_body)
-	
-	# End position = last baked visual point (for chaining hills)
-	var end_pos: Vector2 = surface_points_visual[surface_points_visual.size() - 1] if surface_points_visual.size() > 0 else Vector2(length, base_y + length * slope)
+
+	var end_pos: Vector2 = Vector2(length, 0.0)
 
 	return {
 		"node": hill,
 		"end_position": end_pos,
-		"surface_points": surface_points_visual,
-		"spawn_points": spawn_points
+		"surface_points": surface_points,
+		"spawn_points": surface_points # Can use surface points for spawning
 	}
+
+
+func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool) -> Dictionary:
+	var generator_type = params.get("generator_type", HillGenerationParams.GeneratorType.NOISE_HILL)
+
+	match generator_type:
+		HillGenerationParams.GeneratorType.FLAT_LINE:
+			return _generate_flat_line(params)
+		_: # Default to NOISE_HILL
+			# --- Root node for this hill segment ---
+			var hill: Node2D = Node2D.new()
+			hill.name = "HillContainer"
+			
+			# Physics & visuals
+			var ground_body: StaticBody2D = StaticBody2D.new()
+			var collision_polygon: CollisionPolygon2D = CollisionPolygon2D.new()
+			var visual_polygon: Polygon2D = Polygon2D.new()
+			collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
+			
+			# --- Noise-based height function ---
+			var noise: FastNoiseLite = FastNoiseLite.new()
+			# Use the deterministic seed provided by the LevelGenerator
+			noise.seed = seed
+			noise.frequency = float(params.get("frequency", 0.0015))
+			noise.fractal_octaves = 1
+			
+			# --- Shape params for a downward-sloping hill ---
+			var length: float    = float(params.get("length", 1200.0))
+			var amplitude: float = float(params.get("amplitude", 60.0))
+			var slope: float     = float(params.get("slope", 0.2))
+			var steepness_increase: float = float(params.get("steepness_increase", 0.00005))
+			
+			var base_y: float = 0.0 # Each segment starts at its own local origin
+			
+			# Control vs visual density
+			var control_step: float = float(params.get("control_step", 140.0))
+			# Resolve overrides from params (or use exported defaults)
+			var vis_bake: float = float(params.get("visual_bake_interval", visual_bake_interval))
+			var col_bake: float = float(params.get("collision_bake_interval", collision_bake_interval))
+			var simplify_eps: float = float(params.get("simplify_epsilon_px", simplify_epsilon_px))
+			var max_col_vertices: int = int(params.get("max_collision_vertices", max_collision_vertices))
+			
+			# --- Curve construction ---
+			var curve: Curve2D = Curve2D.new()
+			var spawn_points: PackedVector2Array = PackedVector2Array()
+			var dx: float = control_step * 0.5
+
+			# --- Height functions for a "bobsled" style hill ---
+			var y_raw: Callable = func(x: float) -> float:
+				# 1. The base shape is a downward curve (linear + quadratic term).
+				var base_downward_curve: float = x * slope + x * x * steepness_increase
+				# 2. Add noise for bumps and texture.
+				var noise_component: float = noise.get_noise_1d(x) * amplitude
+				# 3. Combine with base_y for continuity across function calls.
+				return base_downward_curve + noise_component + base_y
+				
+			# Normalize so the seam starts exactly at y=0 (relative to this segment's origin).
+			var y0: float = float(y_raw.call(0.0))
+			var y_at: Callable = func(x: float) -> float:
+				return float(y_raw.call(x)) - y0
+				
+			# Bezier handle length: shorter on sharp curves
+			var handle_len_fn: Callable = func(x: float, y_prev: float, y: float, y_next: float) -> float:
+				var local_step: float = control_step
+				var base_len: float   = 0.45 * local_step
+				var dy1: float = (y - y_prev)
+				var dy2: float = (y_next - y)
+				var curvature: float = abs(dy2 - dy1) / float(max(1.0, local_step))
+				var k: float = 1.0 / (1.0 + curvature * 1.2)
+				return clamp(base_len * k, 0.1 * control_step, 0.5 * control_step)
+				
+			# --- Sample control points ---
+			var x: float = 0.0
+			while x <= length:
+				var y: float      = float(y_at.call(x))
+				var y_prev: float = float(y_at.call(max(0.0, x - dx)))
+				var y_next: float = float(y_at.call(min(length, x + dx)))
+				var tangent: Vector2 = Vector2(dx * 2.0, (y_next - y_prev)).normalized()
+				var hlen: float = float(handle_len_fn.call(x, y_prev, y, y_next))
+				curve.add_point(Vector2(x, y), -tangent * hlen, tangent * hlen)
+				spawn_points.append(Vector2(x, y))
+				x += control_step
+				
+			# Force last point at hill end
+			if curve.get_point_count() == 0 or curve.get_point_position(curve.get_point_count() - 1).x < length:
+				var y_end: float      = float(y_at.call(length))
+				var y_prev_end: float = float(y_at.call(max(0.0, length - dx)))
+				var tan_end: Vector2  = Vector2(dx, (y_end - y_prev_end)).normalized()
+				var hlen_end: float = float(handle_len_fn.call(length, y_prev_end, y_end, y_end))
+				curve.add_point(Vector2(length, y_end), -tan_end * hlen_end, tan_end * hlen_end)
+				spawn_points.append(Vector2(length, y_end))
+
+			# --- Bake two resolutions: one for visuals, one for collisions ---
+			curve.bake_interval = vis_bake
+			var surface_points_visual: PackedVector2Array = curve.get_baked_points()
+			
+			# Ensure the hill's surface never goes backward on the X-axis, which can create an invalid polygon (does NOT render!)
+			if surface_points_visual.size() > 1:
+				var filtered_visual_points := PackedVector2Array()
+				filtered_visual_points.append(surface_points_visual[0])
+				var last_x: float = surface_points_visual[0].x
+				for i in range(1, surface_points_visual.size()):
+					if surface_points_visual[i].x > last_x:
+						filtered_visual_points.append(surface_points_visual[i])
+						last_x = surface_points_visual[i].x
+				surface_points_visual = filtered_visual_points
+			curve.bake_interval = col_bake
+			var surface_points_collision: PackedVector2Array = curve.get_baked_points()
+			
+			# --- Simplify/cap collision points ---
+			if simplify_eps > 0.0:
+				surface_points_collision = Algorithms._rdp(surface_points_collision, simplify_eps)
+			if surface_points_collision.size() > max_col_vertices and max_col_vertices > 2:
+				# Downsample evenly to max vertices
+				var reduced := PackedVector2Array()
+				var step: float = float(surface_points_collision.size() - 1) / float(max_col_vertices - 1)
+				var t: float = 0.0
+				while int(floor(t)) < surface_points_collision.size():
+					reduced.append(surface_points_collision[int(floor(t))])
+					t += step
+				if reduced[reduced.size() - 1] != surface_points_collision[surface_points_collision.size() - 1]:
+					reduced.append(surface_points_collision[surface_points_collision.size() - 1])
+				surface_points_collision = reduced
+				
+			# --- Seam stitch (forces first point at y=0) ---
+			var poly_surface_visual: PackedVector2Array = surface_points_visual.duplicate()
+			if poly_surface_visual.size() >= 1 and abs(poly_surface_visual[0].y) > 0.001:
+				poly_surface_visual.insert(0, Vector2(0.0, 0.0))
+			var poly_surface_collision: PackedVector2Array = surface_points_collision.duplicate()
+			if poly_surface_collision.size() >= 1 and abs(poly_surface_collision[0].y) > 0.001:
+				poly_surface_collision.insert(0, Vector2(0.0, 0.0))
+				
+			# --- Build visual polygon (high res, pretty) ---
+			var fill_visual: PackedVector2Array = PackedVector2Array()
+			fill_visual.append_array(poly_surface_visual)
+			if fill_visual.size() >= 2:
+				var max_y_v: float = -INF
+				for p in poly_surface_visual: max_y_v = max(max_y_v, p.y)
+				var bottom_y_v: float = max(amplitude * 2.2, max_y_v + amplitude * 0.6)
+				fill_visual.append(Vector2(poly_surface_visual[fill_visual.size() - 1].x, bottom_y_v))
+				fill_visual.append(Vector2(poly_surface_visual[0].x, bottom_y_v))
+			visual_polygon.polygon = fill_visual
+			visual_polygon.color = params.get("color", Color.DARK_GREEN)
+			
+			# --- Build collision polygon (simplified) ---
+			var fill_collision: PackedVector2Array = PackedVector2Array()
+			fill_collision.append_array(poly_surface_collision)
+			if fill_collision.size() >= 2:
+				var max_y_c: float = -INF
+				for p in poly_surface_collision: max_y_c = max(max_y_c, p.y)
+				var bottom_y_c: float = max(amplitude * 2.2, max_y_c + amplitude * 0.6)
+				fill_collision.append(Vector2(poly_surface_collision[fill_collision.size() - 1].x, bottom_y_c))
+				fill_collision.append(Vector2(poly_surface_collision[0].x, bottom_y_c))
+			collision_polygon.polygon = fill_collision
+
+			# --- Starch collectibles ---
+			# Only spawn starch points when generating in the forward direction.
+			if not is_generating_backwards:
+				var i: int = 0
+				for p in spawn_points:
+					if i % SPAWN_STARCH_POINTS_EVERY_N_POINTS == 0:
+						var starch: Node2D = STARCH_POINT.instantiate()
+						hill.add_child(starch)
+						starch.position = p + Vector2(0.0, -100.0)
+					i += 1
+
+			# --- Assemble final hill node ---
+			ground_body.add_child(collision_polygon)
+			hill.add_child(visual_polygon)
+			hill.add_child(ground_body)
+			
+			# End position = last baked visual point (for chaining hills)
+			var end_pos: Vector2 = surface_points_visual[surface_points_visual.size() - 1] if surface_points_visual.size() > 0 else Vector2(length, base_y + length * slope)
+
+			return {
+				"node": hill,
+				"end_position": end_pos,
+				"surface_points": surface_points_visual,
+				"spawn_points": spawn_points
+			}
 # ------------------------------------------------------------------------------
 # References / Tutorials / Resources:
 #

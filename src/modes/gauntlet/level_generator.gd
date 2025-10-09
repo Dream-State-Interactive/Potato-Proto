@@ -11,8 +11,11 @@ extends Node2D
 @export_range(1, 20) var editor_preview_length: int = 5
 
 @export_group("World Theming")
-## Will be applied in order based on their 'number_of_hills_to_trigger'.
+## Will be applied in order based on their 'trigger_at_segment_count'.
 @export var world_themes: Array[WorldTheme]
+## If true, theme progression will only advance after completing a 'hill' segment, ignoring special segments.
+## If false, any completed segment will advance theme progression.
+@export var progress_theme_on_hills_only: bool = false
 
 @export_group("Generation Config")
 @export_range(2, 20) var max_active_segments: int = 5
@@ -53,6 +56,7 @@ var _special_sequence_repeats: int = 0
 var _is_in_special_chain: bool = false
 var _last_special_trigger_hills: int = -1
 var last_theme_change_hill_count: int = -1
+var _completed_hill_segments: int = 0
 var _current_world_theme: WorldTheme = null
 var _next_world_theme_index: int = 0
 
@@ -61,7 +65,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		return
 	if not world_themes.is_empty():
-		world_themes.sort_custom(func(a, b): return a.number_of_hills_to_trigger < b.number_of_hills_to_trigger)
+		world_themes.sort_custom(func(a, b): return a.trigger_at_segment_count < b.trigger_at_segment_count)
 	reset_and_generate_initial_segments()
 
 
@@ -86,6 +90,7 @@ func _reset_and_initialize():
 	ProgressionManager.reset(_master_seed)
 	
 	_player_current_index = 0
+	_completed_hill_segments = 0
 	# The anchor is still crucial. It defines where the world begins.
 	_segment_end_positions[-1] = Vector2.ZERO
 	
@@ -115,7 +120,7 @@ func _generate_level_preview():
 	_player_current_index = 0
 	_segment_end_positions[-1] = Vector2.ZERO
 	if not world_themes.is_empty():
-		world_themes.sort_custom(func(a, b): return a.number_of_hills_to_trigger < b.number_of_hills_to_trigger)
+		world_themes.sort_custom(func(a, b): return a.trigger_at_segment_count < b.trigger_at_segment_count)
 		_apply_initial_theme()
 	for i in range(editor_preview_length):
 		_generate_segment_at_index(i)
@@ -139,11 +144,11 @@ func _check_and_apply_theme_change():
 		return
 
 	var next_theme: WorldTheme = world_themes[_next_world_theme_index]
-	var hills_completed = ProgressionManager.max_forward_index
+	var progress_counter = ProgressionManager.max_forward_index if not progress_theme_on_hills_only else _completed_hill_segments
 
 	# Check if the player has reached the hill count required for the next theme.
-	if hills_completed >= next_theme.number_of_hills_to_trigger:
-		print("Triggering theme change at ", hills_completed, " hills.")
+	if progress_counter >= next_theme.trigger_at_segment_count:
+		print("Triggering theme change at progress count ", progress_counter)
 		_current_world_theme = next_theme
 		_apply_world_theme(_current_world_theme, false) # 'false' for a smooth transition
 		_next_world_theme_index += 1
@@ -242,6 +247,7 @@ func _generate_start_segment(_seed: int) -> Dictionary:
 	var segment = Node2D.new()
 	segment.name = "StartSegment_0"
 	segment.add_to_group("level_segment")
+	segment.set_meta("segment_type", "start")
 	var content_node: Node2D = start_segment_scene.instantiate()
 	segment.add_child(content_node)
 	# Compute end AFTER added to scene so transforms are valid
@@ -260,29 +266,38 @@ func _generate_standard_segment(index: int, seed: int) -> Dictionary:
 	var segment = Node2D.new()
 	segment.name = "Segment" + str(index)
 	segment.add_to_group("level_segment")
+	segment.set_meta("segment_type", "hill")
 
-	# Generate Hill and Hazards
-	var hill_params = ProgressionManager.get_hill_parameters(index)
-	
-	# Apply overrides from the current WorldTheme
-	if is_instance_valid(_current_world_theme):
-		# A. Override hill generation parameters if specified.
-		if _current_world_theme.override_hill_parameters and is_instance_valid(_current_world_theme.hill_parameters):
-			var overrides = _current_world_theme.hill_parameters
-			hill_params["length"] = overrides.length
-			hill_params["amplitude"] = overrides.amplitude
-			hill_params["slope"] = overrides.slope
-			hill_params["steepness_increase"] = overrides.steepness_increase
-			hill_params["frequency"] = overrides.frequency
-			hill_params["control_step"] = overrides.control_step
-			hill_params["visual_bake_interval"] = overrides.visual_bake_interval
-			hill_params["collision_bake_interval"] = overrides.collision_bake_interval
-			hill_params["simplify_epsilon_px"] = overrides.simplify_epsilon_px
-			hill_params["max_collision_vertices"] = overrides.max_collision_vertices
-		
-		# B. Set the hill's color from the theme's visual data.
-		if is_instance_valid(_current_world_theme.theme_data):
-			hill_params["color"] = _current_world_theme.theme_data.terrain_fill
+	var hill_params: Dictionary
+	var use_override = (
+		is_instance_valid(_current_world_theme) and
+		_current_world_theme.override_hill_parameters and
+		is_instance_valid(_current_world_theme.hill_parameters)
+	)
+
+	if use_override:
+		print("Using HillGenerationParams override from WorldTheme.")
+		var overrides = _current_world_theme.hill_parameters
+		hill_params = {
+			"length": overrides.length,
+			"amplitude": overrides.amplitude,
+			"slope": overrides.slope,
+			"steepness_increase": overrides.steepness_increase,
+			"frequency": overrides.frequency,
+			"control_step": overrides.control_step,
+			"visual_bake_interval": overrides.visual_bake_interval,
+			"collision_bake_interval": overrides.collision_bake_interval,
+			"simplify_epsilon_px": overrides.simplify_epsilon_px,
+			"max_collision_vertices": overrides.max_collision_vertices,
+			"generator_type": overrides.generator_type
+		}
+	else:
+		# If no valid override, get parameters from the progression system.
+		hill_params = ProgressionManager.get_hill_parameters(index)
+
+	# Set the hill's color from the theme's visual data, regardless of override.
+	if is_instance_valid(_current_world_theme) and is_instance_valid(_current_world_theme.theme_data):
+		hill_params["color"] = _current_world_theme.theme_data.terrain_fill
 	
 	var should_spawn_starch = (index > ProgressionManager.max_forward_index)
 	var hill_result = hill_generator.generate_hill(hill_params, seed, not should_spawn_starch)
@@ -335,6 +350,7 @@ func _generate_special_segment(index: int, seed: int) -> Dictionary:
 	var segment = Node2D.new()
 	segment.name = "SpecialSegment_" + str(index)
 	segment.add_to_group("level_segment")
+	segment.set_meta("segment_type", "special")
 	var content_node: Node2D = config.scene.instantiate()
 	segment.add_child(content_node)
 	var end_marker = content_node.find_child("EndMarker", true, false)
@@ -356,6 +372,11 @@ func _on_player_crossed_boundary(from_index: int, direction: int):
 	print("Player is now in segment: %d" % _player_current_index)
 
 	if direction > 0:
+		var completed_segment = _active_segments.get(from_index)
+		if is_instance_valid(completed_segment) and completed_segment.get_meta("segment_type") == "hill":
+			_completed_hill_segments += 1
+			print("Completed a hill segment. Total hills: ", _completed_hill_segments)
+		
 		ProgressionManager.update_progress(_player_current_index)
 	
 	call_deferred("_ensure_surrounding_segments_exist")

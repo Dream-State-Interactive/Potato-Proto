@@ -4,8 +4,9 @@
 
 [resource]
 script = ExtResource("1_f6oea")
-length = 1800.0
-amplitude = 50.0
+generator_type = 0
+length = 15000.0
+amplitude = 100.0
 slope = 0.25
 steepness_increase = 0.0
 frequency = 0.0015

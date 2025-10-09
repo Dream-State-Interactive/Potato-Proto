@@ -4,11 +4,12 @@
 
 [resource]
 script = ExtResource("1_wrvcb")
-length = 3500.0
-amplitude = 10.0
-slope = 0.2
+generator_type = 1
+length = 6400.0
+amplitude = 0.0
+slope = 0.0
 steepness_increase = 0.0
-frequency = 0.0005
+frequency = 0.0
 control_step = 140.0
 visual_bake_interval = 8.0
 collision_bake_interval = 18.0
