@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bkc2bdj16c5og" path="res://assets/graphics/sprites/env/moth.png" id="3_w52lw"]
 [ext_resource type="Shader" uid="uid://51k1ydskpuw4" path="res://src/themes/shaders/celestials_glow.gdshader" id="4_7fpps"]
 [ext_resource type="Shader" uid="uid://bg0i8uycbwmk6" path="res://src/themes/shaders/fog_overlay.gdshader" id="4_yryhw"]
-[ext_resource type="Shader" uid="uid://sbc1edwb8l3c" path="res://src/themes/shaders/cloud_lighting.gdshader" id="7_qwy70"]
+[ext_resource type="Shader" path="res://src/themes/shaders/cloud_lighting.gdshader" id="7_qwy70"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y8x24"]
 shader = ExtResource("1_mygdp")

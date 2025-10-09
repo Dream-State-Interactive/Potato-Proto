@@ -12,6 +12,7 @@ extends CanvasLayer
 @onready var upgrade_roll_speed_button: Button = grid_container.get_node("UpgradeRollSpeedButton")
 @onready var upgrade_armor_button: Button = grid_container.get_node("UpgradeArmorButton")
 @onready var upgrade_jump_force_button: Button = grid_container.get_node("UpgradeJumpButton")
+@onready var upgrade_health_button: Button = grid_container.get_node("UpgradeHealthButton")
 
 # --- GODOT FUNCTIONS ---
 func _ready():
@@ -22,12 +23,13 @@ func _ready():
 	upgrade_roll_speed_button.focus_mode = Control.FOCUS_NONE
 	upgrade_armor_button.focus_mode = Control.FOCUS_NONE
 	upgrade_jump_force_button.focus_mode = Control.FOCUS_NONE
+	upgrade_health_button.focus_mode = Control.FOCUS_NONE
 
 	for upgrade in upgrades:
 		print(">>> UpgradeData: ", upgrade.stat_identifier, upgrade.upgrade_value)
 
 	# TEST the button references
-	print(">>> Buttons valid?", upgrade_roll_speed_button, upgrade_armor_button, upgrade_jump_force_button)
+	print(">>> Buttons valid?", upgrade_roll_speed_button, upgrade_armor_button, upgrade_jump_force_button, upgrade_health_button)
 
 	if is_instance_valid(close_menu_button):
 		close_menu_button.pressed.connect(_on_close_pressed)
@@ -53,6 +55,9 @@ func connect_upgrade_buttons():
 	if upgrades.size() > 2:
 		print("Connecting JUMP")
 		upgrade_jump_force_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(2))
+	if upgrades.size() > 3:
+		print("Connecting HEALTH")
+		upgrade_health_button.pressed.connect(Callable(self, "_on_upgrade_pressed").bind(3))
 
 func _on_upgrade_pressed(index: int):
 	if index >= 0 and index < upgrades.size():

@@ -13,45 +13,6 @@ const EPS: float = 0.001
 @export var simplify_epsilon_px: float = 4.0       # Simplification tolerance for collision (px)
 @export var max_collision_vertices: int = 512      # Safety cap for collision vertex count
 
-# --- Utility: distance from a point P to a line segment AB ---
-static func _dist_point_to_segment(p: Vector2, a: Vector2, b: Vector2) -> float:
-	var ab: Vector2 = b - a
-	var ab_len2: float = ab.length_squared()
-	if ab_len2 <= 0.0:
-		return (p - a).length()
-	var t: float = clamp((p - a).dot(ab) / ab_len2, 0.0, 1.0)
-	var c: Vector2 = a + ab * t
-	return (p - c).length()
-
-static func _rdp(points: PackedVector2Array, eps: float) -> PackedVector2Array:
-	var n: int = points.size()
-	if n < 3:
-		return points
-	var p0: Vector2 = points[0]
-	var pn: Vector2 = points[n - 1]
-	var idx: int = -1
-	var dmax: float = 0.0
-	# Find farthest point from the segment p0→pn
-	for i in range(1, n - 1):
-		var d: float = _dist_point_to_segment(points[i], p0, pn)
-		if d > dmax:
-			dmax = d
-			idx = i
-	# Recurse on sub-spans if error too large
-	if dmax > eps and idx >= 0:
-		var left: PackedVector2Array = _rdp(points.slice(0, idx + 1), eps)
-		var right: PackedVector2Array = _rdp(points.slice(idx, n), eps)
-		var out := PackedVector2Array()
-		for j in range(left.size() - 1): # avoid duplicate last point
-			out.append(left[j])
-		for j in range(right.size()):
-			out.append(right[j])
-		return out
-	else:
-		var out := PackedVector2Array()
-		out.append(p0)
-		out.append(pn)
-		return out
 
 
 func _generate_flat_line(params: Dictionary) -> Dictionary:
@@ -206,7 +167,7 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			
 			# --- Simplify/cap collision points ---
 			if simplify_eps > 0.0:
-				surface_points_collision = _rdp(surface_points_collision, simplify_eps)
+				surface_points_collision = Algorithms._rdp(surface_points_collision, simplify_eps)
 			if surface_points_collision.size() > max_col_vertices and max_col_vertices > 2:
 				# Downsample evenly to max vertices
 				var reduced := PackedVector2Array()
