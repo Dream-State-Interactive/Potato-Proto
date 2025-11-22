@@ -4,9 +4,9 @@ class_name StarchPoint
 extends Collectible
 
 @export var starch_value: int = 10
-@export var pickup_sound: AudioStream
-@export var pitch_scale: float = 1.5
-@export var volume_db: float = -6.0
+@export var pickup_sound: AudioStream = preload("res://assets/sfx/StarchyCrunch.ogg")
+@export var pitch_scale: float = 0.2
+@export var volume_db: float = -8.0
 @export var pulse_speed: float = 2.0  # Speed of pulsing
 @export var scale_amount: float = 0.1  # Amount of scaling for the pulse effect
 
@@ -29,16 +29,6 @@ func _process(delta: float) -> void:
 func _on_collect(player: Player):
 	print("Player collected starch point with ID: %s" % unique_id)
 	player.add_starch(starch_value)
-	
-	# --- Your existing sound playing logic is unchanged ---
-	if pickup_sound:
-		var audio_player = AudioStreamPlayer2D.new()
-		audio_player.stream = pickup_sound
-		audio_player.pitch_scale = pitch_scale
-		audio_player.volume_db = volume_db
-		audio_player.position = position
-		get_tree().root.add_child(audio_player)
-		audio_player.play()
-		audio_player.connect("playback_finished", Callable(audio_player, "queue_free"))
+	AudioService.play_sfx(pickup_sound, pitch_scale, volume_db, global_position)
 		
 	queue_free()
