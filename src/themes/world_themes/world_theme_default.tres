@@ -1,14 +1,33 @@
-[gd_resource type="Resource" script_class="WorldTheme" load_steps=5 format=3 uid="uid://bsyaek6f7ourc"]
+[gd_resource type="Resource" script_class="WorldTheme" load_steps=7 format=3 uid="uid://bsyaek6f7ourc"]
 
 [ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_rdj8n"]
 [ext_resource type="Resource" uid="uid://trd8tx1e2b28" path="res://src/hazards/rocks/hazard_rock_config.tres" id="2_a22wk"]
 [ext_resource type="Script" uid="uid://drkkfybqqiwy3" path="res://src/themes/world_theme.gd" id="2_b5pu6"]
 [ext_resource type="Resource" uid="uid://bcer88akwyf1x" path="res://src/themes/tres/default.tres" id="3_b5pu6"]
+[ext_resource type="Script" uid="uid://iu2sjly11dob" path="res://src/themes/hill_generation_params.gd" id="3_r5yx7"]
+
+[sub_resource type="Resource" id="Resource_ecyrr"]
+script = ExtResource("3_r5yx7")
+generator_type = 0
+length = 2200.0
+amplitude = 60.0
+slope = 0.2
+steepness_increase = 5e-05
+frequency = 0.0015
+control_step = 140.0
+visual_bake_interval = 8.0
+collision_bake_interval = 18.0
+simplify_epsilon_px = 4.0
+max_collision_vertices = 512
+wave_amplitude_scale = 0.4
+wave_speed = 375.0
+metadata/_custom_type_script = "uid://iu2sjly11dob"
 
 [resource]
 script = ExtResource("2_b5pu6")
 theme_data = ExtResource("3_b5pu6")
 trigger_at_segment_count = 0
 hazard_configs = Array[ExtResource("1_rdj8n")]([ExtResource("2_a22wk")])
-override_hill_parameters = false
+override_hill_parameters = true
+hill_parameters = SubResource("Resource_ecyrr")
 metadata/_custom_type_script = "uid://drkkfybqqiwy3"

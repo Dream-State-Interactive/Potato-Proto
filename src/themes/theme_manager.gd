@@ -39,6 +39,10 @@ const Z_POST          := 30
 var current_theme: ThemeData
 var time_of_day := 0.25 # 0=dawn, 0.5=noon, 0.75=dusk, 1=midnight
 
+var _parallax_layers: Array[Parallax2D] = []
+var _parallax_sprites_a: Array[Sprite2D] = []
+var _parallax_sprites_b: Array[Sprite2D] = []
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Scene refs / stack
 # ─────────────────────────────────────────────────────────────────────────────
@@ -154,6 +158,7 @@ func apply_theme(theme: ThemeData) -> void:
 	current_theme = theme
 	_tween_celestial_sizes(theme.sun_size, theme.moon_size, 0.0) # Instant
 	_apply_frame()
+	_update_cloud_lighting()
 	emit_signal("theme_applied", theme)
 
 func _find_world_environment(n: Node) -> WorldEnvironment:
@@ -168,6 +173,7 @@ func _find_world_environment(n: Node) -> WorldEnvironment:
 func set_time_of_day(t: float) -> void:
 	time_of_day = clampf(t, 0.0, 1.0)
 	_apply_frame()
+	_update_cloud_lighting()
 	emit_signal("time_of_day_changed", time_of_day)
 
 func transition_to_theme(new_theme: ThemeData, seconds: float = 1.2) -> void:
@@ -225,6 +231,7 @@ func transition_to_theme(new_theme: ThemeData, seconds: float = 1.2) -> void:
 		_is_transitioning = false # 2. Clear the flag.
 		emit_signal("theme_applied", new_theme)
 		_apply_frame() # 3. Call apply_frame ONCE at the very end for a clean state.
+		_update_cloud_lighting()
 	)
 
 
@@ -254,10 +261,7 @@ func _apply_frame() -> void:
 		_update_parallax()
 	_update_overlays()
 	_update_stars()
-	_update_world_environment() 
-	
-	# NEW: Update cloud lighting every frame.
-	_update_cloud_lighting()
+	_update_world_environment()
 
 func _update_world_environment() -> void:
 	_ensure_env()
@@ -578,6 +582,28 @@ func _ensure_stack() -> void:
 	add_child(_stack)
 	
 	_configure_canvas_layer(_stack)
+	_cache_stack_nodes()
+
+func _cache_stack_nodes() -> void:
+	_parallax_layers.clear()
+	_parallax_sprites_a.clear()
+	_parallax_sprites_b.clear()
+
+	if not is_instance_valid(_stack): return
+
+	var cl := _n(NP_CL) as CanvasLayer
+	if not is_instance_valid(cl): return
+
+	for i in range(MAX_PARALLAX_LAYERS):
+		var p_layer := cl.get_node_or_null("ParallaxLayer%d" % i) as Parallax2D
+		_parallax_layers.append(p_layer) # can be null, check validity later
+
+		if is_instance_valid(p_layer):
+			_parallax_sprites_a.append(p_layer.get_node_or_null("SpriteA"))
+			_parallax_sprites_b.append(p_layer.get_node_or_null("SpriteB"))
+		else:
+			_parallax_sprites_a.append(null)
+			_parallax_sprites_b.append(null)
 
 func _configure_canvas_layer(stack_node: Node) -> void:
 	if not is_instance_valid(stack_node): return
