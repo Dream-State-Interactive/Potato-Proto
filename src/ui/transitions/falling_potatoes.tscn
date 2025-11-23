@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvik0q8p0a3bx"]
+
+[ext_resource type="Script" uid="uid://ic5mj0g4eolp" path="res://src/ui/transitions/falling_potatoes.gd" id="1_m75hi"]
+[ext_resource type="Texture2D" uid="uid://cq27w0nkcbj7q" path="res://assets/graphics/sprites/player/potato.png" id="2_xjveu"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_786wn"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -500, 0)
+emission_shape = 3
+emission_box_extents = Vector3(950, 0, 1)
+angle_min = -9.99999
+angle_max = 11.0
+angular_velocity_min = -75.0
+angular_velocity_max = 75.0
+gravity = Vector3(0, 69, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 6.0
+scale_min = 0.69
+scale_max = 1.42
+
+[node name="FallingPotatoes" type="Node2D"]
+z_index = 1024
+script = ExtResource("1_m75hi")
+
+[node name="Potato_Wipe" type="GPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(980, 101)
+emitting = false
+amount = 500
+texture = ExtResource("2_xjveu")
+lifetime = 6.8
+one_shot = true
+preprocess = 3.0
+speed_scale = 2.5
+explosiveness = 0.4
+visibility_rect = Rect2(-350, -100, 1920, 1080)
+process_material = SubResource("ParticleProcessMaterial_786wn")
+
+[node name="BlackBackground" type="ColorRect" parent="."]
+offset_left = -53.0
+offset_top = -82.0
+offset_right = 2018.0
+offset_bottom = 1151.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 1)

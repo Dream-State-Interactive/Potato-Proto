@@ -139,12 +139,12 @@ func on_game_scene_ready():
 	if _initial_boot:
 		_initial_boot = false
 		# On the first boot, always show main menu.
-		SceneLoader.change_scene("res://src/ui/menus/MainMenu.tscn")
+		SceneLoader.change_scene_with_transition("res://src/ui/menus/MainMenu.tscn")
 		return 
 	# Subsequent calls focus on actualy gameplay, not the Main Menu
 	if next_scene_is_new_game:
 		reset_game_state()
-		SceneLoader.change_scene(level_path_to_load)
+		SceneLoader.change_scene_with_transition(level_path_to_load)
 	else:
 		load_game_after_player_ready()
 
@@ -156,13 +156,13 @@ func start_new_game_at_level(level_path: String):
 	
 	# 2. Prepare for the scene change and load Main.tscn.
 	prepare_for_scene_change()
-	SceneLoader.change_scene(SceneLoader.MAIN_GAME_SCENE)
+	SceneLoader.change_scene_with_transition(SceneLoader.MAIN_GAME_SCENE)
 
 ## LOAD GAME
 func start_loaded_game(slot: int):
 	set_next_game_state(false, slot) # false = is NOT a new game
 	prepare_for_scene_change()
-	SceneLoader.change_scene(SceneLoader.MAIN_GAME_SCENE)
+	SceneLoader.change_scene_with_transition(SceneLoader.MAIN_GAME_SCENE)
 
 ## This function ensures we don't try to load data into a player that doesn't exist yet.
 func load_game_after_player_ready():

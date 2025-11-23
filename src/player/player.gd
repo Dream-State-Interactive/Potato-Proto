@@ -551,7 +551,7 @@ func _on_died():
 	print("Player has died!")
 	player_death.emit(score)
 	score = 0
-	SceneLoader.change_scene("res://src/ui/menus/leaderboardDeath.tscn")
+	SceneLoader.change_scene_with_transition("res://src/ui/menus/leaderboardDeath.tscn")
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
 # It ensures the player's physics properties match the current StatBlock resource.

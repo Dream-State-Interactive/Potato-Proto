@@ -10,6 +10,7 @@ const ABILITY_MENU = preload("res://src/ui/menus/AbilityMenu.tscn")
 @onready var GUI_root = $"."
 @onready var menu_container: CanvasLayer = $MenuContainer
 @onready var menu_backdrop_container: CanvasLayer = $MenuBackdropContainer
+@onready var transition_container: CanvasLayer = $TransitionContainer
 var hud_instance: CanvasLayer 
 var level_up_menu_instance: CanvasLayer
 var ability_menu_instance: CanvasLayer
@@ -125,7 +126,10 @@ func hide_pause_menu_backdrop():
 	if _overlay and is_instance_valid(_overlay):
 		_overlay.queue_free()
 		_overlay = null
-
+		
+func start_transition(transition) -> void:
+	transition_container.add_child(transition)
+	
 # --- Signals ---
 
 # MenuManager will request this to show a menu.
