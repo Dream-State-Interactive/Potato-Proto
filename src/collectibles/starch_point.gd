@@ -30,6 +30,6 @@ func _process(delta: float) -> void:
 func _on_collect(player: Player):
 	print("Player collected starch point with ID: %s" % unique_id)
 	player.add_starch(starch_value)
-	AudioService.play_sfx(pickup_sound, pitch_scale, volume_db, global_position)
+	AudioService.play_sfx(pickup_sound, pitch_scale, volume_db, global_position, false, 'StarchyCrunch')
 		
 	queue_free()

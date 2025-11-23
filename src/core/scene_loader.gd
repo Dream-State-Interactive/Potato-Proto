@@ -32,6 +32,7 @@ func change_scene(scene_path: String):
 	GameManager.current_level_path = scene_path
 	current_scene_path = scene_path
 	MenuManager.clear_history()
+	AudioService.stop_all_looping()
 	
 	get_tree().change_scene_to_file(scene_path)
 	GameManager.on_level_loaded()
