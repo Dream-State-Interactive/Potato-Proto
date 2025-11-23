@@ -15,4 +15,6 @@ visual_bake_interval = 8.0
 collision_bake_interval = 18.0
 simplify_epsilon_px = 4.0
 max_collision_vertices = 512
+wave_amplitude_scale = 0.4
+wave_speed = 1.0
 metadata/_custom_type_script = "uid://iu2sjly11dob"

@@ -11,7 +11,7 @@ extends Node2D
 @export_range(1, 20) var editor_preview_length: int = 5
 
 @export_group("World Theming")
-## Will be applied in order based on their 'trigger_at_segment_count'.
+## Assign your WorldTheme resources here. They will be applied in order based on their 'trigger_at_segment_count'.
 @export var world_themes: Array[WorldTheme]
 ## If true, theme progression will only advance after completing a 'hill' segment, ignoring special segments.
 ## If false, any completed segment will advance theme progression.
@@ -21,22 +21,8 @@ extends Node2D
 @export_range(2, 20) var max_active_segments: int = 5
 @export_range(1, 10) var pregenerate_forward: int = 3
 @export_range(1, 10) var pregenerate_backward: int = 2
-
-## Array to control the special scene generation sequence.
-## Create 'SpecialSegmentConfig' resources and add them in the Inspector.
-@export var special_segment_sequence: Array[SpecialSegmentConfig]
 ## The scene that will always be generated first. Must contain a Marker2D named "EndMarker".
 @export var start_segment_scene: PackedScene = preload("res://src/modes/gauntlet/start_segment.tscn")
-
-@export_group("Store Generation")
-## The scene for the regular store.
-@export var regular_store_scene: PackedScene = preload("res://src/modes/gauntlet/store.tscn")
-## How many hills are completed before a regular store appears.
-@export var regular_store_interval: int = 5
-## The scene for the special, less frequent store.
-@export var special_store_scene: PackedScene
-## How many hills are completed before a special store appears.
-@export var special_store_interval: int = 15
 
 const SEGMENT_BOUNDARY_SCENE = preload("res://src/modes/gauntlet/segment_boundary.tscn")
 
@@ -47,15 +33,14 @@ const SEGMENT_BOUNDARY_SCENE = preload("res://src/modes/gauntlet/segment_boundar
 
 # --- State Management ---
 var _master_seed: int
-var _rng := RandomNumberGenerator.new()
 var _active_segments: Dictionary = {}
 var _segment_end_positions: Dictionary = {}
 var _player_current_index: int = 0
-var _special_sequence_index: int = 0
-var _special_sequence_repeats: int = 0
-var _is_in_special_chain: bool = false
-var _last_special_trigger_hills: int = -1
-var last_theme_change_hill_count: int = -1
+
+# This cache is the core of the new deterministic system. It stores the "recipe" for each segment index.
+var _segment_recipe_cache: Dictionary = {}
+
+# These variables are for managing the LIVE theme transition based on player progress.
 var _completed_hill_segments: int = 0
 var _current_world_theme: WorldTheme = null
 var _next_world_theme_index: int = 0
@@ -72,9 +57,7 @@ func _ready():
 # =====================================
 # --- Initialization and Resetting ---
 # =====================================
-## game_manager.gd calls this to reset the generator
 func reset_and_generate_initial_segments():
-	print("--- RESETTING LEVEL GENERATOR ---")
 	_reset_and_initialize()
 	_apply_initial_theme()
 	_generate_initial_bootstrap_segments()
@@ -85,72 +68,66 @@ func _reset_and_initialize():
 			segment.queue_free()
 	_active_segments.clear()
 	_segment_end_positions.clear()
+	_segment_recipe_cache.clear()
 	
 	_master_seed = randi()
 	ProgressionManager.reset(_master_seed)
 	
 	_player_current_index = 0
 	_completed_hill_segments = 0
-	# The anchor is still crucial. It defines where the world begins.
 	_segment_end_positions[-1] = Vector2.ZERO
-	
-	_special_sequence_index = 0
-	_special_sequence_repeats = 0
-	_is_in_special_chain = false
-	_last_special_trigger_hills = -1
+
+	# Prime the cache for the start segment. This is the base case for the recursive recipe lookup.
+	if start_segment_scene:
+		_segment_recipe_cache[0] = {
+			"type": "handcrafted", 
+			"scene": start_segment_scene, 
+			"name": "StartSegment"
+		}
 
 func _generate_initial_bootstrap_segments():
-	print("--- GENERATING INITIAL BOOTSTRAP ---")
-	# Generate the start segment and the forward buffer.
-	# No negative segments are ever generated here.
 	_generate_segment_at_index(0)
 	var forward_limit = _player_current_index + pregenerate_forward
 	for i in range(1, forward_limit + 1):
 		_generate_segment_at_index(i)
-	print("--- BOOTSTRAP COMPLETE ---")
 
 func _generate_level_preview():
 	for child in get_children():
 		if child.is_in_group("level_segment"):
 			child.queue_free()
-	_active_segments.clear()
-	_segment_end_positions.clear()
-	_master_seed = 12345
+	
+	_reset_and_initialize() # Use the same reset logic to ensure cache is primed
+	_master_seed = 12345 # Use a fixed seed for consistent previews
 	ProgressionManager.reset(_master_seed)
-	_player_current_index = 0
-	_segment_end_positions[-1] = Vector2.ZERO
+
 	if not world_themes.is_empty():
-		world_themes.sort_custom(func(a, b): return a.trigger_at_segment_count < b.trigger_at_segment_count)
 		_apply_initial_theme()
+		
 	for i in range(editor_preview_length):
 		_generate_segment_at_index(i)
 
 
 # ==================================
-# --- Theme Integration Logic ---
+# --- Live Theme Integration Logic ---
 # ==================================
 func _apply_initial_theme():
 	if not world_themes.is_empty():
 		_current_world_theme = world_themes[0]
 		_next_world_theme_index = 1
-		_apply_world_theme(_current_world_theme, true) # 'true' for instant application
-		print("Applied initial world theme.")
+		_apply_world_theme(_current_world_theme, true)
 	else:
 		printerr("LevelGenerator: No WorldThemes have been configured in the Inspector.")
 
 func _check_and_apply_theme_change():
-	# Don't check if there are no more themes in the sequence.
 	if _next_world_theme_index >= world_themes.size():
 		return
 
 	var next_theme: WorldTheme = world_themes[_next_world_theme_index]
 	var progress_counter = ProgressionManager.max_forward_index if not progress_theme_on_hills_only else _completed_hill_segments
 
-	# Check if the player has reached the hill count required for the next theme.
 	if progress_counter >= next_theme.trigger_at_segment_count:
-		print("Triggering theme change at progress count ", progress_counter)
 		_current_world_theme = next_theme
-		_apply_world_theme(_current_world_theme, false) # 'false' for a smooth transition
+		_apply_world_theme(_current_world_theme, false)
 		_next_world_theme_index += 1
 
 func _apply_world_theme(theme: WorldTheme, instant: bool):
@@ -158,25 +135,20 @@ func _apply_world_theme(theme: WorldTheme, instant: bool):
 		printerr("Attempted to apply an invalid WorldTheme resource.")
 		return
 
-	# 1. Apply the visual theme using the new ThemeManager.
 	if is_instance_valid(theme.theme_data):
 		if instant or Engine.is_editor_hint():
 			ThemeManager.apply_theme(theme.theme_data)
 		else:
-			# Use a default transition time, e.g., 2.5 seconds.
 			ThemeManager.transition_to_theme(theme.theme_data, 2.5)
 
-	# 2. Overwrite the HazardGenerator's configurations.
 	if is_instance_valid(hazard_generator) and not theme.hazard_configs.is_empty():
 		hazard_generator.hazard_configs = theme.hazard_configs
-		print("Applied new hazard configuration from WorldTheme.")
 
 
 # =============================
 # --- Core Generation Logic ---
 # =============================
 func _ensure_surrounding_segments_exist():
-	print("Ensuring surrounding segments exist around index: %d" % _player_current_index)
 	var forward_limit = _player_current_index + pregenerate_forward
 	for i in range(_player_current_index, forward_limit + 1):
 		_generate_segment_at_index(i)
@@ -188,41 +160,35 @@ func _ensure_surrounding_segments_exist():
 	_maybe_cull_segments()
 
 func _generate_segment_at_index(index: int):
-	# The generator will simply refuse to create any segment with a negative index.
-	if index < 0:
+	if index < 0 or _active_segments.has(index):
 		return
 
-	if _active_segments.has(index):
+	var recipe = _get_or_decide_segment_recipe(index)
+	if recipe.is_empty():
+		printerr("Failed to get or decide recipe for segment index: ", index)
 		return
 
-	print("Generating segment for index: %d" % index)
 	var segment_seed = ProgressionManager.get_seed_for_index(index)
 	var result: Dictionary
 
-	if index == 0 and start_segment_scene:
-		result = _generate_start_segment(segment_seed)
-	else:
-		var hills_completed = ProgressionManager.max_forward_index
-		if not _is_in_special_chain and not special_segment_sequence.is_empty():
-			var cfg: SpecialSegmentConfig = special_segment_sequence[_special_sequence_index]
-			if cfg and cfg.number_of_hills_required > 0 and (hills_completed > 0 and (hills_completed % cfg.number_of_hills_required == 0) and _last_special_trigger_hills != hills_completed):
-				_is_in_special_chain = true
-				_special_sequence_repeats = 0
-				_last_special_trigger_hills = hills_completed
-		
-		if _is_in_special_chain:
-			result = _generate_special_segment(index, segment_seed)
-		else:
-			result = _generate_standard_segment(index, segment_seed)
+	match recipe.type:
+		"handcrafted":
+			result = _generate_handcrafted_segment(recipe.name + "_" + str(index), recipe.scene)
+		"store":
+			result = _generate_handcrafted_segment("StoreSegment_" + str(index), recipe.scene)
+		"hill":
+			result = _generate_procedural_segment(index, segment_seed, recipe)
+		_:
+			printerr("Encountered unknown recipe type: '", recipe.type, "' for index: ", index)
+			return
 
 	if result.is_empty():
-		printerr("Failed to generate segment for index: ", index)
+		printerr("Failed to generate segment node for index: ", index)
 		return
 
 	var segment: Node2D = result["node"]
 	var end_pos_local: Vector2 = result["end_pos_local"]
 
-	# Positioning logic is now simpler as it only handles index >= 0.
 	var spawn_pos = _segment_end_positions.get(index - 1, Vector2.ZERO)
 	add_child(segment)
 	segment.global_position = spawn_pos
@@ -231,71 +197,124 @@ func _generate_segment_at_index(index: int):
 	_active_segments[index] = segment
 	_finalize_segment_generation(segment, index, end_pos_local)
 
-# Shared logic for finishing any segment type.
-func _finalize_segment_generation(segment: Node2D, index: int, end_pos_local: Vector2):
-	segment.set_meta("segment_index", index)
-	if not Engine.is_editor_hint():
-		# A boundary is placed at the end of every valid segment.
-		# Since negative segments can't be created, a boundary at the start of the world is never made.
-		var boundary = SEGMENT_BOUNDARY_SCENE.instantiate()
-		segment.add_child(boundary)
-		boundary.position = end_pos_local
-		boundary.segment_index = index
-		boundary.player_crossed_boundary.connect(_on_player_crossed_boundary)
 
-func _generate_start_segment(_seed: int) -> Dictionary:
-	var segment = Node2D.new()
-	segment.name = "StartSegment_0"
-	segment.add_to_group("level_segment")
-	segment.set_meta("segment_type", "start")
-	var content_node: Node2D = start_segment_scene.instantiate()
-	segment.add_child(content_node)
-	# Compute end AFTER added to scene so transforms are valid
-	var end_marker = content_node.find_child("EndMarker", true, false)
-	if not end_marker:
-		printerr("Start scene is missing an 'EndMarker' node!")
+# ============================
+# --- Deterministic System ---
+# ============================
+func _get_or_decide_segment_recipe(index: int) -> Dictionary:
+	if index in _segment_recipe_cache:
+		return _segment_recipe_cache[index]
+	if index < 0:
 		return {}
-	return {"node": segment, "end_pos_local": end_marker.position}
 
-func _generate_standard_segment(index: int, seed: int) -> Dictionary:
-	_rng.seed = seed
-	
-	# Check if a theme transition is needed before generating the segment.
-	_check_and_apply_theme_change()
+	var segment_seed = ProgressionManager.get_seed_for_index(index)
+	var local_rng := RandomNumberGenerator.new()
+	local_rng.seed = segment_seed
+
+	var theme_for_rules = _get_theme_for_index(index)
+	var recipe: Dictionary
+
+	if not is_instance_valid(theme_for_rules):
+		recipe = {"type": "hill", "profile": null} # Fallback if no themes are configured
+		_segment_recipe_cache[index] = recipe
+		return recipe
+
+	# 1. Check for Handcrafted Segments
+	if not theme_for_rules.handcrafted_segments.is_empty():
+		for rule in theme_for_rules.handcrafted_segments:
+			if is_instance_valid(rule) and rule.scene:
+				var is_on_cooldown = false
+				for i in range(1, rule.min_hills_between_spawns + 1):
+					var prev_recipe = _get_or_decide_segment_recipe(index - i)
+					if prev_recipe and (prev_recipe.type == "handcrafted" or prev_recipe.type == "store"):
+						is_on_cooldown = true
+						break
+				
+				if not is_on_cooldown and local_rng.randf() < rule.probability:
+					recipe = {"type": "handcrafted", "scene": rule.scene, "name": "SpecialSegment"}
+					_segment_recipe_cache[index] = recipe
+					return recipe
+
+	# 2. Check for Stores
+	var store_rules = theme_for_rules.store_rules
+	if is_instance_valid(store_rules):
+		var is_on_cooldown = false
+		for i in range(1, store_rules.min_hills_between_stores + 1):
+			var prev_recipe = _get_or_decide_segment_recipe(index - i)
+			if prev_recipe and prev_recipe.type == "store":
+				is_on_cooldown = true
+				break
+		
+		if not is_on_cooldown and local_rng.randf() < store_rules.regular_store_probability:
+			var store_scene = store_rules.regular_store_scene
+			if is_instance_valid(store_rules.special_store_scene) and local_rng.randf() < store_rules.special_store_chance:
+				store_scene = store_rules.special_store_scene
 			
+			if store_scene:
+				recipe = {"type": "store", "scene": store_scene}
+				_segment_recipe_cache[index] = recipe
+				return recipe
+
+	# 3. Default to a procedural hill
+	var profile = _weighted_choice(theme_for_rules.hill_profiles, local_rng)
+	recipe = {"type": "hill", "profile": profile}
+	_segment_recipe_cache[index] = recipe
+	return recipe
+
+func _get_theme_for_index(index: int) -> WorldTheme:
+	if world_themes.is_empty():
+		return null
+
+	var theme_to_use = world_themes[0]
+	var progress_counter = 0
+
+	if progress_theme_on_hills_only:
+		var hill_count = 0
+		for i in range(index):
+			var recipe = _get_or_decide_segment_recipe(i)
+			if recipe and recipe.type == "hill":
+				hill_count += 1
+		progress_counter = hill_count
+	else:
+		progress_counter = index
+
+	for theme in world_themes:
+		if progress_counter >= theme.trigger_at_segment_count:
+			theme_to_use = theme
+		else:
+			break
+			
+	return theme_to_use
+
+
+# =======================================
+# --- Segment Instantiation Functions ---
+# =======================================
+func _generate_procedural_segment(index: int, seed: int, recipe: Dictionary) -> Dictionary:
 	var segment = Node2D.new()
-	segment.name = "Segment" + str(index)
+	segment.name = "HillSegment_" + str(index)
 	segment.add_to_group("level_segment")
 	segment.set_meta("segment_type", "hill")
 
 	var hill_params: Dictionary
-	var use_override = (
-		is_instance_valid(_current_world_theme) and
-		_current_world_theme.override_hill_parameters and
-		is_instance_valid(_current_world_theme.hill_parameters)
-	)
+	var hill_profile: HillProfile = recipe.get("profile")
 
-	if use_override:
-		print("Using HillGenerationParams override from WorldTheme.")
-		var overrides = _current_world_theme.hill_parameters
+	if is_instance_valid(hill_profile) and is_instance_valid(hill_profile.hill_parameters):
+		var params_res = hill_profile.hill_parameters
 		hill_params = {
-			"length": overrides.length,
-			"amplitude": overrides.amplitude,
-			"slope": overrides.slope,
-			"steepness_increase": overrides.steepness_increase,
-			"frequency": overrides.frequency,
-			"control_step": overrides.control_step,
-			"visual_bake_interval": overrides.visual_bake_interval,
-			"collision_bake_interval": overrides.collision_bake_interval,
-			"simplify_epsilon_px": overrides.simplify_epsilon_px,
-			"max_collision_vertices": overrides.max_collision_vertices,
-			"generator_type": overrides.generator_type
+			"length": params_res.length, "amplitude": params_res.amplitude,
+			"slope": params_res.slope, "steepness_increase": params_res.steepness_increase,
+			"frequency": params_res.frequency, "control_step": params_res.control_step,
+			"visual_bake_interval": params_res.visual_bake_interval,
+			"collision_bake_interval": params_res.collision_bake_interval,
+			"simplify_epsilon_px": params_res.simplify_epsilon_px,
+			"max_collision_vertices": params_res.max_collision_vertices,
+			"generator_type": params_res.generator_type
 		}
 	else:
-		# If no valid override, get parameters from the progression system.
 		hill_params = ProgressionManager.get_hill_parameters(index)
 
-	# Set the hill's color from the theme's visual data, regardless of override.
+	# The color of the hill should come from the LIVE theme for smooth visual transitions.
 	if is_instance_valid(_current_world_theme) and is_instance_valid(_current_world_theme.theme_data):
 		hill_params["color"] = _current_world_theme.theme_data.terrain_fill
 	
@@ -308,76 +327,62 @@ func _generate_standard_segment(index: int, seed: int) -> Dictionary:
 	segment.add_child(hill_node)
 	
 	var spawn_pts: PackedVector2Array = hill_result.get("spawn_points", hill_result["surface_points"])
-	# We also pass the index to the hazard generator for consistency.
 	var hazards_node: Node2D = hazard_generator.generate(spawn_pts, seed, index)
 	if hazards_node:
 		hill_node.add_child(hazards_node)
 
-	# Generate Content (Store or Obstacle)
-	var content_node: Node2D
-	var content_end_pos_local: Vector2
-	var content_spawned = false
-	
-	var hills_completed = ProgressionManager.max_forward_index
-	# Check for the Special Store first to give it priority.
-	if special_store_scene and special_store_interval > 0 and (hills_completed % special_store_interval == special_store_interval - 1):
-		content_node = special_store_scene.instantiate()
-		content_end_pos_local = hill_end_pos_local + Vector2(1000, 0)
-		content_spawned = true
-	elif regular_store_scene and regular_store_interval > 0 and (hills_completed % regular_store_interval == regular_store_interval - 1):
-		content_node = regular_store_scene.instantiate()
-		content_end_pos_local = hill_end_pos_local + Vector2(1000, 0)
-		content_spawned = true
-		
-	if not content_spawned:
-		var obstacle_result = obstacle_generator.generate_obstacle(ProgressionManager.get_obstacle_complexity(index))
-		content_node = obstacle_result["node"]
-		content_end_pos_local = hill_end_pos_local + Vector2(float(obstacle_result.get("width", 1000.0)), 0)
-
+	var obstacle_result = obstacle_generator.generate_obstacle(ProgressionManager.get_obstacle_complexity(index))
+	var content_node = obstacle_result["node"]
+	var content_end_pos_local = hill_end_pos_local + Vector2(float(obstacle_result.get("width", 1000.0)), 0)
 	content_node.position = hill_end_pos_local
 	segment.add_child(content_node)
 	
 	return {"node": segment, "end_pos_local": content_end_pos_local}
 
-func _generate_special_segment(index: int, seed: int) -> Dictionary:
-	if special_segment_sequence.is_empty() or _special_sequence_index >= special_segment_sequence.size():
-		_is_in_special_chain = false
-		return _generate_standard_segment(index, seed)
-	var config: SpecialSegmentConfig = special_segment_sequence[_special_sequence_index]
-	if not config or not config.scene:
-		_is_in_special_chain = false
-		return _generate_standard_segment(index, seed)
+func _generate_handcrafted_segment(name: String, scene: PackedScene) -> Dictionary:
+	if not scene:
+		printerr("Attempted to generate a handcrafted segment with a null scene: ", name)
+		return {}
+		
 	var segment = Node2D.new()
-	segment.name = "SpecialSegment_" + str(index)
+	segment.name = name
 	segment.add_to_group("level_segment")
 	segment.set_meta("segment_type", "special")
-	var content_node: Node2D = config.scene.instantiate()
+	
+	var content_node: Node2D = scene.instantiate()
 	segment.add_child(content_node)
+	
 	var end_marker = content_node.find_child("EndMarker", true, false)
 	if not end_marker:
-		printerr("Special scene '", config.scene.resource_path, "' is missing 'EndMarker'!")
-		return {}
+		printerr("Handcrafted scene '", scene.resource_path, "' is missing an 'EndMarker' node!")
+		return {"node": segment, "end_pos_local": Vector2(1000, 0)}
 
-	# Update the special sequence progression
-	_special_sequence_repeats += 1
-	if _special_sequence_repeats >= max(1, config.number_of_times_to_repeat):
-		_special_sequence_repeats = 0
-		_special_sequence_index = (_special_sequence_index + 1) % special_segment_sequence.size()
-		_is_in_special_chain = false
 	return {"node": segment, "end_pos_local": end_marker.position}
 
+func _finalize_segment_generation(segment: Node2D, index: int, end_pos_local: Vector2):
+	segment.set_meta("segment_index", index)
+	if not Engine.is_editor_hint():
+		var boundary = SEGMENT_BOUNDARY_SCENE.instantiate()
+		segment.add_child(boundary)
+		boundary.position = end_pos_local
+		boundary.segment_index = index
+		boundary.player_crossed_boundary.connect(_on_player_crossed_boundary)
 
+
+# =====================================
+# --- Player Movement and Culling ---
+# =====================================
 func _on_player_crossed_boundary(from_index: int, direction: int):
 	_player_current_index = from_index + direction
-	print("Player is now in segment: %d" % _player_current_index)
 
 	if direction > 0:
-		var completed_segment = _active_segments.get(from_index)
-		if is_instance_valid(completed_segment) and completed_segment.get_meta("segment_type") == "hill":
+		var recipe = _get_or_decide_segment_recipe(from_index)
+		if recipe and recipe.type == "hill":
 			_completed_hill_segments += 1
-			print("Completed a hill segment. Total hills: ", _completed_hill_segments)
 		
 		ProgressionManager.update_progress(_player_current_index)
+		
+		_check_and_apply_theme_change()
 	
 	call_deferred("_ensure_surrounding_segments_exist")
 
@@ -390,6 +395,26 @@ func _maybe_cull_segments():
 	for index in cull_indices:
 		var segment = _active_segments.get(index)
 		if is_instance_valid(segment):
-			print("Culling segment at index: ", index)
 			segment.queue_free()
 		_active_segments.erase(index)
+
+func _weighted_choice(items: Array, rng: RandomNumberGenerator) -> Variant:
+	if items.is_empty(): return null
+	var total_weight: float = 0.0
+	for item in items:
+		if item and "weight" in item:
+			total_weight += item.weight
+			
+	if total_weight <= 0.0:
+		if items.is_empty(): return null
+		return items.pick_random()
+		
+	var choice: float = rng.randf() * total_weight
+	var current_weight: float = 0.0
+	for item in items:
+		if item and "weight" in item:
+			current_weight += item.weight
+			if choice < current_weight:
+				return item
+				
+	return items[-1]

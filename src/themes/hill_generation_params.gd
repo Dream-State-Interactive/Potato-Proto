@@ -3,7 +3,14 @@
 class_name HillGenerationParams
 extends Resource
 
-enum GeneratorType { NOISE_HILL, FLAT_LINE }
+enum GeneratorType {
+	NOISE_HILL,
+	FLAT_LINE,
+	VALLEY,     # Down-then-up "bowl"
+	HILL,       # Up-then-down "bump"
+	WAVE,       # Wavy roller-coaster
+	UPHILL,     # Global uphill trend
+}
 @export var generator_type: GeneratorType = GeneratorType.NOISE_HILL
 
 @export_group("Shape")
@@ -21,3 +28,9 @@ enum GeneratorType { NOISE_HILL, FLAT_LINE }
 @export_range(5.0, 100.0, 1.0) var collision_bake_interval: float = 18.0
 @export_range(0.0, 10.0, 0.1) var simplify_epsilon_px: float = 4.0
 @export_range(64, 1024, 8) var max_collision_vertices: int = 512
+
+@export_group("Wave")
+## Multiplier applied to the base amplitude for the animated offset.
+@export_range(0.0, 2.0, 0.05) var wave_amplitude_scale: float = 0.4
+## Cycles per second of the animated wave.
+@export_range(0.0, 1000.0, 0.1) var wave_speed: float = 1.0

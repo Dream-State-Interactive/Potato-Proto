@@ -1,16 +1,84 @@
-[gd_resource type="Resource" script_class="WorldTheme" load_steps=7 format=3 uid="uid://camxgvdj21o06"]
+[gd_resource type="Resource" script_class="WorldTheme" load_steps=19 format=3 uid="uid://camxgvdj21o06"]
 
 [ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_djtqe"]
+[ext_resource type="Script" uid="uid://clkbqbuuhwpk" path="res://src/modes/gauntlet/handcrafted_segment_rule.gd" id="1_grb4p"]
+[ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="2_1hyeg"]
 [ext_resource type="Script" uid="uid://drkkfybqqiwy3" path="res://src/themes/world_theme.gd" id="2_1t2fn"]
 [ext_resource type="Resource" uid="uid://trd8tx1e2b28" path="res://src/hazards/rocks/hazard_rock_config.tres" id="2_5f1w7"]
 [ext_resource type="Resource" uid="uid://b6ql7v7ymkkad" path="res://src/themes/tres/graveyard_night.tres" id="3_1t2fn"]
 [ext_resource type="Resource" uid="uid://3ne4nonc3hbo" path="res://src/hazards/pitchfork/hazard_pitchfork_special_config.tres" id="3_mo43s"]
+[ext_resource type="PackedScene" uid="uid://dathi73lenpye" path="res://src/levels/level_1/level_1.tscn" id="3_ugru4"]
 [ext_resource type="Resource" uid="uid://22uocr44h2uq" path="res://src/hazards/worm/hazard_worm_config.tres" id="4_17ua8"]
+[ext_resource type="Script" uid="uid://br7w0fjmbh8fo" path="res://src/modes/gauntlet/hill_profile.gd" id="8_jana3"]
+[ext_resource type="Script" uid="uid://iu2sjly11dob" path="res://src/themes/hill_generation_params.gd" id="9_alyu0"]
+[ext_resource type="Resource" uid="uid://tqvaiuoilvku" path="res://src/modes/gauntlet/default_store_rules.tres" id="11_f7tyn"]
+
+[sub_resource type="Resource" id="Resource_h3oc5"]
+script = ExtResource("1_grb4p")
+scene = ExtResource("2_1hyeg")
+probability = 0.05
+min_hills_between_spawns = 3
+metadata/_custom_type_script = "uid://clkbqbuuhwpk"
+
+[sub_resource type="Resource" id="Resource_cotbl"]
+script = ExtResource("1_grb4p")
+scene = ExtResource("3_ugru4")
+probability = 0.05
+min_hills_between_spawns = 3
+metadata/_custom_type_script = "uid://clkbqbuuhwpk"
+
+[sub_resource type="Resource" id="Resource_sk4kg"]
+script = ExtResource("9_alyu0")
+generator_type = 2
+length = 1200.0
+amplitude = 60.0
+slope = 0.2
+steepness_increase = 5e-05
+frequency = 0.0015
+control_step = 140.0
+visual_bake_interval = 8.0
+collision_bake_interval = 18.0
+simplify_epsilon_px = 4.0
+max_collision_vertices = 512
+wave_amplitude_scale = 0.4
+wave_speed = 1.0
+metadata/_custom_type_script = "uid://iu2sjly11dob"
+
+[sub_resource type="Resource" id="Resource_vol0x"]
+script = ExtResource("8_jana3")
+hill_parameters = SubResource("Resource_sk4kg")
+weight = 1.0
+metadata/_custom_type_script = "uid://br7w0fjmbh8fo"
+
+[sub_resource type="Resource" id="Resource_tecx7"]
+script = ExtResource("9_alyu0")
+generator_type = 4
+length = 1200.0
+amplitude = 60.0
+slope = 0.2
+steepness_increase = 5e-05
+frequency = 0.0015
+control_step = 140.0
+visual_bake_interval = 8.0
+collision_bake_interval = 18.0
+simplify_epsilon_px = 4.0
+max_collision_vertices = 512
+wave_amplitude_scale = 0.4
+wave_speed = 1.0
+metadata/_custom_type_script = "uid://iu2sjly11dob"
+
+[sub_resource type="Resource" id="Resource_t5ebu"]
+script = ExtResource("8_jana3")
+hill_parameters = SubResource("Resource_tecx7")
+weight = 0.5
+metadata/_custom_type_script = "uid://br7w0fjmbh8fo"
 
 [resource]
 script = ExtResource("2_1t2fn")
 theme_data = ExtResource("3_1t2fn")
-trigger_at_segment_count = 4
+trigger_at_segment_count = 20
+hill_profiles = Array[ExtResource("8_jana3")]([SubResource("Resource_vol0x"), SubResource("Resource_t5ebu")])
 hazard_configs = Array[ExtResource("1_djtqe")]([ExtResource("2_5f1w7"), ExtResource("3_mo43s"), ExtResource("4_17ua8")])
-override_hill_parameters = false
+store_rules = ExtResource("11_f7tyn")
+handcrafted_segments = Array[ExtResource("1_grb4p")]([SubResource("Resource_h3oc5"), SubResource("Resource_cotbl")])
 metadata/_custom_type_script = "uid://drkkfybqqiwy3"

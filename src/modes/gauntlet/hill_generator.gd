@@ -5,6 +5,7 @@ extends Node2D
 # === Collectible Config ===
 const SPAWN_STARCH_POINTS_EVERY_N_POINTS: int = 3
 const STARCH_POINT := preload("res://src/collectibles/starch_point.tscn")
+const WaveHillAnimator := preload("res://src/modes/gauntlet/wave_hill_animator.gd")
 const EPS: float = 0.001
 
 # === Export Variables ===
@@ -59,12 +60,12 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 
 
 func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool) -> Dictionary:
-	var generator_type = params.get("generator_type", HillGenerationParams.GeneratorType.NOISE_HILL)
+	var generator_type: int = params.get("generator_type", HillGenerationParams.GeneratorType.NOISE_HILL)
 
 	match generator_type:
 		HillGenerationParams.GeneratorType.FLAT_LINE:
 			return _generate_flat_line(params)
-		_: # Default to NOISE_HILL
+		_:
 			# --- Root node for this hill segment ---
 			var hill: Node2D = Node2D.new()
 			hill.name = "HillContainer"
@@ -77,45 +78,97 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			
 			# --- Noise-based height function ---
 			var noise: FastNoiseLite = FastNoiseLite.new()
-			# Use the deterministic seed provided by the LevelGenerator
 			noise.seed = seed
 			noise.frequency = float(params.get("frequency", 0.0015))
 			noise.fractal_octaves = 1
 			
-			# --- Shape params for a downward-sloping hill ---
+			# --- Shape params ---
 			var length: float    = float(params.get("length", 1200.0))
 			var amplitude: float = float(params.get("amplitude", 60.0))
 			var slope: float     = float(params.get("slope", 0.2))
 			var steepness_increase: float = float(params.get("steepness_increase", 0.00005))
+			# For bowl/crest shapes, we want the global trend mostly flat so
+			# the start and end are near the same height.
+			if generator_type == HillGenerationParams.GeneratorType.VALLEY \
+			or generator_type == HillGenerationParams.GeneratorType.HILL \
+			or generator_type == HillGenerationParams.GeneratorType.WAVE:
+				slope = 0.0
+				steepness_increase = 0.0
 			
 			var base_y: float = 0.0 # Each segment starts at its own local origin
 			
 			# Control vs visual density
 			var control_step: float = float(params.get("control_step", 140.0))
-			# Resolve overrides from params (or use exported defaults)
 			var vis_bake: float = float(params.get("visual_bake_interval", visual_bake_interval))
 			var col_bake: float = float(params.get("collision_bake_interval", collision_bake_interval))
 			var simplify_eps: float = float(params.get("simplify_epsilon_px", simplify_epsilon_px))
 			var max_col_vertices: int = int(params.get("max_collision_vertices", max_collision_vertices))
 			
-			# --- Curve construction ---
-			var curve: Curve2D = Curve2D.new()
-			var spawn_points: PackedVector2Array = PackedVector2Array()
-			var dx: float = control_step * 0.5
-
-			# --- Height functions for a "bobsled" style hill ---
+			# ----- shape profile selection -----
+			var shape_profile: Callable = func(t: float) -> float:
+				return 0.0
+			
+			match generator_type:
+				HillGenerationParams.GeneratorType.NOISE_HILL:
+					shape_profile = func(t: float) -> float:
+						return 0.0
+				HillGenerationParams.GeneratorType.VALLEY:
+					# 0 → dip → 0 (bowl), +Y is down
+					shape_profile = func(t: float) -> float:
+						return sin(PI * t)  # 0..1..0
+				HillGenerationParams.GeneratorType.HILL:
+					# 0 → crest → 0 (bump up)
+					shape_profile = func(t: float) -> float:
+						return -sin(PI * t)
+				HillGenerationParams.GeneratorType.WAVE:
+					# Wavy roller-coaster; two oscillations
+					shape_profile = func(t: float) -> float:
+						return 0.7 * sin(TAU * t * 2.0)
+				HillGenerationParams.GeneratorType.UPHILL:
+					shape_profile = func(t: float) -> float:
+						return 0.0
+				_:
+					shape_profile = func(t: float) -> float:
+						return 0.0
+			
+			# Flip global trend for uphill so potato climbs instead of descending.
+			if generator_type == HillGenerationParams.GeneratorType.UPHILL:
+				slope = -abs(slope)
+				steepness_increase = -abs(steepness_increase) * 0.25
+			
+			var shape_amplitude: float = amplitude
+			var noise_amplitude: float = amplitude * 0.5
+			
+			if generator_type == HillGenerationParams.GeneratorType.WAVE:
+				noise_amplitude = amplitude * 0.25   # softer chop, more swell
+			
+			# --- Height functions (patched) ---
 			var y_raw: Callable = func(x: float) -> float:
-				# 1. The base shape is a downward curve (linear + quadratic term).
-				var base_downward_curve: float = x * slope + x * x * steepness_increase
-				# 2. Add noise for bumps and texture.
-				var noise_component: float = noise.get_noise_1d(x) * amplitude
-				# 3. Combine with base_y for continuity across function calls.
-				return base_downward_curve + noise_component + base_y
-				
+				var t: float = (x / length) if length > 0.0 else 0.0
+				# 1. Global trend: downhill or uphill
+				var global_trend: float = x * slope + x * x * steepness_increase
+				# 2. Macro shape: hill/valley/wave/etc.
+				var shape_offset: float = float(shape_profile.call(t)) * shape_amplitude
+				# 3. Noise for bumps & texture.
+				var noise_component: float = noise.get_noise_1d(x) * noise_amplitude
+				return base_y + global_trend + shape_offset + noise_component
+			
 			# Normalize so the seam starts exactly at y=0 (relative to this segment's origin).
 			var y0: float = float(y_raw.call(0.0))
+			var yL: float = float(y_raw.call(length))
+
 			var y_at: Callable = func(x: float) -> float:
 				return float(y_raw.call(x)) - y0
+
+			# For WAVE, also force the end back to baseline by removing a linear ramp
+			if generator_type == HillGenerationParams.GeneratorType.WAVE and length > 0.0:
+				var total_delta: float = yL - y0
+				y_at = func(x: float) -> float:
+					var t_local: float = x / length
+					var base: float = float(y_raw.call(x)) - y0
+					# Subtract a linear ramp so y_at(0) = 0 and y_at(length) = 0
+					return base - total_delta * t_local
+
 				
 			# Bezier handle length: shorter on sharp curves
 			var handle_len_fn: Callable = func(x: float, y_prev: float, y: float, y_next: float) -> float:
@@ -128,6 +181,10 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 				return clamp(base_len * k, 0.1 * control_step, 0.5 * control_step)
 				
 			# --- Sample control points ---
+			var curve: Curve2D = Curve2D.new()
+			var spawn_points: PackedVector2Array = PackedVector2Array()
+			var dx: float = control_step * 0.5
+
 			var x: float = 0.0
 			while x <= length:
 				var y: float      = float(y_at.call(x))
@@ -152,7 +209,7 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			curve.bake_interval = vis_bake
 			var surface_points_visual: PackedVector2Array = curve.get_baked_points()
 			
-			# Ensure the hill's surface never goes backward on the X-axis, which can create an invalid polygon (does NOT render!)
+			# Ensure the hill's surface never goes backward on the X-axis
 			if surface_points_visual.size() > 1:
 				var filtered_visual_points := PackedVector2Array()
 				filtered_visual_points.append(surface_points_visual[0])
@@ -162,6 +219,7 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 						filtered_visual_points.append(surface_points_visual[i])
 						last_x = surface_points_visual[i].x
 				surface_points_visual = filtered_visual_points
+			
 			curve.bake_interval = col_bake
 			var surface_points_collision: PackedVector2Array = curve.get_baked_points()
 			
@@ -169,13 +227,12 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			if simplify_eps > 0.0:
 				surface_points_collision = Algorithms._rdp(surface_points_collision, simplify_eps)
 			if surface_points_collision.size() > max_col_vertices and max_col_vertices > 2:
-				# Downsample evenly to max vertices
 				var reduced := PackedVector2Array()
 				var step: float = float(surface_points_collision.size() - 1) / float(max_col_vertices - 1)
-				var t: float = 0.0
-				while int(floor(t)) < surface_points_collision.size():
-					reduced.append(surface_points_collision[int(floor(t))])
-					t += step
+				var t_red: float = 0.0
+				while int(floor(t_red)) < surface_points_collision.size():
+					reduced.append(surface_points_collision[int(floor(t_red))])
+					t_red += step
 				if reduced[reduced.size() - 1] != surface_points_collision[surface_points_collision.size() - 1]:
 					reduced.append(surface_points_collision[surface_points_collision.size() - 1])
 				surface_points_collision = reduced
@@ -193,7 +250,8 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			fill_visual.append_array(poly_surface_visual)
 			if fill_visual.size() >= 2:
 				var max_y_v: float = -INF
-				for p in poly_surface_visual: max_y_v = max(max_y_v, p.y)
+				for p in poly_surface_visual:
+					max_y_v = max(max_y_v, p.y)
 				var bottom_y_v: float = max(amplitude * 2.2, max_y_v + amplitude * 0.6)
 				fill_visual.append(Vector2(poly_surface_visual[fill_visual.size() - 1].x, bottom_y_v))
 				fill_visual.append(Vector2(poly_surface_visual[0].x, bottom_y_v))
@@ -205,14 +263,26 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			fill_collision.append_array(poly_surface_collision)
 			if fill_collision.size() >= 2:
 				var max_y_c: float = -INF
-				for p in poly_surface_collision: max_y_c = max(max_y_c, p.y)
+				for p in poly_surface_collision:
+					max_y_c = max(max_y_c, p.y)
 				var bottom_y_c: float = max(amplitude * 2.2, max_y_c + amplitude * 0.6)
 				fill_collision.append(Vector2(poly_surface_collision[fill_collision.size() - 1].x, bottom_y_c))
 				fill_collision.append(Vector2(poly_surface_collision[0].x, bottom_y_c))
 			collision_polygon.polygon = fill_collision
 
+# ============================================================================================
+			# --- Attach runtime wave animator for WAVE segments ---
+			if generator_type == HillGenerationParams.GeneratorType.WAVE:
+				var animator: WaveHillAnimator = WaveHillAnimator.new()
+				# You can tweak these or pull from params if you want per-theme control
+				animator.wave_amplitude = amplitude * 0.4
+				animator.wave_speed = 1.0
+				hill.add_child(animator)
+				# Note: poly_surface_visual / poly_surface_collision are the top surface points
+				animator.setup(visual_polygon, collision_polygon, poly_surface_visual, poly_surface_collision)
+# ============================================================================================
+
 			# --- Starch collectibles ---
-			# Only spawn starch points when generating in the forward direction.
 			if not is_generating_backwards:
 				var i: int = 0
 				for p in spawn_points:
