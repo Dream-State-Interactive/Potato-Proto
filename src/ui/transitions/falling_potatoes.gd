@@ -31,11 +31,4 @@ func finish_transition() -> void:
 	var tween_out = create_tween()
 	tween_out.tween_property(black_rect, "modulate:a", 0.0, fade_time)
 	await tween_out.finished
-
-	# 5) Wait for remaining particles to fall off-screen, then clean up
-	# Use particles.lifetime (or slightly more) as a rough upper bound.
-	var extra_time := particles.lifetime
-	await get_tree().create_timer(extra_time).timeout
-
-	transition_completed.emit()
 	queue_free()
