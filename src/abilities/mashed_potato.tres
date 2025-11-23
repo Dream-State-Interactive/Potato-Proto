@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AbilityInfo" load_steps=4 format=3 uid="uid://djidvvnwlgvos"]
+
+[ext_resource type="PackedScene" uid="uid://dw24t30td03wa" path="res://src/abilities/mashed_potato.tscn" id="1_lbgkl"]
+[ext_resource type="Texture2D" uid="uid://dtlqdye1wj0ch" path="res://assets/graphics/ui/icons/ability/icon_ability_Mashed.png" id="2_lbgkl"]
+[ext_resource type="Script" uid="uid://cufp68wokqij0" path="res://src/abilities/ability_info.gd" id="3_uu4yn"]
+
+[resource]
+script = ExtResource("3_uu4yn")
+ability_name = "Mashed Potato"
+ability_description = "Jump high and smash your enemies!"
+icon = ExtResource("2_lbgkl")
+ability_scene = ExtResource("1_lbgkl")
+metadata/_custom_type_script = "uid://cufp68wokqij0"

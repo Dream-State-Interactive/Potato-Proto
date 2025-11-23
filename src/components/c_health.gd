@@ -33,31 +33,27 @@ signal died
 ## The maximum health of this object. Can be set in the Inspector.
 @export var max_health: float = 100.0:
 	set(value):
+		current_health = int((current_health/max_health) * value)
 		max_health = value
-		# When max_health changes, re-validate current_health
-		if self.is_node_ready(): # Don't run this before _ready()
-			self.current_health = _current_health # Re-trigger the setter for clamping
 
-## internal reference for current health
-var _current_health: float
 ## The current health of this object | Setter triggers anytime 'health_component.current_health = X' is performed
 var current_health: float:
 	get:
-		return _current_health
+		return current_health
 	set(value):
 		# 1. Clamp the new value to be between 0 and max_health.
 		var new_health = clamp(value, 0, max_health)
 		
 		# 2. Only proceed if the value has actually changed.
-		if new_health == _current_health:
+		if new_health == current_health:
 			return
 			
 		# 3. Update the internal variable.
-		_current_health = new_health
+		current_health = new_health
 		
 		# 4. ALWAYS emit the signal when the value changes.
-		health_changed.emit(_current_health, max_health)
-		print("CHealth setter: Health is now %f / %f" % [_current_health, max_health])
+		health_changed.emit(current_health, max_health)
+		print("CHealth setter: Health is now %f / %f" % [current_health, max_health])
 
 # --- Godot Functions ---
 func _ready():
@@ -68,7 +64,7 @@ func _ready():
 ## The main function for dealing damage. It's called by the Player script.
 func take_damage(amount: float, contact_point: Vector2, contact_normal: Vector2):
 	# Don't process damage if already dead.
-	if _current_health <= 0: 
+	if current_health <= 0: 
 		return
 
 	var parent_node := get_parent()  # the Player root that owns this component
@@ -91,7 +87,7 @@ func take_damage(amount: float, contact_point: Vector2, contact_normal: Vector2)
 ## The main function for healing.
 func heal(amount: float):
 	# Don't process healing if already at full health.
-	if _current_health >= max_health:
+	if current_health >= max_health:
 		return
 
 	self.current_health += amount

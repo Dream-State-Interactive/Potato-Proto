@@ -346,11 +346,11 @@ func _physics_process(_delta: float):
 	if not _is_gripping and roll_input != 0:
 		# Note: We do not multiply by delta here. `apply_torque` is an acceleration,
 		# and the physics engine handles the time step integration for us.
-		apply_torque(roll_input * stats.roll_speed * DEV_ROLL_MULTIPLIER)
+		apply_torque(roll_input * stats.roll_speed * DEV_ROLL_MULTIPLIER * GameManager.player_instance.mass)
 	
 	# The horizontal nudge helps counter friction and makes movement feel more responsive.
 	if on_floor and roll_input != 0:
-		apply_central_force(Vector2(roll_input * stats.horizontal_nudge, 0))
+		apply_central_force(Vector2(roll_input * stats.horizontal_nudge * GameManager.player_instance.mass, 0))
 	
 	# Apply a smaller force in the air to allow the player to influence their trajectory.
 	elif not on_floor and roll_input != 0:
@@ -368,7 +368,7 @@ func _physics_process(_delta: float):
 		)
 		
 		# 4. Apply the final calculated force.
-		apply_central_force(Vector2(roll_input * effective_air_control, 0))
+		apply_central_force(Vector2(roll_input * effective_air_control * GameManager.player_instance.mass, 0))
 	
 	# --- JUMP LOGIC ---
 	# We can jump if we are physically on the ground OR if the coyote timer is still running.
@@ -378,7 +378,7 @@ func _physics_process(_delta: float):
 		
 		# Reset vertical velocity for a consistent jump height.
 		linear_velocity.y = 0
-		apply_central_impulse(Vector2.UP * stats.jump_force * 10)
+		apply_central_impulse(Vector2.UP * stats.jump_force * 10 * GameManager.player_instance.mass)
 		
 		_is_gripping = false # Ensure grip is broken immediately on jump.
 		
@@ -402,13 +402,13 @@ func dash(direction: String) -> void:
 				combo_multiplier = 10
 			match(direction):
 				"up":
-					apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier))
+					apply_central_impulse(Vector2(0, -jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass))
 				"down":
-					apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier))
+					apply_central_impulse(Vector2(0, jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass))
 				"left":
-					apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+					apply_central_impulse(Vector2(-jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass, 0))
 				"right":
-					apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier, 0))
+					apply_central_impulse(Vector2(jump_strength * mass * jump_multiplier * combo_multiplier * GameManager.player_instance.mass, 0))
 			InputCooldownTimer.start()
 			
 		dashes_used += 1
@@ -519,14 +519,16 @@ func heal(amount: float):
 	var max_health = stats.max_health
 	if max_health <= 0: return
 
-	var heal_percentage = amount / max_health
+	var percent_total_health_healed = amount / max_health
+	var percent_missing_health_healed = amount / (max_health - health_component.current_health)
 	
 	# Tell the HealthComponent to restore health. This will trigger _on_health_changed.
 	health_component.heal(amount)
 	
 	# Visually "un-peel" by removing the most recent damage point.
 	if not damage_points.is_empty():
-		damage_points.resize(damage_points.size() - 1)
+		var damage_points_to_heal = clamp(int(percent_missing_health_healed * damage_points.size()), 0, damage_points.size())
+		damage_points.resize(damage_points.size() - damage_points_to_heal)
 		# Force the shader to update with the smaller list of damage points.
 		var skin_material = skin_sprite.material as ShaderMaterial
 		if skin_material:
@@ -534,7 +536,7 @@ func heal(amount: float):
 			skin_material.set_shader_parameter("hit_count", damage_points.size())
 			
 	# Directly reverse the aging effect.
-	current_aging_level = clamp(current_aging_level - heal_percentage, 0.0, 1.0)
+	current_aging_level = clamp(current_aging_level - percent_total_health_healed, 0.0, 1.0)
 	var flesh_material = flesh_sprite.material as ShaderMaterial
 	if flesh_material:
 		flesh_material.set_shader_parameter("aging_factor", current_aging_level)
@@ -569,6 +571,8 @@ func apply_stats_from_resource():
 		armor_component.armor = stats.armor
 		
 	jump_strength = stats.jump_force
+	if health_component && stats.health:
+		health_component.max_health = stats.health
 
 	print("Player stats have been reapplied. New Grip value: ", stats.grip)
 

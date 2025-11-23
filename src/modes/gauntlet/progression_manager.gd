@@ -17,7 +17,7 @@ func update_progress(new_index: int):
 	if new_index > max_forward_index:
 		max_forward_index = new_index
 		# The global current_level is still useful for tracking the player's best run
-		var new_level = (max_forward_index / 2) + 1
+		var new_level: int = (max_forward_index / 2) + 1
 		if new_level != current_level:
 			current_level = new_level
 			emit_signal("difficulty_changed", new_level)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://b87ropc7lnqnj"]
+
+[ext_resource type="Script" uid="uid://bt58c45o283vw" path="res://src/upgrades/upgrade_data.gd" id="1_1w63t"]
+
+[resource]
+script = ExtResource("1_1w63t")
+stat_identifier = "health"
+upgrade_value = 10.0
+base_cost = 50
+cost_increase_per_level = 50
+metadata/_custom_type_script = "uid://bt58c45o283vw"

@@ -18,4 +18,4 @@ func perform_ability(player_body: RigidBody2D):
 		
 	# This torque value should be very large.
 	var torque_impulse = SPEED_MULTIPLIER * GameManager.player_instance.stats.roll_speed
-	player_body.apply_torque_impulse(roll_input * torque_impulse)
+	player_body.apply_torque_impulse(roll_input * torque_impulse * GameManager.player_instance.mass)
