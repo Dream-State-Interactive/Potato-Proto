@@ -519,14 +519,16 @@ func heal(amount: float):
 	var max_health = stats.max_health
 	if max_health <= 0: return
 
-	var heal_percentage = amount / max_health
+	var percent_total_health_healed = amount / max_health
+	var percent_missing_health_healed = amount / (max_health - health_component.current_health)
 	
 	# Tell the HealthComponent to restore health. This will trigger _on_health_changed.
 	health_component.heal(amount)
 	
 	# Visually "un-peel" by removing the most recent damage point.
 	if not damage_points.is_empty():
-		damage_points.resize(damage_points.size() - 1)
+		var damage_points_to_heal = clamp(int(percent_missing_health_healed * damage_points.size()), 0, damage_points.size())
+		damage_points.resize(damage_points.size() - damage_points_to_heal)
 		# Force the shader to update with the smaller list of damage points.
 		var skin_material = skin_sprite.material as ShaderMaterial
 		if skin_material:
@@ -534,7 +536,7 @@ func heal(amount: float):
 			skin_material.set_shader_parameter("hit_count", damage_points.size())
 			
 	# Directly reverse the aging effect.
-	current_aging_level = clamp(current_aging_level - heal_percentage, 0.0, 1.0)
+	current_aging_level = clamp(current_aging_level - percent_total_health_healed, 0.0, 1.0)
 	var flesh_material = flesh_sprite.material as ShaderMaterial
 	if flesh_material:
 		flesh_material.set_shader_parameter("aging_factor", current_aging_level)
