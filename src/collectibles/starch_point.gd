@@ -7,6 +7,7 @@ extends Collectible
 @export var pickup_sound: AudioStream = preload("res://assets/sfx/StarchyCrunch.ogg")
 @export var pitch_scale: float = 0.2
 @export var volume_db: float = -8.0
+
 @export var pulse_speed: float = 2.0  # Speed of pulsing
 @export var scale_amount: float = 0.1  # Amount of scaling for the pulse effect
 
