@@ -1,16 +1,105 @@
-[gd_resource type="Resource" script_class="WorldTheme" load_steps=6 format=3 uid="uid://in5i7a0wt5iw"]
+[gd_resource type="Resource" script_class="WorldTheme" load_steps=19 format=3 uid="uid://in5i7a0wt5iw"]
 
 [ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_hakju"]
+[ext_resource type="Script" uid="uid://clkbqbuuhwpk" path="res://src/modes/gauntlet/handcrafted_segment_rule.gd" id="1_r68rh"]
 [ext_resource type="Resource" uid="uid://22uocr44h2uq" path="res://src/hazards/worm/hazard_worm_config.tres" id="2_pwasg"]
+[ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="2_tbkyt"]
 [ext_resource type="Script" uid="uid://drkkfybqqiwy3" path="res://src/themes/world_theme.gd" id="2_xw1g7"]
-[ext_resource type="Resource" uid="uid://buj0l5506n3vv" path="res://src/themes/overrides/override_hill_desert.tres" id="3_2fspl"]
+[ext_resource type="PackedScene" uid="uid://dathi73lenpye" path="res://src/levels/level_1/level_1.tscn" id="3_r8trt"]
 [ext_resource type="Resource" uid="uid://d22w5f1taq2ae" path="res://src/themes/tres/sandy_dunes.tres" id="3_xw1g7"]
+[ext_resource type="Script" uid="uid://br7w0fjmbh8fo" path="res://src/modes/gauntlet/hill_profile.gd" id="6_k2b35"]
+[ext_resource type="Script" uid="uid://iu2sjly11dob" path="res://src/themes/hill_generation_params.gd" id="7_lcvfj"]
+[ext_resource type="Resource" uid="uid://tqvaiuoilvku" path="res://src/modes/gauntlet/default_store_rules.tres" id="9_ipvbe"]
+
+[sub_resource type="Resource" id="Resource_h3oc5"]
+script = ExtResource("1_r68rh")
+scene = ExtResource("2_tbkyt")
+probability = 0.05
+min_hills_between_spawns = 3
+metadata/_custom_type_script = "uid://clkbqbuuhwpk"
+
+[sub_resource type="Resource" id="Resource_cotbl"]
+script = ExtResource("1_r68rh")
+scene = ExtResource("3_r8trt")
+probability = 0.05
+min_hills_between_spawns = 3
+metadata/_custom_type_script = "uid://clkbqbuuhwpk"
+
+[sub_resource type="Resource" id="Resource_y3yoq"]
+script = ExtResource("7_lcvfj")
+generator_type = 3
+length = 1200.0
+amplitude = 60.0
+slope = 0.2
+steepness_increase = 5e-05
+frequency = 0.0015
+control_step = 140.0
+visual_bake_interval = 8.0
+collision_bake_interval = 18.0
+simplify_epsilon_px = 4.0
+max_collision_vertices = 512
+wave_amplitude_scale = 0.4
+wave_speed = 1.0
+metadata/_custom_type_script = "uid://iu2sjly11dob"
+
+[sub_resource type="Resource" id="Resource_3sgsm"]
+script = ExtResource("6_k2b35")
+hill_parameters = SubResource("Resource_y3yoq")
+weight = 1.0
+metadata/_custom_type_script = "uid://br7w0fjmbh8fo"
+
+[sub_resource type="Resource" id="Resource_ufhkr"]
+script = ExtResource("7_lcvfj")
+generator_type = 5
+length = 1200.0
+amplitude = 60.0
+slope = 0.2
+steepness_increase = 5e-05
+frequency = 0.0015
+control_step = 140.0
+visual_bake_interval = 8.0
+collision_bake_interval = 18.0
+simplify_epsilon_px = 4.0
+max_collision_vertices = 512
+wave_amplitude_scale = 0.4
+wave_speed = 1.0
+metadata/_custom_type_script = "uid://iu2sjly11dob"
+
+[sub_resource type="Resource" id="Resource_ninf1"]
+script = ExtResource("6_k2b35")
+hill_parameters = SubResource("Resource_ufhkr")
+weight = 1.0
+metadata/_custom_type_script = "uid://br7w0fjmbh8fo"
+
+[sub_resource type="Resource" id="Resource_htsrd"]
+script = ExtResource("7_lcvfj")
+generator_type = 2
+length = 1200.0
+amplitude = 60.0
+slope = 0.2
+steepness_increase = 5e-05
+frequency = 0.0015
+control_step = 140.0
+visual_bake_interval = 8.0
+collision_bake_interval = 18.0
+simplify_epsilon_px = 4.0
+max_collision_vertices = 512
+wave_amplitude_scale = 0.4
+wave_speed = 1.0
+metadata/_custom_type_script = "uid://iu2sjly11dob"
+
+[sub_resource type="Resource" id="Resource_1i34f"]
+script = ExtResource("6_k2b35")
+hill_parameters = SubResource("Resource_htsrd")
+weight = 1.0
+metadata/_custom_type_script = "uid://br7w0fjmbh8fo"
 
 [resource]
 script = ExtResource("2_xw1g7")
 theme_data = ExtResource("3_xw1g7")
-trigger_at_segment_count = 7
+trigger_at_segment_count = 30
+hill_profiles = Array[ExtResource("6_k2b35")]([SubResource("Resource_3sgsm"), SubResource("Resource_ninf1"), SubResource("Resource_1i34f")])
 hazard_configs = Array[ExtResource("1_hakju")]([ExtResource("2_pwasg")])
-override_hill_parameters = false
-hill_parameters = ExtResource("3_2fspl")
+store_rules = ExtResource("9_ipvbe")
+handcrafted_segments = Array[ExtResource("1_r68rh")]([SubResource("Resource_h3oc5"), SubResource("Resource_cotbl")])
 metadata/_custom_type_script = "uid://drkkfybqqiwy3"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StoreRules" load_steps=4 format=3 uid="uid://tqvaiuoilvku"]
+
+[ext_resource type="PackedScene" uid="uid://cu4qjv18u2cmk" path="res://src/modes/gauntlet/store.tscn" id="1_uonem"]
+[ext_resource type="Script" uid="uid://ds28wwlc5ifa5" path="res://src/modes/gauntlet/store_rules.gd" id="1_xp7gk"]
+[ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="3_0p0iq"]
+
+[resource]
+script = ExtResource("1_xp7gk")
+regular_store_scene = ExtResource("1_uonem")
+special_store_scene = ExtResource("3_0p0iq")
+min_hills_between_stores = 4
+regular_store_probability = 0.2
+special_store_chance = 0.1
+metadata/_custom_type_script = "uid://ds28wwlc5ifa5"

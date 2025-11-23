@@ -1,16 +1,12 @@
-[gd_scene load_steps=26 format=3 uid="uid://c42sfrnl684n0"]
+[gd_scene load_steps=20 format=3 uid="uid://c42sfrnl684n0"]
 
-[ext_resource type="Script" uid="uid://b5uvm210kdlen" path="res://src/modes/gauntlet/special_segment_config.gd" id="2_3yl0h"]
 [ext_resource type="Script" uid="uid://drkkfybqqiwy3" path="res://src/themes/world_theme.gd" id="2_5wuuv"]
 [ext_resource type="Script" uid="uid://csv3csdlqc0kk" path="res://src/modes/gauntlet/level_generator.gd" id="2_epjwl"]
 [ext_resource type="Script" uid="uid://i6uw1f8ndrxn" path="res://src/modes/gauntlet/hill_generator.gd" id="2_ow8bn"]
 [ext_resource type="Resource" uid="uid://bsyaek6f7ourc" path="res://src/themes/world_themes/world_theme_default.tres" id="3_jlf6b"]
-[ext_resource type="PackedScene" uid="uid://dathi73lenpye" path="res://src/levels/level_1/level_1.tscn" id="3_vl8ep"]
-[ext_resource type="PackedScene" uid="uid://ddenat04hgjrs" path="res://src/levels/level_proto/level_proto.tscn" id="4_4wyg8"]
 [ext_resource type="Script" uid="uid://xlwp7yn7gi56" path="res://src/modes/gauntlet/obstacle_generator.gd" id="4_e8qkv"]
 [ext_resource type="Resource" uid="uid://b4cotj6rt4u62" path="res://src/themes/world_themes/world_theme_grassland.tres" id="4_xf88g"]
 [ext_resource type="Resource" uid="uid://camxgvdj21o06" path="res://src/themes/world_themes/world_theme_graveyard.tres" id="5_4ofxx"]
-[ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="5_qulm8"]
 [ext_resource type="Resource" uid="uid://in5i7a0wt5iw" path="res://src/themes/world_themes/world_theme_desert.tres" id="6_a4u2y"]
 [ext_resource type="Script" uid="uid://dm620ib0cmc7w" path="res://src/modes/gauntlet/hazard_generator.gd" id="7_qulm8"]
 [ext_resource type="Resource" uid="uid://d8dsdkxuo4bx" path="res://src/themes/world_themes/world_theme_warehouse.tres" id="7_r3jc4"]
@@ -21,18 +17,6 @@
 [ext_resource type="Resource" uid="uid://trd8tx1e2b28" path="res://src/hazards/rocks/hazard_rock_config.tres" id="12_fkahy"]
 [ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="18_aclwq"]
 [ext_resource type="Script" uid="uid://b5lxwxm3721vl" path="res://src/themes/day_night_controller.gd" id="32_jlf6b"]
-
-[sub_resource type="Resource" id="Resource_o0cro"]
-script = ExtResource("2_3yl0h")
-scene = ExtResource("3_vl8ep")
-number_of_hills_required = 10
-number_of_times_to_repeat = 1
-
-[sub_resource type="Resource" id="Resource_uj73j"]
-script = ExtResource("2_3yl0h")
-scene = ExtResource("4_4wyg8")
-number_of_hills_required = 20
-number_of_times_to_repeat = 1
 
 [sub_resource type="GDScript" id="GDScript_4ied8"]
 script/source = "extends Node2D
@@ -50,10 +34,6 @@ glow_blend_mode = 1
 [node name="LevelGenerator" type="Node2D" parent="."]
 script = ExtResource("2_epjwl")
 world_themes = Array[ExtResource("2_5wuuv")]([ExtResource("3_jlf6b"), ExtResource("4_xf88g"), ExtResource("5_4ofxx"), ExtResource("6_a4u2y"), ExtResource("7_r3jc4")])
-special_segment_sequence = Array[ExtResource("2_3yl0h")]([SubResource("Resource_o0cro"), SubResource("Resource_uj73j")])
-regular_store_interval = 4
-special_store_scene = ExtResource("5_qulm8")
-special_store_interval = 8
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("2_ow8bn")
