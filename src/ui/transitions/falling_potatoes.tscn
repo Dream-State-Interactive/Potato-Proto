@@ -26,12 +26,12 @@ script = ExtResource("1_m75hi")
 z_index = 1
 position = Vector2(980, 101)
 emitting = false
-amount = 500
+amount = 1000
 texture = ExtResource("2_xjveu")
 lifetime = 6.8
 one_shot = true
 preprocess = 3.0
-speed_scale = 2.5
+speed_scale = 3.0
 explosiveness = 0.4
 visibility_rect = Rect2(-350, -100, 1920, 1080)
 process_material = SubResource("ParticleProcessMaterial_786wn")
@@ -44,3 +44,9 @@ offset_bottom = 1151.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0, 0, 0, 1)
+
+[node name="HoldBlackScreenTimer" type="Timer" parent="."]
+wait_time = 1.4
+one_shot = true
+
+[connection signal="timeout" from="HoldBlackScreenTimer" to="." method="_on_hold_black_screen_timer_timeout"]
