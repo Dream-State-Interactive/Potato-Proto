@@ -18,6 +18,9 @@ bg_color = Color(0.168627, 0.168627, 0.168627, 0.482353)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpdxj"]
 bg_color = Color(0.931646, 0.430387, 0.21892, 1)
 
+[sub_resource type="Theme" id="Theme_ariom"]
+Button/fonts/font = null
+
 [node name="Hud" type="CanvasLayer"]
 layer = 0
 script = ExtResource("1_1wsu8")
@@ -173,7 +176,7 @@ text = "E"
 
 [node name="HowToPlay" type="Node2D" parent="."]
 position = Vector2(192, 981)
-scale = Vector2(1.04764, 1.04764)
+scale = Vector2(1.13142, 1.13142)
 
 [node name="Keybinds" type="RichTextLabel" parent="HowToPlay"]
 offset_left = -161.63
