@@ -37,4 +37,5 @@ func finish_transition() -> void:
 	var tween_out = create_tween()
 	tween_out.tween_property(black_rect, "modulate:a", 0.0, fade_out_time)
 	await tween_out.finished
+	transition_completed.emit()
 	queue_free()
