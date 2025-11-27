@@ -20,10 +20,6 @@ offset_bottom = 1060.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_snovc")
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0.807843, 0.423529, 0.156863, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 20
 theme_override_font_sizes/normal_font_size = 75
 horizontal_alignment = 1
 

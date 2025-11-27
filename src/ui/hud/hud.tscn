@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://benqvi8jf1a3v"]
+[gd_scene load_steps=10 format=3 uid="uid://benqvi8jf1a3v"]
 
 [ext_resource type="Script" uid="uid://bs5iogpvifrxp" path="res://src/ui/hud/hud.gd" id="1_1wsu8"]
 [ext_resource type="FontFile" uid="uid://dmjdhsomc3fwp" path="res://assets/fonts/Coopers Town.otf" id="2_cpm4x"]
@@ -17,9 +17,6 @@ bg_color = Color(0.168627, 0.168627, 0.168627, 0.482353)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpdxj"]
 bg_color = Color(0.931646, 0.430387, 0.21892, 1)
-
-[sub_resource type="Theme" id="Theme_ariom"]
-Button/fonts/font = null
 
 [node name="Hud" type="CanvasLayer"]
 layer = 0
@@ -139,13 +136,13 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_bpdxj")
 
 [node name="Ability 1 Label" type="RichTextLabel" parent="BottomRight_HBox/Ability1_Icon"]
 layout_mode = 0
-offset_left = 9.0
+offset_left = -6.0
 offset_top = 64.0
-offset_right = 58.0
+offset_right = 80.0
 offset_bottom = 129.0
 theme = ExtResource("4_cio14")
 theme_override_font_sizes/normal_font_size = 51
-text = "Q"
+text = " Q"
 
 [node name="Ability2_Icon" type="TextureRect" parent="BottomRight_HBox"]
 custom_minimum_size = Vector2(64, 64)
@@ -166,27 +163,25 @@ grow_vertical = 2
 
 [node name="Ability 2 Label" type="RichTextLabel" parent="BottomRight_HBox/Ability2_Icon"]
 layout_mode = 0
-offset_left = 14.0
+offset_left = 2.0
 offset_top = 66.0
-offset_right = 57.0
+offset_right = 82.0
 offset_bottom = 122.0
 theme = ExtResource("4_cio14")
 theme_override_font_sizes/normal_font_size = 51
-text = "E"
+text = " E"
 
 [node name="HowToPlay" type="Node2D" parent="."]
 position = Vector2(192, 981)
-scale = Vector2(1.13142, 1.13142)
+scale = Vector2(1.02317, 1.02317)
 
 [node name="Keybinds" type="RichTextLabel" parent="HowToPlay"]
 offset_left = -161.63
 offset_top = -88.6824
 offset_right = 160.37
 offset_bottom = 123.318
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0.807843, 0.423529, 0.156863, 1)
-theme_override_constants/outline_size = 13
-theme_override_fonts/normal_font = ExtResource("2_cpm4x")
+theme = ExtResource("4_cio14")
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/normal_font_size = 19
 text = "Left Click - Roll Left
 Right Click - Roll Right
@@ -201,11 +196,8 @@ offset_left = -144.63
 offset_top = -108.682
 offset_right = 137.37
 offset_bottom = -22.6824
-theme = SubResource("Theme_ariom")
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0.807843, 0.423529, 0.156863, 1)
+theme = ExtResource("4_cio14")
 theme_override_constants/outline_size = 13
-theme_override_fonts/normal_font = ExtResource("2_cpm4x")
 theme_override_font_sizes/normal_font_size = 28
 text = "How To Play:"
 horizontal_alignment = 1
