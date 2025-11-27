@@ -6,9 +6,13 @@ extends Resource
 @export_category("Core Settings")
 ## The visual theme (sky, lighting, etc.) to apply.
 @export var theme_data: ThemeData
-## The number of segments the player must complete before this theme becomes active.
-## Behavior is controlled by 'Progress Theme On Hills Only' in the LevelGenerator.
+
+@export_group("Triggers")
+## If LevelGenerator is in SEGMENT mode, trigger after this many hills.
 @export_range(0, 100) var trigger_at_segment_count: int = 0
+## If LevelGenerator is in SCORE mode, trigger when player score exceeds this value.
+@export_range(0, 1000000, 500) var trigger_at_score: int = 0
+
 
 @export_category("Hill Generation")
 ## A weighted list of different hill shapes that can be generated in this biome.

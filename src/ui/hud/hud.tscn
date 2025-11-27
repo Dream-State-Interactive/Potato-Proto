@@ -155,7 +155,7 @@ text = " E"
 
 [node name="HowToPlay" type="Node2D" parent="."]
 position = Vector2(192, 981)
-scale = Vector2(1.08944, 1.08944)
+scale = Vector2(1.02181, 1.02181)
 
 [node name="Keybinds" type="RichTextLabel" parent="HowToPlay"]
 offset_left = -161.63

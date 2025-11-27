@@ -77,6 +77,7 @@ metadata/_custom_type_script = "uid://br7w0fjmbh8fo"
 script = ExtResource("2_1t2fn")
 theme_data = ExtResource("3_1t2fn")
 trigger_at_segment_count = 20
+trigger_at_score = 30000
 hill_profiles = Array[ExtResource("8_jana3")]([SubResource("Resource_vol0x"), SubResource("Resource_t5ebu")])
 hazard_configs = Array[ExtResource("1_djtqe")]([ExtResource("2_5f1w7"), ExtResource("3_mo43s"), ExtResource("4_17ua8")])
 store_rules = ExtResource("11_f7tyn")

@@ -33,10 +33,14 @@ glow_blend_mode = 1
 
 [node name="LevelGenerator" type="Node2D" parent="."]
 script = ExtResource("2_epjwl")
+progression_mode = 1
 world_themes = Array[ExtResource("2_5wuuv")]([ExtResource("3_jlf6b"), ExtResource("4_xf88g"), ExtResource("5_4ofxx"), ExtResource("6_a4u2y"), ExtResource("7_r3jc4")])
+progress_theme_on_hills_only = true
+generate_obstacles = false
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("2_ow8bn")
+hill_bottom_depth = null
 
 [node name="HazardGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("7_qulm8")
