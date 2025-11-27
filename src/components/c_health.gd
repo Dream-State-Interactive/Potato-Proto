@@ -33,8 +33,9 @@ signal died
 ## The maximum health of this object. Can be set in the Inspector.
 @export var max_health: float = 100.0:
 	set(value):
-		current_health = int((current_health/max_health) * value)
 		max_health = value
+		current_health = int((current_health/max_health) * value)
+		health_changed.emit(current_health, max_health)
 
 		health_changed.emit(current_health, max_health)
 
