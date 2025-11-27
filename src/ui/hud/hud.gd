@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var health_bar: ProgressBar = $TopLeft_VBox/HealthBar
 @onready var health_label: Label = $TopLeft_VBox/HealthBar/HealthLabel
 @onready var starch_label: Label = $TopLeft_VBox/StarchLabel
+@onready var score_label: Label = $ScoreLabel
 @onready var ability1_cooldown_bar: ProgressBar = $BottomRight_HBox/Ability1_Icon/Ability1_CooldownBar
 @onready var ability2_cooldown_bar: ProgressBar = $BottomRight_HBox/Ability2_Icon/Ability2_CooldownBar
 @onready var ability1_icon: TextureRect = $BottomRight_HBox/Ability1_Icon
@@ -50,7 +51,7 @@ func _process(delta: float) -> void:
 		speed = int(GameManager.player_instance.linear_velocity.length() / SPEED_NORMALIZER)
 		$TopLeft_VBox/SpeedLabel.text = (str(int(speed)) + " MPH")
 		score = int(GameManager.player_instance.score)
-		$TopLeft_VBox/ScoreLabel.text = "SCORE: " + str(score)
+		score_label.text = str(score)
 
 
 func connect_to_game_manager_signals():

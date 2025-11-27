@@ -69,36 +69,24 @@ text = "0/100"
 
 [node name="StarchLabel" type="Label" parent="TopLeft_VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_cpm4x")
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_cio14")
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 35
 text = "Starch: 0"
 
 [node name="SpeedLabel" type="Label" parent="TopLeft_VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_cpm4x")
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_cio14")
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 35
+text = "0 MPH"
 
 [node name="FPSLabel" type="Label" parent="TopLeft_VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_cpm4x")
-theme_override_font_sizes/font_size = 40
-
-[node name="ScoreLabel" type="Label" parent="TopLeft_VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.945098, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_cpm4x")
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_cio14")
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 35
+text = "FPS: 60"
 
 [node name="BottomRight_HBox" type="HBoxContainer" parent="."]
 anchors_preset = 3
@@ -173,7 +161,7 @@ text = " E"
 
 [node name="HowToPlay" type="Node2D" parent="."]
 position = Vector2(192, 981)
-scale = Vector2(1.02317, 1.02317)
+scale = Vector2(1.12365, 1.12365)
 
 [node name="Keybinds" type="RichTextLabel" parent="HowToPlay"]
 offset_left = -161.63
@@ -209,3 +197,14 @@ enable_hover_effect = false
 enable_pulse_effect = true
 pulse_max_scale = 1.15
 pulse_duration = 6.0
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 1221.0
+offset_top = 17.0
+offset_right = 1889.0
+offset_bottom = 124.0
+theme = ExtResource("4_cio14")
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 100
+text = "1234567890"
+horizontal_alignment = 2
