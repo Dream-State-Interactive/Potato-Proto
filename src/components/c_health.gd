@@ -37,8 +37,6 @@ signal died
 		current_health = int((current_health/max_health) * value)
 		health_changed.emit(current_health, max_health)
 
-		health_changed.emit(current_health, max_health)
-
 ## The current health of this object | Setter triggers anytime 'health_component.current_health = X' is performed
 var current_health: float:
 	get:
