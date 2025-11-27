@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://benqvi8jf1a3v"]
+[gd_scene load_steps=11 format=3 uid="uid://benqvi8jf1a3v"]
 
 [ext_resource type="Script" uid="uid://bs5iogpvifrxp" path="res://src/ui/hud/hud.gd" id="1_1wsu8"]
 [ext_resource type="FontFile" uid="uid://dmjdhsomc3fwp" path="res://assets/fonts/Coopers Town.otf" id="2_cpm4x"]
 [ext_resource type="Texture2D" uid="uid://bcd8k243yithf" path="res://assets/graphics/ui/panel.png" id="2_pv7ps"]
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="4_cio14"]
 [ext_resource type="Script" uid="uid://raghio163m0c" path="res://src/components/c_gui_scale.gd" id="5_cio14"]
+[ext_resource type="Texture2D" uid="uid://tkxsi2wm45t6" path="res://assets/graphics/sprites/collectibles/starch_point.png" id="6_cio14"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cio14"]
 bg_color = Color(0.945098, 0, 0, 1)
@@ -66,13 +67,6 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_cpm4x")
 theme_override_font_sizes/font_size = 26
 text = "0/100"
-
-[node name="StarchLabel" type="Label" parent="TopLeft_VBox"]
-layout_mode = 2
-theme = ExtResource("4_cio14")
-theme_override_constants/outline_size = 25
-theme_override_font_sizes/font_size = 35
-text = "Starch: 0"
 
 [node name="SpeedLabel" type="Label" parent="TopLeft_VBox"]
 layout_mode = 2
@@ -161,7 +155,7 @@ text = " E"
 
 [node name="HowToPlay" type="Node2D" parent="."]
 position = Vector2(192, 981)
-scale = Vector2(1.12365, 1.12365)
+scale = Vector2(1.08944, 1.08944)
 
 [node name="Keybinds" type="RichTextLabel" parent="HowToPlay"]
 offset_left = -161.63
@@ -208,3 +202,18 @@ theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 100
 text = "1234567890"
 horizontal_alignment = 2
+
+[node name="StarchLabel" type="Label" parent="."]
+offset_left = 1397.0
+offset_top = 153.0
+offset_right = 1788.0
+offset_bottom = 233.0
+theme = ExtResource("4_cio14")
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 75
+text = "0"
+horizontal_alignment = 2
+
+[node name="StarchPoint" type="Sprite2D" parent="."]
+position = Vector2(1858, 191)
+texture = ExtResource("6_cio14")
