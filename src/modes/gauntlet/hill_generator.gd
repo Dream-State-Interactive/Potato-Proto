@@ -2,7 +2,7 @@
 @tool
 extends Node2D
 
-const TERRAIN_MATERIAL = preload("res://src/themes/shaders/terrain_lighting.material") # Make sure to create this Material resource using the shader above!
+const terrain_material = preload("res://src/themes/shaders/terrain_lighting.material") # Make sure to create this Material resource using the shader above!
 
 # === Collectible Config ===
 const SPAWN_STARCH_POINTS_EVERY_N_POINTS: int = 3
@@ -47,7 +47,10 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 	fill_visual.append(Vector2(0.0, thickness))
 	visual_polygon.polygon = fill_visual
 	visual_polygon.color = params.get("color", Color.DARK_GREEN)
-
+	
+	if terrain_material:
+		visual_polygon.material = terrain_material
+		
 	# Build collision polygon (can be the same as visual for a simple rectangle)
 	collision_polygon.polygon = fill_visual
 
@@ -254,19 +257,51 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 				
 			# --- Build visual polygon (high res, pretty) ---
 			var fill_visual: PackedVector2Array = PackedVector2Array()
+			# Create an array for UVs
+			var fill_uvs: PackedVector2Array = PackedVector2Array()
+			
 			fill_visual.append_array(poly_surface_visual)
+			
+			# Assign Y=0.0 to all surface points (The Top)
+			# We can use X for horizontal mapping if needed, or just 0.0
+			for p in poly_surface_visual:
+				# Normalize X roughly so textures don't stretch infinitely if you use them later
+				var uv_x = p.x / length if length > 0 else 0.0
+				fill_uvs.append(Vector2(uv_x, 0.0))
+
 			if fill_visual.size() >= 2:
 				var max_y_v: float = -INF
 				for p in poly_surface_visual:
 					max_y_v = max(max_y_v, p.y)
 				
-				# UPDATED: Use hill_bottom_depth to extend far below the lowest point
 				var bottom_y_v: float = max_y_v + hill_bottom_depth
 				
+				# Add Bottom-Right point
 				fill_visual.append(Vector2(poly_surface_visual[fill_visual.size() - 1].x, bottom_y_v))
+				# UV for Bottom-Right (Y=1.0)
+				fill_uvs.append(Vector2(1.0, 1.0))
+				
+				# Add Bottom-Left point
 				fill_visual.append(Vector2(poly_surface_visual[0].x, bottom_y_v))
+				# UV for Bottom-Left (Y=1.0)
+				fill_uvs.append(Vector2(0.0, 1.0))
+			
 			visual_polygon.polygon = fill_visual
+			# Apply the custom UVs
+			visual_polygon.uv = fill_uvs
+			
 			visual_polygon.color = params.get("color", Color.DARK_GREEN)
+			
+			# --- Apply the shared material ---
+			if terrain_material:
+				visual_polygon.material = terrain_material
+				# Important: Ensure a texture is set
+				# If you use a solid color polygon, you might need a 1x1 white pixel texture.
+				if visual_polygon.texture == null:
+					# Create a placeholder texture if none exists so the shader works
+					var img = Image.create(4, 4, false, Image.FORMAT_RGBA8)
+					img.fill(Color.WHITE)
+					visual_polygon.texture = ImageTexture.create_from_image(img)
 			
 			# --- Build collision polygon (simplified) ---
 			var fill_collision: PackedVector2Array = PackedVector2Array()

@@ -47,7 +47,7 @@ var _parallax_sprites_b: Array[Sprite2D] = []
 # ─────────────────────────────────────────────────────────────────────────────
 # Scene refs / stack
 # ─────────────────────────────────────────────────────────────────────────────
-@export var terrain_material: ShaderMaterial
+@export var terrain_material: ShaderMaterial = preload("res://src/themes/shaders/terrain_lighting.material")
 @export var visual_stack_scene: PackedScene = preload("res://src/themes/visual_stack.tscn")
 var _stack: Node = null # instance of visual_stack.tscn
 
@@ -573,6 +573,19 @@ func _update_cloud_lighting() -> void:
 				mat.set_shader_parameter("moon_color", current_theme.moon_color)
 				mat.set_shader_parameter("sun_vis", sun_vis)
 				mat.set_shader_parameter("moon_vis", moon_vis)
+	# Since all hills share this one resource, updating it once updates all hills instantly.
+	if terrain_material:
+		terrain_material.set_shader_parameter("sun_pos_uv", sun_pos_uv)
+		terrain_material.set_shader_parameter("moon_pos_uv", moon_pos_uv)
+		terrain_material.set_shader_parameter("sun_color", current_theme.sun_color)
+		terrain_material.set_shader_parameter("moon_color", current_theme.moon_color)
+		terrain_material.set_shader_parameter("sun_vis", sun_vis)
+		terrain_material.set_shader_parameter("moon_vis", moon_vis)
+		
+		# Calculate and pass aspect ratio
+		var vp_size = get_viewport().get_visible_rect().size
+		var aspect = float(vp_size.x) / float(vp_size.y) if vp_size.y > 0 else 1.77
+		terrain_material.set_shader_parameter("screen_aspect", aspect)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers / Utilities
