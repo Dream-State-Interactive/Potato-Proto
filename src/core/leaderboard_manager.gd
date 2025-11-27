@@ -5,7 +5,7 @@ extends Node
 	get:
 		var endOfLeaderboard = (currentLeaderboard.size() if NUM_LEADERS_TO_SHOW > currentLeaderboard.size() else NUM_LEADERS_TO_SHOW) - 1
 		return currentLeaderboard[endOfLeaderboard].score
-@export var NUM_LEADERS_TO_SHOW: int = 10
+@export var NUM_LEADERS_TO_SHOW: int = 12
 
 signal leaderboard_updated
 

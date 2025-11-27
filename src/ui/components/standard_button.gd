@@ -29,7 +29,7 @@ func _on_pressed() -> void:
 		return
 		
 	if destination and not destination.is_empty():
-		SceneLoader.change_scene(destination)
+		SceneLoader.change_scene_with_transition(destination)
 	elif replaceMenu and not replaceMenu.is_empty():
 		MenuManager.replace_menu(replaceMenu)
 	elif pushMenu and not pushMenu.is_empty():

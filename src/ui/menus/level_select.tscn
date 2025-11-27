@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://raghio163m0c" path="res://src/components/c_gui_scale.gd" id="6_ligq2"]
 
 [node name="LevelSelect" type="CanvasLayer"]
-layer = 6
+layer = 4
 script = ExtResource("1_aqssb")
 back_button_paths = Array[NodePath]([NodePath("MarginContainer/VBoxContainer/BackButton")])
 

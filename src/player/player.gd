@@ -474,7 +474,7 @@ func force_visual_update():
 
 # This function is connected to the HealthComponent's 'damaged' signal.
 # It handles the visual effect of peeling the skin.
-func _on_damaged(amount: float, global_contact_point: Vector2, contact_normal: Vector2):
+func _on_damaged(_amount: float, global_contact_point: Vector2, _contact_normal: Vector2):
 	_ensure_skin_material_is_unique()
 	if damage_points.size() >= 64: return
 
@@ -551,7 +551,7 @@ func _on_died():
 	print("Player has died!")
 	player_death.emit(score)
 	score = 0
-	SceneLoader.change_scene("res://src/ui/menus/leaderboardDeath.tscn")
+	SceneLoader.change_scene_with_transition("res://src/ui/menus/leaderboardDeath.tscn")
 
 # This function is called from _ready() and by the GameManager after an upgrade/load.
 # It ensures the player's physics properties match the current StatBlock resource.
@@ -686,5 +686,5 @@ func _ensure_skin_material_is_unique():
 	_skin_material_made_unique = true
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_area_2d_body_entered(_body: Node2D) -> void:
 	pass # Replace with function body.

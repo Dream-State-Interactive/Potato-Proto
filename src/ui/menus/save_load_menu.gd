@@ -62,7 +62,7 @@ func on_load_pressed(slot_number: int):
 	
 	# 5. Tell the SceneLoader to go to the level from the save file.
 	print("Loading level '%s' from save slot %d" % [level_to_load, slot_number])
-	SceneLoader.change_scene(level_to_load)
+	SceneLoader.change_scene_with_transition(level_to_load)
 
 ## Updates button text and disabled states based on whether save files exist.
 func update_buttons():

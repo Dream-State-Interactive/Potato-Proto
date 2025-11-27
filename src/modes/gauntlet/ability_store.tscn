@@ -97,7 +97,6 @@ offset_top = -314.0
 offset_right = 1304.0
 offset_bottom = -177.0
 theme = ExtResource("3_f6ri4")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 80
 text = "STORE"
 metadata/_edit_use_anchors_ = true

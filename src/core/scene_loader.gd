@@ -18,9 +18,15 @@
 # =============================================================================
 extends Node
 
-
 const MAIN_GAME_SCENE = "res://src/main.tscn"
+const TRANSITION_SCENE = preload("res://src/ui/transitions/falling_potatoes.tscn")
+
 var current_scene_path: String = ""
+var target_scene_path: String = ""
+var _is_changing: bool = false
+var current_transition = null
+
+signal scene_loaded
 
 ## This is now the one and only safe way to change to a new scene.
 func change_scene(scene_path: String):
@@ -32,11 +38,32 @@ func change_scene(scene_path: String):
 	GameManager.current_level_path = scene_path
 	current_scene_path = scene_path
 	MenuManager.clear_history()
+	AudioService.stop_all_looping()
 	
 	get_tree().change_scene_to_file(scene_path)
+	await get_tree().process_frame
+	scene_loaded.emit()
 	GameManager.on_level_loaded()
 	
 	GameManager.resume()
+	
+func change_scene_with_transition(scene_path: String) -> void:
+	if _is_changing:
+		return
+	_is_changing = true
+
+	self.target_scene_path = scene_path
+
+	var transition := TRANSITION_SCENE.instantiate()
+	current_transition = transition
+	GUI.start_transition(transition)
+
+func _on_transition_opaque() -> void:
+	await change_scene(target_scene_path)
+	current_transition.finish_transition()
+	
+	_is_changing = false
+
 
 ## Restarts the current level
 func reload_current_scene():
@@ -46,7 +73,7 @@ func reload_current_scene():
 		
 	print("Restarting level: ", current_scene_path)
 	GameManager.reset_game_state()
-	change_scene(current_scene_path)
+	change_scene_with_transition(current_scene_path)
 
 ## Restarts the Main scene itself
 func hard_reset_game():

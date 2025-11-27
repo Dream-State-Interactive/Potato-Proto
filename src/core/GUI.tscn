@@ -10,3 +10,6 @@ layer = 5
 
 [node name="MenuBackdropContainer" type="CanvasLayer" parent="."]
 layer = 0
+
+[node name="TransitionContainer" type="CanvasLayer" parent="."]
+layer = 5

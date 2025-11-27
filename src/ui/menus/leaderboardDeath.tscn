@@ -12,17 +12,17 @@ script = ExtResource("1_8rs73")
 
 [node name="RestartButton" parent="." instance=ExtResource("2_8rs73")]
 offset_left = 1186.0
-offset_top = 951.0
+offset_top = 966.0
 offset_right = 4642.0
-offset_bottom = 2075.72
+offset_bottom = 2090.72
 text = "Restart"
 metadata/destination = "res://src/modes/gauntlet/world.tscn"
 
 [node name="MainMenuButton" parent="." instance=ExtResource("2_8rs73")]
-offset_left = 1554.0
-offset_top = 951.0
-offset_right = 5010.0
-offset_bottom = 2075.72
+offset_left = 1569.0
+offset_top = 966.0
+offset_right = 5025.0
+offset_bottom = 2090.72
 text = "Main Menu"
 metadata/destination = "res://src/ui/menus/MainMenu.tscn"
 
