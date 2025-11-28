@@ -1,7 +1,7 @@
 # res://LanguageTester.gd
 extends Node
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	# Press F1 for English
 	if Input.is_action_just_pressed("ui_page_up"):
 		print("LANGUAGE -> English")

@@ -22,8 +22,8 @@ func _ready():
 		if GameManager.is_item_collected(unique_id):
 			queue_free()
 
-func _on_collect(player: Player):
-	push_warning("The _on_collect() method must be implemented in a child collectinle")
+func _on_collect(_player: Player):
+	printerr("_on_collect must be implemented in child collectible classes")
 
 
 func _on_triggered(body):
