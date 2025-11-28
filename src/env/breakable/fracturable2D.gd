@@ -404,7 +404,7 @@ func _spawn_shard(verts: PackedVector2Array, impact_point: Vector2) -> void:
 	# visual `Polygon2D`. The actual collision is handled by the parent body's layer and mask.
 	var colpoly = CollisionPolygon2D.new()
 	colpoly.polygon = local_pts
-	shard.add_child(colpoly)
+	shard.call_deferred("add_child", colpoly)
 
 
 	# =============================================================================
