@@ -59,7 +59,7 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 	}
 
 
-func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool) -> Dictionary:
+func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards: bool) -> Dictionary:
 	var generator_type: int = params.get("generator_type", HillGenerationParams.GeneratorType.NOISE_HILL)
 
 	match generator_type:
@@ -78,7 +78,7 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			
 			# --- Noise-based height function ---
 			var noise: FastNoiseLite = FastNoiseLite.new()
-			noise.seed = seed
+			noise.seed = noise_seed
 			noise.frequency = float(params.get("frequency", 0.0015))
 			noise.fractal_octaves = 1
 			

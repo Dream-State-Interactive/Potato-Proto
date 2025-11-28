@@ -67,7 +67,7 @@ func _ready() -> void:
 # The rest of your script (physics_process, build_worm, etc.) remains exactly the same.
 # It will now use the dynamically set 'initial_stack' value.
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	if player == null:

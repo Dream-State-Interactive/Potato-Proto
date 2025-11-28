@@ -9,8 +9,8 @@ extends Node2D
 
 var _rng := RandomNumberGenerator.new()
 
-func generate(surface_points: PackedVector2Array, seed: int, index: int) -> Node2D:
-	_rng.seed = seed
+func generate(surface_points: PackedVector2Array, rng_seed: int, index: int) -> Node2D:
+	_rng.seed = rng_seed
 	
 	var container := Node2D.new()
 	container.name = "HazardsContainer"

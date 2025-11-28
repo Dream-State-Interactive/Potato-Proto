@@ -339,13 +339,13 @@ func _generate_procedural_segment(index: int, seed: int, recipe: Dictionary) -> 
 	
 	return {"node": segment, "end_pos_local": content_end_pos_local}
 
-func _generate_handcrafted_segment(name: String, scene: PackedScene) -> Dictionary:
+func _generate_handcrafted_segment(segment_name: String, scene: PackedScene) -> Dictionary:
 	if not scene:
-		printerr("Attempted to generate a handcrafted segment with a null scene: ", name)
+		printerr("Attempted to generate a handcrafted segment with a null scene: ", segment_name)
 		return {}
 		
 	var segment = Node2D.new()
-	segment.name = name
+	segment.name = segment_name
 	segment.add_to_group("level_segment")
 	segment.set_meta("segment_type", "special")
 	
