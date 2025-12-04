@@ -33,7 +33,7 @@ func _process(_delta: float):
 		
 	super(_delta)
 
-func perform_ability(player_body: RigidBody2D):
+func perform_ability(_player_body: RigidBody2D):
 	roll_input = Input.get_axis("roll_left", "roll_right")
 	directionVector = Vector2.RIGHT
 	if roll_input < 0:
