@@ -38,17 +38,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Determine the zoom direction based on the invert_scroll flag
 	var zoom_in_action = "scroll_down" if not invert_scroll else "scroll_up"
 	var zoom_out_action = "scroll_up" if not invert_scroll else "scroll_down"
+	
+	var zoom_amount = Vector2.ONE * _target_zoom * zoom_increment
 
 	# Check for zoom in action
 	if event.is_action_pressed(zoom_in_action):
-		# Decrease the target zoom values (zooming in)
-		_target_zoom -= Vector2.ONE * zoom_increment
+		_target_zoom -= zoom_amount
 		get_viewport().set_input_as_handled()
 
 	# Check for zoom out action
 	if event.is_action_pressed(zoom_out_action):
-		# Increase the target zoom values (zooming out)
-		_target_zoom += Vector2.ONE * zoom_increment
+		_target_zoom += zoom_amount
 		get_viewport().set_input_as_handled()
 
 	# Clamp the target zoom to stay within the min/max bounds
