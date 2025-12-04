@@ -52,6 +52,7 @@ func generate(surface_points: PackedVector2Array, rng_seed: int, index: int) -> 
 
 			# Random check to see if we should spawn this hazard
 			if _rng.randf() < density:
+				@warning_ignore("integer_division")
 				var spawn_index = i + (config.slot_cost / 2)
 				if spawn_index + 1 >= total_points:
 					continue

@@ -130,30 +130,30 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 			var max_col_vertices: int = int(params.get("max_collision_vertices", max_collision_vertices))
 			
 			# ----- shape profile selection -----
-			var shape_profile: Callable = func(t: float) -> float:
+			var shape_profile: Callable = func(_t: float) -> float:
 				return 0.0
 			
 			match generator_type:
 				HillGenerationParams.GeneratorType.NOISE_HILL:
-					shape_profile = func(t: float) -> float:
+					shape_profile = func(_t: float) -> float:
 						return 0.0
 				HillGenerationParams.GeneratorType.VALLEY:
 					# 0 → dip → 0 (bowl), +Y is down
-					shape_profile = func(t: float) -> float:
-						return sin(PI * t)  # 0..1..0
+					shape_profile = func(_t: float) -> float:
+						return sin(PI * _t)  # 0..1..0
 				HillGenerationParams.GeneratorType.HILL:
 					# 0 → crest → 0 (bump up)
-					shape_profile = func(t: float) -> float:
-						return -sin(PI * t)
+					shape_profile = func(_t: float) -> float:
+						return -sin(PI * _t)
 				HillGenerationParams.GeneratorType.WAVE:
 					# Wavy roller-coaster; two oscillations
-					shape_profile = func(t: float) -> float:
-						return 0.7 * sin(TAU * t * 2.0)
+					shape_profile = func(_t: float) -> float:
+						return 0.7 * sin(TAU * _t * 2.0)
 				HillGenerationParams.GeneratorType.UPHILL:
-					shape_profile = func(t: float) -> float:
+					shape_profile = func(_t: float) -> float:
 						return 0.0
 				_:
-					shape_profile = func(t: float) -> float:
+					shape_profile = func(_t: float) -> float:
 						return 0.0
 			
 			# Flip global trend for uphill so potato climbs instead of descending.
