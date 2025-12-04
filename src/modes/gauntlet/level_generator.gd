@@ -50,9 +50,6 @@ var _completed_hill_segments: int = 0
 var _current_world_theme: WorldTheme = null
 var _next_world_theme_index: int = 0
 
-var _player_ref: Node2D = null
-
-
 func _ready():
 	if Engine.is_editor_hint():
 		return

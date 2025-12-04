@@ -20,11 +20,37 @@ const EPS: float = 0.001
 ## How far down (in pixels) the terrain extends below the lowest surface point.
 ## Increase this if you see the sky under the ground.
 @export var hill_bottom_depth: float = 2000.0
+@export var length: float = 1200.0
+@export var slope: float = 0.2
+@export var steepness_increase: float = 0.00005
+@export var amplitude: float = 60.0
+@export var shape_profile: Callable = func(_t: float) -> float:
+	return 0.0
 
+@export var shape_amplitude: float = 60.0
+
+var noise: FastNoiseLite = FastNoiseLite.new()
+
+var generator_type: int = HillGenerationParams.GeneratorType.NOISE_HILL
 var generate_backwards = false
 var hill: Node2D
 var ground_body: StaticBody2D
 var collision_polygon: CollisionPolygon2D
+
+func y_raw(x: float) -> float:
+	var noise_amplitude: float = amplitude * 0.5
+
+	if generator_type == HillGenerationParams.GeneratorType.WAVE:
+		noise_amplitude = amplitude * 0.25   # softer chop, more swell
+
+	var t: float = (x / length) if length > 0.0 else 0.0
+	# 1. Global trend: downhill or uphill
+	var global_trend: float = x * slope + x * x * steepness_increase
+	# 2. Macro shape: hill/valley/wave/etc.
+	var shape_offset: float = float(shape_profile.call(t)) * amplitude
+	# 3. Noise for bumps & texture.
+	var noise_component: float = noise.get_noise_1d(x) * noise_amplitude
+	return global_trend + shape_offset + noise_component
 
 func generate_collectibles(spawn_points: PackedVector2Array) -> void:
 	if not generate_backwards:
@@ -45,7 +71,7 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 	var visual_polygon: Polygon2D = Polygon2D.new()
 	collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
 
-	var length: float = float(params.get("length", 1200.0))
+	length = float(params.get("length", 1200.0))
 	
 	# UPDATED: Use the export variable for thickness
 	var thickness: float = hill_bottom_depth
@@ -85,7 +111,7 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 
 func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards: bool) -> Dictionary:
 	generate_backwards = is_generating_backwards
-	var generator_type: int = params.get("generator_type", HillGenerationParams.GeneratorType.NOISE_HILL)
+	generator_type = params.get("generator_type", HillGenerationParams.GeneratorType.NOISE_HILL)
 
 	match generator_type:
 		HillGenerationParams.GeneratorType.FLAT_LINE:
@@ -102,16 +128,15 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 			collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
 			
 			# --- Noise-based height function ---
-			var noise: FastNoiseLite = FastNoiseLite.new()
 			noise.seed = noise_seed
 			noise.frequency = float(params.get("frequency", 0.0015))
 			noise.fractal_octaves = 1
 			
 			# --- Shape params ---
-			var length: float    = float(params.get("length", 1200.0))
-			var amplitude: float = float(params.get("amplitude", 60.0))
-			var slope: float     = float(params.get("slope", 0.2))
-			var steepness_increase: float = float(params.get("steepness_increase", 0.00005))
+			length = float(params.get("length", 1200.0))
+			amplitude = float(params.get("amplitude", 60.0))
+			slope = float(params.get("slope", 0.2))
+			steepness_increase = float(params.get("steepness_increase", 0.00005))
 			# For bowl/crest shapes, we want the global trend mostly flat so
 			# the start and end are near the same height.
 			if generator_type == HillGenerationParams.GeneratorType.VALLEY \
@@ -119,8 +144,6 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 			or generator_type == HillGenerationParams.GeneratorType.WAVE:
 				slope = 0.0
 				steepness_increase = 0.0
-			
-			var base_y: float = 0.0 # Each segment starts at its own local origin
 			
 			# Control vs visual density
 			var control_step: float = float(params.get("control_step", 140.0))
@@ -130,9 +153,6 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 			var max_col_vertices: int = int(params.get("max_collision_vertices", max_collision_vertices))
 			
 			# ----- shape profile selection -----
-			var shape_profile: Callable = func(_t: float) -> float:
-				return 0.0
-			
 			match generator_type:
 				HillGenerationParams.GeneratorType.NOISE_HILL:
 					shape_profile = func(_t: float) -> float:
@@ -161,22 +181,6 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 				slope = -abs(slope)
 				steepness_increase = -abs(steepness_increase) * 0.25
 			
-			var shape_amplitude: float = amplitude
-			var noise_amplitude: float = amplitude * 0.5
-			
-			if generator_type == HillGenerationParams.GeneratorType.WAVE:
-				noise_amplitude = amplitude * 0.25   # softer chop, more swell
-			
-			# --- Height functions (patched) ---
-			var y_raw: Callable = func(x: float) -> float:
-				var t: float = (x / length) if length > 0.0 else 0.0
-				# 1. Global trend: downhill or uphill
-				var global_trend: float = x * slope + x * x * steepness_increase
-				# 2. Macro shape: hill/valley/wave/etc.
-				var shape_offset: float = float(shape_profile.call(t)) * shape_amplitude
-				# 3. Noise for bumps & texture.
-				var noise_component: float = noise.get_noise_1d(x) * noise_amplitude
-				return base_y + global_trend + shape_offset + noise_component
 			
 			# Normalize so the seam starts exactly at y=0 (relative to this segment's origin).
 			var y0: float = float(y_raw.call(0.0))
@@ -194,7 +198,6 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 					# Subtract a linear ramp so y_at(0) = 0 and y_at(length) = 0
 					return base - total_delta * t_local
 
-				
 			# Bezier handle length: shorter on sharp curves
 			var handle_len_fn: Callable = func(x: float, y_prev: float, y: float, y_next: float) -> float:
 				var local_step: float = control_step
@@ -354,7 +357,7 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 			hill.add_child(ground_body)
 			
 			# End position = last baked visual point (for chaining hills)
-			var end_pos: Vector2 = surface_points_visual[surface_points_visual.size() - 1] if surface_points_visual.size() > 0 else Vector2(length, base_y + length * slope)
+			var end_pos: Vector2 = surface_points_visual[surface_points_visual.size() - 1] if surface_points_visual.size() > 0 else Vector2(length, length * slope)
 
 			return {
 				"node": hill,
