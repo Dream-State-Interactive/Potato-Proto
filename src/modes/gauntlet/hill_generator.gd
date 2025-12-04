@@ -21,13 +21,27 @@ const EPS: float = 0.001
 ## Increase this if you see the sky under the ground.
 @export var hill_bottom_depth: float = 2000.0
 
+var generate_backwards = false
+var hill: Node2D
+var ground_body: StaticBody2D
+var collision_polygon: CollisionPolygon2D
+
+func generate_collectibles(spawn_points: PackedVector2Array) -> void:
+	if not generate_backwards:
+		var i: int = 0
+		for p in spawn_points:
+			if i % SPAWN_STARCH_POINTS_EVERY_N_POINTS == 0:
+				var starch: Node2D = STARCH_POINT.instantiate()
+				hill.add_child(starch)
+				starch.position = p + Vector2(0.0, -100.0)
+			i += 1
 
 func _generate_flat_line(params: Dictionary) -> Dictionary:
-	var hill: Node2D = Node2D.new()
+	hill = Node2D.new()
 	hill.name = "FlatLineContainer"
 
-	var ground_body: StaticBody2D = StaticBody2D.new()
-	var collision_polygon: CollisionPolygon2D = CollisionPolygon2D.new()
+	ground_body = StaticBody2D.new()
+	collision_polygon = CollisionPolygon2D.new()
 	var visual_polygon: Polygon2D = Polygon2D.new()
 	collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
 
@@ -69,7 +83,8 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 	}
 
 
-func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool) -> Dictionary:
+func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards: bool) -> Dictionary:
+	generate_backwards = is_generating_backwards
 	var generator_type: int = params.get("generator_type", HillGenerationParams.GeneratorType.NOISE_HILL)
 
 	match generator_type:
@@ -77,18 +92,18 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 			return _generate_flat_line(params)
 		_:
 			# --- Root node for this hill segment ---
-			var hill: Node2D = Node2D.new()
+			hill = Node2D.new()
 			hill.name = "HillContainer"
 			
 			# Physics & visuals
-			var ground_body: StaticBody2D = StaticBody2D.new()
-			var collision_polygon: CollisionPolygon2D = CollisionPolygon2D.new()
+			ground_body = StaticBody2D.new()
+			collision_polygon = CollisionPolygon2D.new()
 			var visual_polygon: Polygon2D = Polygon2D.new()
 			collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
 			
 			# --- Noise-based height function ---
 			var noise: FastNoiseLite = FastNoiseLite.new()
-			noise.seed = seed
+			noise.seed = noise_seed
 			noise.frequency = float(params.get("frequency", 0.0015))
 			noise.fractal_octaves = 1
 			
@@ -331,14 +346,7 @@ func generate_hill(params: Dictionary, seed: int, is_generating_backwards: bool)
 # ============================================================================================
 
 			# --- Starch collectibles ---
-			if not is_generating_backwards:
-				var i: int = 0
-				for p in spawn_points:
-					if i % SPAWN_STARCH_POINTS_EVERY_N_POINTS == 0:
-						var starch: Node2D = STARCH_POINT.instantiate()
-						hill.add_child(starch)
-						starch.position = p + Vector2(0.0, -100.0)
-					i += 1
+			generate_collectibles(spawn_points)
 
 			# --- Assemble final hill node ---
 			ground_body.add_child(collision_polygon)

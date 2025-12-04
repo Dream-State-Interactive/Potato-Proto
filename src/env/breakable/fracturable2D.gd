@@ -376,17 +376,17 @@ func _spawn_shard(verts: PackedVector2Array, impact_point: Vector2) -> void:
 	# calculates the final pixel coordinate on the texture for each vertex.
 	var tex = polygon_2d.texture
 	if tex:
-		var offset = polygon_2d.texture_offset
-		var rotation = polygon_2d.texture_rotation
-		var scale_uv = polygon_2d.texture_scale
+		var texture_offset = polygon_2d.texture_offset
+		var texture_rotation = polygon_2d.texture_rotation
+		var texture_scale_uv = polygon_2d.texture_scale
 
 		var uvs := PackedVector2Array()
 		for v in verts:
 			var uv = v
 			# THE FORMULA: uv_pixel = (vertex_local - texture_offset).rotated(texture_rotation) * texture_scale
-			uv -= offset      # 1. Shift vertex relative to the texture's origin.
-			uv = uv.rotated(rotation) # 2. Rotate it around that new origin.
-			uv *= scale_uv    # 3. Scale it.
+			uv -= texture_offset      # 1. Shift vertex relative to the texture's origin.
+			uv = uv.rotated(texture_rotation) # 2. Rotate it around that new origin.
+			uv *= texture_scale_uv    # 3. Scale it.
 			uvs.append(uv)
 		
 		# We assign the final array of pixel coordinates. Godot's renderer now knows
@@ -404,7 +404,7 @@ func _spawn_shard(verts: PackedVector2Array, impact_point: Vector2) -> void:
 	# visual `Polygon2D`. The actual collision is handled by the parent body's layer and mask.
 	var colpoly = CollisionPolygon2D.new()
 	colpoly.polygon = local_pts
-	shard.add_child(colpoly)
+	shard.call_deferred("add_child", colpoly)
 
 
 	# =============================================================================

@@ -308,7 +308,7 @@ func _get_theme_for_index(index: int) -> WorldTheme:
 # =======================================
 # --- Segment Instantiation Functions ---
 # =======================================
-func _generate_procedural_segment(index: int, seed: int, recipe: Dictionary) -> Dictionary:
+func _generate_procedural_segment(index: int, segment_seed: int, recipe: Dictionary) -> Dictionary:
 	var segment = Node2D.new()
 	segment.name = "HillSegment_" + str(index)
 	segment.add_to_group("level_segment")
@@ -337,7 +337,7 @@ func _generate_procedural_segment(index: int, seed: int, recipe: Dictionary) -> 
 		hill_params["color"] = _current_world_theme.theme_data.terrain_fill
 	
 	var should_spawn_starch = (index > ProgressionManager.max_forward_index)
-	var hill_result = hill_generator.generate_hill(hill_params, seed, not should_spawn_starch)
+	var hill_result = hill_generator.generate_hill(hill_params, segment_seed, not should_spawn_starch)
 	var hill_node: Node2D = hill_result["node"]
 	hill_node.z_as_relative = false
 	hill_node.z_index = 5
@@ -345,7 +345,7 @@ func _generate_procedural_segment(index: int, seed: int, recipe: Dictionary) -> 
 	segment.add_child(hill_node)
 	
 	var spawn_pts: PackedVector2Array = hill_result.get("spawn_points", hill_result["surface_points"])
-	var hazards_node: Node2D = hazard_generator.generate(spawn_pts, seed, index)
+	var hazards_node: Node2D = hazard_generator.generate(spawn_pts, segment_seed, index)
 	if hazards_node:
 		hill_node.add_child(hazards_node)
 
@@ -364,13 +364,13 @@ func _generate_procedural_segment(index: int, seed: int, recipe: Dictionary) -> 
 	
 	return {"node": segment, "end_pos_local": content_end_pos_local}
 
-func _generate_handcrafted_segment(name: String, scene: PackedScene) -> Dictionary:
+func _generate_handcrafted_segment(segment_name: String, scene: PackedScene) -> Dictionary:
 	if not scene:
-		printerr("Attempted to generate a handcrafted segment with a null scene: ", name)
+		printerr("Attempted to generate a handcrafted segment with a null scene: ", segment_name)
 		return {}
 		
 	var segment = Node2D.new()
-	segment.name = name
+	segment.name = segment_name
 	segment.add_to_group("level_segment")
 	segment.set_meta("segment_type", "special")
 	
