@@ -10,7 +10,10 @@ extends Node2D
 
 @export_range(1, 20) var editor_preview_length: int = 5
 
+enum ProgressionMode { SEGMENTS, SCORE }
+
 @export_group("World Theming")
+@export var progression_mode: ProgressionMode = ProgressionMode.SEGMENTS
 ## Assign your WorldTheme resources here. They will be applied in order based on their 'trigger_at_segment_count'.
 @export var world_themes: Array[WorldTheme]
 ## If true, theme progression will only advance after completing a 'hill' segment, ignoring special segments.
@@ -18,6 +21,8 @@ extends Node2D
 @export var progress_theme_on_hills_only: bool = false
 
 @export_group("Generation Config")
+## If true, obstacle segments (flat areas with boxes) will be appended to hills.
+@export var generate_obstacles: bool = true 
 @export_range(2, 20) var max_active_segments: int = 5
 @export_range(1, 10) var pregenerate_forward: int = 3
 @export_range(1, 10) var pregenerate_backward: int = 2
@@ -44,6 +49,8 @@ var _segment_recipe_cache: Dictionary = {}
 var _completed_hill_segments: int = 0
 var _current_world_theme: WorldTheme = null
 var _next_world_theme_index: int = 0
+
+var _player_ref: Node2D = null
 
 
 func _ready():
@@ -123,11 +130,22 @@ func _check_and_apply_theme_change():
 		return
 
 	var next_theme: WorldTheme = world_themes[_next_world_theme_index]
-	var progress_counter = ProgressionManager.max_forward_index if not progress_theme_on_hills_only else _completed_hill_segments
+	var should_trigger := false
 
-	if progress_counter >= next_theme.trigger_at_segment_count:
+	match progression_mode:
+		ProgressionMode.SEGMENTS:
+			var progress_counter = ProgressionManager.max_forward_index if not progress_theme_on_hills_only else _completed_hill_segments
+			should_trigger = progress_counter >= next_theme.trigger_at_segment_count
+		
+		ProgressionMode.SCORE:
+			# Check the Player's Score via GameManager
+			if is_instance_valid(GameManager.player_instance):
+				should_trigger = GameManager.player_instance.score >= next_theme.trigger_at_score
+
+	if should_trigger:
 		_current_world_theme = next_theme
-		_apply_world_theme(_current_world_theme, false)
+		# Use a slightly longer transition for distance to mask the exact pixel line
+		_apply_world_theme(_current_world_theme, false) 
 		_next_world_theme_index += 1
 
 func _apply_world_theme(theme: WorldTheme, instant: bool):
@@ -331,11 +349,18 @@ func _generate_procedural_segment(index: int, segment_seed: int, recipe: Diction
 	if hazards_node:
 		hill_node.add_child(hazards_node)
 
-	var obstacle_result = obstacle_generator.generate_obstacle(ProgressionManager.get_obstacle_complexity(index))
-	var content_node = obstacle_result["node"]
-	var content_end_pos_local = hill_end_pos_local + Vector2(float(obstacle_result.get("width", 1000.0)), 0)
-	content_node.position = hill_end_pos_local
-	segment.add_child(content_node)
+	# --- OBSTACLE GENERATION LOGIC ---
+	# Initialize content_end_pos_local to the hill's end. 
+	# If obstacles are generated, this will be updated.
+	var content_end_pos_local = hill_end_pos_local
+
+	if generate_obstacles:
+		var obstacle_result = obstacle_generator.generate_obstacle(ProgressionManager.get_obstacle_complexity(index))
+		var content_node = obstacle_result["node"]
+		# Add the obstacle width to the total segment length
+		content_end_pos_local = hill_end_pos_local + Vector2(float(obstacle_result.get("width", 1000.0)), 0)
+		content_node.position = hill_end_pos_local
+		segment.add_child(content_node)
 	
 	return {"node": segment, "end_pos_local": content_end_pos_local}
 

@@ -2,17 +2,24 @@
 @tool
 extends Node2D
 
+const terrain_material = preload("res://src/themes/shaders/terrain_lighting.material") # Make sure to create this Material resource using the shader above!
+
 # === Collectible Config ===
 const SPAWN_STARCH_POINTS_EVERY_N_POINTS: int = 3
 const STARCH_POINT := preload("res://src/collectibles/starch_point.tscn")
 const WaveHillAnimator := preload("res://src/modes/gauntlet/wave_hill_animator.gd")
 const EPS: float = 0.001
 
+
 # === Export Variables ===
 @export var visual_bake_interval: float = 8.0      # Resolution of visual hills
 @export var collision_bake_interval: float = 18.0  # Resolution of collision hills
 @export var simplify_epsilon_px: float = 4.0       # Simplification tolerance for collision (px)
 @export var max_collision_vertices: int = 512      # Safety cap for collision vertex count
+
+## How far down (in pixels) the terrain extends below the lowest surface point.
+## Increase this if you see the sky under the ground.
+@export var hill_bottom_depth: float = 2000.0
 
 var generate_backwards = false
 var hill: Node2D
@@ -39,8 +46,9 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 	collision_polygon.build_mode = CollisionPolygon2D.BUILD_SOLIDS
 
 	var length: float = float(params.get("length", 1200.0))
-	# A flat line has no amplitude, but we need a thickness for the polygon
-	var thickness: float = 200.0
+	
+	# UPDATED: Use the export variable for thickness
+	var thickness: float = hill_bottom_depth
 
 	# The surface is just two points
 	var surface_points: PackedVector2Array = [Vector2.ZERO, Vector2(length, 0.0)]
@@ -53,7 +61,10 @@ func _generate_flat_line(params: Dictionary) -> Dictionary:
 	fill_visual.append(Vector2(0.0, thickness))
 	visual_polygon.polygon = fill_visual
 	visual_polygon.color = params.get("color", Color.DARK_GREEN)
-
+	
+	if terrain_material:
+		visual_polygon.material = terrain_material
+		
 	# Build collision polygon (can be the same as visual for a simple rectangle)
 	collision_polygon.polygon = fill_visual
 
@@ -261,16 +272,51 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 				
 			# --- Build visual polygon (high res, pretty) ---
 			var fill_visual: PackedVector2Array = PackedVector2Array()
+			# Create an array for UVs
+			var fill_uvs: PackedVector2Array = PackedVector2Array()
+			
 			fill_visual.append_array(poly_surface_visual)
+			
+			# Assign Y=0.0 to all surface points (The Top)
+			# We can use X for horizontal mapping if needed, or just 0.0
+			for p in poly_surface_visual:
+				# Normalize X roughly so textures don't stretch infinitely if you use them later
+				var uv_x = p.x / length if length > 0 else 0.0
+				fill_uvs.append(Vector2(uv_x, 0.0))
+
 			if fill_visual.size() >= 2:
 				var max_y_v: float = -INF
 				for p in poly_surface_visual:
 					max_y_v = max(max_y_v, p.y)
-				var bottom_y_v: float = max(amplitude * 2.2, max_y_v + amplitude * 0.6)
+				
+				var bottom_y_v: float = max_y_v + hill_bottom_depth
+				
+				# Add Bottom-Right point
 				fill_visual.append(Vector2(poly_surface_visual[fill_visual.size() - 1].x, bottom_y_v))
+				# UV for Bottom-Right (Y=1.0)
+				fill_uvs.append(Vector2(1.0, 1.0))
+				
+				# Add Bottom-Left point
 				fill_visual.append(Vector2(poly_surface_visual[0].x, bottom_y_v))
+				# UV for Bottom-Left (Y=1.0)
+				fill_uvs.append(Vector2(0.0, 1.0))
+			
 			visual_polygon.polygon = fill_visual
+			# Apply the custom UVs
+			visual_polygon.uv = fill_uvs
+			
 			visual_polygon.color = params.get("color", Color.DARK_GREEN)
+			
+			# --- Apply the shared material ---
+			if terrain_material:
+				visual_polygon.material = terrain_material
+				# Important: Ensure a texture is set
+				# If you use a solid color polygon, you might need a 1x1 white pixel texture.
+				if visual_polygon.texture == null:
+					# Create a placeholder texture if none exists so the shader works
+					var img = Image.create(4, 4, false, Image.FORMAT_RGBA8)
+					img.fill(Color.WHITE)
+					visual_polygon.texture = ImageTexture.create_from_image(img)
 			
 			# --- Build collision polygon (simplified) ---
 			var fill_collision: PackedVector2Array = PackedVector2Array()
@@ -279,7 +325,10 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 				var max_y_c: float = -INF
 				for p in poly_surface_collision:
 					max_y_c = max(max_y_c, p.y)
-				var bottom_y_c: float = max(amplitude * 2.2, max_y_c + amplitude * 0.6)
+				
+				# UPDATED: Use hill_bottom_depth here as well
+				var bottom_y_c: float = max_y_c + hill_bottom_depth
+				
 				fill_collision.append(Vector2(poly_surface_collision[fill_collision.size() - 1].x, bottom_y_c))
 				fill_collision.append(Vector2(poly_surface_collision[0].x, bottom_y_c))
 			collision_polygon.polygon = fill_collision

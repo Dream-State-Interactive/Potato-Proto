@@ -43,9 +43,11 @@ var _parallax_layers: Array[Parallax2D] = []
 var _parallax_sprites_a: Array[Sprite2D] = []
 var _parallax_sprites_b: Array[Sprite2D] = []
 
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Scene refs / stack
 # ─────────────────────────────────────────────────────────────────────────────
+@export var terrain_material: ShaderMaterial = preload("res://src/themes/shaders/terrain_lighting.material")
 @export var visual_stack_scene: PackedScene = preload("res://src/themes/visual_stack.tscn")
 var _stack: Node = null # instance of visual_stack.tscn
 
@@ -460,18 +462,29 @@ func _transition_parallax_fade(tw: Tween, old_theme: ThemeData, new_theme: Theme
 		var s_out := p_layer.get_node_or_null(sprite_name_out) as Sprite2D
 		var s_in  := p_layer.get_node_or_null(sprite_name_in) as Sprite2D
 
-		if not is_instance_valid(s_out) or not is_instance_valid(s_in):
-			printerr("ThemeManager: ParallaxLayer%d requires two Sprite2D children named 'SpriteA' and 'SpriteB' for fading." % i)
-			continue
+		# 1. Handle Motion Scale Tweening
+		var old_motion = old_theme.get_parallax_motion(i) if old_theme else new_theme.get_parallax_motion(i)
+		var new_motion = new_theme.get_parallax_motion(i)
+		
+		# Even if textures are null, we tween the motion to prevent the layer from jumping
+		# if a texture suddenly appears later.
+		if old_motion != new_motion:
+			tw.parallel().tween_property(p_layer, "scroll_scale", new_motion, seconds)
 
+		# 2. Handle Texture Fading
 		# --- FADE IN ---
 		if i < new_textures.size() and new_textures[i] != null:
-			p_layer.visible = true
-			_configure_parallax_sprite(p_layer, s_in, new_textures[i], new_theme.get_parallax_motion(i), i)
+			p_layer.visible = true # Ensure layer is visible
+			
+			# We DO NOT set scroll_scale here instantly. We let the tween handle it.
+			# We only configure the sprite texture and Z-index.
+			_configure_parallax_sprite_texture_only(s_in, new_textures[i], i)
+			
 			s_in.modulate.a = 0.0
 			s_in.visible = true
 			tw.parallel().tween_property(s_in, "modulate:a", 1.0, seconds)
 		else:
+			# If no new texture, fade out whatever might be there or keep it hidden
 			s_in.visible = false
 
 		# --- FADE OUT ---
@@ -480,6 +493,13 @@ func _transition_parallax_fade(tw: Tween, old_theme: ThemeData, new_theme: Theme
 			tw.parallel().tween_property(s_out, "modulate:a", 0.0, seconds)
 		else:
 			s_out.visible = false
+
+# Set texture without touching motion scale
+func _configure_parallax_sprite_texture_only(sprite: Sprite2D, texture: Texture2D, layer_index: int) -> void:
+	sprite.texture = texture
+	sprite.centered = false
+	sprite.z_index = Z_PARALLAX_BASE + (MAX_PARALLAX_LAYERS - 1 - layer_index)
+	sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 
 func _update_overlays() -> void:
 	var canvas_mod := _n(NP_CANVAS_MOD) as CanvasModulate
@@ -553,6 +573,19 @@ func _update_cloud_lighting() -> void:
 				mat.set_shader_parameter("moon_color", current_theme.moon_color)
 				mat.set_shader_parameter("sun_vis", sun_vis)
 				mat.set_shader_parameter("moon_vis", moon_vis)
+	# Since all hills share this one resource, updating it once updates all hills instantly.
+	if terrain_material:
+		terrain_material.set_shader_parameter("sun_pos_uv", sun_pos_uv)
+		terrain_material.set_shader_parameter("moon_pos_uv", moon_pos_uv)
+		terrain_material.set_shader_parameter("sun_color", current_theme.sun_color)
+		terrain_material.set_shader_parameter("moon_color", current_theme.moon_color)
+		terrain_material.set_shader_parameter("sun_vis", sun_vis)
+		terrain_material.set_shader_parameter("moon_vis", moon_vis)
+		
+		# Calculate and pass aspect ratio
+		var vp_size = get_viewport().get_visible_rect().size
+		var aspect = float(vp_size.x) / float(vp_size.y) if vp_size.y > 0 else 1.77
+		terrain_material.set_shader_parameter("screen_aspect", aspect)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers / Utilities

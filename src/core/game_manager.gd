@@ -224,6 +224,9 @@ func reset_game_state():
 ## It decides whether to reset for a new game or trigger a load.
 func on_level_loaded():
 	print("GameManager: A level has finished loading. Checking state.")
+	if current_level_path == "res://src/ui/menus/MainMenu.tscn":
+		print("GameManager: Main Menu loaded. Waiting for user input.")
+		return
 	if next_scene_is_new_game:
 		reset_game_state()
 	else:
