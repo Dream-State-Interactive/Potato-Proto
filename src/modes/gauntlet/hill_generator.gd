@@ -27,6 +27,8 @@ const EPS: float = 0.001
 @export var shape_profile: Callable = func(_t: float) -> float:
 	return 0.0
 
+@export var control_step: float = 140.0
+
 @export var shape_amplitude: float = 60.0
 
 var noise: FastNoiseLite = FastNoiseLite.new()
@@ -146,9 +148,9 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 				steepness_increase = 0.0
 			
 			# Control vs visual density
-			var control_step: float = float(params.get("control_step", 140.0))
-			var vis_bake: float = float(params.get("visual_bake_interval", visual_bake_interval))
-			var col_bake: float = float(params.get("collision_bake_interval", collision_bake_interval))
+			control_step = float(params.get("control_step", 140.0))
+			visual_bake_interval = float(params.get("visual_bake_interval", visual_bake_interval))
+			collision_bake_interval = float(params.get("collision_bake_interval", collision_bake_interval))
 			var simplify_eps: float = float(params.get("simplify_epsilon_px", simplify_epsilon_px))
 			var max_col_vertices: int = int(params.get("max_collision_vertices", max_collision_vertices))
 			
@@ -234,7 +236,7 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 				spawn_points.append(Vector2(length, y_end))
 
 			# --- Bake two resolutions: one for visuals, one for collisions ---
-			curve.bake_interval = vis_bake
+			curve.bake_interval = visual_bake_interval
 			var surface_points_visual: PackedVector2Array = curve.get_baked_points()
 			
 			# Ensure the hill's surface never goes backward on the X-axis
@@ -248,7 +250,7 @@ func generate_hill(params: Dictionary, noise_seed: int, is_generating_backwards:
 						last_x = surface_points_visual[i].x
 				surface_points_visual = filtered_visual_points
 			
-			curve.bake_interval = col_bake
+			curve.bake_interval = collision_bake_interval
 			var surface_points_collision: PackedVector2Array = curve.get_baked_points()
 			
 			# --- Simplify/cap collision points ---
