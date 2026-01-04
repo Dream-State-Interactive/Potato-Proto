@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AssetGraveyardCliff" load_steps=2 format=3 uid="uid://dby32w17bel4m"]
+
+[ext_resource type="Script" uid="uid://dgqlw6eaxqe01" path="res://tools/LevelGen/assets/graveyard/asset_graveyard_cliff.gd" id="1_w2g2i"]
+
+[resource]
+script = ExtResource("1_w2g2i")
+color = Color(0.04, 0.05, 0.06, 1)
+highlight = Color(0.1, 0.11, 0.12, 1)
+top_offset = 165.0
+amp = 46.0
+freq = 0.01
+seed_val = 505
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://dgqlw6eaxqe01"

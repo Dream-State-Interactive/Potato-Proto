@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://eewys6kys7nx"]
+[gd_scene load_steps=22 format=3 uid="uid://eewys6kys7nx"]
 
 [ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="1_c5t7q"]
 [ext_resource type="PackedScene" uid="uid://bhhfjdk83iomh" path="res://src/npc/npc_goobie/npc_goobie.tscn" id="1_dtn8e"]
@@ -18,6 +18,11 @@
 [ext_resource type="PackedScene" uid="uid://cfn43rut1y2rm" path="res://src/env/lighting/light_lamp_01.tscn" id="16_bvkjj"]
 [ext_resource type="PackedScene" uid="uid://s7iommtvhr20" path="res://src/env/physics_button.tscn" id="18_5pbs8"]
 
+[sub_resource type="Gradient" id="Gradient_0qd0n"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.342466, 0.506849, 0.677104, 0.843444)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0.147672, 0.147672, 0.147672, 1, 0.215902, 0.215902, 0.215902, 1, 1, 1, 1, 1)
+
 [sub_resource type="Environment" id="Environment_bvkjj"]
 background_mode = 3
 tonemap_exposure = 0.25
@@ -36,6 +41,7 @@ script = ExtResource("1_t771s")
 theme_order = Array[ExtResource("2_novs6")]([ExtResource("3_q6mnd"), ExtResource("4_ecojg"), ExtResource("5_wa04n"), ExtResource("6_ecojg"), ExtResource("6_x0lmf")])
 segment_scene = ExtResource("3_au4le")
 start_anchor_path = NodePath("ThemeStart")
+custom_gradient = SubResource("Gradient_0qd0n")
 crossfade = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

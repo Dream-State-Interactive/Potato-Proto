@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AssetWarehouseConveyor" load_steps=2 format=3 uid="uid://f2e816uf8mww"]
+
+[ext_resource type="Script" uid="uid://du5i41bvj0on7" path="res://tools/LevelGen/assets/warehouse/asset_warehouse_conveyor.gd" id="1_iyxcv"]
+
+[resource]
+script = ExtResource("1_iyxcv")
+metal_light = Color(0.3, 0.35, 0.4, 1)
+metal_dark = Color(0.15, 0.18, 0.22, 1)
+belt_color = Color(0.1, 0.1, 0.1, 1)
+fry_color = Color(0.95, 0.75, 0.2, 1)
+snaps_to_terrain = true
+probability = 0.4
+metadata/_custom_type_script = "uid://du5i41bvj0on7"

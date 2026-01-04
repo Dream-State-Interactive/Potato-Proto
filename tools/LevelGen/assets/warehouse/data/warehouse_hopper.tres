@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AssetWarehouseHopper" load_steps=2 format=3 uid="uid://8y4n7sx7w8no"]
+
+[ext_resource type="Script" uid="uid://bg2oa5hfjriqr" path="res://tools/LevelGen/assets/warehouse/asset_warehouse_hopper.gd" id="1_04mj6"]
+
+[resource]
+script = ExtResource("1_04mj6")
+metal_dark = Color(0.15, 0.18, 0.22, 1)
+metal_light = Color(0.3, 0.35, 0.4, 1)
+fry_shadow_color = Color(0.8, 0.6, 0.1, 1)
+hopper_chance = 0.5
+ceiling_y = -3000.0
+snaps_to_terrain = false
+probability = 1.0
+metadata/_custom_type_script = "uid://bg2oa5hfjriqr"

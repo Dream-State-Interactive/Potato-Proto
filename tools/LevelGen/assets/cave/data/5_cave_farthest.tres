@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AssetCaveTerrain" load_steps=2 format=3 uid="uid://cqp8hn03ya8d5"]
+
+[ext_resource type="Script" uid="uid://cdjijfsvtiili" path="res://tools/LevelGen/assets/cave/asset_cave_terrain.gd" id="1_17twr"]
+
+[resource]
+script = ExtResource("1_17twr")
+color = Color(0.02, 0.07, 0.14, 1)
+z_index = 0
+show_outlines = true
+outline_color = Color(0.1, 0.15, 0.2, 1)
+floor_y = 200.0
+ceil_y = -500.0
+amp = 400.0
+noise_freq = 0.006
+noise_seed = 999
+wander_enabled = false
+wander_freq = 0.001
+wander_amp = 300.0
+wander_seed = 12345
+add_collision = false
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://cdjijfsvtiili"

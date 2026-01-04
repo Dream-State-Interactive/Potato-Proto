@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="BiomeProfile" load_steps=8 format=3 uid="uid://caavf7lfwkit3"]
+
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="1_eht7t"]
+[ext_resource type="Resource" uid="uid://bxmukivbw1rfw" path="res://tools/LevelGen/assets/barn/layers/barn_layer_fg.tres" id="2_2k5wy"]
+[ext_resource type="Script" uid="uid://duio13n1t25ct" path="res://tools/LevelGen/core/biome_profile.gd" id="2_jq0gu"]
+[ext_resource type="Resource" uid="uid://cdisathp0ck34" path="res://tools/LevelGen/assets/barn/layers/barn_layer_outside.tres" id="3_6p3qj"]
+[ext_resource type="Resource" uid="uid://djuxlg4q0tcxd" path="res://tools/LevelGen/assets/barn/layers/barn_layer_struct.tres" id="4_2vy8q"]
+[ext_resource type="Resource" uid="uid://d3x7v3mmcii53" path="res://tools/LevelGen/assets/barn/layers/barn_layer_wall.tres" id="5_7a1qb"]
+[ext_resource type="Resource" uid="uid://deeoyp56acd7f" path="res://tools/LevelGen/assets/barn/layers/barn_layer_wallprops.tres" id="6_6p3qj"]
+
+[resource]
+script = ExtResource("2_jq0gu")
+sky_top_color = Color(0.1, 0.1, 0.2, 1)
+sky_bottom_color = Color(0.05, 0.05, 0.1, 1)
+show_celestial_bodies = true
+scale = 2.0
+glow_enabled = false
+glow_intensity = 0.8
+glow_bloom = 0.0
+glow_blend_mode = 2
+use_fog_overlay = false
+fog_color_top = Color(0.02, 0.03, 0.06, 0)
+fog_color_bot = Color(0.03, 0.06, 0.09, 0.78)
+use_cloud_mass = false
+layers = Array[ExtResource("1_eht7t")]([ExtResource("2_2k5wy"), ExtResource("3_6p3qj"), ExtResource("4_2vy8q"), ExtResource("5_7a1qb"), ExtResource("6_6p3qj")])
+metadata/_custom_type_script = "uid://duio13n1t25ct"

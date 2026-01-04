@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="BiomeProfile" load_steps=7 format=3 uid="uid://cquwjfgq7rcxl"]
+
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="1_57ifs"]
+[ext_resource type="Resource" uid="uid://du02dqctdqo38" path="res://tools/LevelGen/assets/forest/layers/forest_3_layer_trees.tres" id="2_w0crf"]
+[ext_resource type="AudioStream" uid="uid://budniykkmtb6u" path="res://assets/Music/PotatoGame_Track2_v2.mp3" id="2_w667u"]
+[ext_resource type="Script" uid="uid://duio13n1t25ct" path="res://tools/LevelGen/core/biome_profile.gd" id="2_xat2p"]
+[ext_resource type="Resource" uid="uid://d1vfm0v0a51kn" path="res://tools/LevelGen/assets/forest/layers/forest_2_layer_bg.tres" id="3_uave0"]
+[ext_resource type="Resource" uid="uid://bqs88sp3fngew" path="res://tools/LevelGen/assets/forest/layers/forest_1_layer_fg.tres" id="4_pehkp"]
+
+[resource]
+script = ExtResource("2_xat2p")
+sky_top_color = Color(0.05, 0.05, 0.15, 1)
+sky_bottom_color = Color(0.02, 0.02, 0.05, 1)
+show_celestial_bodies = true
+scale = 1.0
+music = ExtResource("2_w667u")
+glow_enabled = false
+glow_intensity = 0.8
+glow_bloom = 0.0
+glow_blend_mode = 2
+use_fog_overlay = false
+fog_color_top = Color(0.02, 0.03, 0.06, 0)
+fog_color_bot = Color(0.03, 0.06, 0.09, 0.78)
+use_cloud_mass = false
+layers = Array[ExtResource("1_57ifs")]([ExtResource("2_w0crf"), ExtResource("3_uave0"), ExtResource("4_pehkp")])
+metadata/_custom_type_script = "uid://duio13n1t25ct"

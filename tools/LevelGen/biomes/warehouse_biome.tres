@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="BiomeProfile" load_steps=10 format=3 uid="uid://ddyj3jhp12v4q"]
+
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="1_t076t"]
+[ext_resource type="Resource" uid="uid://c7x2ynkdfvrkb" path="res://tools/LevelGen/assets/warehouse/layers/warehouse_layer7_wall.tres" id="2_bkvcs"]
+[ext_resource type="Script" uid="uid://duio13n1t25ct" path="res://tools/LevelGen/core/biome_profile.gd" id="2_tcgr5"]
+[ext_resource type="Resource" uid="uid://bt16jaubslvhm" path="res://tools/LevelGen/assets/warehouse/layers/warehouse_layer6_far.tres" id="3_ubnrw"]
+[ext_resource type="Resource" uid="uid://cu7cfnetkienb" path="res://tools/LevelGen/assets/warehouse/layers/warehouse_layer5_cables.tres" id="4_16k32"]
+[ext_resource type="Resource" uid="uid://b5cxw6rcmwucq" path="res://tools/LevelGen/assets/warehouse/layers/warehouse_layer4_lights.tres" id="5_j0bfq"]
+[ext_resource type="Resource" uid="uid://b167aexmtsxcm" path="res://tools/LevelGen/assets/warehouse/layers/warehouse_layer3_pipes.tres" id="6_w0mnc"]
+[ext_resource type="Resource" uid="uid://c18vpr7x7yrda" path="res://tools/LevelGen/assets/warehouse/layers/warehouse_layer2_mid.tres" id="7_m107x"]
+[ext_resource type="Resource" uid="uid://cydvv2sp6n3dk" path="res://tools/LevelGen/assets/warehouse/layers/warehouse_layer1_fg.tres" id="8_er6ny"]
+
+[resource]
+script = ExtResource("2_tcgr5")
+sky_top_color = Color(0.02, 0.02, 0.05, 1)
+sky_bottom_color = Color(0.05, 0.05, 0.08, 1)
+show_celestial_bodies = true
+scale = 1.0
+glow_enabled = false
+glow_intensity = 0.8
+glow_bloom = 0.0
+glow_blend_mode = 2
+use_fog_overlay = false
+fog_color_top = Color(0.02, 0.03, 0.06, 0)
+fog_color_bot = Color(0.03, 0.06, 0.09, 0.78)
+use_cloud_mass = false
+layers = Array[ExtResource("1_t076t")]([ExtResource("2_bkvcs"), ExtResource("3_ubnrw"), ExtResource("4_16k32"), ExtResource("5_j0bfq"), ExtResource("6_w0mnc"), ExtResource("7_m107x"), ExtResource("8_er6ny")])
+metadata/_custom_type_script = "uid://duio13n1t25ct"

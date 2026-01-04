@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AssetCaveDetails" load_steps=2 format=3 uid="uid://tjomh4urvia0"]
+
+[ext_resource type="Script" uid="uid://cyokcvmj0dk07" path="res://tools/LevelGen/assets/cave/asset_cave_details.gd" id="1_eubsf"]
+
+[resource]
+script = ExtResource("1_eubsf")
+crystal_color = Color(0, 0.9, 1, 1)
+spike_color = Color(0.05, 0.1, 0.2, 1)
+glow_intensity = 1.6
+ceil_y = -600.0
+amp = 120.0
+noise_freq = 0.006
+noise_seed = 999
+floor_y_ref = 200.0
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://cyokcvmj0dk07"

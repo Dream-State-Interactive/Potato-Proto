@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BiomeProfile" load_steps=7 format=3 uid="uid://dkx22pisw6q1o"]
+
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="1_d88m8"]
+[ext_resource type="Script" uid="uid://duio13n1t25ct" path="res://tools/LevelGen/core/biome_profile.gd" id="2_dbe4p"]
+[ext_resource type="Resource" uid="uid://711o8m346ue7" path="res://tools/LevelGen/assets/desert/layers/desert_Layer4.tres" id="2_sehku"]
+[ext_resource type="Resource" uid="uid://cjl2mnhyv7hfa" path="res://tools/LevelGen/assets/desert/layers/desert_Layer3.tres" id="3_js4td"]
+[ext_resource type="Resource" uid="uid://be7av2hcs572m" path="res://tools/LevelGen/assets/desert/layers/desert_Layer2.tres" id="4_lgi7w"]
+[ext_resource type="Resource" uid="uid://2ruce6vvgvyj" path="res://tools/LevelGen/assets/desert/layers/desert_Layer1.tres" id="5_rw4j8"]
+
+[resource]
+script = ExtResource("2_dbe4p")
+sky_top_color = Color(0, 0, 0.1, 1)
+sky_bottom_color = Color(0.05, 0.05, 0.2, 1)
+show_celestial_bodies = true
+scale = 1.0
+glow_enabled = false
+glow_intensity = 0.8
+glow_bloom = 0.0
+glow_blend_mode = 2
+use_fog_overlay = false
+fog_color_top = Color(0.02, 0.03, 0.06, 0)
+fog_color_bot = Color(0.03, 0.06, 0.09, 0.78)
+use_cloud_mass = false
+layers = Array[ExtResource("1_d88m8")]([ExtResource("2_sehku"), ExtResource("3_js4td"), ExtResource("4_lgi7w"), ExtResource("5_rw4j8")])
+metadata/_custom_type_script = "uid://duio13n1t25ct"

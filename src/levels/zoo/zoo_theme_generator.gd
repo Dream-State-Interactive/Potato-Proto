@@ -7,7 +7,7 @@ class_name ZooThemeGenerator
 @export var start_anchor_path: NodePath                        # optional Marker2D/Node2D to start at
 @export_range(1, 5, 1) var max_active_segments: int = 2
 @export var seam_eps_px: float = 2.0
-
+@export var custom_gradient: Gradient
 @export var start_time_of_day: float = 0.25
 @export var advance_time_per_segment: float = 0.0              # e.g. 0.15 to roll time
 @export var crossfade: bool = false

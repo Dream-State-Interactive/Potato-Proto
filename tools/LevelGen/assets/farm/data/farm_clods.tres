@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AssetFarmDecor" load_steps=2 format=3 uid="uid://dh0sb8df72lq"]
+
+[ext_resource type="Script" uid="uid://co6t6u31hkk0i" path="res://tools/LevelGen/assets/farm/asset_farm_clods.gd" id="1_a1u2m"]
+
+[resource]
+script = ExtResource("1_a1u2m")
+density = 15
+probability = 1.0
+snaps_to_terrain = true
+snap_rotation = true
+y_offset = 2.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://co6t6u31hkk0i"

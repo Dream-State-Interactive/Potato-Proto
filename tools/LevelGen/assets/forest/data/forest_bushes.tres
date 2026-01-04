@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AssetForestBushes" load_steps=2 format=3 uid="uid://b04cy24gu7lst"]
+
+[ext_resource type="Script" uid="uid://cgiscggtentdt" path="res://tools/LevelGen/assets/forest/asset_forest_bushes.gd" id="1_gq0yv"]
+
+[resource]
+script = ExtResource("1_gq0yv")
+color = Color(0.05, 0.11, 0.05, 1)
+density = 10
+probability = 1.0
+snaps_to_terrain = true
+snap_rotation = true
+y_offset = 4.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://cgiscggtentdt"

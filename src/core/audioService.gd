@@ -49,18 +49,18 @@ var _looping_players: Dictionary = {}
 
 # Music: usually one looping track at a time.
 # `key` lets you control/stop this music later (defaults to "music").
-func play_music(stream: AudioStream, volume_db: float = 1.0, position: Vector2 = Vector2.ZERO, loop: bool = true, key: StringName = &"music") -> void:
+func play_music(stream: AudioStream, volume_db: float = 1.0, position: Vector2 = Vector2.ZERO, loop: bool = true, key: StringName = &"music", is_global: bool = true) -> void:
 	# Stop any existing music with the same key.
 	stop_sound(key)
-	_play_sound(stream, "Music", 0.0, volume_db, position, loop, key)
+	_play_sound(stream, "Music", 0.0, volume_db, position, loop, key, is_global)
 
 func stop_music(key: StringName = &"music") -> void:
 	stop_sound(key)
 
 # SFX: one-shots by default (auto-freed).
 # If you pass loop = true AND a key, the SFX is tracked and can be stopped.
-func play_sfx(stream: AudioStream, pitch_range: float = 1.0, volume_db: float = 0.0, position: Vector2 = Vector2.ZERO, loop: bool = false, key: StringName = StringName()) -> void:
-	_play_sound(stream, "Effects", pitch_range, volume_db, position, loop, key)
+func play_sfx(stream: AudioStream, pitch_range: float = 1.0, volume_db: float = 0.0, position: Vector2 = Vector2.ZERO, loop: bool = false, key: StringName = StringName(), is_global: bool = false) -> void:
+	_play_sound(stream, "Effects", pitch_range, volume_db, position, loop, key, is_global)
 
 func stop_sound(key: StringName) -> void:
 	if not _looping_players.has(key):
@@ -75,24 +75,35 @@ func stop_sound(key: StringName) -> void:
 
 func stop_all_looping(fade_time: float = 0.75) -> void:
 	for key in _looping_players.keys():
-		var player: AudioStreamPlayer2D = _looping_players[key]
+		var player = _looping_players[key]
 		if not is_instance_valid(player):
 			continue
 
 		var tween := create_tween()
 		# Fade volume_db to -80 dB (effectively silence)
 		tween.tween_property(player, "volume_db", -80.0, fade_time)
-		# When tween finishes, clean up this player
-		tween.tween_callback(Callable(self, "stop_sound").bind(key))
+		# Prevent the "Restart" bug where the fade-out kills the NEW music.
+		tween.tween_callback(func():
+			# Only stop the sound via key if the key still points to OLD player
+			if _looping_players.has(key) and _looping_players[key] == player:
+				stop_sound(key)
+			# Key in use by New Music (because level reloaded), clean manually.
+			elif is_instance_valid(player):
+				player.queue_free()
+		)
 
 
-func _play_sound(stream: AudioStream, bus: String = "Effects", pitch_range: float = 0.0, volume_db: float = 0.0, position: Vector2 = Vector2.ZERO, loop: bool = false, key: StringName = StringName()) -> void:
-	var audio_player := AudioStreamPlayer2D.new()
+func _play_sound(stream: AudioStream, bus: String = "Effects", pitch_range: float = 0.0, volume_db: float = 0.0, position: Vector2 = Vector2.ZERO, loop: bool = false, key: StringName = StringName(), is_global: bool = false) -> void:
+	var audio_player: Node
+	if is_global:
+		audio_player = AudioStreamPlayer.new()
+	else:
+		audio_player = AudioStreamPlayer2D.new()
+		audio_player.position = position
 	audio_player.stream = stream
 	audio_player.pitch_scale = randf_range(1.0 - pitch_range, 1.0 + pitch_range)
 	audio_player.volume_db = volume_db
 	audio_player.bus = bus
-	audio_player.position = position
 
 	# Only force loop on when requested.
 	# (If you want to force it off when loop == false, you can also set .loop = false here.)

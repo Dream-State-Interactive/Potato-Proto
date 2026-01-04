@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AssetDesertVegetation" load_steps=2 format=3 uid="uid://howucno11ukp"]
+
+[ext_resource type="Script" uid="uid://dln200abj51b0" path="res://tools/LevelGen/assets/desert/asset_desert_vegetation.gd" id="1_pj7mu"]
+
+[resource]
+script = ExtResource("1_pj7mu")
+trunk_color = Color(0.2, 0.15, 0.1, 1)
+leaf_color = Color(0.15, 0.25, 0.15, 1)
+shrub_color = Color(0.22, 0.18, 0.1, 1)
+brightness_mult = 0.0
+density = 4
+probability = 1.0
+snaps_to_terrain = true
+snap_rotation = false
+y_offset = 5.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://dln200abj51b0"

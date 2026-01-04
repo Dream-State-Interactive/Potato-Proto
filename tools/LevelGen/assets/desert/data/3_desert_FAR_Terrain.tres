@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AssetDesertTerrain" load_steps=2 format=3 uid="uid://cd5nqt6imvulp"]
+
+[ext_resource type="Script" uid="uid://cvrm1fs7mhl8n" path="res://tools/LevelGen/assets/desert/asset_desert_terrain.gd" id="1_enbet"]
+
+[resource]
+script = ExtResource("1_enbet")
+add_ripples = false
+color = Color(0.25, 0.15, 0.08, 1)
+depth = 2000.0
+add_collision = false
+noise_freq = 0.0007
+noise_amp = 250.0
+noise_seed = 1337
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 125.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://cvrm1fs7mhl8n"

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=4 format=3 uid="uid://dhcocq4mlqnaf"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_tjn8e"]
+[ext_resource type="Resource" uid="uid://dpbh5dhqsfaeg" path="res://tools/LevelGen/assets/farm/data/farm_woods.tres" id="2_1ldpr"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="2_5cgqv"]
+
+[resource]
+script = ExtResource("2_5cgqv")
+layer_name = "Layer 5 (Woods)"
+parallax_speed = Vector2(0.05, 1)
+z_index = -80
+render_distance = 3
+y_offset = -50.0
+assets = Array[ExtResource("1_tjn8e")]([ExtResource("2_1ldpr")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

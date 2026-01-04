@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AssetFarmFence" load_steps=2 format=3 uid="uid://bcj1t2s5cdw6t"]
+
+[ext_resource type="Script" uid="uid://dtjao5ers6sj0" path="res://tools/LevelGen/assets/farm/asset_farm_fence.gd" id="1_yxemh"]
+
+[resource]
+script = ExtResource("1_yxemh")
+min_segments = 2
+max_segments = 5
+density = 1
+probability = 0.5
+snaps_to_terrain = true
+snap_rotation = true
+y_offset = 10.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://dtjao5ers6sj0"

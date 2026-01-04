@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://consaani8nb7p"]
+[gd_scene load_steps=6 format=3 uid="uid://consaani8nb7p"]
 
 [ext_resource type="Script" uid="uid://bpv1vn614w3y5" path="res://src/modes/gauntlet/store_interaction.gd" id="1_3fbk5"]
 [ext_resource type="PackedScene" uid="uid://bhhfjdk83iomh" path="res://src/npc/npc_goobie/npc_goobie.tscn" id="2_f6ri4"]
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="3_f6ri4"]
+[ext_resource type="Script" uid="uid://dvbcdw28hq7xq" path="res://tools/LevelGen/core/proc_asset_instance.gd" id="4_jmhdx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7re1"]
 radius = 270.59
@@ -100,3 +101,11 @@ theme = ExtResource("3_f6ri4")
 theme_override_font_sizes/font_size = 80
 text = "STORE"
 metadata/_edit_use_anchors_ = true
+
+[node name="EndMarker" type="Marker2D" parent="."]
+position = Vector2(1000, 0)
+
+[node name="ProcAssetInstance" type="Node2D" parent="."]
+position = Vector2(528, 2)
+script = ExtResource("4_jmhdx")
+metadata/_custom_type_script = "uid://dvbcdw28hq7xq"

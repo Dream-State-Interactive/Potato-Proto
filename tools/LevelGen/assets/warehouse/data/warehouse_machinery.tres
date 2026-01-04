@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AssetWarehouseMachinery" load_steps=2 format=3 uid="uid://bqvjjn8px4d5k"]
+
+[ext_resource type="Script" uid="uid://dup4tdgl2d3lg" path="res://tools/LevelGen/assets/warehouse/assets_warehouse_machinery.gd" id="1_u2mps"]
+
+[resource]
+script = ExtResource("1_u2mps")
+metal_dark = Color(0.15, 0.18, 0.22, 1)
+snaps_to_terrain = false
+probability = 1.0
+metadata/_custom_type_script = "uid://dup4tdgl2d3lg"

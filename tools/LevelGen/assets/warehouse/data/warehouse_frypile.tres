@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AssetWarehouseFryPile" load_steps=2 format=3 uid="uid://bard7iypev4jn"]
+
+[ext_resource type="Script" uid="uid://but880yfijqp6" path="res://tools/LevelGen/assets/warehouse/asset_warehouse_frypile.gd" id="1_whwfx"]
+
+[resource]
+script = ExtResource("1_whwfx")
+fry_color = Color(0.95, 0.75, 0.2, 1)
+fry_shadow_color = Color(0.8, 0.6, 0.1, 1)
+density = 40
+probability = 1.0
+snaps_to_terrain = true
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://but880yfijqp6"

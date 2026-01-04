@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AssetDesertPyramid" load_steps=2 format=3 uid="uid://e7aix4o0jqgi"]
+
+[ext_resource type="Script" uid="uid://dthpi11fef3me" path="res://tools/LevelGen/assets/desert/asset_desert_pyramid.gd" id="1_dokfc"]
+
+[resource]
+script = ExtResource("1_dokfc")
+lit_color = Color(0.25, 0.2, 0.12, 1)
+shadow_color = Color(0.1, 0.08, 0.05, 1)
+horizon_y = 200.0
+snaps_to_terrain = false
+probability = 0.15
+metadata/_custom_type_script = "uid://dthpi11fef3me"

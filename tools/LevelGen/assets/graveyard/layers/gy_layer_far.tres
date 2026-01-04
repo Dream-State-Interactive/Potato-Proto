@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=5 format=3 uid="uid://bw1mnx7p8aq1y"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_02mdr"]
+[ext_resource type="Resource" uid="uid://bkgkptbakxrjg" path="res://tools/LevelGen/assets/graveyard/data/gy_far.tres" id="2_qrpgx"]
+[ext_resource type="Resource" uid="uid://coqrk1svmag5w" path="res://tools/LevelGen/assets/graveyard/data/gy_details_far.tres" id="3_y6w0p"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="4_4qd25"]
+
+[resource]
+script = ExtResource("4_4qd25")
+layer_name = "Layer"
+parallax_speed = Vector2(0.2, 1)
+z_index = -70
+render_distance = 3
+y_offset = 0.0
+assets = Array[ExtResource("1_02mdr")]([ExtResource("2_qrpgx"), ExtResource("3_y6w0p")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

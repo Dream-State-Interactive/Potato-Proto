@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AssetBarnOutside" load_steps=2 format=3 uid="uid://binoboa6ft52c"]
+
+[ext_resource type="Script" uid="uid://c1rp5xis5kxt" path="res://tools/LevelGen/assets/barn/asset_barn_outside.gd" id="1_ub2bd"]
+
+[resource]
+script = ExtResource("1_ub2bd")
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://c1rp5xis5kxt"

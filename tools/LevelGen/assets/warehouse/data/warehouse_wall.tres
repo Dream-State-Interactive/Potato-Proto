@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AssetWarehouseWall" load_steps=2 format=3 uid="uid://bft6vp4smtwha"]
+
+[ext_resource type="Script" uid="uid://djrjfymw1a8jf" path="res://tools/LevelGen/assets/warehouse/asset_warehouse_wall.gd" id="1_cpjs2"]
+
+[resource]
+script = ExtResource("1_cpjs2")
+base_color = Color(0.2, 0.22, 0.25, 1)
+brick_color = Color(0.18, 0.2, 0.23, 1)
+window_chance = 0.6
+snaps_to_terrain = false
+probability = 1.0
+metadata/_custom_type_script = "uid://djrjfymw1a8jf"

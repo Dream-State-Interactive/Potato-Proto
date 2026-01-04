@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AssetCaveLightRay" load_steps=2 format=3 uid="uid://d08o4pi7d3vff"]
+
+[ext_resource type="Script" uid="uid://httposr1gk73" path="res://tools/LevelGen/assets/cave/asset_cave_lightray.gd" id="1_tve4w"]
+
+[resource]
+script = ExtResource("1_tve4w")
+color = Color(0.4, 0.7, 1, 0.04)
+width_min = 60.0
+width_max = 180.0
+height = 1500.0
+angle_max = 15.0
+density = 1
+probability = 0.25
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = -600.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://httposr1gk73"

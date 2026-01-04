@@ -1,0 +1,128 @@
+[gd_scene load_steps=30 format=3 uid="uid://c47m3e2gtabhu"]
+
+[ext_resource type="Script" uid="uid://fslu6y317grw" path="res://tools/LevelGen/core/level_maker_modular.gd" id="1_aftvb"]
+[ext_resource type="Resource" uid="uid://cquwjfgq7rcxl" path="res://tools/LevelGen/biomes/forest_biome.tres" id="2_aftvb"]
+[ext_resource type="Resource" uid="uid://5op3hbvteldj" path="res://tools/LevelGen/biomes/farm_biome.tres" id="2_dw005"]
+[ext_resource type="Resource" uid="uid://caavf7lfwkit3" path="res://tools/LevelGen/biomes/barn_biome.tres" id="2_ii60e"]
+[ext_resource type="PackedScene" uid="uid://divysbi8wuyxu" path="res://src/player/playerSpawn.tscn" id="3_ci2p4"]
+[ext_resource type="PackedScene" uid="uid://cahc2oqxyppbt" path="res://src/levels/zoo/cheat_room.tscn" id="3_lrrkd"]
+[ext_resource type="Script" uid="uid://bdi3q0ujbeewx" path="res://tools/LevelGen/core/biome_entry.gd" id="4_t3lw0"]
+[ext_resource type="Resource" uid="uid://bx5014p6u54r6" path="res://tools/LevelGen/biomes/cave_biome.tres" id="5_bbhfy"]
+[ext_resource type="Resource" uid="uid://dkx22pisw6q1o" path="res://tools/LevelGen/biomes/desert_biome.tres" id="5_t3lw0"]
+[ext_resource type="Script" uid="uid://csgqmb4c1jjk2" path="res://tools/LevelGen/core/terrain_override.gd" id="8_bbhfy"]
+[ext_resource type="Script" uid="uid://bq8bhr3jj4gls" path="res://tools/LevelGen/core/special_chunk_entry.gd" id="8_culic"]
+[ext_resource type="Resource" uid="uid://c6uiknvyhtt4c" path="res://tools/LevelGen/biomes/graveyard_biome.tres" id="8_v18sk"]
+[ext_resource type="PackedScene" uid="uid://cu4qjv18u2cmk" path="res://src/modes/gauntlet/store.tscn" id="9_bbhfy"]
+[ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="10_ii60e"]
+[ext_resource type="Resource" uid="uid://ddyj3jhp12v4q" path="res://tools/LevelGen/biomes/warehouse_biome.tres" id="10_ocsyv"]
+
+[sub_resource type="Resource" id="Resource_tybkv"]
+script = ExtResource("4_t3lw0")
+chunk_index = 23
+biome = ExtResource("2_ii60e")
+metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
+
+[sub_resource type="Resource" id="Resource_7i0sr"]
+script = ExtResource("4_t3lw0")
+chunk_index = 30
+biome = ExtResource("2_aftvb")
+metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
+
+[sub_resource type="Resource" id="Resource_culic"]
+script = ExtResource("4_t3lw0")
+chunk_index = 69
+biome = ExtResource("5_bbhfy")
+metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
+
+[sub_resource type="Resource" id="Resource_bbhfy"]
+script = ExtResource("4_t3lw0")
+chunk_index = 100
+biome = ExtResource("8_v18sk")
+metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
+
+[sub_resource type="Resource" id="Resource_sqn22"]
+script = ExtResource("4_t3lw0")
+chunk_index = 150
+biome = ExtResource("5_t3lw0")
+metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
+
+[sub_resource type="Resource" id="Resource_voa2y"]
+script = ExtResource("4_t3lw0")
+chunk_index = 210
+biome = ExtResource("10_ocsyv")
+metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
+
+[sub_resource type="Curve" id="Curve_bbhfy"]
+_data = [Vector2(0, 0.00317609), 0.0, 0.0, 0, 0, Vector2(0.501188, 0.917423), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_ii60e"]
+script = ExtResource("8_bbhfy")
+start_chunk = 2
+end_chunk = 7
+transition_chunks = 1.0
+curve = SubResource("Curve_bbhfy")
+min_height = 0.0
+max_height = 500.0
+blend_weight = 1.0
+parallax_corrected = false
+bg_height_multiplier = 0.5
+metadata/_custom_type_script = "uid://csgqmb4c1jjk2"
+
+[sub_resource type="Curve" id="Curve_ii60e"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.163895, 0.380672), 0.0, 0.0, 0, 0, Vector2(0.225653, 0.121143), 0.0, 0.0, 0, 0, Vector2(0.339667, 0.45735), 0.0, 0.0, 0, 0, Vector2(0.420428, 0.115245), 0.0, 0.0, 0, 0, Vector2(0.546318, 0.486842), 0.0, 0.0, 0, 0, Vector2(0.650831, 0.0621598), 0.0, 0.0, 0, 0, Vector2(0.72209, 0.463249), 0.0, 0.0, 0, 0, Vector2(1, 0.00907445), 0.0, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_e0q16"]
+script = ExtResource("8_bbhfy")
+start_chunk = 13
+end_chunk = 15
+transition_chunks = 1.0
+curve = SubResource("Curve_ii60e")
+min_height = 0.0
+max_height = 500.0
+blend_weight = 1.0
+parallax_corrected = false
+bg_height_multiplier = 0.5
+metadata/_custom_type_script = "uid://csgqmb4c1jjk2"
+
+[sub_resource type="Curve" id="Curve_dw005"]
+_data = [Vector2(0, 0.882033), 0.0, 0.0, 0, 0, Vector2(0.508314, 0.0267696), 0.0, 0.0, 0, 0, Vector2(1, 0.970508), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_ocsyv"]
+script = ExtResource("8_bbhfy")
+start_chunk = 17
+end_chunk = 22
+transition_chunks = 1.0
+curve = SubResource("Curve_dw005")
+min_height = -500.0
+max_height = 100.0
+blend_weight = 1.0
+parallax_corrected = false
+bg_height_multiplier = 0.5
+metadata/_custom_type_script = "uid://csgqmb4c1jjk2"
+
+[sub_resource type="Resource" id="Resource_dw005"]
+script = ExtResource("8_culic")
+chunk_index = 12
+scene = ExtResource("9_bbhfy")
+metadata/_custom_type_script = "uid://bq8bhr3jj4gls"
+
+[sub_resource type="Resource" id="Resource_v18sk"]
+script = ExtResource("8_culic")
+chunk_index = 16
+scene = ExtResource("10_ii60e")
+metadata/_custom_type_script = "uid://bq8bhr3jj4gls"
+
+[node name="LevelGen" type="Node2D" node_paths=PackedStringArray("player_node")]
+script = ExtResource("1_aftvb")
+current_biome = ExtResource("2_dw005")
+starting_segment = ExtResource("3_lrrkd")
+player_node = NodePath("PlayerSpawn")
+biome_list = Array[ExtResource("4_t3lw0")]([SubResource("Resource_tybkv"), SubResource("Resource_7i0sr"), SubResource("Resource_culic"), SubResource("Resource_bbhfy"), SubResource("Resource_sqn22"), SubResource("Resource_voa2y")])
+terrain_overrides = Array[ExtResource("8_bbhfy")]([SubResource("Resource_ii60e"), SubResource("Resource_e0q16"), SubResource("Resource_ocsyv")])
+special_chunk_list = Array[ExtResource("8_culic")]([SubResource("Resource_dw005"), SubResource("Resource_v18sk")])
+delete_distance_px = 6000.0
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("3_ci2p4")]

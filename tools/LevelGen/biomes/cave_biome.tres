@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BiomeProfile" load_steps=9 format=3 uid="uid://bx5014p6u54r6"]
+
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="1_s0gb3"]
+[ext_resource type="Script" uid="uid://duio13n1t25ct" path="res://tools/LevelGen/core/biome_profile.gd" id="2_1j4ms"]
+[ext_resource type="Resource" uid="uid://dhwr0wtu0avsl" path="res://tools/LevelGen/assets/cave/layers/cave_layer1_fg.tres" id="2_oq6m1"]
+[ext_resource type="Resource" uid="uid://dljlrjlm2hnqi" path="res://tools/LevelGen/assets/cave/layers/cave_layer2_mid.tres" id="3_myb4d"]
+[ext_resource type="Resource" uid="uid://ecxtxkadbht6" path="res://tools/LevelGen/assets/cave/layers/cave_layer3_mid_far.tres" id="4_sbj0i"]
+[ext_resource type="Resource" uid="uid://cbf06coqnc0nq" path="res://tools/LevelGen/assets/cave/layers/cave_layer4_far.tres" id="5_p2hgn"]
+[ext_resource type="Resource" uid="uid://btp8ry2u7onep" path="res://tools/LevelGen/assets/cave/layers/cave_layer5_farthest.tres" id="6_xk3oj"]
+[ext_resource type="Resource" uid="uid://oh7lt5th4qtb" path="res://tools/LevelGen/assets/cave/layers/cave_layer6_deepest.tres" id="7_7hsfb"]
+
+[resource]
+script = ExtResource("2_1j4ms")
+sky_top_color = Color(0.01, 0.02, 0.05, 1)
+sky_bottom_color = Color(0.08, 0.12, 0.22, 1)
+show_celestial_bodies = false
+scale = 1.0
+glow_enabled = true
+glow_intensity = 1.6
+glow_bloom = 0.3
+glow_blend_mode = 0
+use_fog_overlay = false
+fog_color_top = Color(0.02, 0.03, 0.06, 0)
+fog_color_bot = Color(0.03, 0.06, 0.09, 0.78)
+use_cloud_mass = false
+layers = Array[ExtResource("1_s0gb3")]([ExtResource("2_oq6m1"), ExtResource("3_myb4d"), ExtResource("4_sbj0i"), ExtResource("5_p2hgn"), ExtResource("6_xk3oj"), ExtResource("7_7hsfb")])
+metadata/_custom_type_script = "uid://duio13n1t25ct"

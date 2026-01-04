@@ -1,0 +1,345 @@
+[gd_scene format=3 uid="uid://cvvrjku27w0bo"]
+
+[node name="HouseInteriorProtoV3" type="Node2D"]
+z_index = -5
+z_as_relative = false
+scale = Vector2(4, 4)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+z_index = 4
+z_as_relative = false
+position = Vector2(-1012, 40.25)
+color = Color(0.919838, 0, 0.202981, 1)
+polygon = PackedVector2Array(596, -44.25, 578.75, -1125.25, 1654, -1177, 1596.5, 30.5, 590.25, 93.75)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Polygon2D"]
+offset_left = 745.5
+offset_top = -801.5
+offset_right = 1467.5
+offset_bottom = -493.5
+theme_override_font_sizes/normal_font_size = 222
+text = "BARN"
+
+[node name="Sky" type="Polygon2D" parent="."]
+visible = false
+color = Color(0.73, 0.88, 0.9, 1)
+polygon = PackedVector2Array(-3000, -2000, 3000, -2000, 3000, 900, -3000, 900)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(3000, -540)
+
+[node name="Soil" type="Polygon2D" parent="StaticBody2D"]
+color = Color(0.39, 0.27, 0.2, 1)
+polygon = PackedVector2Array(-3000, 540, 3000, 540, 3000, 2200, -3000, 2200)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-3000, 540, 3000, 540, 3000, 2200, -3000, 2200)
+
+[node name="House" type="Node2D" parent="."]
+position = Vector2(3360, -480)
+
+[node name="Shell" type="Node2D" parent="House"]
+
+[node name="MainWallFill" type="Polygon2D" parent="House/Shell"]
+color = Color(0.95, 0.93, 0.89, 1)
+polygon = PackedVector2Array(0, 90, 880, 90, 880, 760, 0, 760)
+
+[node name="GarageFill" type="Polygon2D" parent="House/Shell"]
+color = Color(0.92, 0.92, 0.9, 1)
+polygon = PackedVector2Array(-340, 170, 0, 170, 0, 520, -340, 520)
+
+[node name="RoofMain" type="Polygon2D" parent="House/Shell"]
+color = Color(0.52, 0.33, 0.22, 1)
+polygon = PackedVector2Array(-10, 90, 440, -55, 890, 90)
+
+[node name="RoofGarage" type="Polygon2D" parent="House/Shell"]
+color = Color(0.5, 0.32, 0.22, 1)
+polygon = PackedVector2Array(-350, 170, -170, 105, 0, 170)
+
+[node name="Frame" type="Node2D" parent="House"]
+
+[node name="FrameLeft" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(0, 90, 12, 90, 12, 760, 0, 760)
+
+[node name="FrameRight" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(868, 90, 880, 90, 880, 760, 868, 760)
+
+[node name="FrameTop" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(0, 90, 880, 90, 880, 102, 0, 102)
+
+[node name="FrameBottom" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(0, 748, 880, 748, 880, 760, 0, 760)
+
+[node name="BandUpperFloor" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(0, 270, 880, 270, 880, 288, 0, 288)
+
+[node name="BandGroundFloor" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(0, 420, 880, 420, 880, 438, 0, 438)
+
+[node name="GarageFrameLeft" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(-340, 170, -328, 170, -328, 520, -340, 520)
+
+[node name="GarageFrameTop" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(-340, 170, 0, 170, 0, 182, -340, 182)
+
+[node name="GarageFrameBottom" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(-340, 508, 0, 508, 0, 520, -340, 520)
+
+[node name="GarageBandGround" type="Polygon2D" parent="House/Frame"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(-340, 420, 0, 420, 0, 438, -340, 438)
+
+[node name="Partitions" type="Node2D" parent="House"]
+
+[node name="ColA" type="Polygon2D" parent="House/Partitions"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(310, 90, 322, 90, 322, 760, 310, 760)
+
+[node name="ColB" type="Polygon2D" parent="House/Partitions"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(630, 90, 642, 90, 642, 760, 630, 760)
+
+[node name="StairBayCol" type="Polygon2D" parent="House/Partitions"]
+color = Color(0.9, 0.52, 0.52, 1)
+polygon = PackedVector2Array(770, 270, 782, 270, 782, 438, 770, 438)
+
+[node name="Windows" type="Node2D" parent="House"]
+
+[node name="WinUpperLeft" type="Polygon2D" parent="House/Windows"]
+color = Color(0.6, 0.82, 0.95, 1)
+polygon = PackedVector2Array(70, 120, 150, 120, 150, 200, 70, 200)
+
+[node name="WinUpperMid" type="Polygon2D" parent="House/Windows"]
+color = Color(0.6, 0.82, 0.95, 1)
+polygon = PackedVector2Array(380, 120, 460, 120, 460, 200, 380, 200)
+
+[node name="WinUpperRight" type="Polygon2D" parent="House/Windows"]
+color = Color(0.6, 0.82, 0.95, 1)
+polygon = PackedVector2Array(720, 120, 800, 120, 800, 200, 720, 200)
+
+[node name="WinGarage" type="Polygon2D" parent="House/Windows"]
+color = Color(0.6, 0.82, 0.95, 1)
+polygon = PackedVector2Array(-270, 230, -190, 230, -190, 310, -270, 310)
+
+[node name="Props" type="Node2D" parent="House"]
+
+[node name="Bed" type="Polygon2D" parent="House/Props"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(165, 230, 295, 230, 295, 270, 165, 270)
+
+[node name="BedHead" type="Polygon2D" parent="House/Props"]
+color = Color(0.97, 0.97, 0.97, 1)
+polygon = PackedVector2Array(165, 220, 295, 220, 295, 230, 165, 230)
+
+[node name="Nightstand" type="Polygon2D" parent="House/Props"]
+color = Color(0.22, 0.15, 0.1, 1)
+polygon = PackedVector2Array(135, 235, 155, 235, 155, 265, 135, 265)
+
+[node name="GreenChair" type="Polygon2D" parent="House/Props"]
+color = Color(0.35, 0.62, 0.33, 1)
+polygon = PackedVector2Array(465, 230, 575, 230, 575, 288, 465, 288)
+
+[node name="TVTop" type="Polygon2D" parent="House/Props"]
+color = Color(0.46, 0.33, 0.24, 1)
+polygon = PackedVector2Array(360, 340, 600, 340, 600, 362, 360, 362)
+
+[node name="TVBody" type="Polygon2D" parent="House/Props"]
+color = Color(0.2, 0.14, 0.1, 1)
+polygon = PackedVector2Array(390, 362, 570, 362, 570, 412, 390, 412)
+
+[node name="Couch" type="Polygon2D" parent="House/Props"]
+color = Color(0.7, 0.36, 0.56, 1)
+polygon = PackedVector2Array(660, 378, 760, 378, 760, 438, 660, 438)
+
+[node name="DecoDot" type="Polygon2D" parent="House/Props"]
+color = Color(0.96, 0.82, 0.32, 1)
+polygon = PackedVector2Array(635, 322, 650, 322, 650, 337, 635, 337)
+
+[node name="UtilityPanel" type="Polygon2D" parent="House/Props"]
+color = Color(0.88, 0.9, 0.92, 1)
+polygon = PackedVector2Array(110, 540, 180, 540, 180, 690, 110, 690)
+
+[node name="RedTank" type="Polygon2D" parent="House/Props"]
+color = Color(0.85, 0.18, 0.18, 1)
+polygon = PackedVector2Array(205, 580, 230, 580, 230, 690, 205, 690)
+
+[node name="LaundryTint" type="Polygon2D" parent="House/Props"]
+color = Color(0.72, 0.82, 0.64, 0.35)
+polygon = PackedVector2Array(642, 438, 880, 438, 880, 748, 642, 748)
+
+[node name="ClothesLine" type="Polygon2D" parent="House/Props"]
+color = Color(0.95, 0.95, 0.95, 1)
+polygon = PackedVector2Array(690, 560, 850, 560, 850, 564, 690, 564)
+
+[node name="LaundryDot" type="Polygon2D" parent="House/Props"]
+color = Color(0.96, 0.82, 0.32, 1)
+polygon = PackedVector2Array(740, 585, 755, 585, 755, 600, 740, 600)
+
+[node name="IroningBoard" type="Polygon2D" parent="House/Props"]
+color = Color(0.7, 0.78, 0.95, 1)
+polygon = PackedVector2Array(705, 695, 835, 695, 835, 718, 705, 718)
+
+[node name="GaragePool" type="Polygon2D" parent="House/Props"]
+color = Color(0.6, 0.82, 0.95, 1)
+polygon = PackedVector2Array(-290, 440, -60, 440, -60, 505, -290, 505)
+
+[node name="GarageMound" type="Polygon2D" parent="House/Props"]
+color = Color(0.7, 0.85, 0.95, 1)
+polygon = PackedVector2Array(-180, 405, -140, 375, -100, 405)
+
+[node name="Stairs" type="Node2D" parent="House"]
+
+[node name="RStep1" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(725, 410, 810, 410, 810, 422, 725, 422)
+
+[node name="RStep2" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(715, 392, 800, 392, 800, 404, 715, 404)
+
+[node name="RStep3" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(705, 374, 790, 374, 790, 386, 705, 386)
+
+[node name="RStep4" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(695, 356, 780, 356, 780, 368, 695, 368)
+
+[node name="RStep5" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(685, 338, 770, 338, 770, 350, 685, 350)
+
+[node name="RStep6" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(675, 320, 760, 320, 760, 332, 675, 332)
+
+[node name="RStep7" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(665, 302, 750, 302, 750, 314, 665, 314)
+
+[node name="BStep1" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(445, 720, 520, 720, 520, 732, 445, 732)
+
+[node name="BStep2" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(455, 695, 530, 695, 530, 707, 455, 707)
+
+[node name="BStep3" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(465, 670, 540, 670, 540, 682, 465, 682)
+
+[node name="BStep4" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(475, 645, 550, 645, 550, 657, 475, 657)
+
+[node name="BStep5" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(485, 620, 560, 620, 560, 632, 485, 632)
+
+[node name="BStep6" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(495, 595, 570, 595, 570, 607, 495, 607)
+
+[node name="BStep7" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(505, 570, 580, 570, 580, 582, 505, 582)
+
+[node name="BStep8" type="Polygon2D" parent="House/Stairs"]
+color = Color(0.76, 0.3, 0.26, 1)
+polygon = PackedVector2Array(515, 545, 590, 545, 590, 557, 515, 557)
+
+[node name="Collision" type="StaticBody2D" parent="House"]
+
+[node name="ColUpper" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(0, 270, 880, 270, 880, 288, 0, 288)
+
+[node name="ColGround" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(0, 420, 880, 420, 880, 438, 0, 438)
+
+[node name="ColBasement" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(0, 748, 880, 748, 880, 760, 0, 760)
+
+[node name="ColGarageGround" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(-340, 420, 0, 420, 0, 438, -340, 438)
+
+[node name="ColLeftOuter" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(0, 90, 12, 90, 12, 760, 0, 760)
+
+[node name="ColRightOuter" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(868, 90, 880, 90, 880, 760, 868, 760)
+
+[node name="ColGarageLeftOuter" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(-340, 170, -328, 170, -328, 520, -340, 520)
+
+[node name="ColGarageTopOuter" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(-340, 170, 0, 170, 0, 182, -340, 182)
+
+[node name="ColGarageBottomOuter" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(-340, 508, 0, 508, 0, 520, -340, 520)
+
+[node name="ColPartitionA" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(310, 90, 322, 90, 322, 760, 310, 760)
+
+[node name="ColPartitionB" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(630, 90, 642, 90, 642, 760, 630, 760)
+
+[node name="ColStairBay" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(770, 270, 782, 270, 782, 438, 770, 438)
+
+[node name="ColRStep1" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(725, 410, 810, 410, 810, 422, 725, 422)
+
+[node name="ColRStep2" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(715, 392, 800, 392, 800, 404, 715, 404)
+
+[node name="ColRStep3" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(705, 374, 790, 374, 790, 386, 705, 386)
+
+[node name="ColRStep4" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(695, 356, 780, 356, 780, 368, 695, 368)
+
+[node name="ColRStep5" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(685, 338, 770, 338, 770, 350, 685, 350)
+
+[node name="ColRStep6" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(675, 320, 760, 320, 760, 332, 675, 332)
+
+[node name="ColRStep7" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(665, 302, 750, 302, 750, 314, 665, 314)
+
+[node name="ColBStep1" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(445, 720, 520, 720, 520, 732, 445, 732)
+
+[node name="ColBStep2" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(455, 695, 530, 695, 530, 707, 455, 707)
+
+[node name="ColBStep3" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(465, 670, 540, 670, 540, 682, 465, 682)
+
+[node name="ColBStep4" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(475, 645, 550, 645, 550, 657, 475, 657)
+
+[node name="ColBStep5" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(485, 620, 560, 620, 560, 632, 485, 632)
+
+[node name="ColBStep6" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(495, 595, 570, 595, 570, 607, 495, 607)
+
+[node name="ColBStep7" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(505, 570, 580, 570, 580, 582, 505, 582)
+
+[node name="ColBStep8" type="CollisionPolygon2D" parent="House/Collision"]
+polygon = PackedVector2Array(515, 545, 590, 545, 590, 557, 515, 557)
+
+[node name="EndMarker" type="Marker2D" parent="."]
+position = Vector2(6000, 0)

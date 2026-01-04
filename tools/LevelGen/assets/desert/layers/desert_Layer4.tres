@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=5 format=3 uid="uid://711o8m346ue7"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_5sgpw"]
+[ext_resource type="Resource" uid="uid://dt2rxbj0ttbdk" path="res://tools/LevelGen/assets/desert/data/4_desert_FARTHEST_Terrain.tres" id="2_5sgpw"]
+[ext_resource type="Resource" uid="uid://e7aix4o0jqgi" path="res://tools/LevelGen/assets/desert/data/pyramid.tres" id="2_kihvu"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="4_t5nr2"]
+
+[resource]
+script = ExtResource("4_t5nr2")
+layer_name = "Farthest"
+parallax_speed = Vector2(0.1, 1)
+z_index = -80
+render_distance = 3
+y_offset = -50.0
+assets = Array[ExtResource("1_5sgpw")]([ExtResource("2_5sgpw"), ExtResource("2_kihvu")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

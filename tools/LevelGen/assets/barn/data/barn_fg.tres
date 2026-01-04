@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AssetBarnFG" load_steps=2 format=3 uid="uid://c2d5cfr24q2sj"]
+
+[ext_resource type="Script" uid="uid://btu1jf8knnjnf" path="res://tools/LevelGen/assets/barn/asset_barn_fg.gd" id="1_6773a"]
+
+[resource]
+script = ExtResource("1_6773a")
+floor_y = 64.0
+dirt_color = Color(0.15, 0.1, 0.05, 1)
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://btu1jf8knnjnf"

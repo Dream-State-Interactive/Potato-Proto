@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AssetDesertRocks" load_steps=2 format=3 uid="uid://c77eb8gyg8dhm"]
+
+[ext_resource type="Script" uid="uid://dm6f8vmkwfuyj" path="res://tools/LevelGen/assets/desert/asset_desert_rocks.gd" id="1_81yjg"]
+
+[resource]
+script = ExtResource("1_81yjg")
+color = Color(0.3, 0.2, 0.15, 1)
+density = 5
+probability = 1.0
+snaps_to_terrain = true
+snap_rotation = true
+y_offset = 2.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://dm6f8vmkwfuyj"

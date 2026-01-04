@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AssetBarnWallProps" load_steps=2 format=3 uid="uid://bnu0mmn37gm3g"]
+
+[ext_resource type="Script" uid="uid://26pqmo3bhfgb" path="res://tools/LevelGen/assets/barn/asset_barn_wall_props.gd" id="1_l3ie4"]
+
+[resource]
+script = ExtResource("1_l3ie4")
+floor_y = 64.0
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://26pqmo3bhfgb"

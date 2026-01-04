@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AssetWarehousePipes" load_steps=2 format=3 uid="uid://c6utqiv5uxnbk"]
+
+[ext_resource type="Script" uid="uid://cfut7wbenk8m1" path="res://tools/LevelGen/assets/warehouse/asset_warehouse_pipes.gd" id="1_f0vfh"]
+
+[resource]
+script = ExtResource("1_f0vfh")
+pipe_color = Color(0.07, 0.09, 0.11, 1)
+column_color = Color(0.14, 0.15, 0.17, 1)
+ceiling_y = -3000.0
+depth = 4000.0
+snaps_to_terrain = false
+probability = 1.0
+metadata/_custom_type_script = "uid://cfut7wbenk8m1"

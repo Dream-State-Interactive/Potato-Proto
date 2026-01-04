@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AssetFarmWoods" load_steps=2 format=3 uid="uid://dpbh5dhqsfaeg"]
+
+[ext_resource type="Script" uid="uid://csarak3jhysgp" path="res://tools/LevelGen/assets/farm/asset_farm_woods.gd" id="1_lk3n1"]
+
+[resource]
+script = ExtResource("1_lk3n1")
+color = Color(0.05, 0.1, 0.05, 1)
+noise_seed = 11
+noise_freq = 0.015
+noise_amp = 50.0
+y_offset = -80.0
+snaps_to_terrain = false
+probability = 1.0
+metadata/_custom_type_script = "uid://csarak3jhysgp"

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AssetBarnWall" load_steps=2 format=3 uid="uid://dyu8b6cj4ehdv"]
+
+[ext_resource type="Script" uid="uid://ddk5c8pbppmge" path="res://tools/LevelGen/assets/barn/asset_barn_wall.gd" id="1_b1tc6"]
+
+[resource]
+script = ExtResource("1_b1tc6")
+floor_y = 64.0
+wall_height_offset = 550.0
+roof_peak_offset = 850.0
+wall_height = 520.0
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://ddk5c8pbppmge"

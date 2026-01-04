@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=4 format=3 uid="uid://d1vfm0v0a51kn"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_l34he"]
+[ext_resource type="Resource" uid="uid://dw0opcamtj8ss" path="res://tools/LevelGen/assets/forest/data/forest_bg_terrain.tres" id="2_7efis"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="3_u06u8"]
+
+[resource]
+script = ExtResource("3_u06u8")
+layer_name = "Layer 2 (BG)"
+parallax_speed = Vector2(0.3, 0.8)
+z_index = -50
+render_distance = 3
+y_offset = 0.0
+assets = Array[ExtResource("1_l34he")]([ExtResource("2_7efis")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

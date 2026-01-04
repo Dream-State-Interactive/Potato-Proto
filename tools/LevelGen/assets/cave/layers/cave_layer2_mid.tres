@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=5 format=3 uid="uid://dljlrjlm2hnqi"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_8xfdh"]
+[ext_resource type="Resource" uid="uid://c3ge7rw4kf5dv" path="res://tools/LevelGen/assets/cave/data/2_cave_mid.tres" id="2_cqnu8"]
+[ext_resource type="Resource" uid="uid://dredivxtflagp" path="res://tools/LevelGen/assets/cave/data/cave_dust_mid.tres" id="3_lvk4r"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="4_sfmnc"]
+
+[resource]
+script = ExtResource("4_sfmnc")
+layer_name = "Layer"
+parallax_speed = Vector2(0.65, 1)
+z_index = -60
+render_distance = 3
+y_offset = 0.0
+assets = Array[ExtResource("1_8xfdh")]([ExtResource("2_cqnu8"), ExtResource("3_lvk4r")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

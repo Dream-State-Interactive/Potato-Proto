@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AssetGraveyardDetails" load_steps=2 format=3 uid="uid://daxchcs07d6db"]
+
+[ext_resource type="Script" uid="uid://b4mcwoi0632xr" path="res://tools/LevelGen/assets/graveyard/asset_graveyard_details.gd" id="1_u8gmv"]
+
+[resource]
+script = ExtResource("1_u8gmv")
+type = 3
+depth01 = 0.1
+fade_color = Color(0.12, 0.24, 0.28, 1)
+fade_strength = 0.38
+density = 6
+probability = 0.725
+snaps_to_terrain = true
+snap_rotation = true
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://b4mcwoi0632xr"

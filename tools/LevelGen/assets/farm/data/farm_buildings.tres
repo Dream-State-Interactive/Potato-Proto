@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AssetFarmStructure" load_steps=2 format=3 uid="uid://odsnmt2akjyp"]
+
+[ext_resource type="Script" uid="uid://c0fjeyk1xybh2" path="res://tools/LevelGen/assets/farm/asset_farm_structure.gd" id="1_t85h4"]
+
+[resource]
+script = ExtResource("1_t85h4")
+y_offset = 10.0
+attached_objects_y_offset = 10.0
+snaps_to_terrain = false
+probability = 0.2
+metadata/_custom_type_script = "uid://c0fjeyk1xybh2"

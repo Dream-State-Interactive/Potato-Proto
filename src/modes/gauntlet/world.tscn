@@ -40,7 +40,6 @@ generate_obstacles = false
 
 [node name="HillGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("2_ow8bn")
-hill_bottom_depth = null
 
 [node name="HazardGenerator" type="Node2D" parent="LevelGenerator"]
 script = ExtResource("7_qulm8")

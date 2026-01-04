@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=6 format=3 uid="uid://cydvv2sp6n3dk"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_3g0ba"]
+[ext_resource type="Resource" uid="uid://jon33moaksmx" path="res://tools/LevelGen/assets/warehouse/data/warehouse_floor.tres" id="2_5iulx"]
+[ext_resource type="Resource" uid="uid://f2e816uf8mww" path="res://tools/LevelGen/assets/warehouse/data/warehouse_conveyor.tres" id="3_mcex3"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="4_3g8ub"]
+[ext_resource type="Resource" uid="uid://bard7iypev4jn" path="res://tools/LevelGen/assets/warehouse/data/warehouse_frypile.tres" id="4_5iulx"]
+
+[resource]
+script = ExtResource("4_3g8ub")
+layer_name = "Layer 1 (FG)"
+parallax_speed = Vector2(1, 1)
+z_index = 0
+render_distance = 3
+y_offset = 0.0
+assets = Array[ExtResource("1_3g0ba")]([ExtResource("2_5iulx"), ExtResource("3_mcex3"), ExtResource("4_5iulx")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

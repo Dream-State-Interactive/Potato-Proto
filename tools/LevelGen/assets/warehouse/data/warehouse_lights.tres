@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AssetWarehouseLights" load_steps=2 format=3 uid="uid://wedw4n5akaqu"]
+
+[ext_resource type="Script" uid="uid://dgp1742wli20a" path="res://tools/LevelGen/assets/warehouse/asset_warehouse_lights.gd" id="1_kpb7f"]
+
+[resource]
+script = ExtResource("1_kpb7f")
+metal_dark = Color(0.15, 0.18, 0.22, 1)
+beam_color = Color(1, 1, 0.9, 0.15)
+y_hang = 120.0
+ceiling_y = -3000.0
+snaps_to_terrain = false
+probability = 1.0
+metadata/_custom_type_script = "uid://dgp1742wli20a"

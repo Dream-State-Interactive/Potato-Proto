@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AssetWarehouseCables" load_steps=2 format=3 uid="uid://kgx1p0rccg3k"]
+
+[ext_resource type="Script" uid="uid://co21j12ctmf87" path="res://tools/LevelGen/assets/warehouse/asset_warehouse_cables.gd" id="1_f6ef3"]
+
+[resource]
+script = ExtResource("1_f6ef3")
+color = Color(0.08, 0.08, 0.08, 1)
+width = 3.0
+y_hang = 120.0
+sag_amount = 30.0
+snaps_to_terrain = false
+probability = 1.0
+metadata/_custom_type_script = "uid://co21j12ctmf87"

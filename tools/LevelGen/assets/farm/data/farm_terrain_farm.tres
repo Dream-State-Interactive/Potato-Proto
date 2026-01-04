@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AssetFarmTerrain" load_steps=2 format=3 uid="uid://dg52wvb47j4ac"]
+
+[ext_resource type="Script" uid="uid://ct44jom51n1jq" path="res://tools/LevelGen/assets/farm/asset_farm_terrain.gd" id="1_at4lp"]
+
+[resource]
+script = ExtResource("1_at4lp")
+soil_light_color = Color(0.35, 0.25, 0.12, 1)
+furrow_freq = 0.003
+furrow_amp = 0.0
+band_height = 0.0
+darkness_mult = 0.0
+irregularity = 0.0
+color = Color(0.147598, 0.342301, 0.162393, 1)
+depth = 2000.0
+add_collision = false
+noise_freq = 0.0002
+noise_amp = 30.0
+noise_seed = 22
+density = 1
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = 50.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://ct44jom51n1jq"

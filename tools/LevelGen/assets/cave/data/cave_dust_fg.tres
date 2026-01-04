@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AssetCaveDust" load_steps=2 format=3 uid="uid://i28u0k5sc585"]
+
+[ext_resource type="Script" uid="uid://0ugri8kxbx13" path="res://tools/LevelGen/assets/cave/asset_cave_dust.gd" id="1_vnopy"]
+
+[resource]
+script = ExtResource("1_vnopy")
+color = Color(0.2, 0.7, 0.9, 0.25)
+size_mod = 1.2
+density = 4
+probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+y_offset = -500.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://0ugri8kxbx13"

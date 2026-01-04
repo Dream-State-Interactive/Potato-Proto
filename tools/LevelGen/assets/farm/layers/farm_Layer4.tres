@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=7 format=3 uid="uid://dy48sw5ec86pv"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_nnn8m"]
+[ext_resource type="Resource" uid="uid://dg52wvb47j4ac" path="res://tools/LevelGen/assets/farm/data/farm_terrain_farm.tres" id="2_gg0np"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="2_vdevb"]
+[ext_resource type="Resource" uid="uid://ds03m804p0d37" path="res://tools/LevelGen/assets/farm/data/farm_trees.tres" id="3_udjle"]
+[ext_resource type="Resource" uid="uid://odsnmt2akjyp" path="res://tools/LevelGen/assets/farm/data/farm_buildings.tres" id="4_h0xsj"]
+[ext_resource type="Resource" uid="uid://bcj1t2s5cdw6t" path="res://tools/LevelGen/assets/farm/data/farm_fences.tres" id="5_df4us"]
+
+[resource]
+script = ExtResource("2_vdevb")
+layer_name = "Layer 4 (Farm)"
+parallax_speed = Vector2(0.07, 1)
+z_index = -70
+render_distance = 3
+y_offset = -40.0
+assets = Array[ExtResource("1_nnn8m")]([ExtResource("2_gg0np"), ExtResource("3_udjle"), ExtResource("4_h0xsj"), ExtResource("5_df4us")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AssetForestTrees" load_steps=2 format=3 uid="uid://da351r4rxvb6q"]
+
+[ext_resource type="Script" uid="uid://dwisdck75y7eg" path="res://tools/LevelGen/assets/forest/asset_forest_trees.gd" id="1_xpnre"]
+
+[resource]
+script = ExtResource("1_xpnre")
+color = Color(0.02, 0.04, 0.02, 1)
+z_index_offset = 0
+use_sp_trees = false
+min_height = 300.0
+max_height = 600.0
+sp_min_base = 70.0
+sp_max_base = 140.0
+sp_min_h = 90.0
+sp_max_h = 150.0
+sp_depth_extension = 500.0
+density = 12
+probability = 1.0
+snaps_to_terrain = true
+snap_rotation = false
+y_offset = 15.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://dwisdck75y7eg"
