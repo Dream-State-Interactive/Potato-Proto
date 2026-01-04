@@ -152,7 +152,7 @@ func _on_hide_all_menus_requested():
 	else:
 		hud_instance.hide()
 
-func _on_player_is_ready(player_node: Player):
+func _on_player_is_ready(_player_node: Player):
 	hud_instance.show()
 	hud_instance.connect_to_game_manager_signals()
 
@@ -164,7 +164,7 @@ func _on_leaving_game_world():
 	#if not GameManager.player_health_updated.is_connected(_on_player_registered):
 		#GameManager.player_health_updated.connect(_on_player_registered)
 
-func _on_stat_upgraded(stat_name: String):
+func _on_stat_upgraded(_stat_name: String):
 	# Tell the level up menu to refresh itself.
 	if is_instance_valid(level_up_menu_instance) and level_up_menu_instance.is_visible():
 		level_up_menu_instance.update_ui_elements()

@@ -181,8 +181,6 @@ func load_game_after_player_ready():
 			if is_item_collected(item.unique_id):
 				item.queue_free()
 	
-	var save_data = SaveManager.get_save_data(slot_to_load)
-	
 	player_instance.apply_stats_from_resource()
 	
 	# After loading all the data, tell the player to update its visuals.

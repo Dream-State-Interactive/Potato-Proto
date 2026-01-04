@@ -50,6 +50,7 @@ func _ready() -> void:
 		return
 
 	# Calculate the number of progression "steps" that have passed.
+	@warning_ignore("integer_division")
 	var steps: int = int((current_hills - unlock_at_hills) / hills_per_stack_increase)
 	
 	# Calculate the final stack size based on its own scaling rules.
