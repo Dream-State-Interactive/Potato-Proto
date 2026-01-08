@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("2_2j3er")
 layer_name = "Layer - Trees"
-parallax_speed = Vector2(0.2, 0.7)
+parallax_speed = Vector2(0.2, 0.2)
 z_index = -60
 render_distance = 3
 y_offset = 0.0

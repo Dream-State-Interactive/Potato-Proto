@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_keslc")
 layer_name = "Layer"
-parallax_speed = Vector2(0.8, 1)
+parallax_speed = Vector2(0.8, 0.8)
 z_index = -72
 render_distance = 3
 y_offset = 0.0

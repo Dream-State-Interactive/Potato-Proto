@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("3_e3w86")
 layer_name = "Layer 7 Wall"
-parallax_speed = Vector2(0.05, 1)
+parallax_speed = Vector2(0.05, 0.05)
 z_index = -100
 render_distance = 3
 y_offset = -650.0

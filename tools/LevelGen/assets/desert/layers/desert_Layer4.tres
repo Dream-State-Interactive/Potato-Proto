@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("4_t5nr2")
 layer_name = "Farthest"
-parallax_speed = Vector2(0.1, 1)
+parallax_speed = Vector2(0.1, 0.1)
 z_index = -80
 render_distance = 3
 y_offset = -50.0

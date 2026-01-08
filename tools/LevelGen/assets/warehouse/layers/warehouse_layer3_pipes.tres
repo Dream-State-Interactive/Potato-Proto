@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("3_y6dp0")
 layer_name = "Layer 3 pipes"
-parallax_speed = Vector2(0.3, 1)
+parallax_speed = Vector2(0.3, 0.3)
 z_index = -70
 render_distance = 3
 y_offset = -650.0

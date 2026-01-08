@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("2_eglej")
 layer_name = "Far"
-parallax_speed = Vector2(0.2, 1)
+parallax_speed = Vector2(0.2, 0.2)
 z_index = -70
 render_distance = 3
 y_offset = -45.0

@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_jt0qt")
 layer_name = "Layer 3 (Mid-Far)"
-parallax_speed = Vector2(0.15, 1)
+parallax_speed = Vector2(0.15, 0.15)
 z_index = -60
 render_distance = 3
 y_offset = -30.0

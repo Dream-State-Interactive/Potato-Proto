@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("3_2gkxx")
 layer_name = "Layer 4 lights"
-parallax_speed = Vector2(0.2, 1)
+parallax_speed = Vector2(0.2, 0.2)
 z_index = -90
 render_distance = 3
 y_offset = -800.0

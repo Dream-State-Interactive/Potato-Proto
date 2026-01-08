@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("3_cd5lk")
 layer_name = "Layer 5 cables"
-parallax_speed = Vector2(0.15, 1)
+parallax_speed = Vector2(0.15, 0.15)
 z_index = -95
 render_distance = 3
 y_offset = -650.0
