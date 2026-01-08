@@ -18,7 +18,7 @@ func generate(ctx: ProcContext):
 	var step = 20
 	var h_scale = ctx.shared_state.get("current_height_scale", 1.0)
 	
-	# 1. Start height calculation for snapping
+	# 1. Start height calculation
 	var start_noise_y = _get_height_at(ctx.global_x, noise)
 	var start_target_y = _calculate_final_y(ctx.global_x, start_noise_y, ctx, h_scale)
 
@@ -53,9 +53,22 @@ func generate(ctx: ProcContext):
 	poly.polygon = draw_pts
 	ctx.parent_node.add_child(poly)
 	
+	# 4. Collision & Surface System
 	if add_collision:
-		var sb = StaticBody2D.new(); var col = CollisionPolygon2D.new()
-		col.polygon = draw_pts; sb.add_child(col); ctx.parent_node.add_child(sb)
+		var sb = StaticBody2D.new()
+		sb.name = "ProcTerrainBody"
+		
+		if surface_definition:
+			# A. Apply Physics (Friction/Bounce) to the body
+			sb.physics_material_override = surface_definition.physics_material
+			
+			# B. Apply Audio/Visual Data via Metadata
+			sb.set_meta(SurfaceManager.META_KEY, surface_definition)
+
+		var col = CollisionPolygon2D.new()
+		col.polygon = draw_pts
+		sb.add_child(col)
+		ctx.parent_node.add_child(sb)
 	
 	_post_process(ctx, curve_pts, poly)
 
@@ -69,7 +82,6 @@ func _calculate_final_y(world_x: float, noise_y: float, ctx: ProcContext, h_scal
 		var target_y = noise_y - altitude
 		return lerp(noise_y, target_y, ov.blend_weight * mask)
 	return noise_y
-
 
 func _get_height_at(world_x: float, noise: FastNoiseLite) -> float:
 	return y_offset + (noise.get_noise_1d(world_x) * noise_amp)

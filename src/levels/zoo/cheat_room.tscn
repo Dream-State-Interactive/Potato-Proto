@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cahc2oqxyppbt"]
+[gd_scene load_steps=10 format=3 uid="uid://cahc2oqxyppbt"]
 
 [ext_resource type="PackedScene" uid="uid://cg5no13kqh8hv" path="res://src/collectibles/starch_point.tscn" id="1_kg8sm"]
 [ext_resource type="Script" uid="uid://bpv1vn614w3y5" path="res://src/modes/gauntlet/store_interaction.gd" id="2_bi54f"]
 [ext_resource type="PackedScene" uid="uid://bhhfjdk83iomh" path="res://src/npc/npc_goobie/npc_goobie.tscn" id="3_oco8u"]
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="4_bi1r5"]
+[ext_resource type="Resource" uid="uid://c1rpc38s4ax8v" path="res://src/core/surface/data/default.tres" id="5_kuupn"]
 [ext_resource type="Texture2D" uid="uid://by37wolcjeyg0" path="res://assets/graphics/sprites/_dev/bustin.png" id="5_oco8u"]
+[ext_resource type="Script" uid="uid://ddxbt3q2oonmq" path="res://src/core/surface/surface_tagger.gd" id="6_3abnm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7re1"]
 radius = 270.59
@@ -207,6 +209,7 @@ position = Vector2(-1376, 209.112)
 scale = Vector2(4.0836, 4.45715)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Structure"]
+metadata/surface_def = ExtResource("5_kuupn")
 
 [node name="EXT" type="Polygon2D" parent="Structure/StaticBody2D"]
 color = Color(0.380811, 0.312773, 0.282938, 1)
@@ -215,9 +218,14 @@ polygon = PackedVector2Array(24, 32, 337, 32, 388.383, -2.26861, 432, -13, 469, 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Structure/StaticBody2D"]
 polygon = PackedVector2Array(24, 32, 337, 32, 388.383, -2.26861, 432, -13, 469, 1, 492, 1, 495, 21, 472, 19, 453, 9, 427, 2, 390.097, 10.9685, 371, 31, 341, 52, 259, 69, 75, 76, -28, 70, -70, 37, -94, -7, -93, -45, -81, -140, -76, -273, -28, -314, 46, -321, 354, -313, 453, -291, 492, -253, 494, -225, 174, -242, 103, -248, 46, -249, 0, -234, -28, -205, -38, -183, -39, -148, -38, -98, -34, -50, -28, 4, -7, 22)
 
+[node name="SurfaceTagger" type="Node" parent="Structure/StaticBody2D"]
+script = ExtResource("6_3abnm")
+definition = ExtResource("5_kuupn")
+metadata/_custom_type_script = "uid://ddxbt3q2oonmq"
+
 [node name="StarchPoint" parent="." instance=ExtResource("1_kg8sm")]
 position = Vector2(-692, 289.112)
-scale = Vector2(0.189332, 0.189332)
+scale = Vector2(1.28213, 1.28213)
 starch_value = 100000
 pulse_speed = 4.2
 scale_amount = 0.95

@@ -16,6 +16,10 @@ extends Resource
 @export var scale_min: float = 1.0
 @export var scale_max: float = 1.0
 
+@export_group("Surface")
+## If this asset generates a StaticBody, use this surface.
+@export var surface_definition: SurfaceDefinition
+
 func generate(ctx: ProcContext) -> void:
 	pass
 

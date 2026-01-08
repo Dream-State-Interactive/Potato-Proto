@@ -1,12 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://consaani8nb7p"]
+[gd_scene load_steps=9 format=3 uid="uid://consaani8nb7p"]
 
 [ext_resource type="Script" uid="uid://bpv1vn614w3y5" path="res://src/modes/gauntlet/store_interaction.gd" id="1_3fbk5"]
 [ext_resource type="PackedScene" uid="uid://bhhfjdk83iomh" path="res://src/npc/npc_goobie/npc_goobie.tscn" id="2_f6ri4"]
 [ext_resource type="Theme" uid="uid://b5xvitnc8cji" path="res://assets/themes/base_menu_theme.tres" id="3_f6ri4"]
+[ext_resource type="Resource" uid="uid://c1rpc38s4ax8v" path="res://src/core/surface/data/default.tres" id="3_t282t"]
+[ext_resource type="Script" uid="uid://ddxbt3q2oonmq" path="res://src/core/surface/surface_tagger.gd" id="4_fvyxx"]
 [ext_resource type="Script" uid="uid://dvbcdw28hq7xq" path="res://tools/LevelGen/core/proc_asset_instance.gd" id="4_jmhdx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7re1"]
 radius = 270.59
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pguc"]
+bounce = 0.52
+absorbent = true
 
 [node name="AbilityStore" type="Node2D"]
 
@@ -83,6 +89,8 @@ color = Color(0.686413, 0.58376, 0.442752, 1)
 polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_0pguc")
+metadata/surface_def = ExtResource("3_t282t")
 
 [node name="Floor" type="Polygon2D" parent="StaticBody2D"]
 color = Color(0.571602, 0.302053, 0.173409, 1)
@@ -91,6 +99,11 @@ polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(0, 2)
 polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="SurfaceTagger" type="Node" parent="StaticBody2D"]
+script = ExtResource("4_fvyxx")
+definition = ExtResource("3_t282t")
+metadata/_custom_type_script = "uid://ddxbt3q2oonmq"
 
 [node name="Label" type="Label" parent="."]
 offset_left = 291.0
@@ -106,6 +119,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(1000, 0)
 
 [node name="ProcAssetInstance" type="Node2D" parent="."]
-position = Vector2(528, 2)
+position = Vector2(996, -202)
 script = ExtResource("4_jmhdx")
 metadata/_custom_type_script = "uid://dvbcdw28hq7xq"

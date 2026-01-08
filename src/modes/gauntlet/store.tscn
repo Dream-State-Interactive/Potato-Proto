@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://cu4qjv18u2cmk"]
+[gd_scene load_steps=7 format=3 uid="uid://cu4qjv18u2cmk"]
 
 [ext_resource type="Texture2D" uid="uid://by37wolcjeyg0" path="res://assets/graphics/sprites/_dev/bustin.png" id="1_g6tey"]
 [ext_resource type="Script" uid="uid://bpv1vn614w3y5" path="res://src/modes/gauntlet/store_interaction.gd" id="2_2bjau"]
+[ext_resource type="Resource" uid="uid://c1rpc38s4ax8v" path="res://src/core/surface/data/default.tres" id="3_jv7i4"]
+[ext_resource type="Script" uid="uid://ddxbt3q2oonmq" path="res://src/core/surface/surface_tagger.gd" id="4_3w5wg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bi1r5"]
 radius = 270.59
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pguc"]
+bounce = 0.52
+absorbent = true
 
 [node name="Store" type="Node2D"]
 
@@ -80,6 +86,8 @@ color = Color(0.686413, 0.58376, 0.442752, 1)
 polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_0pguc")
+metadata/surface_def = ExtResource("3_jv7i4")
 
 [node name="Floor" type="Polygon2D" parent="StaticBody2D"]
 color = Color(0.571602, 0.302053, 0.173409, 1)
@@ -88,6 +96,11 @@ polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(0, 2)
 polygon = PackedVector2Array(0, 0, 0, 100, 1000, 100, 1000, 0)
+
+[node name="SurfaceTagger" type="Node" parent="StaticBody2D"]
+script = ExtResource("4_3w5wg")
+definition = ExtResource("3_jv7i4")
+metadata/_custom_type_script = "uid://ddxbt3q2oonmq"
 
 [node name="Label" type="Label" parent="."]
 offset_left = 293.0

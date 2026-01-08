@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SurfaceDefinition" load_steps=4 format=3 uid="uid://c1rpc38s4ax8v"]
+
+[ext_resource type="AudioStream" uid="uid://cftlq20mm106g" path="res://assets/sfx/StarchyCrunch.ogg" id="1_01qqt"]
+[ext_resource type="Script" uid="uid://cjl8elq7whdcl" path="res://src/core/surface/surface_definition.gd" id="1_54dbe"]
+[ext_resource type="AudioStream" uid="uid://x3gvdwjg5bpw" path="res://assets/sfx/starchPointDing.mp3" id="3_sq06u"]
+
+[resource]
+script = ExtResource("1_54dbe")
+impact_sounds = Array[AudioStream]([ExtResource("1_01qqt")])
+slide_sounds = Array[AudioStream]([ExtResource("3_sq06u")])
+footstep_sounds = Array[AudioStream]([])
+volume_db_offset = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.1
+metadata/_custom_type_script = "uid://cjl8elq7whdcl"

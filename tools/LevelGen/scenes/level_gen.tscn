@@ -12,9 +12,9 @@
 [ext_resource type="Script" uid="uid://csgqmb4c1jjk2" path="res://tools/LevelGen/core/terrain_override.gd" id="8_bbhfy"]
 [ext_resource type="Script" uid="uid://bq8bhr3jj4gls" path="res://tools/LevelGen/core/special_chunk_entry.gd" id="8_culic"]
 [ext_resource type="Resource" uid="uid://c6uiknvyhtt4c" path="res://tools/LevelGen/biomes/graveyard_biome.tres" id="8_v18sk"]
-[ext_resource type="PackedScene" uid="uid://cu4qjv18u2cmk" path="res://src/modes/gauntlet/store.tscn" id="9_bbhfy"]
 [ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="10_ii60e"]
 [ext_resource type="Resource" uid="uid://ddyj3jhp12v4q" path="res://tools/LevelGen/biomes/warehouse_biome.tres" id="10_ocsyv"]
+[ext_resource type="PackedScene" uid="uid://cu4qjv18u2cmk" path="res://src/modes/gauntlet/store.tscn" id="13_v18sk"]
 
 [sub_resource type="Resource" id="Resource_tybkv"]
 script = ExtResource("4_t3lw0")
@@ -106,7 +106,7 @@ metadata/_custom_type_script = "uid://csgqmb4c1jjk2"
 [sub_resource type="Resource" id="Resource_dw005"]
 script = ExtResource("8_culic")
 chunk_index = 12
-scene = ExtResource("9_bbhfy")
+scene = ExtResource("13_v18sk")
 metadata/_custom_type_script = "uid://bq8bhr3jj4gls"
 
 [sub_resource type="Resource" id="Resource_v18sk"]

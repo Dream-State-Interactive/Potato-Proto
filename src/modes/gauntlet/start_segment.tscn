@@ -1,4 +1,11 @@
-[gd_scene format=3 uid="uid://cbl57rf68p1mr"]
+[gd_scene load_steps=4 format=3 uid="uid://cbl57rf68p1mr"]
+
+[ext_resource type="Resource" uid="uid://c1rpc38s4ax8v" path="res://src/core/surface/data/default.tres" id="1_brh5j"]
+[ext_resource type="Script" uid="uid://ddxbt3q2oonmq" path="res://src/core/surface/surface_tagger.gd" id="2_6oeu2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pguc"]
+bounce = 0.52
+absorbent = true
 
 [node name="StartSegment" type="Node2D"]
 
@@ -44,6 +51,8 @@ color = Color(0.603922, 0.364706, 0.164706, 1)
 polygon = PackedVector2Array(257, -114, 254, 0, 271, 0, 263, -114)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_0pguc")
+metadata/surface_def = ExtResource("1_brh5j")
 
 [node name="Polygon2D2" type="Polygon2D" parent="StaticBody2D"]
 color = Color(0.552941, 0.356863, 0.262745, 1)
@@ -89,6 +98,11 @@ polygon = PackedVector2Array(0, 0, 746, -209, 746, 150, 0, 150)
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(583, 0)
 polygon = PackedVector2Array(0, 0, 746, -209, 746, 150, 0, 150)
+
+[node name="SurfaceTagger" type="Node" parent="StaticBody2D"]
+script = ExtResource("2_6oeu2")
+definition = ExtResource("1_brh5j")
+metadata/_custom_type_script = "uid://ddxbt3q2oonmq"
 
 [node name="EndMarker" type="Marker2D" parent="."]
 position = Vector2(1329, -209)

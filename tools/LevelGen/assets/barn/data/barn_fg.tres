@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="AssetBarnFG" load_steps=2 format=3 uid="uid://c2d5cfr24q2sj"]
+[gd_resource type="Resource" script_class="AssetBarnFG" load_steps=3 format=3 uid="uid://c2d5cfr24q2sj"]
 
 [ext_resource type="Script" uid="uid://btu1jf8knnjnf" path="res://tools/LevelGen/assets/barn/asset_barn_fg.gd" id="1_6773a"]
+[ext_resource type="Resource" uid="uid://c1rpc38s4ax8v" path="res://src/core/surface/data/default.tres" id="2_rvm41"]
 
 [resource]
 script = ExtResource("1_6773a")
@@ -13,4 +14,5 @@ snap_rotation = false
 y_offset = 0.0
 scale_min = 1.0
 scale_max = 1.0
+surface_definition = ExtResource("2_rvm41")
 metadata/_custom_type_script = "uid://btu1jf8knnjnf"

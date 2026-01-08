@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="AssetFarmTerrain" load_steps=2 format=3 uid="uid://btfnb4uyylxmh"]
+[gd_resource type="Resource" script_class="AssetFarmTerrain" load_steps=3 format=3 uid="uid://btfnb4uyylxmh"]
 
 [ext_resource type="Script" uid="uid://ct44jom51n1jq" path="res://tools/LevelGen/assets/farm/asset_farm_terrain.gd" id="1_uk2rd"]
+[ext_resource type="Resource" uid="uid://c1rpc38s4ax8v" path="res://src/core/surface/data/default.tres" id="2_n2axd"]
 
 [resource]
 script = ExtResource("1_uk2rd")
@@ -23,4 +24,5 @@ snap_rotation = false
 y_offset = 550.0
 scale_min = 1.0
 scale_max = 1.0
+surface_definition = ExtResource("2_n2axd")
 metadata/_custom_type_script = "uid://ct44jom51n1jq"

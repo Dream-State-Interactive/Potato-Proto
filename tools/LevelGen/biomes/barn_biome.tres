@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BiomeProfile" load_steps=8 format=3 uid="uid://caavf7lfwkit3"]
+[gd_resource type="Resource" script_class="BiomeProfile" load_steps=9 format=3 uid="uid://caavf7lfwkit3"]
 
 [ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="1_eht7t"]
 [ext_resource type="Resource" uid="uid://bxmukivbw1rfw" path="res://tools/LevelGen/assets/barn/layers/barn_layer_fg.tres" id="2_2k5wy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://djuxlg4q0tcxd" path="res://tools/LevelGen/assets/barn/layers/barn_layer_struct.tres" id="4_2vy8q"]
 [ext_resource type="Resource" uid="uid://d3x7v3mmcii53" path="res://tools/LevelGen/assets/barn/layers/barn_layer_wall.tres" id="5_7a1qb"]
 [ext_resource type="Resource" uid="uid://deeoyp56acd7f" path="res://tools/LevelGen/assets/barn/layers/barn_layer_wallprops.tres" id="6_6p3qj"]
+[ext_resource type="AudioStream" uid="uid://budniykkmtb6u" path="res://assets/Music/PotatoGame_Track2_v2.mp3" id="7_2vy8q"]
 
 [resource]
 script = ExtResource("2_jq0gu")
@@ -14,6 +15,7 @@ sky_top_color = Color(0.1, 0.1, 0.2, 1)
 sky_bottom_color = Color(0.05, 0.05, 0.1, 1)
 show_celestial_bodies = true
 scale = 2.0
+music = ExtResource("7_2vy8q")
 glow_enabled = false
 glow_intensity = 0.8
 glow_bloom = 0.0

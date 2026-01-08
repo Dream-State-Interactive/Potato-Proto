@@ -79,6 +79,7 @@ const FLOOR_ANGLE_MAX := deg_to_rad(50.0)   # treat anything flatter than this a
 @export var score = 0
 
 var prevDistance: float = 0
+var _previous_velocity: Vector2 = Vector2.ZERO
 
 const DASH_COOLDOWN: float = 0.125
 const COMBO_COOLDOWN: float = 0.25
@@ -256,6 +257,9 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		_is_gripping = true
 		# We must 'return' immediately to prevent any of our normal physics logic
 		# (like applying gravity or rolling torque) from running and interfering.
+		
+		# CRITICAL: Even if we return early, we must track velocity for the next frame
+		_previous_velocity = state.linear_velocity
 		return
 
 	# If we reach this point, it means the grip component was not active.
@@ -270,16 +274,45 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		if not collision_circle.disabled and collision_circle.shape.radius >= target_circle_radius * 0.95 and linear_velocity.length() > INDESTRUCTIBLE_VELOCITY:
 			is_invincible = true
 			
-	# --- 3. HAZARD COLLISION & DAMAGE LOGIC ---
-	# We only check for damage if our damage cooldown timer is finished.
-	# This prevents taking damage every single frame while touching a hazard.
-	if damage_cooldown.is_stopped():
-		# 'get_contact_count()' tells us how many objects we are touching this frame.
-		for i in range(state.get_contact_count()):
-			# 'get_contact_collider_object()' gives us a direct reference to the other node.
-			var collider = state.get_contact_collider_object(i)
-			if not collider: continue # Safety check in case the object was just freed.
+	# --- 3. COLLISION LOGIC (Sounds & Hazards) ---
+	# 'get_contact_count()' tells us how many objects we are touching this frame.
+	# Track the loudest impact this frame to avoid playing 4 sounds if we hit a corner.
+	var max_impact_impulse: float = 0.0
+	var max_impact_collider: Object = null
+	var max_impact_pos: Vector2 = Vector2.ZERO
+	
+	# Calculate TOTAL change in velocity (Deceleration). Represents the total impact force applied to the player.
+	var velocity_change = state.linear_velocity - _previous_velocity
+	
+	# We iterate through ALL contacts.
+	for i in range(state.get_contact_count()):
+		# 'get_contact_collider_object()' gives us a direct reference to the other node.
+		var collider = state.get_contact_collider_object(i)
+		if not collider: continue # Safety check in case the object was just freed.
 
+		# --- A. SURFACE IMPACT SOUNDS ---
+		# Calculate how hard we hit the surface.
+		# The normal points OUT of the wall. Velocity Change points INTO the wall.
+		var contact_normal = state.get_contact_local_normal(i)
+		
+		# We project our Deceleration onto the wall's normal.
+		# If this is positive, it means this specific wall stopped our movement.
+		var impact_on_this_surface = velocity_change.dot(contact_normal)
+		
+		if impact_on_this_surface > 0:
+			# Convert Deceleration to Force (F = ma) -> Impulse = VelocityChange * Mass
+			var specific_impulse = impact_on_this_surface * mass
+			
+			# Only store the hardest hit for this frame
+			if specific_impulse > max_impact_impulse:
+				max_impact_impulse = specific_impulse
+				max_impact_collider = collider
+				# Convert local contact point to global
+				max_impact_pos = state.get_contact_local_position(i)
+
+		# --- B. HAZARD COLLISION & DAMAGE LOGIC ---
+		# We only check for damage if our damage cooldown timer is finished.
+		if damage_cooldown.is_stopped():
 			# We check if the object we hit has our reusable CHazard component.
 			# The 'false, false' arguments make it a non-recursive search, which is faster.
 			var hazard_component = collider.get_node_or_null("CHazard")
@@ -315,6 +348,16 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 						break
 					else:
 						print("INVINCIBLE: Damage ignored!")
+						
+	# --- 4. EXECUTE AUDIO ---
+	# Play one sound per frame (the loudest one).
+	if max_impact_collider and max_impact_impulse > 100.0:
+		# Calls the new robust system
+		SurfaceManager.handle_impact(max_impact_collider, max_impact_pos, max_impact_impulse)
+
+	# --- 5. STORE VELOCITY FOR NEXT FRAME ---
+	# Save the current state to compare against the next frame to calculate "deceleration".
+	_previous_velocity = state.linear_velocity
 
 # _physics_process(delta) runs on every physics frame. Ideal for applying forces and input.
 func _physics_process(_delta: float):
