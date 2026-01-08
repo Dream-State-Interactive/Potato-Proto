@@ -76,14 +76,27 @@ func generate(ctx: ProcContext):
 	_build_poly(ctx.parent_node, c_curve, -4000.0) # Ceiling fills up
 	
 	if add_collision:
-		var sb = StaticBody2D.new()
-		var col = CollisionPolygon2D.new()
-		var col_pts = f_curve.duplicate()
-		col_pts.append(Vector2(f_curve[-1].x, 4000))
-		col_pts.append(Vector2(f_curve[0].x, 4000))
-		col.polygon = col_pts
-		sb.add_child(col)
-		ctx.parent_node.add_child(sb)
+		# Floor collision
+		var sb_floor = StaticBody2D.new()
+		sb_floor.name = "FloorCollision"
+		var col_floor = CollisionPolygon2D.new()
+		var col_pts_floor = f_curve.duplicate()
+		col_pts_floor.append(Vector2(f_curve[-1].x, 4000))
+		col_pts_floor.append(Vector2(f_curve[0].x, 4000))
+		col_floor.polygon = col_pts_floor
+		sb_floor.add_child(col_floor)
+		ctx.parent_node.add_child(sb_floor)
+
+		# Ceiling collision
+		var sb_ceil = StaticBody2D.new()
+		sb_ceil.name = "CeilingCollision"
+		var col_ceil = CollisionPolygon2D.new()
+		var col_pts_ceil = c_curve.duplicate()
+		col_pts_ceil.append(Vector2(c_curve[-1].x, -4000))
+		col_pts_ceil.append(Vector2(c_curve[0].x, -4000))
+		col_ceil.polygon = col_pts_ceil
+		sb_ceil.add_child(col_ceil)
+		ctx.parent_node.add_child(sb_ceil)
 
 # Helper for floor calc to reuse in snap logic
 func _get_floor_y(local_x: float, global_x: float, noise: FastNoiseLite, wander_noise: FastNoiseLite) -> float:

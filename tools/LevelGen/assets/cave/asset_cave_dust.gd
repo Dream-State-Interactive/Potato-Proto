@@ -16,11 +16,13 @@ func generate(ctx: ProcContext):
 		# Octagon shape
 		p.polygon = PackedVector2Array([Vector2(0,-s), Vector2(s*0.4, -s*0.4), Vector2(s,0), Vector2(s*0.4, s*0.4), Vector2(0,s), Vector2(-s*0.4, s*0.4), Vector2(-s,0), Vector2(-s*0.4, -s*0.4)])
 		p.color = color * 2.2 # Glow multiplier
-		
-		p.position = Vector2(ctx.rng.randf_range(0, ctx.chunk_size), ctx.rng.randf_range(0, 1000))
+
+		# Spawn particles throughout the entire tunnel space (from ceiling to floor)
+		# Typical cave: ceiling at -600, floor at +200 = 800 pixel height
+		p.position = Vector2(ctx.rng.randf_range(0, ctx.chunk_size), ctx.rng.randf_range(-900, 700) + y_offset)
 		p.set_meta("start_y", p.position.y)
 		p.set_meta("phase", ctx.rng.randf() * TAU)
 		p.set_meta("speed_mod", ctx.rng.randf_range(0.8, 1.2))
-		
+
 		controller.add_child(p)
 		controller.motes.append(p)

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=5 format=3 uid="uid://bvq8n4t2kxr5m"]
+
+[ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_ultra"]
+[ext_resource type="Resource" uid="uid://dhftsm4e0xmuk" path="res://tools/LevelGen/assets/cave/data/6_cave_deepest.tres" id="2_ultra"]
+[ext_resource type="Resource" uid="uid://d2icgfyvqqlv" path="res://tools/LevelGen/assets/cave/data/cave_dust_far.tres" id="3_ultra"]
+[ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="4_ultra"]
+
+[resource]
+script = ExtResource("4_ultra")
+layer_name = "Ultra Deep Layer"
+parallax_speed = Vector2(0.02, 0.02)
+z_index = -120
+render_distance = 3
+y_offset = 10.0
+assets = Array[ExtResource("1_ultra")]([ExtResource("2_ultra"), ExtResource("3_ultra")])
+metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

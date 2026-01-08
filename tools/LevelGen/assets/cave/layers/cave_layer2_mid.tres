@@ -8,9 +8,9 @@
 [resource]
 script = ExtResource("4_sfmnc")
 layer_name = "Layer"
-parallax_speed = Vector2(0.65, 1)
+parallax_speed = Vector2(0.75, 0.75)
 z_index = -60
 render_distance = 3
-y_offset = 0.0
+y_offset = -25.0
 assets = Array[ExtResource("1_8xfdh")]([ExtResource("2_cqnu8"), ExtResource("3_lvk4r")])
 metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"

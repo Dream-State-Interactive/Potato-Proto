@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "Bash(tree:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(wc:*)"
+    ]
+  }
+}

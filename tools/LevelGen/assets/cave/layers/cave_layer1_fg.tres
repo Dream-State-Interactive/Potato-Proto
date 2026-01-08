@@ -12,6 +12,6 @@ layer_name = "Layer"
 parallax_speed = Vector2(1, 1)
 z_index = 0
 render_distance = 3
-y_offset = 0.0
+y_offset = -25.0
 assets = Array[ExtResource("1_rq6lq")]([ExtResource("2_r83jf"), ExtResource("3_hp8h1"), ExtResource("4_1uw6k")])
 metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"
