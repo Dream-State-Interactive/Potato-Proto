@@ -22,25 +22,43 @@ func _ready():
 func _process(delta):
 	if _is_playing and is_instance_valid(_current_actor) and is_instance_valid(_bubble):
 		var screen_position = get_viewport().get_canvas_transform() * _current_actor.global_position
-		var bubble_width = _bubble.size.x
-		_bubble.global_position = screen_position + Vector2(-bubble_width / 2, -150)
+		var bubble_size := _bubble.size
+		_bubble.global_position = screen_position + Vector2(-bubble_size.x * 0.5, -bubble_size.y - 40)
 
-func play():
+func play() -> void:
 	if _is_playing or not dialogue:
 		print("NOTHING SIR")
 		return
-		
-	var ui_layer = get_node_or_null(ui_layer_path)
+
+	var ui_layer := get_node_or_null(ui_layer_path)
+	if ui_layer == null:
+		push_warning("DialoguePlayer: ui_layer_path invalid or UI layer not found: %s" % [ui_layer_path])
+		return
+
+	_is_playing = true
+	_current_line_index = 0
+
 	if not is_instance_valid(_bubble):
 		print("SHIT AINT VALID, VALIDATING...")
 		_bubble = bubble_scene.instantiate()
 		ui_layer.add_child(_bubble)
-		await _bubble.ready
-	
+
+		if not _bubble.is_node_ready():
+			_bubble.ready.connect(_on_bubble_ready, CONNECT_ONE_SHOT)
+			return
+
+	_start_dialogue()
+
+func _on_bubble_ready() -> void:
+	if not _is_playing:
+		return
+	_start_dialogue()
+
+func _start_dialogue() -> void:
 	print("OH WE GO BABY")
-	_is_playing = true
-	_current_line_index = 0
 	_show_current_line()
+
+
 
 func _unhandled_input(event):
 	if _is_playing and event.is_action_pressed("ui_accept"):
@@ -66,7 +84,11 @@ func _show_current_line():
 	
 	var key_to_translate = line.text_key
 	print("Attempting to translate key: '", key_to_translate, "'")
-	var final_text = tr(key_to_translate)
+	var key: String = String(line.text_key)
+	var translated: String = tr(key)
+
+	# If no translation exists, returns the key unchanged.
+	var final_text: String = translated if translated != key else key
 	print("Translation result: '", final_text, "'")
 	
 	#var final_text = tr(line.text_key)

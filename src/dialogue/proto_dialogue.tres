@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogueResource" load_steps=5 format=3 uid="uid://cihgmc4rdcu4m"]
+[gd_resource type="Resource" script_class="DialogueResource" load_steps=9 format=3 uid="uid://cihgmc4rdcu4m"]
 
 [ext_resource type="Script" uid="uid://ly6cd7llx4r3" path="res://src/dialogue/DialogueResource.gd" id="1_s7t14"]
 [ext_resource type="Script" uid="uid://bjhexxha8vley" path="res://src/dialogue/DialogueLineResource.gd" id="1_uu8nx"]
@@ -13,6 +13,30 @@ script = ExtResource("1_uu8nx")
 speaker_key = &"bustin"
 text_key = &"BUSTIN_FEELS_GOOD"
 
+[sub_resource type="Resource" id="Resource_cesdl"]
+script = ExtResource("1_uu8nx")
+speaker_key = &"bustin"
+text_key = &"YO_MAMA"
+metadata/_custom_type_script = "uid://bjhexxha8vley"
+
+[sub_resource type="Resource" id="Resource_m5fwm"]
+script = ExtResource("1_uu8nx")
+speaker_key = &"potato_sick"
+text_key = &"CAP"
+metadata/_custom_type_script = "uid://bjhexxha8vley"
+
+[sub_resource type="Resource" id="Resource_koim2"]
+script = ExtResource("1_uu8nx")
+speaker_key = &"bustin"
+text_key = &"MAN BEING STUCK IN THIS LEVEL IS JUST NOT SKIBIDI BRO, LIKE AM I GIVING ANXIETY!??? IM NOT SURE BUT i COULD REALLY GO FOR A MOCHA LATTE RIGHT NOW. GOD DAMN BUSTIN MAKES ME FEEL GOOD"
+metadata/_custom_type_script = "uid://bjhexxha8vley"
+
+[sub_resource type="Resource" id="Resource_qaduu"]
+script = ExtResource("1_uu8nx")
+speaker_key = &"potato_sick"
+text_key = &"...ye"
+metadata/_custom_type_script = "uid://bjhexxha8vley"
+
 [resource]
 script = ExtResource("1_s7t14")
-lines = Array[ExtResource("1_uu8nx")]([SubResource("Resource_1esp0"), SubResource("Resource_7djt5")])
+lines = Array[ExtResource("1_uu8nx")]([SubResource("Resource_1esp0"), SubResource("Resource_7djt5"), SubResource("Resource_cesdl"), SubResource("Resource_m5fwm"), SubResource("Resource_koim2"), SubResource("Resource_qaduu")])

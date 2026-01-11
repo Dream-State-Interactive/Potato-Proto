@@ -51,9 +51,10 @@ func _ready() -> void:
 
 	# Apply pivot logic only to Control nodes, as Node2D/Sprite2D don't have it.
 	if _parent_node is Control:
-		# Wait for parent to be resized before calculating its center.
-		await _parent_node.resized
-		_parent_node.pivot_offset = _parent_node.size / 2.0
+		# Recenter pivot every time the parent resizes (important for dynamic sizing).
+		(_parent_node as Control).resized.connect(_on_parent_resized)
+		_on_parent_resized()
+
 	# For Node2D (like Sprite2D), scaling is relative to the node's origin.
 	# To scale from the center, ensure the Sprite2D's 'centered' property is on,
 	# or adjust its 'offset' manually in the Inspector.
@@ -72,6 +73,14 @@ func _ready() -> void:
 
 
 # --- State Machine & Animation Control ---
+func _on_parent_resized() -> void:
+	if _parent_node is Control:
+		var c := _parent_node as Control
+		c.pivot_offset = c.size / 2.0
+
+func recenter_pivot() -> void:
+	_on_parent_resized()
+
 
 func _update_animation_state() -> void:
 	if _is_locked:

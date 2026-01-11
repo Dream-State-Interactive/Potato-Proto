@@ -18,10 +18,7 @@ func _apply() -> void:
 	if not parent or not definition:
 		return
 
-	# 1. Apply Physics Material (Visual feedback in editor)
 	if parent is CollisionObject2D and definition.physics_material:
 		parent.physics_material_override = definition.physics_material
 	
-	# 2. Set Metadata (The "Magic" Link)
-	# This embeds the resource reference directly into the parent object
 	parent.set_meta(SurfaceManager.META_KEY, definition)

@@ -225,7 +225,7 @@ metadata/_custom_type_script = "uid://ddxbt3q2oonmq"
 
 [node name="StarchPoint" parent="." instance=ExtResource("1_kg8sm")]
 position = Vector2(-692, 289.112)
-scale = Vector2(1.28213, 1.28213)
+scale = Vector2(0.586521, 0.586521)
 starch_value = 100000
 pulse_speed = 4.2
 scale_amount = 0.95
