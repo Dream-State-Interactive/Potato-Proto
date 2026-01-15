@@ -147,6 +147,7 @@ var _skin_material_made_unique: bool = false
 # _ready() runs once when the node is added to the scene tree and ready.
 # It's used for one-time setup.
 func _ready():
+	add_to_group("player")  # Register with Godot's group system for easy lookup.
 	InputCooldownTimer.wait_time = DASH_COOLDOWN
 	ComboCooldownTimer.wait_time = COMBO_COOLDOWN
 	# --- Physics Setup ---
@@ -217,7 +218,7 @@ func generate_score():
 	var distanceFromRoot = player_position.distance_to(root_position) - 414
 	var distanceFactor = distanceFromRoot * SCORE_DISTANCE_NORMALIZER
 	
-	var pointsFactor = GameManager.total_starch_points * SCORE_POINTS_NORMALIZER
+	var pointsFactor = RunState.total_starch_points * SCORE_POINTS_NORMALIZER
 	
 	var new_score = distanceFactor + pointsFactor
 	
@@ -552,10 +553,10 @@ func _on_health_changed(current_health: float, max_health: float):
 	aging_rate = (1.0 - health_percentage) * max_aging_rate
 
 func _on_ability1_state_updated(state: int, progress: float):
-	GameManager.ability1_state_updated.emit(state, progress)
+	SignalBus.ability1_state_updated.emit(state, progress)
 
 func _on_ability2_state_updated(state: int, progress: float):
-	GameManager.ability2_state_updated.emit(state, progress)
+	SignalBus.ability2_state_updated.emit(state, progress)
 
 # The public healing function. Called by 'add_starch'.
 func heal(amount: float):
@@ -586,7 +587,7 @@ func heal(amount: float):
 
 # This is called by StarchPoint collectibles.
 func add_starch(amount: int):
-	GameManager.add_starch_points(amount)
+	RunState.add_starch_points(amount)
 	heal(STARCH_HEAL_VALUE) # Each starch point heals for a flat amount.
 
 # This is connected to the HealthComponent's 'died' signal.
@@ -644,26 +645,26 @@ func equip_ability(ability_info: AbilityInfo, slot_number: int):
 			equipped_ability1_info = ability_info
 			# Connect the ability's signal to our NEW handler function.
 			new_ability.state_updated.connect(_on_ability1_state_updated)
-			GameManager.ability1_equipped.emit(ability_info)
+			SignalBus.ability1_equipped.emit(ability_info)
 			# Immediately update the HUD to show it's ready.
-			GameManager.ability1_state_updated.emit(Ability.State.READY, 0.0)
+			SignalBus.ability1_state_updated.emit(Ability.State.READY, 0.0)
 		else: # slot_number == 2
 			equipped_ability2_info = ability_info
 			new_ability.state_updated.connect(_on_ability2_state_updated)
-			GameManager.ability2_equipped.emit(ability_info)
-			GameManager.ability2_state_updated.emit(Ability.State.READY, 0.0)
-	
+			SignalBus.ability2_equipped.emit(ability_info)
+			SignalBus.ability2_state_updated.emit(Ability.State.READY, 0.0)
+
 	# 4. Handle UNEQUIPPING (if ability_info is null).
 	else:
 		print("Unequipped ability in slot ", slot_number)
 		if slot_number == 1:
 			equipped_ability1_info = null
-			GameManager.ability1_equipped.emit(null)
-			GameManager.ability1_state_updated.emit(Ability.State.READY, 0.0)
+			SignalBus.ability1_equipped.emit(null)
+			SignalBus.ability1_state_updated.emit(Ability.State.READY, 0.0)
 		else: # slot_number == 2
 			equipped_ability2_info = null
-			GameManager.ability2_equipped.emit(null)
-			GameManager.ability2_state_updated.emit(Ability.State.READY, 0.0)
+			SignalBus.ability2_equipped.emit(null)
+			SignalBus.ability2_state_updated.emit(Ability.State.READY, 0.0)
 
 # This function handles the smooth blending between our three collision shapes
 # based on the player's current speed. It is called every physics frame.
