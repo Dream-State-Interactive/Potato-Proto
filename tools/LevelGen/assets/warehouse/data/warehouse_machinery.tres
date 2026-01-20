@@ -5,6 +5,12 @@
 [resource]
 script = ExtResource("1_u2mps")
 metal_dark = Color(0.15, 0.18, 0.22, 1)
-snaps_to_terrain = false
+density = 1
 probability = 1.0
+snaps_to_terrain = false
+snap_rotation = false
+max_slope_degrees = 180.0
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
 metadata/_custom_type_script = "uid://dup4tdgl2d3lg"

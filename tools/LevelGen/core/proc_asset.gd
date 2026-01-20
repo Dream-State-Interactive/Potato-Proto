@@ -10,6 +10,8 @@ extends Resource
 @export var snaps_to_terrain: bool = false
 ## If true, the asset will tilt to match the angle of the ground.
 @export var snap_rotation: bool = false 
+## Maximum angle (in degrees) the ground can be before the asset refuses to spawn | Default is 180 (spawns on anything, including ceilings).
+@export_range(0.0, 180.0) var max_slope_degrees: float = 180.0 
 @export var y_offset: float = 0.0
 
 @export_group("Transform")
@@ -22,6 +24,10 @@ extends Resource
 
 func generate(ctx: ProcContext) -> void:
 	pass
+
+## Helper to check if a specific rotation is within the allowed slope limit
+func is_slope_valid(rotation_radians: float) -> bool:
+	return abs(rad_to_deg(rotation_radians)) <= max_slope_degrees
 
 ## Helper to get randomized transform data for a single spawn instance
 func _get_spawn_params(ctx: ProcContext, curve_idx: int) -> Dictionary:

@@ -8,8 +8,6 @@
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_a3mru")
-min_width = null
-max_width = null
 
 [node name="BubbleBG" type="NinePatchRect" parent="."]
 modulate = Color(1, 0.917647, 0.670588, 1)

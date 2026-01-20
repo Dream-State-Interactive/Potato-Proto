@@ -610,7 +610,9 @@ func _process_bg_layer(layer_data: Dictionary, profile: LayerProfile, player_x: 
 
 		# Gen X for Noise: Continuous based on unscaled grid
 		var gen_x: float = (start_x * speed) + (float(idx) * float(chunk_size))
-		_generate_assets_for_node(chunk_root, profile, idx, gen_x, chunk_size, NAN)
+		
+		# Pass gen_x as the final argument (world_x) so overrides look up the correct absolute position
+		_generate_assets_for_node(chunk_root, profile, idx, gen_x, chunk_size, NAN, gen_x)
 
 		chunks[idx] = chunk_root
 
@@ -652,25 +654,25 @@ func _generate_assets_for_node(node: Node2D, profile: LayerProfile, idx: int, ge
 	ctx.snap_y = snap_y
 	ctx.shared_state = _shared_state.duplicate()
 	ctx.terrain_overrides = terrain_overrides
-	ctx.is_background = not _is_gameplay_layer(profile)
 	
-	# If this is the gameplay layer, world_x is just idx * size
+	# Determine if BG and set Parallax Factor for coordinate projection
+	ctx.is_background = not _is_gameplay_layer(profile)
+	ctx.parallax_factor = profile.parallax_speed.x
+	
+	# Safety for 0.0 speed (fixed backgrounds) to prevent division by zero later
+	if is_equal_approx(ctx.parallax_factor, 0.0):
+		ctx.parallax_factor = 0.0001
+	
+	# If this is the gameplay layer, world_x is just idx * size.
+	# If it's a BG layer, world_x is passed in as the parallax-corrected coordinate (gen_x).
 	if is_nan(world_x):
 		world_x = float(idx * chunk_size)
 	
-	# Pass the correct world coordinate for override detection
-	ctx.global_x = world_x # Re-assign to use world X for everything
-	
-	# Setup height scale for smoothing
-	ctx.shared_state["current_height_scale"] = 1.0
-	if ctx.is_background:
-		for ov in terrain_overrides:
-			if ov.is_in_range(world_x, chunk_size):
-				ctx.shared_state["current_height_scale"] = ov.bg_height_multiplier
-				break
+	# Pass the correct world coordinate for noise and override detection
+	ctx.global_x = world_x 
 
 	ctx.rng = RandomNumberGenerator.new()
-	ctx.rng.seed = (idx * 73856093) ^ (profile.z_index * 19349663)
+	ctx.rng.seed = (idx * 420) ^ (profile.z_index * 420)
 
 	for asset in profile.assets:
 		if not asset: continue

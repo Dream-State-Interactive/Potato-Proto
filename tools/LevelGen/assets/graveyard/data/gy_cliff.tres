@@ -14,6 +14,7 @@ density = 1
 probability = 1.0
 snaps_to_terrain = false
 snap_rotation = false
+max_slope_degrees = 180.0
 y_offset = 0.0
 scale_min = 1.0
 scale_max = 1.0

@@ -4,8 +4,13 @@
 
 [resource]
 script = ExtResource("1_t85h4")
-y_offset = 10.0
 attached_objects_y_offset = 10.0
-snaps_to_terrain = false
+density = 1
 probability = 0.2
+snaps_to_terrain = false
+snap_rotation = false
+max_slope_degrees = 180.0
+y_offset = 10.0
+scale_min = 1.0
+scale_max = 1.0
 metadata/_custom_type_script = "uid://c0fjeyk1xybh2"

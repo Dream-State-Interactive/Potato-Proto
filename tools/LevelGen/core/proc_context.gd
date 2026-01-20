@@ -1,4 +1,3 @@
-# src/tools/LevelGen/core/proc_context.gd
 class_name ProcContext
 extends RefCounted
 
@@ -12,6 +11,7 @@ var shared_state: Dictionary
 # Override System
 var terrain_overrides: Array[TerrainOverride] = []
 var is_background: bool = false
+var parallax_factor: float = 1.0 # Added for coordinate projection
 
 # Data passed from Terrain to Scatter assets
 var terrain_curve: PackedVector2Array = PackedVector2Array()

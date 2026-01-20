@@ -12,6 +12,7 @@ density = 6
 probability = 0.725
 snaps_to_terrain = true
 snap_rotation = true
+max_slope_degrees = 180.0
 y_offset = 0.0
 scale_min = 1.0
 scale_max = 1.0

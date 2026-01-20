@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c47m3e2gtabhu"]
+[gd_scene load_steps=32 format=3 uid="uid://c47m3e2gtabhu"]
 
 [ext_resource type="Script" uid="uid://fslu6y317grw" path="res://tools/LevelGen/core/level_maker_modular.gd" id="1_aftvb"]
 [ext_resource type="Resource" uid="uid://cquwjfgq7rcxl" path="res://tools/LevelGen/biomes/forest_biome.tres" id="2_aftvb"]
@@ -48,7 +48,7 @@ metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
 
 [sub_resource type="Resource" id="Resource_voa2y"]
 script = ExtResource("4_t3lw0")
-chunk_index = 210
+chunk_index = 401
 biome = ExtResource("10_ocsyv")
 metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
 
@@ -103,6 +103,23 @@ parallax_corrected = false
 bg_height_multiplier = 0.5
 metadata/_custom_type_script = "uid://csgqmb4c1jjk2"
 
+[sub_resource type="Curve" id="Curve_v18sk"]
+_data = [Vector2(0, 0.495501), 0.0, 0.0, 0, 0, Vector2(0.217143, 0.407761), 0.0, 0.0, 0, 0, Vector2(0.291429, 0.612486), 1.67323, 1.67323, 0, 0, Vector2(0.411429, 0.649044), 0.930566, 0.930566, 0, 0, Vector2(0.48, 0.787964), 0.0, 0.0, 0, 0, Vector2(0.497143, 0.692913), 0.0, 0.0, 0, 0, Vector2(0.542857, 0.627109), 0.0, 0.0, 0, 0, Vector2(0.577143, 0.700225), 0.0, 0.0, 0, 0, Vector2(0.645714, 0.627109), 2.00274, 2.00274, 0, 0, Vector2(0.754286, 0.517435), 0.654642, 0.654642, 0, 0, Vector2(0.805714, 0.546682), 0.0, 0.0, 0, 0, Vector2(0.868571, 0.444319), 0.0, 0.0, 0, 0, Vector2(0.937143, 0.553993), 0.0, 0.0, 0, 0, Vector2(1, 0.495501), 0.0, 0.0, 0, 0]
+point_count = 14
+
+[sub_resource type="Resource" id="Resource_k4ndr"]
+script = ExtResource("8_bbhfy")
+start_chunk = 151
+end_chunk = 400
+transition_chunks = 1.0
+curve = SubResource("Curve_v18sk")
+min_height = -20000.0
+max_height = 20000.0
+blend_weight = 1.0
+parallax_corrected = true
+bg_height_multiplier = 0.75
+metadata/_custom_type_script = "uid://csgqmb4c1jjk2"
+
 [sub_resource type="Resource" id="Resource_dw005"]
 script = ExtResource("8_culic")
 chunk_index = 12
@@ -121,8 +138,9 @@ current_biome = ExtResource("2_dw005")
 starting_segment = ExtResource("3_lrrkd")
 player_node = NodePath("PlayerSpawn")
 biome_list = Array[ExtResource("4_t3lw0")]([SubResource("Resource_tybkv"), SubResource("Resource_7i0sr"), SubResource("Resource_culic"), SubResource("Resource_bbhfy"), SubResource("Resource_sqn22"), SubResource("Resource_voa2y")])
-terrain_overrides = Array[ExtResource("8_bbhfy")]([SubResource("Resource_ii60e"), SubResource("Resource_e0q16"), SubResource("Resource_ocsyv")])
+terrain_overrides = Array[ExtResource("8_bbhfy")]([SubResource("Resource_ii60e"), SubResource("Resource_e0q16"), SubResource("Resource_ocsyv"), SubResource("Resource_k4ndr")])
 special_chunk_list = Array[ExtResource("8_culic")]([SubResource("Resource_dw005"), SubResource("Resource_v18sk")])
 delete_distance_px = 6000.0
+global_bg_offset_x = 512.0
 
 [node name="PlayerSpawn" parent="." instance=ExtResource("3_ci2p4")]
