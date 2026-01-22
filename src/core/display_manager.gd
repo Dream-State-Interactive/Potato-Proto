@@ -3,20 +3,33 @@ extends Node
 @onready var WINDOW = get_window()
 @onready var VIEWPORT = get_viewport()
 
+var target_resolution: Vector2i = Vector2i(1920, 1080)
+
 @export var display_mode: DisplayServer.WindowMode:
 	set(mode):
-		DisplayServer.window_set_mode(mode, 0)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, 0)
+		WINDOW.size = target_resolution
 		
-		if(mode != DisplayServer.WindowMode.WINDOW_MODE_FULLSCREEN):
-			DisplayServer.window_set_flag(DisplayServer.WindowFlags.WINDOW_FLAG_BORDERLESS, false, WINDOW.get_window_id())
+		var final_mode = mode
+		if(mode == DisplayServer.WINDOW_MODE_FULLSCREEN):
+			final_mode = DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
+			
+		DisplayServer.window_set_mode(final_mode, 0)
+		
+		if(final_mode == DisplayServer.WINDOW_MODE_WINDOWED):
+			WINDOW.move_to_center()
 	get:
-		return DisplayServer.window_get_mode(0)
+		var mode = DisplayServer.window_get_mode(0)
+		if(mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN):
+			return DisplayServer.WINDOW_MODE_FULLSCREEN
+		return mode
 		
 @export var display_resolution: Vector2i:
 	set(display_resolution):
-		WINDOW.size = display_resolution
+		target_resolution = display_resolution
+		self.display_mode = self.display_mode
 	get():
-		return WINDOW.size
+		return target_resolution
 
 func _ready() -> void:
 	if(WINDOW == null):
@@ -24,5 +37,5 @@ func _ready() -> void:
 	if(VIEWPORT == null):
 		print("Error: Viewport not found")
 	
-	display_mode = SettingsService.getSettingValue("display", "display_mode")
 	display_resolution = SettingsService.getSettingValue("display", "display_resolution")
+	display_mode = SettingsService.getSettingValue("display", "display_mode")
