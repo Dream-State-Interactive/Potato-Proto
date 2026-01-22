@@ -22,7 +22,7 @@ func generate(surface_points: PackedVector2Array, rng_seed: int, index: int) -> 
 	var current_hills: int = index
 	var potential_hazards: Array[HazardConfig] = []
 	for config in hazard_configs:
-		if config and current_hills >= config.min_hills_completed and current_hills <= config.max_hills_completed:
+		if config and current_hills >= config.min_chunk_index and current_hills <= config.max_chunk_index:
 			potential_hazards.append(config)
 	
 	if potential_hazards.is_empty():
@@ -38,10 +38,13 @@ func generate(surface_points: PackedVector2Array, rng_seed: int, index: int) -> 
 		for config in potential_hazards:
 			if not config.hazard_scene or i + config.slot_cost >= total_points:
 				continue
+			
 			# Calculate how many "progression steps" have passed since this hazard unlocked.
-			var hills_since_unlock = max(0, current_hills - config.min_hills_completed)
+			var hills_since_unlock = max(0, current_hills - config.min_chunk_index)
+			
 			# Calculate the current density based on progression.
-			var current_density = config.base_density + (hills_since_unlock * config.density_increase_per_hill)
+			var current_density = config.base_density + (hills_since_unlock * config.density_increase_per_chunk)
+			
 			# Clamp the density to the defined maximum.
 			var density = min(current_density, config.max_density)
 			var progress_percent: float = float(i) / total_points
