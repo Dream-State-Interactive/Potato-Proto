@@ -20,8 +20,6 @@ var target_resolution: Vector2i = Vector2i(1920, 1080)
 			WINDOW.move_to_center()
 	get:
 		var mode = DisplayServer.window_get_mode(0)
-		if(mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN):
-			return DisplayServer.WINDOW_MODE_FULLSCREEN
 		return mode
 		
 @export var display_resolution: Vector2i:
