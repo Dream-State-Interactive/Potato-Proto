@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dowbbf4xkeeqp" path="res://assets/graphics/sprites/hazards/pitchfork_special.png" id="3_4bd70"]
 
 [node name="Pitchfork" type="Node2D"]
-z_index = -11
 
 [node name="Handle" type="RigidBody2D" parent="."]
 script = ExtResource("1_vhj6p")
@@ -41,6 +40,7 @@ angular_limit_enabled = true
 position = Vector2(1, -215)
 
 [node name="Sprite2D" type="Sprite2D" parent="Head"]
+z_index = -1
 position = Vector2(0, -213.4)
 scale = Vector2(2, 2)
 texture = ExtResource("1_4bd70")
@@ -52,7 +52,6 @@ polygon = PackedVector2Array(8, 83.9, -7.5, 83.9, -13, 142.1, -43.5, 145.9, -39,
 
 [node name="Sprite2D2" type="Sprite2D" parent="Head"]
 z_index = 1
-z_as_relative = false
 position = Vector2(0, -213.4)
 scale = Vector2(2, 2)
 texture = ExtResource("3_4bd70")

@@ -6,14 +6,14 @@
 [resource]
 script = ExtResource("2_ls7q6")
 hazard_scene = ExtResource("1_xylcg")
-min_hills_completed = 0
-max_hills_completed = 1000
+min_chunk_index = 0
+max_chunk_index = 10000
 base_density = 0.05
-density_increase_per_hill = 0.001
+density_increase_per_chunk = 0.001
 max_density = 0.1
 end_boost_start_percent = 0.4
 end_boost_multiplier = 1.0
 min_scale = Vector2(1, 1)
 max_scale = Vector2(1, 1)
-slot_cost = 4
+slot_cost = 32
 metadata/_custom_type_script = "uid://cwsplenuixblt"
