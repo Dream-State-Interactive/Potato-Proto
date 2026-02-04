@@ -8,28 +8,31 @@ extends Collectible
 @export var pitch_scale: float = 0.2
 @export var volume_db: float = -8.0
 
-@export var pulse_speed: float = 2.0  # Speed of pulsing
-@export var scale_amount: float = 0.1  # Amount of scaling for the pulse effect
-
-var elapsed_time: float = 0.0
-var pulse_offset: float = 0.0
-
 func _ready():
-	# Connect the Area2D's signal to this script's function
+	# Standard setup
 	body_entered.connect(_on_triggered)
-	randomize()
-	# Use TAU (2*PI) for a full cycle; this is a neat Godot constant
-	pulse_offset = randf_range(0.0, TAU)
 	
-func _process(delta: float) -> void:
-	elapsed_time += delta
-	# Calculate scale using a sine wave with a unique offset for each instance.
-	var scale_factor = 1.0 + sin(elapsed_time * pulse_speed + pulse_offset) * scale_amount
-	scale = Vector2(scale_factor, scale_factor)
+	# Connect visibility notifier to toggle physics
+	var notifier = $VisibleOnScreenNotifier2D
+	if notifier:
+		notifier.screen_entered.connect(func(): 
+			monitoring = true
+			monitorable = true
+		)
+		notifier.screen_exited.connect(func(): 
+			monitoring = false
+			monitorable = false
+		)
+		# Start disabled if spawned off-screen
+		if not notifier.is_on_screen():
+			monitoring = false
+			monitorable = false
+	else:
+		push_warning("StarchPoint is missing VisibleOnScreenNotifier2D! Performance will suffer.")
+
 
 func _on_collect(player: Player):
 	print("Player collected starch point with ID: %s" % unique_id)
 	player.add_starch(starch_value)
 	AudioService.play_sfx(pickup_sound, pitch_scale, volume_db, global_position, false, 'StarchyCrunch')
-		
 	queue_free()

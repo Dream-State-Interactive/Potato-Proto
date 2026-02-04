@@ -1,19 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://cg5no13kqh8hv"]
+[gd_scene load_steps=6 format=3 uid="uid://cg5no13kqh8hv"]
 
 [ext_resource type="Script" uid="uid://u8ern3dq4i4x" path="res://src/collectibles/starch_point.gd" id="1_n6wye"]
 [ext_resource type="Texture2D" uid="uid://tkxsi2wm45t6" path="res://assets/graphics/sprites/collectibles/starch_point.png" id="1_rpace"]
+[ext_resource type="Shader" uid="uid://b38rto37de3xq" path="res://assets/Shaders/pulse.gdshader" id="2_6wqvi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ykbv"]
+shader = ExtResource("2_6wqvi")
+shader_parameter/speed = 0.8
+shader_parameter/scale_amount = 0.15
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_55wb1"]
 radius = 23.0
 
 [node name="StarchPoint" type="Area2D"]
-scale = Vector2(0.94597, 0.94597)
+scale = Vector2(1.0676, 1.0676)
 script = ExtResource("1_n6wye")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1ykbv")
 texture = ExtResource("1_rpace")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_55wb1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-0.241126, 0.223726)
+scale = Vector2(2.44134, 2.48783)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
