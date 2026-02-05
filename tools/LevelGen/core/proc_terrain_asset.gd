@@ -4,7 +4,8 @@ extends ProcAsset
 
 @export_group("Base Terrain Settings")
 @export var color: Color = Color.DARK_GRAY
-@export var depth: float = 2000.0 
+@export var depth: float = 2000.0
+@export var z_index: int = 0
 @export var add_collision: bool = false
 
 @export_subgroup("Noise")
@@ -49,6 +50,7 @@ func generate(ctx: ProcContext):
 
 	# 3. Visuals (Polygon2D)
 	var poly = Polygon2D.new(); poly.color = color
+	poly.z_index = z_index
 	var draw_pts = curve_pts.duplicate()
 	
 	# Use a BEEG buffer if the standard depth isn't enough.

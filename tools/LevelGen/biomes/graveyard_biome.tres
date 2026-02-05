@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="BiomeProfile" load_steps=8 format=3 uid="uid://c6uiknvyhtt4c"]
+[gd_resource type="Resource" script_class="BiomeProfile" load_steps=9 format=3 uid="uid://c6uiknvyhtt4c"]
 
+[ext_resource type="Script" uid="uid://cwsplenuixblt" path="res://src/hazards/hazard_config.gd" id="1_7d3mr"]
 [ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="1_hc0rs"]
 [ext_resource type="Script" uid="uid://duio13n1t25ct" path="res://tools/LevelGen/core/biome_profile.gd" id="2_86oxn"]
 [ext_resource type="Resource" uid="uid://cqiamuut7l4o4" path="res://tools/LevelGen/assets/graveyard/layers/gy_layer_clouds.tres" id="2_fachs"]
@@ -22,5 +23,6 @@ use_fog_overlay = true
 fog_color_top = Color(0.02, 0.03, 0.06, 0)
 fog_color_bot = Color(0.03, 0.06, 0.09, 0.78)
 use_cloud_mass = true
+hazards = Array[ExtResource("1_7d3mr")]([])
 layers = Array[ExtResource("1_hc0rs")]([ExtResource("2_fachs"), ExtResource("3_7d3mr"), ExtResource("4_pkoj6"), ExtResource("5_8evku"), ExtResource("6_bdd1l")])
 metadata/_custom_type_script = "uid://duio13n1t25ct"

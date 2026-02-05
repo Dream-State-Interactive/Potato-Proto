@@ -37,6 +37,7 @@ func _post_process(ctx: ProcContext, curve: PackedVector2Array, main_poly: Polyg
 	while current_offset < max_depth:
 		if is_light_band:
 			var ribbon = Polygon2D.new()
+			ribbon.z_index = main_poly.z_index 
 			ribbon.color = soil_light_color.darkened(darkness_mult)
 			
 			var top_pts = PackedVector2Array()

@@ -249,7 +249,7 @@ func _respawn_chunk(idx: int) -> void:
 
 		if profile:
 			# Pass start_pos.y as snap_y to ensure vertices align with neighbor
-			_generate_assets_for_node(chunk_node, profile, idx, start_pos.x, chunk_size, start_pos.y)
+			_generate_assets_for_node(chunk_node, profile, idx, start_pos.x, chunk_size, start_pos.y, NAN, biome)
 
 	_gameplay_chunks[idx] = { "node": chunk_node, "start_x": start_pos.x, "end_x": end_pos.x }
 	_loaded_min_idx = min(_loaded_min_idx, idx)
@@ -305,7 +305,7 @@ func _spawn_gameplay_chunk(idx: int, start_pos: Vector2, explicit_scene: PackedS
 			chunk_node.scale = Vector2(s, s)
 			container.add_child(chunk_node)
 
-			var ctx = _generate_assets_for_node(chunk_node, profile, idx, start_pos.x, chunk_size, start_pos.y)
+			var ctx = _generate_assets_for_node(chunk_node, profile, idx, start_pos.x, chunk_size, start_pos.y, NAN, chunk_biome)
 			
 			if ctx and not ctx.terrain_curve.is_empty():
 				# Convert Local Y End to World Y End by multiplying by Scale
@@ -612,7 +612,7 @@ func _process_bg_layer(layer_data: Dictionary, profile: LayerProfile, player_x: 
 		var gen_x: float = (start_x * speed) + (float(idx) * float(chunk_size))
 		
 		# Pass gen_x as the final argument (world_x) so overrides look up the correct absolute position
-		_generate_assets_for_node(chunk_root, profile, idx, gen_x, chunk_size, NAN, gen_x)
+		_generate_assets_for_node(chunk_root, profile, idx, gen_x, chunk_size, NAN, gen_x, biome)
 
 		chunks[idx] = chunk_root
 
@@ -645,7 +645,7 @@ func _setup_world_env():
 		_world_env.environment = e_res
 		add_child(_world_env)
 
-func _generate_assets_for_node(node: Node2D, profile: LayerProfile, idx: int, gen_x: float, size: float, snap_y: float, world_x: float = NAN) -> ProcContext:
+func _generate_assets_for_node(node: Node2D, profile: LayerProfile, idx: int, gen_x: float, size: float, snap_y: float, world_x: float = NAN, biome_context: BiomeProfile = null) -> ProcContext:
 	var ctx = ProcContext.new()
 	ctx.chunk_index = idx
 	ctx.global_x = gen_x
@@ -691,6 +691,14 @@ func _generate_assets_for_node(node: Node2D, profile: LayerProfile, idx: int, ge
 			
 		# If all checks pass, generate the asset
 		asset.generate(ctx)
+	
+	# --- HAZARDs ---
+	# Only spawn hazards if:
+	# 1. This is the gameplay layer (not background)
+	# 2. We have a valid terrain curve to spawn on
+	# 3. We have a biome with defined hazards
+	if not ctx.is_background and not ctx.terrain_curve.is_empty() and biome_context and not biome_context.hazards.is_empty():
+		_generate_biome_hazards(ctx, biome_context.hazards)
 	
 	return ctx
 
@@ -858,3 +866,76 @@ func _spawn_celestial_bodies():
 	moon.color = Color(0.9, 0.9, 0.8)
 	moon.position = Vector2(vp.x * 0.8, vp.y * 0.2)
 	_celestial_node.add_child(moon)
+
+func _generate_biome_hazards(ctx: ProcContext, hazards: Array[HazardConfig]):
+	var container = Node2D.new()
+	container.name = "Hazards"
+	ctx.parent_node.add_child(container)
+	
+	var points = ctx.terrain_curve
+	if points.size() < 2: return
+
+	# 1. Determine eligible hazards for this chunk index
+	var current_chunk_idx: int = ctx.chunk_index
+	var potential_hazards: Array[HazardConfig] = []
+	for config in hazards:
+		if config and current_chunk_idx >= config.min_chunk_index and current_chunk_idx <= config.max_chunk_index:
+			potential_hazards.append(config)
+	
+	if potential_hazards.is_empty(): return
+
+	# 2. Iterate through terrain points (Slots)
+	var total_points = points.size()
+	var i = 0
+	
+	var hazard_rng = RandomNumberGenerator.new()
+	hazard_rng.seed = ctx.rng.seed + 9999 
+
+	while i < total_points - 1:
+		var spawned_something = false
+		
+		for config in potential_hazards:
+			if not config.hazard_scene or i + config.slot_cost >= total_points:
+				continue
+				
+			# Calculate Density based on progression
+			var chunks_since_unlock = max(0, current_chunk_idx - config.min_chunk_index)
+			var current_density = config.base_density + (chunks_since_unlock * config.density_increase_per_chunk)
+			var density = min(current_density, config.max_density)
+			
+			var progress_percent: float = float(i) / float(total_points)
+			if progress_percent >= config.end_boost_start_percent:
+				density *= config.end_boost_multiplier
+			
+			# RNG
+			if hazard_rng.randf() < density:
+				var spawn_idx = i + int(config.slot_cost / 2)
+				if spawn_idx + 1 >= total_points: continue
+				
+				var p1 = points[spawn_idx]
+				var p2 = points[spawn_idx + 1]
+				
+				var h_inst = config.hazard_scene.instantiate()
+				
+				# Position & Rotation logic
+				var mid_point = p1.lerp(p2, 0.5)
+				var normal = (p2 - p1).orthogonal().normalized()
+				if normal.y > 0: normal = -normal # Up
+				
+				h_inst.position = mid_point
+				h_inst.rotation = normal.angle() + deg_to_rad(90)
+				
+				# Scale logic
+				if config.min_scale != config.max_scale:
+					var sx = hazard_rng.randf_range(config.min_scale.x, config.max_scale.x)
+					var sy = hazard_rng.randf_range(config.min_scale.y, config.max_scale.y)
+					h_inst.scale = Vector2(sx, sy)
+				
+				container.add_child(h_inst)
+				
+				i += config.slot_cost
+				spawned_something = true
+				break
+		
+		if not spawned_something:
+			i += 1

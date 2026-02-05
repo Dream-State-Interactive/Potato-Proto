@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ProcStarchSpawner" load_steps=3 format=3 uid="uid://llkkqkuf3otn"]
+
+[ext_resource type="Script" uid="uid://dwpneeawxt5ws" path="res://tools/LevelGen/core/proc_starch_spawner.gd" id="1_01wuv"]
+[ext_resource type="PackedScene" uid="uid://cg5no13kqh8hv" path="res://src/collectibles/starch_point.tscn" id="2_amgpu"]
+
+[resource]
+script = ExtResource("1_01wuv")
+starch_scene = ExtResource("2_amgpu")
+pattern_type = 0
+step_interval = 20
+height_offset = -120.0
+wave_frequency = 0.01
+wave_amplitude = 50.0
+noise_jitter = 30.0
+density = 1
+probability = 1.0
+snaps_to_terrain = true
+snap_rotation = false
+max_slope_degrees = 180.0
+y_offset = 0.0
+scale_min = 1.0
+scale_max = 1.0
+metadata/_custom_type_script = "uid://dwpneeawxt5ws"

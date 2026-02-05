@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c47m3e2gtabhu"]
+[gd_scene load_steps=31 format=3 uid="uid://c47m3e2gtabhu"]
 
 [ext_resource type="Script" uid="uid://fslu6y317grw" path="res://tools/LevelGen/core/level_maker_modular.gd" id="1_aftvb"]
 [ext_resource type="Resource" uid="uid://cquwjfgq7rcxl" path="res://tools/LevelGen/biomes/forest_biome.tres" id="2_aftvb"]
@@ -11,7 +11,6 @@
 [ext_resource type="Resource" uid="uid://dkx22pisw6q1o" path="res://tools/LevelGen/biomes/desert_biome.tres" id="5_t3lw0"]
 [ext_resource type="Script" uid="uid://csgqmb4c1jjk2" path="res://tools/LevelGen/core/terrain_override.gd" id="8_bbhfy"]
 [ext_resource type="Script" uid="uid://bq8bhr3jj4gls" path="res://tools/LevelGen/core/special_chunk_entry.gd" id="8_culic"]
-[ext_resource type="Resource" uid="uid://c6uiknvyhtt4c" path="res://tools/LevelGen/biomes/graveyard_biome.tres" id="8_v18sk"]
 [ext_resource type="PackedScene" uid="uid://consaani8nb7p" path="res://src/modes/gauntlet/ability_store.tscn" id="10_ii60e"]
 [ext_resource type="Resource" uid="uid://ddyj3jhp12v4q" path="res://tools/LevelGen/biomes/warehouse_biome.tres" id="10_ocsyv"]
 [ext_resource type="PackedScene" uid="uid://cu4qjv18u2cmk" path="res://src/modes/gauntlet/store.tscn" id="13_v18sk"]
@@ -37,7 +36,7 @@ metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
 [sub_resource type="Resource" id="Resource_bbhfy"]
 script = ExtResource("4_t3lw0")
 chunk_index = 100
-biome = ExtResource("8_v18sk")
+biome = ExtResource("2_dw005")
 metadata/_custom_type_script = "uid://bdi3q0ujbeewx"
 
 [sub_resource type="Resource" id="Resource_sqn22"]

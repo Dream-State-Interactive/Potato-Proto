@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="LayerProfile" load_steps=5 format=3 uid="uid://bqs88sp3fngew"]
+[gd_resource type="Resource" script_class="LayerProfile" load_steps=6 format=3 uid="uid://bqs88sp3fngew"]
 
 [ext_resource type="Script" uid="uid://boi73a2ws5i5q" path="res://tools/LevelGen/core/proc_asset.gd" id="1_3dl0k"]
 [ext_resource type="Script" uid="uid://c7a7v0sc4ywpp" path="res://tools/LevelGen/core/layer_profile.gd" id="2_50t5i"]
 [ext_resource type="Resource" uid="uid://ooxd8ic5nlxy" path="res://tools/LevelGen/assets/forest/data/forest_fg_terrain.tres" id="2_qjlor"]
 [ext_resource type="Resource" uid="uid://b04cy24gu7lst" path="res://tools/LevelGen/assets/forest/data/forest_bushes.tres" id="3_0wjty"]
+[ext_resource type="Resource" uid="uid://llkkqkuf3otn" path="res://tools/LevelGen/assets/_collectibles/starch_spawn_default.tres" id="4_0wjty"]
 
 [resource]
 script = ExtResource("2_50t5i")
@@ -12,5 +13,5 @@ parallax_speed = Vector2(1, 1)
 z_index = 0
 render_distance = 3
 y_offset = 0.0
-assets = Array[ExtResource("1_3dl0k")]([ExtResource("2_qjlor"), ExtResource("3_0wjty")])
+assets = Array[ExtResource("1_3dl0k")]([ExtResource("2_qjlor"), ExtResource("3_0wjty"), ExtResource("4_0wjty")])
 metadata/_custom_type_script = "uid://c7a7v0sc4ywpp"
